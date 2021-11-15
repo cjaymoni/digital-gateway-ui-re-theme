@@ -6,7 +6,6 @@ import { ResourceService } from 'src/app/services/resources.service';
 import { map, tap } from 'rxjs';
 import { usersListActions } from 'src/app/store/actions/users-list.actions';
 import { Store } from '@ngrx/store';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +18,7 @@ export class UserManagementService extends ResourceService {
   editUser(user: any, imageToUpload: any) {}
 
   editUserRole(formData: any, userId: any) {
-    return this.updateResource(
-      formData,
-      userId,
-      `${environment.API_URL}profile/${userId}`,
-      true
-    ).pipe(
+    return this.updateResource(formData, userId).pipe(
       map(data => data as User),
       tap(user =>
         this.store.dispatch(
