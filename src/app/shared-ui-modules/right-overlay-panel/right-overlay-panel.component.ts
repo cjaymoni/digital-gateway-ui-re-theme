@@ -12,6 +12,7 @@ import { selectCurrentRoute } from 'src/app/store/selectors/router.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RightOverlayPanelComponent implements OnInit {
+  title = 'Comments'
   constructor(private store: Store, private navigator: NavigatorService) {}
 
   active$ = this.store.select(selectCurrentRoute).pipe(

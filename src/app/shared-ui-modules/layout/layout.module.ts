@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { RightOverlayPanelModule } from '../right-overlay-panel/right-overlay-panel.module';
 import { ArticleCardModule } from '../article-card/article-card.module';
 import { FooterModule } from '../footer/footer.module';
+import { CommentCardModule } from '../comment-card/comment-card.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -17,7 +18,8 @@ import { FooterModule } from '../footer/footer.module';
     RouterModule,
     RightOverlayPanelModule,
     ArticleCardModule,
-    FooterModule
+    FooterModule,
+    CommentCardModule
   ],
   exports: [LayoutComponent],
 })
