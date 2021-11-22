@@ -6,6 +6,7 @@ import { SideNavModule } from '../side-nav/side-nav.module';
 import { RouterModule } from '@angular/router';
 import { RightOverlayPanelModule } from '../right-overlay-panel/right-overlay-panel.module';
 import { ArticleCardModule } from '../article-card/article-card.module';
+import { FooterModule } from '../footer/footer.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -16,6 +17,7 @@ import { ArticleCardModule } from '../article-card/article-card.module';
     RouterModule,
     RightOverlayPanelModule,
     ArticleCardModule,
+    FooterModule
   ],
   exports: [LayoutComponent],
 })
