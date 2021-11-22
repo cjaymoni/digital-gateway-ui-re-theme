@@ -1,0 +1,29 @@
+<div class="grid justify-content-center align-items-center">
+  <div class="col-12 topbar">
+    <app-top-nav></app-top-nav>
+    <div class="col-12 lg:hidden">
+      <app-side-nav></app-side-nav>
+    </div>
+  </div>
+  <div class="col-12 grid">
+    <div class="hidden col-3 lg:flex">
+      <app-side-nav></app-side-nav>
+    </div>
+
+    <div class="col-12 md:col-8 lg:col-6 grid justify-content-center">
+      <div class="col-12">
+        content
+        <app-article-card></app-article-card>
+        <router-outlet></router-outlet>
+      </div>
+      <div class="leftcontent col-12 md:hidden">left content</div>
+      <div class="rightcontent col-12 md:hidden">right content</div>
+    </div>
+
+    <div class="hidden md:flex md:col-4 lg:col-3">rightsidebar</div>
+  </div>
+  <div class="col-12 footer">footer</div>
+</div>
+<app-right-overlay-panel>
+  <router-outlet name="right-panel"></router-outlet>
+</app-right-overlay-panel>

@@ -1,0 +1,26 @@
+<div
+  class="
+    right-panel
+    shadow-8
+    slidedown
+    animation-duration-1000
+    transition-all transition-ease-in transition-duration-1000
+  "
+  [ngClass]="(active$ | async) ? '' : 'hidden'"
+>
+  <p-scrollPanel styleClass="custom-overlay">
+    <div class="flex col-12 justify-content-between sticky top-0 z-2 bg-white">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-times"
+        class="p-button-outlined p-button-secondary"
+        (click)="hidePanel()"
+      ></button>
+    </div>
+    <div class="z-1">
+      <ng-content></ng-content>
+    </div>
+  </p-scrollPanel>
+</div>
