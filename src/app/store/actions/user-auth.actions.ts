@@ -11,6 +11,7 @@ class UserAuth {
       password: string;
     }>()
   );
+
   loginSuccessful = createAction(
     `${this.type} Login Successful`,
     props<{ user: User }>()
@@ -23,6 +24,7 @@ class UserAuth {
       password: string;
     }>()
   );
+
   logoutSuccessful = createAction(`${this.type} Logout Successful`);
 }
 

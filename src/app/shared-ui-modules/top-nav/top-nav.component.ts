@@ -1,8 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
-import { filter } from 'rxjs';
+import { distinctUntilChanged, filter, map } from 'rxjs';
 import { RouterOutlets } from 'src/app/config/app-config';
+import { menuItemActions } from 'src/app/store/actions/menu-items.actions';
+import { menuItemSelectors } from 'src/app/store/selectors/menu-items.selectors';
 import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
 
 @Component({
@@ -51,5 +53,26 @@ export class TopNavComponent implements OnInit {
 
   constructor(private store: Store) {}
 
+  items$ = this.store.select(menuItemSelectors.topMenuItems).pipe(
+    distinctUntilChanged(),
+    map((menuItem: MenuItem[]) =>
+      menuItem.map(item => {
+        item.command = event => {
+          this.selectMenu(event.item.id);
+        };
+
+        return item;
+      })
+    )
+  );
+
   ngOnInit(): void {}
+
+  selectMenu(id: number) {
+    this.store.dispatch(
+      menuItemActions.selectMenuItem({
+        menuItemId: id,
+      })
+    );
+  }
 }
