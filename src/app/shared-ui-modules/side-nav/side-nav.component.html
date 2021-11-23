@@ -1,3 +1,3 @@
 <ng-container *ngIf="selectedMenu$ | async">
-  <p-panelMenu [model]="(subMenuItems$ | async) || []"></p-panelMenu>
+  <p-tieredMenu [model]="(subMenuItems$ | async) || []"></p-tieredMenu>
 </ng-container>

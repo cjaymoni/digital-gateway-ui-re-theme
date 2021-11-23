@@ -12,6 +12,18 @@ export const initialState: Readonly<MenuItemFromBackend> = {
           label: 'Finance',
           id: 4,
           slug: 'finance',
+          items: [
+            {
+              label: 'Finance',
+              id: 4,
+              slug: 'finance',
+            },
+            {
+              label: 'Tax Policies',
+              id: 5,
+              slug: 'tax-policies',
+            },
+          ],
         },
         {
           label: 'Tax Policies',

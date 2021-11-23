@@ -1,19 +1,18 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './shared-ui-modules/layout/layout.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TestComponentComponent } from './test/test-component/test-component.component';
-import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
-import { StoreModule } from '@ngrx/store';
-import { userAuthReducer } from './store/reducers/user-auth.reducers';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { appReducersMap } from './store/app.reducers';
-import { EffectsModule } from '@ngrx/effects';
 import { appStoreEffects } from './store/app.effects';
-import { HttpClientModule } from '@angular/common/http';
+import { appReducersMap } from './store/app.reducers';
+import { TestComponentComponent } from './test/test-component/test-component.component';
+
 
 @NgModule({
   declarations: [AppComponent, TestComponentComponent],

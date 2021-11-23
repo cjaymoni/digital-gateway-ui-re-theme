@@ -10,7 +10,7 @@ export const menus = createFeatureSelector<Readonly<MenuItemFromBackend>>(
 class MenuItemSelectors {
   selectedMenu = createSelector(menus, menus => menus['selectedMenu']);
 
-  menuItems = createSelector(menus, menus => menus || []);
+  menuItems = createSelector(menus, menus => menus['top_nav'] || []);
 
   subMenuItems = createSelector(menus, menus => {
     const menu = (menus['top_nav'] as MenuItem[]).find(

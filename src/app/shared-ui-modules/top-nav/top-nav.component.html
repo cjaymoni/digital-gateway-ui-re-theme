@@ -1,8 +1,8 @@
 <p-menubar [model]="(items$ | async) || []">
   <ng-container start>
     <div class="flex justify-content-between align-items-center">
-      <!-- *ngIf="loggedInUser$ | async" -->
       <button
+        *ngIf="loggedInUser$ | async"
         class="p-button-outlined p-button-rounded p-button-primary"
         icon="pi pi-user"
         pButton

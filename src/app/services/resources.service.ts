@@ -19,15 +19,19 @@ export class ResourceService {
   }
 
   storeResource(toStore: any, url = this.endpoint) {
-    return this.http.post(`${url}`, toStore);
+    return this.http.post(`${url}`, toStore).pipe(map(data => data as object));
   }
 
   updateResource(toStore: any, id: any, url = this.endpoint) {
-    return this.http.patch(`${url + '/' + id}`, toStore);
+    return this.http
+      .patch(`${url + '/' + id}`, toStore)
+      .pipe(map(data => data as object));
   }
 
   updateResourcePut(toStore: any, id: any, url = this.endpoint) {
-    return this.http.put(`${url + '/' + id}`, toStore);
+    return this.http
+      .put(`${url + '/' + id}`, toStore)
+      .pipe(map(data => data as object));
   }
 
   deleteResource(id: any, url = this.endpoint) {

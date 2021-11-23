@@ -1,7 +1,6 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
 import { Article } from 'src/app/models/article.model';
-import { User } from 'src/app/models/user-auth.model';
 
 class ArticleActions {
   readonly type = '[Article Actions]';
