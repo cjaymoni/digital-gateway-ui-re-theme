@@ -1,0 +1,9 @@
+:host {
+  width: 100%;
+  ::ng-deep {
+    p-autoComplete,
+    .p-autocomplete-multiple-container {
+      width: 100%;
+    }
+  }
+}
