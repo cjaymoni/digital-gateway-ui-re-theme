@@ -1,62 +1,141 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  TemplateRef,
+  AfterViewInit,
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
+import { DEFAULT_PAGE_SIZE } from 'src/app/config/app-config';
+import { PaginatorService } from 'src/app/services/paginator.service';
 
 @Component({
   selector: 'app-app-table',
   templateUrl: './app-table.component.html',
   styleUrls: ['./app-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppTableComponent implements OnInit {
+export class AppTableComponent implements OnInit, AfterViewInit {
+  @Input()
+  data: any[];
+
+  dataToDisplay: any[];
 
   @Input()
-  data: any[] | undefined;
-
-  dataToDisplay: any[] | undefined;
+  title: string = 'Data Table';
 
   @Input()
-  title: string = "Data Table";
+  batchAction = false;
+
+  @Input()
+  batchActionTemplate: TemplateRef<any>;
 
   @Input()
   showAction = false;
 
+  @Input()
+  actionTemplate: TemplateRef<any>;
 
   @Input()
-  actionTemplate: TemplateRef<any> | undefined;
+  bodyTemplate: TemplateRef<any>;
 
   @Input()
-  bodyTemplate: TemplateRef<any> | undefined;
+  headerTemplate: TemplateRef<any>;
 
   @Input()
-  headerTemplate: TemplateRef<any> | undefined;
-
-  @Input()
-  columnsDefinition: { field: string; header: string; template?: TemplateRef<any>; }[] | undefined;
+  columnsDefinition: {
+    field: string;
+    header: string;
+    template?: TemplateRef<any>;
+  }[];
 
   @Input()
   totalDataLength: any;
-  
-  @Input()
-  searchFunction : ((toSearch: any) => Observable<any[]>) | undefined
 
   @Input()
-  searchPlaceholder  = 'Enter value to search'
-  
+  searchFunction: (toSearch) => Observable<any[]> = undefined;
+
+  @Input()
+  searchPlaceholder = 'Enter value to search';
+
   @Input()
   showPaginator = true;
 
   @Input()
-  refreshDataFunction: (()=>void) | undefined;
+  refreshDataFunction: (() => void) | undefined;
 
   @Input()
   showCaption = true;
-  constructor() { }
+
+  @Input()
+  getRowStyle: (rd) => {};
+
+  constructor(public paginatorService: PaginatorService) {}
+
   selectedData = [];
+  searchFormControl = new FormControl('');
+
   ngOnInit() {
+    this.getPaginatedData();
+    if (this.searchFunction) {
+      this.dataToDisplay;
+      this.searchFormControl.valueChanges
+        .pipe(
+          debounceTime(300),
+          // distinctUntilChanged(),
+          tap((_: string) => {
+            if (_ === '') {
+              this.getPaginatedData();
+            }
+          }),
+          filter(d => d.trim() !== ''),
+          switchMap(search => {
+            return this.searchFunction(search);
+          })
+        )
+        .subscribe(d => (this.dataToDisplay = d));
+    }
   }
 
-  refreshData(){
+  getPaginatedData() {
+    if (this.data && this.columnsDefinition) {
+      this.dataToDisplay = this.data.slice(0, DEFAULT_PAGE_SIZE);
+    }
+
+    if (!this.totalDataLength && this.data) {
+      this.totalDataLength = this.data.length;
+    }
+
+    this.selectedData = [];
+  }
+
+  ngAfterViewInit(): void {}
+  ngOnChanges(): void {
+    this.getPaginatedData();
+  }
+  getOptions() {
+    const options = [50, 100, 200];
+
+    const max = this.paginatorService.paginatorDetails.total;
+    if (max > options[options.length - 1]) {
+      options.push(max);
+    }
+    return options;
+  }
+
+  renderRow(rowData: any) {
+    if (this.getRowStyle) return this.getRowStyle(rowData);
+  }
+
+  onPageChange(event: any) {
+    const start = event.page * event.rows;
+    const end = event.rows + start;
+    // this.dataToDisplay = this.data.slice(start, end);
+  }
+  refreshData() {
     // this.refreshDataFunction();
   }
-
 }
