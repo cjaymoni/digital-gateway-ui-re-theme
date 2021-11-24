@@ -8,7 +8,6 @@ import { FooterModule } from '../footer/footer.module';
 import { SideNavModule } from '../side-nav/side-nav.module';
 import { TopNavModule } from '../top-nav/top-nav.module';
 import { LayoutComponent } from './layout.component';
-import { ForumFormModule } from '../forum-form/forum-form.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -20,7 +19,6 @@ import { ForumFormModule } from '../forum-form/forum-form.module';
     RightOverlayPanelModule,
     ArticleCardModule,
     FooterModule,
-    ForumFormModule
   ],
   exports: [LayoutComponent],
 })
