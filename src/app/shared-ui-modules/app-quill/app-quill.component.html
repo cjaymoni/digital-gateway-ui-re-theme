@@ -1,0 +1,8 @@
+<quill-editor 
+  [(ngModel)]="text1"
+  placeholder="Enter Text"
+  [modules]="quillConfig"
+  (onSelectionChanged)="onSelectionChanged($event)"
+  (onContentChanged)="onContentChanged($event)"
+  >
+</quill-editor>

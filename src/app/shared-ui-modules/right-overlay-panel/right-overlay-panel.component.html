@@ -18,9 +18,23 @@
         class="p-button-outlined p-button-secondary"
         (click)="hidePanel()"
       ></button>
+
+      <div class="p-card box shadow-4 p-2 col-10">
+        <div
+          class="
+            text-xl
+            font-bold
+            text-center
+            uppercase
+            white-space-normal
+          "
+        >
+          {{title}}
+        </div>
+      </div>
     </div>
     <div class="z-1">
-      <ng-content></ng-content>
+      <ng-content> </ng-content>
     </div>
   </p-scrollPanel>
 </div>
