@@ -1,24 +1,24 @@
 <ng-container>
-  <div class="p-fluid p-formgrid p-grid">
-    <div class="p-field p-col-12 p-md-12">
+  <div class="fluid formgrid grid">
+    <div class="field col-12">
       <label for="title">Title</label>
-      <input type="text" pInputText>
+      <input type="text" pInputText class="inputfield w-full">
     </div>
-    <div class="p-field p-col-12 p-md-12">
-      <label for="tag">Tag</label>
-      <input type="text" pInputText>
+    <div class="field col-12 md-6">
+      <label for="title">Tag</label>
+      <app-auto-complete></app-auto-complete>
     </div>
-    <div class="p-field p-col-12">
-      <label for="address">Body</label>
-      <p-editor formControlName="description" [style]="{'height':'320px'}"></p-editor>
+    <div class="field col-12 md-6">
+      <label for="title">Category</label>
+      <app-auto-complete ></app-auto-complete>
     </div>
-    <!-- <div class="p-field p-col-12 p-md-6">
-        <label for="city">City</label>
-        <input id="city" type="text" pInputText>
+    <div class="field col-12 mb-8">
+      <label for="body">Body</label>
+      <app-app-quill></app-app-quill>
     </div>
-    <div class="p-field p-col-12 p-md-3">
-        <label for="zip">Zip</label>
-        <input id="zip" type="text" pInputText>
-    </div> -->
+
+    <div class="field col-12 ">
+      <button pButton pRipple class="align-self-center" type="button" label="Add Article"></button>
+    </div>
   </div>
 </ng-container>
