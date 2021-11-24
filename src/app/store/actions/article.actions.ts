@@ -14,6 +14,15 @@ class ArticleActions {
 
   fetchError = createAction(`${this.type} Fetch Error`);
 
+  selectArticle = createAction(
+    `${this.type} Select Article`,
+    props<{
+      article: Article;
+    }>()
+  );
+
+  selectArticleSuccess = createAction(`${this.type} Select Article Success`);
+
   addArticle = createAction(
     `${this.type} Add Article`,
     props<{ article: Article }>()

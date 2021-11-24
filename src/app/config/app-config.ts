@@ -15,3 +15,10 @@ export enum FeatureNamesForStore {
   Category = 'category',
   Menu = 'menuItem',
 }
+
+export const SLUG_PREFIX = 'read';
+
+export enum Pages {
+  Articles = 'articles',
+  Forum = 'forum',
+}
