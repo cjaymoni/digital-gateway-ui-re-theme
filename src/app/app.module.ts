@@ -11,17 +11,17 @@ import { AppComponent } from './app.component';
 import { LayoutModule } from './shared-ui-modules/layout/layout.module';
 import { appStoreEffects } from './store/app.effects';
 import { appReducersMap } from './store/app.reducers';
-import { TestComponentComponent } from './test/test-component/test-component.component';
-
+import { TestComponentModule } from './test/test-component/test-component.module';
 
 @NgModule({
-  declarations: [AppComponent, TestComponentComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     LayoutModule,
     HttpClientModule,
+    TestComponentModule,
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot(appStoreEffects),

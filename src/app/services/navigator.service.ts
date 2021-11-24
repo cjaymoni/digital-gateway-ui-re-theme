@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { RouterOutlets } from '../config/app-config';
+import { Pages, RouterOutlets, SLUG_PREFIX } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root',
@@ -19,5 +19,25 @@ export class NavigatorService {
       ],
       {}
     );
+  }
+
+  article = new ArticleRoutes(this.router);
+}
+
+class AppRoutesConfig {
+  constructor(protected page: Pages, protected router: Router) {}
+
+  go() {
+    this.router.navigate([this.page]);
+  }
+}
+
+class ArticleRoutes extends AppRoutesConfig {
+  constructor(router: Router) {
+    super(Pages.Articles, router);
+  }
+
+  goToReadArticlePage(articleSlug: string) {
+    this.router.navigate([this.page, `${SLUG_PREFIX}-${articleSlug}`]);
   }
 }

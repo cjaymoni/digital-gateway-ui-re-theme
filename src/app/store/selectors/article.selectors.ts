@@ -1,4 +1,4 @@
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { FeatureNamesForStore } from 'src/app/config/app-config';
 import { articleEntityAdapter } from '../reducers/article.reducers';
 import { DefaultAdapterSelectors } from './default.adapter.selectors';
@@ -11,6 +11,9 @@ class ArticleSelectors extends DefaultAdapterSelectors {
   constructor() {
     super(articleEntityAdapter, articleFeatureSelector);
   }
+
+  filtered = createSelector(this.state, state => state);
+  selectedArticle = createSelector(this.state, state => state.selectedArticle);
 }
 
 export const articleSelectors = new ArticleSelectors();

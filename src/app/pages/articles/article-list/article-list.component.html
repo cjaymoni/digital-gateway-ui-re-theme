@@ -1,0 +1,19 @@
+<h3>ARTICLES</h3>
+<ng-container *ngIf="loadingArticles$ | async; else loaded">
+  <div class="flex grid skeleton">
+    <p-skeleton size="15rem"></p-skeleton>
+    <p-skeleton size="15rem"></p-skeleton>
+    <p-skeleton size="15rem"></p-skeleton>
+    <p-skeleton size="15rem"></p-skeleton>
+  </div>
+</ng-container>
+
+<ng-template #loaded>
+  <div class="flex align-items-center flex-wrap grid" style="gap: 10px">
+    <ng-container *ngFor="let article of articles$ | async">
+      <div class="col">
+        <app-article-card [article]="article"></app-article-card>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>

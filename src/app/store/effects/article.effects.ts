@@ -24,6 +24,22 @@ export class ArticleEffects {
     )
   );
 
+  searchArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(articleActions.findAndSelectArticle),
+      switchMap(({ searchParams }) =>
+        this.articleService.searchArticle(searchParams).pipe(
+          map((articles: Article[]) =>
+            articleActions.selectArticle({
+              article: articles?.[0],
+            })
+          ),
+          catchError(() => of(articleActions.fetchError))
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private articleService: ArticleService

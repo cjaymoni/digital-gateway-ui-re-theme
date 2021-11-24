@@ -1,20 +1,28 @@
 <p-card
-  header="A very very long title of the article, quite descriptive"
-  subheader="The Author | 22 July 2021"
-  styleClass="shadow-6 article-card p-2 w-19rem h-24rem"
+  *ngIf="article"
+  [header]="article.title"
+  [subheader]="article.slug"
+  styleClass="shadow-6 article-card p-2 w-full h-24rem scalein animation-duration-500 justify-content-between"
 >
   <ng-template pTemplate="header">
-    <div class="article-category p-1 bg-gray-900 text-white">Finance</div>
+    <div class="article-category p-1 bg-gray-900 text-white">
+      {{ article.id }}
+    </div>
     <img alt="Card" src="https://picsum.photos/200/100" />
   </ng-template>
 
   <ng-template pTemplate="footer">
-    <div class="flex justify-content-center">
+    <div class="flex justify-content-center align-self-end">
       <button
         pButton
-        class="p-button-outlined p-button-danger"
+        class="
+          p-button-outlined p-button-danger
+          justify-content-center
+          align-self-end
+        "
         label="Read More"
         icon="pi pi-book"
+        (click)="openArticle()"
       ></button>
     </div>
   </ng-template>

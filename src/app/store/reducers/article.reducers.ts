@@ -5,7 +5,9 @@ import { articleActions } from '../actions/article.actions';
 
 export interface ArticleState extends EntityState<Article> {
   // additional entity state properties
-  selectedArticle: string | null;
+  selectedArticle: Article | null;
+  searchQuery: '';
+  loading: boolean;
 }
 
 export const articleEntityAdapter: EntityAdapter<Article> =
@@ -15,12 +17,23 @@ export const articleEntityAdapter: EntityAdapter<Article> =
 
 export const initialState: ArticleState = articleEntityAdapter.getInitialState({
   selectedArticle: null,
+  searchQuery: '',
+  loading: false,
 });
 
 export const articleReducer = createReducer(
   initialState,
+  on(articleActions.fetch, state => {
+    return { ...state, loading: true };
+  }),
   on(articleActions.fetchSuccessful, (state, { articles }) => {
-    return articleEntityAdapter.setAll(articles, state);
+    return articleEntityAdapter.setAll(articles, { ...state, loading: false });
+  }),
+  on(articleActions.fetchError, state => {
+    return { ...state, loading: false };
+  }),
+  on(articleActions.selectArticle, (state, { article }) => {
+    return { ...state, selectedArticle: article };
   }),
   on(articleActions.addArticleSuccessful, (state, { article }) => {
     return articleEntityAdapter.addOne(article, state);
