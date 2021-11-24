@@ -1,0 +1,10 @@
+:host ::ng-deep {
+  .p-card-content {
+    display: none;
+  }
+}
+
+.article-category {
+  position: absolute;
+  width: fit-content;
+}

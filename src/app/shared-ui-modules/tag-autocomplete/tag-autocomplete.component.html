@@ -1,0 +1,6 @@
+<app-auto-complete
+  [control]="selectedTags"
+  [suggestions]="(tags$ | async) || []"
+  (searchEvent)="searchTag($event.query)"
+  (enterKeyPressed)="addNewTag()"
+></app-auto-complete>

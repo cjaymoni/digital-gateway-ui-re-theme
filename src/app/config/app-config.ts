@@ -1,8 +1,17 @@
 export const MOBILE_WIDTH_BREAKPOINT = 600;
 export const TABLET_WIDTH_BREAKPOINT = 960;
-export const DESKTOP_WIDTH_BREAKPOINT = 960;
+export const DEFAULT_PAGE_SIZE = 100;
 
 export enum RouterOutlets {
   Main = 'main',
   Right = 'right-panel',
+}
+
+export enum FeatureNamesForStore {
+  User = 'user',
+  Router = 'router',
+  Article = 'article',
+  Tag = 'tag',
+  Category = 'category',
+  Menu = 'menuItem',
 }

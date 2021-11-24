@@ -1,13 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutComponent } from './layout.component';
-import { TopNavModule } from '../top-nav/top-nav.module';
-import { SideNavModule } from '../side-nav/side-nav.module';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { RightOverlayPanelModule } from '../right-overlay-panel/right-overlay-panel.module';
 import { ArticleCardModule } from '../article-card/article-card.module';
 import { FooterModule } from '../footer/footer.module';
-import { CommentCardModule } from '../comment-card/comment-card.module';
+
+import { SideNavModule } from '../side-nav/side-nav.module';
+import { TopNavModule } from '../top-nav/top-nav.module';
+import { LayoutComponent } from './layout.component';
+import { ForumFormModule } from '../forum-form/forum-form.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -19,7 +20,7 @@ import { CommentCardModule } from '../comment-card/comment-card.module';
     RightOverlayPanelModule,
     ArticleCardModule,
     FooterModule,
-    CommentCardModule
+    ForumFormModule
   ],
   exports: [LayoutComponent],
 })

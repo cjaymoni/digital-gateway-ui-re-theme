@@ -21,12 +21,3 @@ $maxHandheld: 960px;
     width: 100vw;
   }
 }
-
-.article-title {
-  cursor: pointer;
-
-  &:hover {
-    color: var(--primary-color);
-    text-decoration: underline;
-  }
-}
