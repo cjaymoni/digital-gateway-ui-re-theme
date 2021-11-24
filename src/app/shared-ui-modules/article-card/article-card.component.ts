@@ -23,14 +23,12 @@ export class ArticleCardComponent implements OnInit {
   ngOnInit(): void {}
 
   openArticle() {
-    console.log('here');
-
     this.store.dispatch(
       articleActions.selectArticle({
         article: this.article as Article,
       })
     );
 
-    this.navigator.readArticle(this.article?.slug as string);
+    this.navigator.article.goToReadArticlePage(this.article?.slug as string);
   }
 }

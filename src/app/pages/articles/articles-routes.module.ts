@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, UrlSegment } from '@angular/router';
 import { SLUG_PREFIX } from 'src/app/config/app-config';
+import { TestComponentComponent } from 'src/app/test/test-component/test-component.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleGuard } from './guard/article.guard';
 
@@ -16,7 +17,7 @@ const routes: Routes = [
   },
   {
     matcher: slugMatcher,
-    component: ArticleListComponent,
+    component: TestComponentComponent,
     data: { fetch: true },
     canActivate: [ArticleGuard],
   },

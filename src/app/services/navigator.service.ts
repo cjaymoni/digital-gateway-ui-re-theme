@@ -21,7 +21,23 @@ export class NavigatorService {
     );
   }
 
-  readArticle(articleSlug: string) {
-    this.router.navigate([Pages.Articles, `${SLUG_PREFIX}-${articleSlug}`]);
+  article = new ArticleRoutes(this.router);
+}
+
+class AppRoutesConfig {
+  constructor(protected page: Pages, protected router: Router) {}
+
+  go() {
+    this.router.navigate([this.page]);
+  }
+}
+
+class ArticleRoutes extends AppRoutesConfig {
+  constructor(router: Router) {
+    super(Pages.Articles, router);
+  }
+
+  goToReadArticlePage(articleSlug: string) {
+    this.router.navigate([this.page, `${SLUG_PREFIX}-${articleSlug}`]);
   }
 }

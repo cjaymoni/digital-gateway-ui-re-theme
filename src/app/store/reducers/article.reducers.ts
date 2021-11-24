@@ -5,7 +5,7 @@ import { articleActions } from '../actions/article.actions';
 
 export interface ArticleState extends EntityState<Article> {
   // additional entity state properties
-  selectedArticle: string | null;
+  selectedArticle: Article | null;
   searchQuery: '';
   loading: boolean;
 }
@@ -33,7 +33,7 @@ export const articleReducer = createReducer(
     return { ...state, loading: false };
   }),
   on(articleActions.selectArticle, (state, { article }) => {
-    return { ...state, selectedArticle: article.title };
+    return { ...state, selectedArticle: article };
   }),
   on(articleActions.addArticleSuccessful, (state, { article }) => {
     return articleEntityAdapter.addOne(article, state);
