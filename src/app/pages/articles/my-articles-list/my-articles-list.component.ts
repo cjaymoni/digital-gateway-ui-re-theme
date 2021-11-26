@@ -1,7 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { Pages } from 'src/app/config/app-config';
+import { map } from 'rxjs';
+import { Pages, PublishedStatusMapping } from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { articleActions } from 'src/app/store/actions/article.actions';
@@ -13,22 +21,34 @@ import { articleSelectors } from 'src/app/store/selectors/article.selectors';
   styleUrls: ['./my-articles-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyArticlesListComponent implements OnInit {
+export class MyArticlesListComponent implements OnInit, AfterViewInit {
   myArticles$ = this.store.select(articleSelectors.all);
 
-  columns = [
-    { header: 'TITLE', field: 'title' },
-    { header: 'CATEGORY', field: 'category' },
-    { header: 'TAGS', field: 'tags' },
-    { header: 'STATUS', field: 'status' },
-    { header: 'CREATED_BY', field: 'created_by' },
-  ];
+  @ViewChild('statusTemplate') statusTemplate: TemplateRef<any> | undefined =
+    undefined;
+
+  @ViewChild('tagsTemplate') tagsTemplate: TemplateRef<any> | undefined =
+    undefined;
+
+  columns: any[] = [];
+
+  PublishedStatusMapping = PublishedStatusMapping;
 
   constructor(
     private store: Store,
     private navigator: NavigatorService,
     private title: Title
   ) {}
+
+  ngAfterViewInit(): void {
+    this.columns = [
+      { header: 'TITLE', field: 'title' },
+      { header: 'CATEGORY', field: 'category' },
+      { header: 'TAGS', field: 'tags', template: this.tagsTemplate },
+      { header: 'STATUS', field: 'status', template: this.statusTemplate },
+      { header: 'CREATED_BY', field: 'created_by', subField: 'username' },
+    ];
+  }
 
   ngOnInit(): void {
     this.title.setTitle('My Articles');
@@ -40,7 +60,11 @@ export class MyArticlesListComponent implements OnInit {
   }
 
   editArticle(article: Article) {
-    this.selectArticle(article);
+    this.store.dispatch(
+      articleActions.selectArticleToEdit({
+        article,
+      })
+    );
     this.navigator.openPanel(Pages.edit);
   }
 

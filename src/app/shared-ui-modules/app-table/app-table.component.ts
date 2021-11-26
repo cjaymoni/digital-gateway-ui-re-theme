@@ -50,6 +50,7 @@ export class AppTableComponent implements OnInit, AfterViewInit {
     field: string;
     header: string;
     template?: TemplateRef<any>;
+    subField?: string;
   }[];
 
   @Input()

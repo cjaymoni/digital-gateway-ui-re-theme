@@ -1,22 +1,26 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  ViewChild,
-  AfterViewInit,
+  Component,
   OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import {
-  FormControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
+import { filter, Subscription, tap } from 'rxjs';
 import { slugify } from 'src/app/helpers/app.helper.functions';
+import { Article } from 'src/app/models/article.model';
+import { Tag } from 'src/app/models/tag.model';
 import { articleActions } from 'src/app/store/actions/article.actions';
+import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 import { AppQuillComponent } from '../app-quill/app-quill.component';
+import { ImageUploadComponent } from '../image-upload/image-upload.component';
 
 @Component({
   selector: 'app-article-form',
@@ -28,9 +32,18 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   @ViewChild('contentBox', { static: true })
   contentInput: AppQuillComponent | null = null;
 
+  @ViewChild('imageUpload', { static: true })
+  imageUploadComponent: ImageUploadComponent | null = null;
+
   articleForm!: FormGroup;
 
   oldTitle = '';
+
+  subscription!: Subscription;
+
+  createForm = true;
+
+  article!: Article;
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +53,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.title.setTitle(this.oldTitle);
+    this.subscription.unsubscribe();
   }
 
   ngOnInit() {
@@ -48,27 +62,57 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
       content: ['', Validators.required],
       categories: ['', [Validators.required]],
       tags: ['', [Validators.required]],
+      image: [],
     });
 
     this.oldTitle = this.title.getTitle();
     this.title.setTitle('Add Or Update Article');
+    this.subscription = this.store
+      .select(articleSelectors.selectedArticleToEdit)
+      .pipe(
+        filter(data => !!data),
+        tap((article: Article) => {
+          this.createForm = false;
+          this.article = article;
+          this.articleForm.patchValue(article);
+        })
+      )
+      .subscribe();
   }
 
   onAddOrUpdateArticle() {
     if (this.articleForm.valid) {
       const article = this.articleForm.value;
-      this.store.dispatch(
-        articleActions.addArticle({
-          article: {
-            title: article.title,
-            content: article.content,
-            category: article.categories?.[0],
-            // tags: article.tags,
-            slug: slugify(article.title),
-            created_by: 1,
-          },
-        })
-      );
+
+      if (this.createForm) {
+        this.store.dispatch(
+          articleActions.addArticle({
+            article: {
+              title: article.title,
+              content: article.content,
+              category: [article.categories?.[0].id],
+              tags: (article.tags as Tag[]).map(tag => tag.id),
+              slug: slugify(article.title),
+              created_by: 1,
+            },
+            imageToUpload: this.imageUploadComponent?.getFilesToUpload()?.[0],
+          })
+        );
+      } else {
+        this.store.dispatch(
+          articleActions.editArticle({
+            article: {
+              title: article.title,
+              content: article.content,
+              category: [article.categories?.[0].id],
+              tags: (article.tags as Tag[]).map(tag => tag.id),
+              slug: slugify(article.title),
+              created_by: 1,
+            },
+            //  imageToUpload: this.imageUploadComponent?.getFilesToUpload()?.[0],
+          })
+        );
+      }
     }
   }
 

@@ -17,23 +17,41 @@
 ></app-table>
 
 <ng-template #actions let-article>
-  <button
-    class="p-button p-button-outlined p-button-text p-button-round"
-    pButton
-    tooltipPosition="bottom"
-    pTooltip="View Article"
-    (click)="viewArticle(article)"
-    icon="pi pi-eye"
-  ></button>
+  <div class="flex justify-content-between">
+    <button
+      class="p-button p-button-rounded p-button-danger mr-3"
+      pButton
+      tooltipPosition="bottom"
+      pTooltip="View Article"
+      (click)="viewArticle(article)"
+      icon="pi pi-eye"
+    ></button>
 
-  <button
-    class="
-      p-button p-button-outlined p-button-info p-button-text p-button-round
-    "
-    pButton
-    pTooltip="Edit Article"
-    tooltipPosition="bottom"
-    icon="pi pi-pencil"
-    (click)="editArticle(article)"
-  ></button>
+    <button
+      class="p-button p-button-info p-button-rounded mr-auto"
+      pButton
+      pTooltip="Edit Article"
+      tooltipPosition="bottom"
+      icon="pi pi-pencil"
+      (click)="editArticle(article)"
+    ></button>
+  </div>
+</ng-template>
+
+<ng-template #statusTemplate let-status>
+  <p-message
+    [severity]="PublishedStatusMapping[status]"
+    [text]="status | uppercase"
+    styleClass="p-mr-2"
+  ></p-message>
+</ng-template>
+
+<ng-template #tagsTemplate let-tags>
+  <div
+    class="flex flex-column flex-wrap justify-content-center align-items-center"
+  >
+    <ng-container *ngFor="let tag of tags">
+      <p-tag styleClass="mb-1" [value]="tag.name"></p-tag>
+    </ng-container>
+  </div>
 </ng-template>

@@ -22,6 +22,15 @@
         ></app-category-autocomplete>
       </div>
     </div>
+    <div class="col-12">
+      <ng-container *ngIf="!createForm && article?.images?.[0]?.image">
+        <div>
+          Current Image
+          <img [src]="article?.images?.[0]?.image" alt="" />
+        </div>
+      </ng-container>
+      <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
+    </div>
 
     <div class="field col-12 mb-8">
       <label for="body">Body</label>
@@ -38,7 +47,7 @@
         pRipple
         class="align-self-center"
         type="button"
-        label="Add Article"
+        [label]="createForm ? 'Add' : 'Edit' + ' Article'"
         [disabled]="articleForm.invalid"
         (click)="onAddOrUpdateArticle()"
       ></button>

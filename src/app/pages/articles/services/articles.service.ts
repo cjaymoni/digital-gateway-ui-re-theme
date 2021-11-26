@@ -25,4 +25,22 @@ export class ArticleService extends ResourceService {
   findArticleUsingSlug(slug: string) {
     return this.searchArticle({ slug });
   }
+
+  addArticle(article: Article, imageToUpload?: File) {
+    const formData = new FormData();
+    if (imageToUpload) {
+      formData.append('images[0]image', imageToUpload, imageToUpload.name);
+      formData.append('images[0]title', imageToUpload.name);
+    }
+    for (const key in article) {
+      const data = (article as any)[key];
+
+      if (Array.isArray(data)) {
+        data.forEach(v => formData.append(key, v));
+      } else {
+        formData.append(key, data);
+      }
+    }
+    return this.storeResource(formData).pipe(map(data => data as Article));
+  }
 }

@@ -15,6 +15,10 @@ class ArticleSelectors extends DefaultAdapterSelectors {
   alll = createSelector(this.state, state => state);
   filtered = createSelector(this.state, state => state);
   selectedArticle = createSelector(this.state, state => state.selectedArticle);
+  selectedArticleToEdit = createSelector(
+    this.state,
+    state => state.selectedArticleToEdit
+  );
 }
 
 export const articleSelectors = new ArticleSelectors();
