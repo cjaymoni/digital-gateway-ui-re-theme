@@ -43,8 +43,8 @@ export class ArticleEffects {
   addArticles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(articleActions.addArticle),
-      switchMap(({ article }) =>
-        this.articleService.storeResource(article).pipe(
+      switchMap(({ article, imageToUpload }) =>
+        this.articleService.addArticle(article, imageToUpload).pipe(
           map((savedArticle: any) =>
             articleActions.addArticleSuccessful({
               article: savedArticle,

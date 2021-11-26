@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
+import { ArticleImageModule } from '../article-image/article-image.module';
 import { ArticleCardComponent } from './article-card.component';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { ArticleCardComponent } from './article-card.component';
     DirectivesModule,
     CardModule,
     ButtonModule,
+    ArticleImageModule,
   ],
   exports: [ArticleCardComponent],
 })

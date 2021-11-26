@@ -6,9 +6,12 @@
 >
   <ng-template pTemplate="header">
     <div class="article-category p-1 bg-gray-900 text-white">
-      {{ article.id }}
+      {{ article.category }}
     </div>
-    <img alt="Card" src="https://picsum.photos/200/100" />
+    <app-article-image
+      [images]="article?.images || []"
+      [title]="article.title.substr(0, 1) | uppercase"
+    ></app-article-image>
   </ng-template>
 
   <ng-template pTemplate="footer">

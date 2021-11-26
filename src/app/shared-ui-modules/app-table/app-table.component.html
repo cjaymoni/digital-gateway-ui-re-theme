@@ -101,7 +101,7 @@
       <!-- body-template -->
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr [ngStyle]="renderRow(rowData)" [pSelectableRow]="rowData">
-          <td *ngIf="batchAction" style="width: 3rem">
+          <td *ngIf="batchAction" class="w-3rem">
             <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
           </td>
           <ng-container *ngIf="bodyTemplate; else defaultBodyTemplate">
@@ -128,13 +128,21 @@
             <ng-container *ngIf="col.template; else normal">
               <ng-template
                 [ngTemplateOutlet]="col.template"
-                [ngTemplateOutletContext]="{ $implicit: rowData[col.field] }"
+                [ngTemplateOutletContext]="{
+                  $implicit: col.subField
+                    ? rowData[col.field][col.subField]
+                    : rowData[col.field]
+                }"
               ></ng-template>
             </ng-container>
 
             <ng-template #normal>
               <span class="p-column-title">{{ col.header }}</span>
-              {{ rowData[col.field] }}
+              {{
+                col.subField
+                  ? rowData[col.field][col.subField]
+                  : rowData[col.field]
+              }}
             </ng-template>
           </td>
         </ng-template>

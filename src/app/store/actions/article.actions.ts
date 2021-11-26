@@ -21,6 +21,13 @@ class ArticleActions {
     }>()
   );
 
+  selectArticleToEdit = createAction(
+    `${this.type} Select Article To Edit`,
+    props<{
+      article: Article;
+    }>()
+  );
+
   selectArticleSuccess = createAction(`${this.type} Select Article Success`);
 
   searchArticle = createAction(
@@ -41,7 +48,7 @@ class ArticleActions {
 
   addArticle = createAction(
     `${this.type} Add Article`,
-    props<{ article: Article }>()
+    props<{ article: Article; imageToUpload?: File }>()
   );
 
   addArticleSuccessful = createAction(
