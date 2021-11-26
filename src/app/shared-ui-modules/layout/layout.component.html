@@ -1,15 +1,14 @@
 <div class="grid justify-content-center align-items-center">
-  <div class="col-12 topbar">
+  <nav class="col-12 topbar">
     <app-top-nav></app-top-nav>
-  </div>
+  </nav>
   <div class="col-12 grid">
-    <div class="hidden col-2 lg:flex">
+    <aside class="hidden col-2 lg:flex sidenav">
       <app-side-nav></app-side-nav>
-    </div>
+    </aside>
 
     <div class="col-12 md:col-8 lg:col-8 grid justify-content-center">
       <div class="col-12">
-        <!-- <app-article-form></app-article-form> -->
         <router-outlet></router-outlet>
       </div>
       <div class="leftcontent col-12 md:hidden">left content</div>
@@ -18,10 +17,12 @@
 
     <div class="hidden md:flex md:col-4 lg:col-2">rightsidebar</div>
   </div>
-  <div class="col-12 footer">
+  <footer class="col-12 footer">
     <app-footer></app-footer>
-  </div>
+  </footer>
 </div>
-<app-right-overlay-panel>
-  <router-outlet name="right-panel"></router-outlet>
-</app-right-overlay-panel>
+<div>
+  <app-right-overlay-panel>
+    <router-outlet name="right-panel"></router-outlet>
+  </app-right-overlay-panel>
+</div>

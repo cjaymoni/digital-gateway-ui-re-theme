@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -15,6 +20,7 @@ import { tagSelectors } from 'src/app/store/selectors/tag.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagAutocompleteComponent implements OnInit {
+  @Input() selectedTags = new FormControl();
   searchQuery$ = new BehaviorSubject('');
 
   tags$ = this.searchQuery$.pipe(
@@ -41,8 +47,6 @@ export class TagAutocompleteComponent implements OnInit {
   searchTag(query: string) {
     this.searchQuery$.next(query);
   }
-
-  selectedTags = new FormControl();
 
   addNewTag() {
     const typedQuery = this.searchQuery$.getValue();

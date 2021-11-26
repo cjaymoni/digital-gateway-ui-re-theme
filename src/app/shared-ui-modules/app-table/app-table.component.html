@@ -17,24 +17,37 @@
       styleClass="p-datatable-responsive-demo p-datatable-gridlines p-datatable-striped"
     >
       <ng-template pTemplate="caption" *ngIf="showCaption">
-        <div class="p-d-flex p-ai-center p-jc-between">
-          {{ title }}
+        <div
+          class="
+            flex
+            align-items-center
+            justify-content-center
+            flex-column
+            md:flex-row
+          "
+        >
+          <div class="md:mr-auto">
+            {{ title }}
+          </div>
 
           <ng-container *ngIf="searchFunction">
-            <div class="p-text-right p-float-right" style="color: white">
+            <div
+              class="p-text-right p-float-right md:mr-auto"
+              style="color: white"
+            >
               <input
                 type="text"
                 pInputText
                 [formControl]="searchFormControl"
                 [placeholder]="searchPlaceholder"
-                style="width: 400px"
+                class="w-full md:w-20rem"
               />
             </div>
           </ng-container>
 
           <p-button
             *ngIf="refreshDataFunction"
-            styleClass="p-button-info"
+            styleClass="p-button-info align-self-end"
             pTooltip="Refresh Data"
             tooltipPosition="bottom"
             icon="pi pi-refresh"
@@ -60,7 +73,7 @@
         <!-- default header template -->
         <ng-template #defaultHeader>
           <tr>
-            <th style="width: 3rem" *ngIf="batchAction">
+            <th class="w-3rem" *ngIf="batchAction">
               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
             <ng-container *ngFor="let col of columns">
