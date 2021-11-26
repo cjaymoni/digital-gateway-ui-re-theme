@@ -5,6 +5,7 @@
         *ngIf="loggedInUser$ | async"
         class="p-button-outlined p-button-rounded p-button-primary"
         icon="pi pi-user"
+        (click)="goToLoginPage()"
         pButton
       ></button>
       <div>
