@@ -1,7 +1,7 @@
 export interface Article {
-  id: string;
+  id?: string | number | any;
   title: string;
-  body: string;
+  body?: string;
   slug: string;
   category?: any;
   tags?: any;

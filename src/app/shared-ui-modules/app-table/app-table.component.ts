@@ -7,22 +7,22 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 import { DEFAULT_PAGE_SIZE } from 'src/app/config/app-config';
 import { PaginatorService } from 'src/app/services/paginator.service';
 
 @Component({
-  selector: 'app-app-table',
+  selector: 'app-table',
   templateUrl: './app-table.component.html',
   styleUrls: ['./app-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppTableComponent implements OnInit, AfterViewInit {
   @Input()
-  data: any[];
+  data: any[] = [];
 
-  dataToDisplay: any[];
+  dataToDisplay: any[] = [];
 
   @Input()
   title: string = 'Data Table';
@@ -31,32 +31,32 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   batchAction = false;
 
   @Input()
-  batchActionTemplate: TemplateRef<any>;
+  batchActionTemplate: TemplateRef<any> | null = null;
 
   @Input()
   showAction = false;
 
   @Input()
-  actionTemplate: TemplateRef<any>;
+  actionTemplate: TemplateRef<any> | null = null;
 
   @Input()
-  bodyTemplate: TemplateRef<any>;
+  bodyTemplate: TemplateRef<any> | null = null;
 
   @Input()
-  headerTemplate: TemplateRef<any>;
+  headerTemplate: TemplateRef<any> | null = null;
 
   @Input()
-  columnsDefinition: {
+  columnsDefinition!: {
     field: string;
     header: string;
     template?: TemplateRef<any>;
   }[];
 
   @Input()
-  totalDataLength: any;
+  totalDataLength = 0;
 
   @Input()
-  searchFunction: (toSearch) => Observable<any[]> = undefined;
+  searchFunction: (toSearch: string) => Observable<any[]> = () => of([]);
 
   @Input()
   searchPlaceholder = 'Enter value to search';
@@ -71,7 +71,9 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   showCaption = true;
 
   @Input()
-  getRowStyle: (rd) => {};
+  getRowStyle = (rd: any) => {
+    return {};
+  };
 
   constructor(public paginatorService: PaginatorService) {}
 
@@ -127,7 +129,7 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   }
 
   renderRow(rowData: any) {
-    if (this.getRowStyle) return this.getRowStyle(rowData);
+    return this.getRowStyle(rowData);
   }
 
   onPageChange(event: any) {

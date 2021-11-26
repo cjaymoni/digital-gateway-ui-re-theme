@@ -2,9 +2,9 @@
   class="
     right-panel
     shadow-8
-    slidedown
-    animation-duration-1000
-    transition-all transition-ease-in transition-duration-1000
+    fadein
+    animation-duration-500
+    transition-all transition-ease-in transition-duration-500
   "
   [ngClass]="(active$ | async) ? '' : 'hidden'"
 >
@@ -20,20 +20,12 @@
       ></button>
 
       <div class="p-card box shadow-4 p-2 col-10">
-        <div
-          class="
-            text-xl
-            font-bold
-            text-center
-            uppercase
-            white-space-normal
-          "
-        >
-          {{title}}
+        <div class="text-xl font-bold text-center uppercase white-space-normal">
+          {{ title }}
         </div>
       </div>
     </div>
-    <div class="z-1">
+    <div class="z-1 flex justify-content-center align-items-center">
       <ng-content> </ng-content>
     </div>
   </p-scrollPanel>

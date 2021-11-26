@@ -1,55 +1,44 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-app-quill',
+  selector: 'app-content-box',
   templateUrl: './app-quill.component.html',
   styleUrls: ['./app-quill.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppQuillComponent implements OnInit {
-  text1: string = '<div>Hello World!</div><div>PrimeNG <b>Editor</b> Rocks</div><div><br></div>';
-  constructor() { }
+  @Input() contentFormControl = new FormControl('');
+  @Input() placeholder = 'Enter content body';
+  @Input() classNames = '';
+  @Input() required = true;
 
-  ngOnInit() {
-  }
+  constructor() {}
 
-  quillConfig={
+  ngOnInit() {}
+
+  quillConfig = {
     //toolbar: '.toolbar',
     toolbar: {
       container: [
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['bold', 'italic', 'underline', 'strike'], // toggled buttons
         ['code-block'],
-        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        //[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-        //[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-        //[{ 'direction': 'rtl' }],                         // text direction
-
-        //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        //[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-        //[{ 'font': [] }],
-        //[{ 'align': [] }],
-
-        ['clean'],                                         // remove formatting button
-        ['link'],
-        //['link', 'image', 'video']  
+        [{ header: 1 }, { header: 2 }], // custom button values
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['clean'], // remove formatting button
+        ['link', 'image'],
       ],
-      
     },
-}
+  };
 
+  onSelectionChanged = (event: any) => {};
 
-onSelectionChanged = (event:any) =>{
-  if(event.oldRange == null){
-    console.log('focussed')
-  }
-  if(event.range == null){
-    console.log('blurred')
-  }
-}
-
-onContentChanged = (event:any) =>{
-  //console.log(event.html);
-}
+  onContentChanged = (event: any) => {
+    //console.log(event.html);
+  };
 }

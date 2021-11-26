@@ -1,0 +1,39 @@
+<div class="text-center flex justify-content-between">
+  <div>MY ARTICLES</div>
+
+  <button
+    pButton
+    class="align-self-end p-btn p-btn-lg"
+    icon="pi pi-plus"
+    label="Add New Article"
+    (click)="goToAddArticlePage()"
+  ></button>
+</div>
+<app-table
+  [data]="(myArticles$ | async) || []"
+  [columnsDefinition]="columns"
+  [actionTemplate]="actions"
+  [showAction]="true"
+></app-table>
+
+<ng-template #actions let-article>
+  <button
+    class="p-button p-button-outlined p-button-text p-button-round"
+    pButton
+    tooltipPosition="bottom"
+    pTooltip="View Article"
+    (click)="viewArticle(article)"
+    icon="pi pi-eye"
+  ></button>
+
+  <button
+    class="
+      p-button p-button-outlined p-button-info p-button-text p-button-round
+    "
+    pButton
+    pTooltip="Edit Article"
+    tooltipPosition="bottom"
+    icon="pi pi-pencil"
+    (click)="editArticle(article)"
+  ></button>
+</ng-template>

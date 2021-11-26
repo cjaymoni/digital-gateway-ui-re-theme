@@ -1,18 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
 import { Router, RouterModule, Routes, UrlSegment } from '@angular/router';
-import { LoginComponent } from './login.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+
+// export function slugMatcher(url: UrlSegment[]) {
+//   return url[0]?.path.startsWith(SLUG_PREFIX) ? { consumed: url } : null;
+// }
 
 const rightPanelRoutes: Routes = [
   {
     path: 'view',
-    component: LoginComponent,
+    component: LoginFormComponent,
     outlet: RouterOutlets.Right,
   },
 ];
 
+// const routes: Routes = [
+//   {
+//     matcher: slugMatcher,
+//     component: LoginFormComponent,
+//     data: { fetch: true },
+//   },
+// ];
+
 @NgModule({
-  imports: [],
+  // imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class LoginRoutesModule {

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { map, Observable, of } from 'rxjs';
@@ -12,7 +17,7 @@ import { categorySelectors } from 'src/app/store/selectors/category.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryAutocompleteComponent implements OnInit {
-  selectedCategory = new FormControl();
+  @Input() selectedCategory = new FormControl();
 
   categories$: Observable<any[]> = of([]);
 

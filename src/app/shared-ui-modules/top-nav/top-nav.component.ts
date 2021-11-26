@@ -34,9 +34,13 @@ export class TopNavComponent implements OnInit {
         : this.store.select(menuItemSelectors.topMenuItems).pipe(
             map(topMenuItems =>
               topMenuItems.map(item => {
-                item.command = event => {
-                  this.selectMenu(event.item.id);
-                };
+                if ((item as any).link) {
+                  item.routerLink = (item as any).link;
+                } else {
+                  item.command = event => {
+                    this.selectMenu(event.item.id);
+                  };
+                }
 
                 return item;
               })
@@ -56,6 +60,6 @@ export class TopNavComponent implements OnInit {
   }
 
   goToLoginPage() {
-    this.navigator.openPanel(Pages.edit);
+    this.navigator.openPanel(Pages.Login);
   }
 }

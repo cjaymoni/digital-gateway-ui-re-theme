@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Pages, RouterOutlets } from './config/app-config';
-import { TestComponentComponent } from './test/test-component/test-component.component';
+import { Pages } from './config/app-config';
 
 const routes: Routes = [
-  {
-    path: 'comments',
-    component: TestComponentComponent,
-    outlet: RouterOutlets.Right,
-  },
   {
     path: Pages.Articles,
     loadChildren: () =>
       import('./pages/articles/articles.module').then(
         module => module.ArticlesModule
+      ),
+  },
+  {
+    path: Pages.Login,
+    loadChildren: () =>
+      import('./pages/login/login.module').then(
+        module => module.LoginModule
       ),
   },
 ];
