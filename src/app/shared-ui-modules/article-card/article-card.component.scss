@@ -2,6 +2,24 @@
   .p-card-content {
     display: none;
   }
+  .p-card-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    @supports (-webkit-line-clamp: 2) {
+      text-overflow: ellipsis;
+      white-space: initial;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  .article-card {
+    min-height: 380px;
+  }
 }
 
 .article-category {

@@ -1,0 +1,12 @@
+<p-fileUpload
+  name="uploads[]"
+  [multiple]="multiple"
+  accept="image/*"
+  styleClass="w-full"
+  [previewWidth]="80"
+  [showUploadButton]="false"
+  [showCancelButton]="false"
+  chooseLabel="Select an image to upload"
+  [files]="filesToShow"
+  (onSelect)="handleSelect($event)"
+></p-fileUpload>

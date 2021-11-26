@@ -40,6 +40,22 @@ export class ArticleEffects {
     )
   );
 
+  addArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(articleActions.addArticle),
+      switchMap(({ article, imageToUpload }) =>
+        this.articleService.addArticle(article, imageToUpload).pipe(
+          map((savedArticle: any) =>
+            articleActions.addArticleSuccessful({
+              article: savedArticle,
+            })
+          ),
+          catchError(() => of(articleActions.fetchError))
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private articleService: ArticleService

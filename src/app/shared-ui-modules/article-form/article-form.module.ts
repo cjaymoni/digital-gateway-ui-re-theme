@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ArticleFormComponent } from './article-form.component';
+import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AppQuillModule } from '../app-quill/app-quill.module';
-import { AppAutoCompleteModule } from '../app-auto-complete/app-auto-complete.module';
-import { ButtonModule } from 'primeng/button';
+import { CategoryAutocompleteModule } from '../category-autocomplete/category-autocomplete.module';
+import { ImageUploadModule } from '../image-upload/image-upload.module';
+import { TagAutocompleteModule } from '../tag-autocomplete/tag-autocomplete.module';
+import { ArticleFormComponent } from './article-form.component';
 
 @NgModule({
   declarations: [ArticleFormComponent],
@@ -15,9 +17,11 @@ import { ButtonModule } from 'primeng/button';
     ReactiveFormsModule,
     InputTextModule,
     AppQuillModule,
-    AppAutoCompleteModule,
+    TagAutocompleteModule,
+    CategoryAutocompleteModule,
     ButtonModule,
+    ImageUploadModule,
   ],
-  exports: [ArticleFormComponent]
+  exports: [ArticleFormComponent],
 })
-export class ArticleFormModule { }
+export class ArticleFormModule {}

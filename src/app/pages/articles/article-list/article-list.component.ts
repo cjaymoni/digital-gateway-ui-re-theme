@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 
@@ -11,7 +11,6 @@ import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 export class ArticleListComponent implements OnInit {
   articles$ = this.store.select(articleSelectors.all);
   loadingArticles$ = this.store.select(articleSelectors.loading);
-  selectedArticle$ = this.store.select(articleSelectors.selectedArticle);
 
   constructor(private store: Store) {}
 

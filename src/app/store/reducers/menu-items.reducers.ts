@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { Pages } from 'src/app/config/app-config';
 import { MenuItemFromBackend } from 'src/app/models/menu-item.model';
 import { menuItemActions } from '../actions/menu-items.actions';
 
@@ -63,6 +64,16 @@ export const initialState: Readonly<MenuItemFromBackend> = {
           slug: 'latest-adverts',
         },
       ],
+    },
+    {
+      label: 'My Articles',
+      id: 7,
+      link: [Pages.Articles, 'my-articles'],
+    },
+    {
+      label: 'My Fourm Posts',
+      id: 8,
+      link: [Pages.Forum, 'my-forum-posts'],
     },
   ],
   selectedMenu: null,
