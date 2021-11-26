@@ -12,6 +12,7 @@ import { LayoutModule } from './shared-ui-modules/layout/layout.module';
 import { appStoreEffects } from './store/app.effects';
 import { appReducersMap } from './store/app.reducers';
 import { TestComponentModule } from './test/test-component/test-component.module';
+import { LoginModule } from './pages/login/login.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { TestComponentModule } from './test/test-component/test-component.module
     LayoutModule,
     HttpClientModule,
     TestComponentModule,
+    LoginModule,
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot(appStoreEffects),

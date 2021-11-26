@@ -10,13 +10,6 @@ const routes: Routes = [
         module => module.ArticlesModule
       ),
   },
-  {
-    path: Pages.Login,
-    loadChildren: () =>
-      import('./pages/login/login.module').then(
-        module => module.LoginModule
-      ),
-  },
 ];
 
 @NgModule({

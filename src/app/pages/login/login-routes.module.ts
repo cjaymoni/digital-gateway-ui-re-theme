@@ -9,7 +9,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 
 const rightPanelRoutes: Routes = [
   {
-    path: 'view',
+    path: 'login',
     component: LoginFormComponent,
     outlet: RouterOutlets.Right,
   },
@@ -24,7 +24,7 @@ const rightPanelRoutes: Routes = [
 // ];
 
 @NgModule({
-  // imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([])],
   exports: [RouterModule]
 })
 export class LoginRoutesModule {
