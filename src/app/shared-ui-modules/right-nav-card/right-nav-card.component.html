@@ -1,0 +1,17 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="header-bar"></div>
+    <div class="flex flex-row justify-content-between m-2">
+      {{ cardHeader }}
+      <i class="pi pi-image"></i>
+    </div>
+  </ng-template>
+  <div class="-mt-4">
+    <img [src]="cardImage" class="w-full h-13rem" alt="CardImage" />
+  </div>
+  <p-divider styleClass="divider"></p-divider>
+  <div class="align-content-center">
+    <a [href]="cardLink">{{ linkTitle }}</a>
+  </div>
+  <div class="mt-2">{{ author }} | {{ cardDate }} | {{ cardTag }}</div>
+</p-card>
