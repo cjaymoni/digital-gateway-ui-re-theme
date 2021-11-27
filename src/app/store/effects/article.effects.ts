@@ -18,7 +18,7 @@ export class ArticleEffects {
               articles,
             })
           ),
-          catchError(() => of(articleActions.fetchError))
+          catchError(error => of(articleActions.fetchError({ error })))
         )
       )
     )
@@ -34,7 +34,7 @@ export class ArticleEffects {
               article: articles?.[0],
             })
           ),
-          catchError(() => of(articleActions.fetchError))
+          catchError(error => of(articleActions.fetchError({ error })))
         )
       )
     )
@@ -50,7 +50,26 @@ export class ArticleEffects {
               article: savedArticle,
             })
           ),
-          catchError(() => of(articleActions.fetchError))
+          catchError(error => of(articleActions.fetchError({ error })))
+        )
+      )
+    )
+  );
+
+  editArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(articleActions.editArticle),
+      switchMap(({ article, imageToUpload }) =>
+        this.articleService.editArticle(article, imageToUpload).pipe(
+          map((updatedArticle: any) =>
+            articleActions.editArticleSuccessful({
+              updatedArticle: {
+                changes: updatedArticle,
+                id: updatedArticle.id,
+              },
+            })
+          ),
+          catchError(error => of(articleActions.fetchError({ error })))
         )
       )
     )

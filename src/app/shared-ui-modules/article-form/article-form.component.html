@@ -18,15 +18,36 @@
       <div class="field col-12 md:col-6">
         <label for="title">Category</label>
         <app-category-autocomplete
-          [selectedCategory]="categories"
+          [selectedCategory]="category"
         ></app-category-autocomplete>
       </div>
     </div>
     <div class="col-12">
-      <ng-container *ngIf="!createForm && article?.images?.[0]?.image">
-        <div>
-          Current Image
-          <img [src]="article?.images?.[0]?.image" alt="" />
+      <ng-container *ngIf="!createForm && articleHasImage">
+        <div class="mb-1">
+          <div class="flex justify-content-evenly align-items-center">
+            <div class="font-bold">Current Image</div>
+            <button
+              pButton
+              pTooltip="Remove current image"
+              class="p-button p-button-text p-button-rounded p-button-danger"
+              icon="pi pi-trash"
+              clickConfirmation
+              (onConfirm)="removeImage()"
+            ></button>
+          </div>
+          <div
+            class="
+              flex
+              justify-content-center
+              align-items-center
+              border-solid
+              p-1
+              border-200
+            "
+          >
+            <img [src]="article?.images?.[0]?.image" alt="" class="h-15rem" />
+          </div>
         </div>
       </ng-container>
       <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
@@ -41,13 +62,13 @@
       ></app-content-box>
     </div>
 
-    <div class="field col-12 ml-auto">
+    <div class="col-12 ml-auto flex justify-content-end">
       <button
         pButton
         pRipple
-        class="align-self-center"
+        class="align-self-center mt-1"
         type="button"
-        [label]="createForm ? 'Add' : 'Edit' + ' Article'"
+        [label]="(createForm ? 'Add' : 'Edit') + ' Article'"
         [disabled]="articleForm.invalid"
         (click)="onAddOrUpdateArticle()"
       ></button>

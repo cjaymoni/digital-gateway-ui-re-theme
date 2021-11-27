@@ -2,7 +2,7 @@
   [control]="selectedCategory"
   [suggestions]="(categories$ | async) || []"
   (searchEvent)="searchCategory($event.query)"
-  [multiple]="true"
+  [multiple]="false"
   [forceSelection]="true"
   [dropdown]="true"
 ></app-auto-complete>

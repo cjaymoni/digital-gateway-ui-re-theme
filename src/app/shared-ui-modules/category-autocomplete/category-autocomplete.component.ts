@@ -23,7 +23,10 @@ export class CategoryAutocompleteComponent implements OnInit {
 
   constructor(private store: Store) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.selectedCategory.updateValueAndValidity();
+    console.log(this.selectedCategory);
+  }
 
   searchCategory(query: string) {
     this.categories$ = this.store.select(categorySelectors.all).pipe(
