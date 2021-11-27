@@ -22,4 +22,8 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
+  onLoginSubmit(){
+    if (this.loginForm.valid) {}
+  }
+
 }
