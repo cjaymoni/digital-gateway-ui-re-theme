@@ -12,14 +12,7 @@ import { AppAlertService } from '../alerts/service/app-alert.service';
 export class LayoutComponent implements OnInit {
   RouterOutlets = RouterOutlets;
 
-  constructor(
-    private navigator: NavigatorService,
-    private alert: AppAlertService
-  ) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.alert.showToast('Testing 1,2,3', PrimeNgAlerts.UNOBSTRUSIVE);
-    }, 0);
-  }
+  ngOnInit(): void {}
 }

@@ -12,11 +12,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { filter, Subscription, tap } from 'rxjs';
+import { filter, map, Subscription, tap } from 'rxjs';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { Article } from 'src/app/models/article.model';
 import { Tag } from 'src/app/models/tag.model';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { articleActions } from 'src/app/store/actions/article.actions';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 import { AppQuillComponent } from '../app-quill/app-quill.component';
@@ -48,12 +50,15 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private title: Title
+    private title: Title,
+    private actions$: Actions,
+    private navigator: NavigatorService
   ) {}
 
   ngOnDestroy(): void {
     this.title.setTitle(this.oldTitle);
     this.subscription.unsubscribe();
+    this.store.dispatch(articleActions.clearAllSelected());
   }
 
   ngOnInit() {
@@ -67,17 +72,8 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
 
     this.oldTitle = this.title.getTitle();
     this.title.setTitle(this.createForm ? 'Add' : 'Update' + ' Article');
-    this.subscription = this.store
-      .select(articleSelectors.selectedArticleToEdit)
-      .pipe(
-        filter(data => !!data),
-        tap((article: Article) => {
-          this.createForm = false;
-          this.article = article;
-          this.articleForm.patchValue(article);
-        })
-      )
-      .subscribe();
+    this.subscription = this.getArticleToEditSubscription();
+    this.subscription.add(this.addOrEditSuccessSubscription());
   }
 
   onAddOrUpdateArticle() {
@@ -134,5 +130,37 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
 
   removeImage() {
     this.images.setValue([]);
+  }
+
+  private addOrEditSuccessSubscription() {
+    return this.actions$
+      .pipe(
+        ofType(
+          articleActions.addArticleSuccessful,
+          articleActions.editArticleSuccessful
+        ),
+        map(_ => {
+          this.navigator.hidePanel();
+        })
+      )
+      .subscribe();
+  }
+
+  private getArticleToEditSubscription() {
+    return this.store
+      .select(articleSelectors.selectedArticleToEdit)
+      .pipe(
+        filter(data => !!data),
+        tap((article: Article) => {
+          this.createForm = false;
+          this.article = article;
+          this.articleForm.patchValue(article);
+        })
+      )
+      .subscribe();
+  }
+
+  goBack() {
+    this.navigator.goBack();
   }
 }

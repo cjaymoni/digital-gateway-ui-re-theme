@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { map, Subscription, tap } from 'rxjs';
+import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -7,15 +15,33 @@ import { NavigatorService } from 'src/app/services/navigator.service';
   styleUrls: ['./right-overlay-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RightOverlayPanelComponent implements OnInit {
-  title = 'Comments';
-  constructor(private navigator: NavigatorService) {}
+export class RightOverlayPanelComponent implements OnInit, OnDestroy {
+  constructor(
+    private navigator: NavigatorService,
+    public device: DeviceService,
+    private cdref: ChangeDetectorRef
+  ) {}
 
-  active$ = this.navigator.panelActive$;
+  show = false;
 
-  ngOnInit(): void {}
+  subscription!: Subscription;
+
+  title$ = this.navigator.panelTitle$;
+
+  ngOnInit(): void {
+    this.subscription = this.navigator.panelActive$
+      .pipe(
+        map(active => (this.show = active)),
+        tap(_ => this.cdref.detectChanges())
+      )
+      .subscribe();
+  }
 
   hidePanel() {
     this.navigator.hidePanel();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }

@@ -80,6 +80,7 @@ class ArticleActions {
     `${this.type} Delete Article Successful`,
     props<{ id: number }>()
   );
-}
 
+  clearAllSelected = createAction(`${this.type} Clear All Selected Articles`);
+}
 export const articleActions = new ArticleActions();

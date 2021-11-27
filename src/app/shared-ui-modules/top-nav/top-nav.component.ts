@@ -38,6 +38,7 @@ export class TopNavComponent implements OnInit {
                   item.command = event => {
                     this.selectMenu(event.item.id);
                   };
+                  item.routerLink = (item as any)?.link;
                 }
 
                 return item;

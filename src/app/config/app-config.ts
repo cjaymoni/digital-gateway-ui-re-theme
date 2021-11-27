@@ -23,6 +23,7 @@ export const SLUG_PREFIX = 'read';
 export enum Pages {
   Articles = 'articles',
   Forum = 'forum',
+  MarketPlace = 'market-place',
 
   //Common Pages
   add = 'add',
@@ -31,7 +32,7 @@ export enum Pages {
 
   //Articles
   MyArticles = 'my-articles',
-  MyForum = 'my-fourum-posts',
+  MyForum = 'my-forum-posts',
   MyMarketPlaceItems = 'my-market-place-items',
 }
 

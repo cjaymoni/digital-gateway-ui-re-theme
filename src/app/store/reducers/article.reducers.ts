@@ -48,5 +48,8 @@ export const articleReducer = createReducer(
   }),
   on(articleActions.deleteArticleSuccessful, (state, { id }) => {
     return articleEntityAdapter.removeOne(id, state);
+  }),
+  on(articleActions.clearAllSelected, state => {
+    return { ...state, selectedArticleToEdit: null, selectedArticle: null };
   })
 );

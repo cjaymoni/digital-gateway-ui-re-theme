@@ -60,7 +60,9 @@ export class ArticleService extends ResourceService {
       const data = (article as any)[key];
 
       if (Array.isArray(data)) {
-        data.forEach(v => formData.append(key, v));
+        if (data.length > 0) {
+          data.forEach(v => formData.append(key, v));
+        }
       } else {
         formData.append(key, data);
       }

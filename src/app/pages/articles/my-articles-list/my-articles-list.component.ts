@@ -56,7 +56,7 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
 
   viewArticle(article: Article) {
     this.selectArticle(article);
-    this.navigator.openPanel(Pages.view);
+    this.navigator.openPanel(Pages.view, 'Preview Article');
   }
 
   editArticle(article: Article) {
@@ -65,7 +65,7 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
         article,
       })
     );
-    this.navigator.openPanel(Pages.edit);
+    this.navigator.openPanel(Pages.edit, 'Edit Article');
   }
 
   goToAddArticlePage() {

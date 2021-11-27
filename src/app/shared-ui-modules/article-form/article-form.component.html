@@ -50,15 +50,17 @@
           </div>
         </div>
       </ng-container>
+      <label for="imageUpload">Image Upload</label>
       <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
     </div>
 
     <div class="field col-12 mb-8">
-      <label for="body">Body</label>
+      <label for="content">Body</label>
       <app-content-box
         #contentBox
         [required]="true"
         [contentFormControl]="content"
+        classNames="h-auto"
       ></app-content-box>
     </div>
 
@@ -66,11 +68,21 @@
       <button
         pButton
         pRipple
-        class="align-self-center mt-1"
+        class="mr-1"
         type="button"
+        icon="pi pi-save"
         [label]="(createForm ? 'Add' : 'Edit') + ' Article'"
         [disabled]="articleForm.invalid"
         (click)="onAddOrUpdateArticle()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        class="p-button-danger mr-1"
+        icon="pi pi-times"
+        type="button"
+        label="Cancel"
+        (click)="goBack()"
       ></button>
     </div>
   </div>

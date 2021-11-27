@@ -6,7 +6,7 @@
 >
   <ng-template pTemplate="header">
     <div class="article-category p-1 bg-gray-900 text-white">
-      {{ article.category }}
+      {{ article.category?.name }}
     </div>
     <app-article-image
       [images]="article?.images || []"
