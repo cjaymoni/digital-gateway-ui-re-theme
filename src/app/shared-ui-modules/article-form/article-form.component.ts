@@ -60,13 +60,13 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
     this.articleForm = this.fb.group({
       title: ['', [Validators.required]],
       content: ['', Validators.required],
-      categories: ['', [Validators.required]],
-      tags: ['', [Validators.required]],
-      image: [],
+      category: ['', [Validators.required]],
+      tags: [''],
+      images: [],
     });
 
     this.oldTitle = this.title.getTitle();
-    this.title.setTitle('Add Or Update Article');
+    this.title.setTitle(this.createForm ? 'Add' : 'Update' + ' Article');
     this.subscription = this.store
       .select(articleSelectors.selectedArticleToEdit)
       .pipe(
@@ -83,33 +83,29 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   onAddOrUpdateArticle() {
     if (this.articleForm.valid) {
       const article = this.articleForm.value;
+      const toSend = {
+        title: article.title,
+        content: article.content,
+        category: [article.category.id],
+        tags: (article.tags as Tag[]).map(tag => tag.id),
+        slug: slugify(article.title),
+        created_by: 1,
+      };
 
       if (this.createForm) {
         this.store.dispatch(
           articleActions.addArticle({
-            article: {
-              title: article.title,
-              content: article.content,
-              category: [article.categories?.[0].id],
-              tags: (article.tags as Tag[]).map(tag => tag.id),
-              slug: slugify(article.title),
-              created_by: 1,
-            },
+            article: toSend,
             imageToUpload: this.imageUploadComponent?.getFilesToUpload()?.[0],
           })
         );
       } else {
         this.store.dispatch(
           articleActions.editArticle({
-            article: {
-              title: article.title,
-              content: article.content,
-              category: [article.categories?.[0].id],
-              tags: (article.tags as Tag[]).map(tag => tag.id),
-              slug: slugify(article.title),
-              created_by: 1,
-            },
-            //  imageToUpload: this.imageUploadComponent?.getFilesToUpload()?.[0],
+            article: { ...toSend, id: this.article.id },
+            imageToUpload: this.articleHasImage
+              ? this.article.images
+              : this.imageUploadComponent?.getFilesToUpload()?.[0],
           })
         );
       }
@@ -120,11 +116,23 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
     return this.articleForm.get('tags') as FormControl;
   }
 
-  get categories() {
-    return this.articleForm.get('categories') as FormControl;
+  get category() {
+    return this.articleForm.get('category') as FormControl;
   }
 
   get content() {
     return this.articleForm.get('content') as FormControl;
+  }
+
+  get images() {
+    return this.articleForm.get('images') as FormControl;
+  }
+
+  get articleHasImage() {
+    return this.images.value?.[0]?.image;
+  }
+
+  removeImage() {
+    this.images.setValue([]);
   }
 }

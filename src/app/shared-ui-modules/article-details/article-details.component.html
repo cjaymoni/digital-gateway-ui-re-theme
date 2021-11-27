@@ -28,6 +28,7 @@
     </div>
     <div class="overflow-hidden md:overflow-auto surface-overlay text-justify">
       <div
+        class="col-12 w-full article-content"
         [innerHTML]="
           sanitizer.bypassSecurityTrustHtml((article$ | async)?.content)
         "

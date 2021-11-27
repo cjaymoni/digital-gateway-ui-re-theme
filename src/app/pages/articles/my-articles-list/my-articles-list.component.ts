@@ -43,7 +43,7 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.columns = [
       { header: 'TITLE', field: 'title' },
-      { header: 'CATEGORY', field: 'category' },
+      { header: 'CATEGORY', field: 'category', subField: 'name' },
       { header: 'TAGS', field: 'tags', template: this.tagsTemplate },
       { header: 'STATUS', field: 'status', template: this.statusTemplate },
       { header: 'CREATED_BY', field: 'created_by', subField: 'username' },
