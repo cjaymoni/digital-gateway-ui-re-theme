@@ -4,6 +4,10 @@
 @import 'src/styles/quill-editor';
 @import '~ngx-sharebuttons/themes/default';
 
+:root {
+  --primary-color: #2196f3;
+  --box-shadow: #a6d5fa;
+}
 body {
   margin: 0;
 }
