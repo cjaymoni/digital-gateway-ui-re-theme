@@ -8,19 +8,24 @@ import {
   shareReplay,
   startWith,
 } from 'rxjs';
-import { MOBILE_WIDTH_BREAKPOINT as MOBILE_WIDTH } from '../config/app-config';
+import {
+  MOBILE_WIDTH_BREAKPOINT as MOBILE_WIDTH,
+  TABLET_WIDTH_BREAKPOINT,
+} from '../config/app-config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeviceService {
-  isHandheld$ = new BehaviorSubject(window.innerWidth < MOBILE_WIDTH);
+  isHandheld$ = new BehaviorSubject(
+    window.innerWidth < TABLET_WIDTH_BREAKPOINT
+  );
 
   constructor() {
     fromEvent(window, 'resize')
       .pipe(
-        map(ev => (ev.target as Window).innerWidth < MOBILE_WIDTH),
-        startWith(window.innerWidth < MOBILE_WIDTH),
+        map(ev => (ev.target as Window).innerWidth < TABLET_WIDTH_BREAKPOINT),
+        startWith(window.innerWidth < TABLET_WIDTH_BREAKPOINT),
         debounceTime(100),
         distinctUntilChanged(),
         shareReplay(1)

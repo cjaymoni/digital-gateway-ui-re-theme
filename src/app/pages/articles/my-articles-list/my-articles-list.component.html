@@ -39,11 +39,8 @@
 </ng-template>
 
 <ng-template #statusTemplate let-status>
-  <p-message
-    [severity]="PublishedStatusMapping[status]"
-    [text]="status | uppercase"
-    styleClass="p-mr-2"
-  ></p-message>
+  <!-- [severity]="PublishedStatusMapping[status]" -->
+  <p-message [text]="status" severity="danger"></p-message>
 </ng-template>
 
 <ng-template #tagsTemplate let-tags>

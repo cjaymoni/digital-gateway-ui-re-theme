@@ -130,7 +130,7 @@
                 [ngTemplateOutlet]="col.template"
                 [ngTemplateOutletContext]="{
                   $implicit: col.subField
-                    ? rowData[col.field][col.subField]
+                    ? rowData[col.field]?.[col.subField]
                     : rowData[col.field]
                 }"
               ></ng-template>
@@ -140,7 +140,7 @@
               <span class="p-column-title">{{ col.header }}</span>
               {{
                 col.subField
-                  ? rowData[col.field][col.subField]
+                  ? rowData[col.field]?.[col.subField]
                   : rowData[col.field]
               }}
             </ng-template>

@@ -1,32 +1,26 @@
-<div
-  class="
-    right-panel
-    shadow-8
-    fadein
-    animation-duration-500
-    transition-all transition-ease-in transition-duration-500
-  "
-  [ngClass]="(active$ | async) ? '' : 'hidden'"
+<p-sidebar
+  [(visible)]="show"
+  [blockScroll]="true"
+  styleClass="p-sidebar-lg w-full lg:w-5"
+  position="right"
+  (onHide)="hidePanel()"
+  [fullScreen]="(device.isHandheld$ | async) || false"
 >
-  <p-scrollPanel styleClass="custom-overlay">
-    <div class="flex col-12 justify-content-between sticky top-0 z-2 bg-white">
-      <button
-        pButton
-        pRipple
-        type="button"
-        icon="pi pi-times"
-        class="p-button-outlined p-button-secondary"
-        (click)="hidePanel()"
-      ></button>
-
-      <div class="p-card box shadow-4 p-2 col-10">
-        <div class="text-xl font-bold text-center uppercase white-space-normal">
-          {{ title }}
-        </div>
+  <div class="flex col-12 justify-content-between sticky top-0 z-1 bg-white">
+    <div class="p-2 col-10">
+      <div class="text-xl font-bold text-center uppercase white-space-normal">
+        {{ title$ | async }}
       </div>
     </div>
-    <div class="z-1 flex justify-content-center align-items-center">
-      <ng-content> </ng-content>
-    </div>
-  </p-scrollPanel>
-</div>
+
+    <button
+      pButton
+      pRipple
+      type="button"
+      icon="pi pi-times"
+      class="p-button-text p-button-secondary"
+      (click)="hidePanel()"
+    ></button>
+  </div>
+  <ng-content></ng-content>
+</p-sidebar>

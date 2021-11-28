@@ -8,6 +8,7 @@ export const initialState: Readonly<MenuItemFromBackend> = {
     {
       label: 'Blog',
       id: 1,
+      link: [Pages.Articles],
       items: [
         {
           label: 'Finance',
@@ -52,6 +53,7 @@ export const initialState: Readonly<MenuItemFromBackend> = {
     {
       label: 'Market Place',
       id: 3,
+      link: [Pages.MarketPlace],
       items: [
         {
           label: 'Most Viewd',

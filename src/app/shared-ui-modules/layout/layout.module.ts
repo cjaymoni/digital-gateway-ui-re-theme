@@ -9,6 +9,8 @@ import { SideNavModule } from '../side-nav/side-nav.module';
 import { TopNavModule } from '../top-nav/top-nav.module';
 import { LayoutComponent } from './layout.component';
 import { ArticleFormModule } from '../article-form/article-form.module';
+import { AlertsModule } from '../alerts/alerts.module';
+import { RightNavCardModule } from '../right-nav-card/right-nav-card.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -21,6 +23,8 @@ import { ArticleFormModule } from '../article-form/article-form.module';
     ArticleFormModule,
     ArticleCardModule,
     FooterModule,
+    AlertsModule,
+    RightNavCardModule,
   ],
   exports: [LayoutComponent],
 })

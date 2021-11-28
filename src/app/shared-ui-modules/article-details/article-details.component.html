@@ -19,6 +19,19 @@
             <p-tag [value]="tag.name" class="mr-1"></p-tag>
           </ng-container>
         </div>
+        <div class="flex m-1 align-items-center">
+          <button type="text" pButton label="Share" icon="pi pi-send" (click)="op.toggle($event)"></button>
+
+        </div>
+        <p-overlayPanel #op [showCloseIcon]="true">
+          <ng-template pTemplate>
+            <share-buttons
+             [show]="8"
+             [include]="['facebook','twitter','linkedin', 'whatsapp','pinterest','reddit','tumblr','telegram','messenger','sms','email','print','copy']"
+            ></share-buttons>
+          </ng-template>
+        </p-overlayPanel>
+
       </div>
       <div class="col-12 md:col-6">
         <app-article-image
@@ -28,6 +41,7 @@
     </div>
     <div class="overflow-hidden md:overflow-auto surface-overlay text-justify">
       <div
+        class="col-12 w-full article-content"
         [innerHTML]="
           sanitizer.bypassSecurityTrustHtml((article$ | async)?.content)
         "

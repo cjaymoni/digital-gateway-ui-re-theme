@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, of, switchMap } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { of, switchMap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
 import { ArticleService } from 'src/app/pages/articles/services/articles.service';
+import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { articleActions } from '../actions/article.actions';
 
 @Injectable()
@@ -18,7 +20,10 @@ export class ArticleEffects {
               articles,
             })
           ),
-          catchError(() => of(articleActions.fetchError))
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
         )
       )
     )
@@ -34,7 +39,10 @@ export class ArticleEffects {
               article: articles?.[0],
             })
           ),
-          catchError(() => of(articleActions.fetchError))
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
         )
       )
     )
@@ -50,14 +58,53 @@ export class ArticleEffects {
               article: savedArticle,
             })
           ),
-          catchError(() => of(articleActions.fetchError))
+          tap(saved => this.showToast('Article Saved Successfully')),
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
         )
       )
     )
   );
 
+  editArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(articleActions.editArticle),
+      switchMap(({ article, imageToUpload }) =>
+        this.articleService.editArticle(article, imageToUpload).pipe(
+          map((updatedArticle: any) =>
+            articleActions.editArticleSuccessful({
+              updatedArticle: {
+                changes: updatedArticle,
+                id: updatedArticle.id,
+              },
+            })
+          ),
+          tap(saved => this.showToast('Article Edited Successfully')),
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  private showToast(message: string) {
+    this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
+  }
+
+  private showError(error: any) {
+    this.alert.showToast(
+      'An error occurred. Rest assured we will fix it',
+      PrimeNgAlerts.ERROR
+    );
+  }
+
   constructor(
     private actions$: Actions,
-    private articleService: ArticleService
+    private articleService: ArticleService,
+    private alert: AppAlertService
   ) {}
 }

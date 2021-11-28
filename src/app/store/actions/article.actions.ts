@@ -1,6 +1,6 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { Article } from 'src/app/models/article.model';
+import { Article, ArticleImage } from 'src/app/models/article.model';
 
 class ArticleActions {
   readonly type = '[Article Actions]';
@@ -12,7 +12,12 @@ class ArticleActions {
     props<{ articles: Article[] }>()
   );
 
-  fetchError = createAction(`${this.type} Fetch Error`);
+  fetchError = createAction(
+    `${this.type} Fetch Error`,
+    props<{
+      error: any;
+    }>()
+  );
 
   selectArticle = createAction(
     `${this.type} Select Article`,
@@ -58,7 +63,7 @@ class ArticleActions {
 
   editArticle = createAction(
     `${this.type} Edit Article`,
-    props<{ article: Article }>()
+    props<{ article: Article; imageToUpload: File | ArticleImage[] | any }>()
   );
 
   editArticleSuccessful = createAction(
@@ -75,6 +80,7 @@ class ArticleActions {
     `${this.type} Delete Article Successful`,
     props<{ id: number }>()
   );
-}
 
+  clearAllSelected = createAction(`${this.type} Clear All Selected Articles`);
+}
 export const articleActions = new ArticleActions();

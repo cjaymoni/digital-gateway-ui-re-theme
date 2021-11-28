@@ -1,7 +1,8 @@
+import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, map } from 'rxjs';
+import { BehaviorSubject, filter, map } from 'rxjs';
 import { Pages, RouterOutlets, SLUG_PREFIX } from '../config/app-config';
 import { selectUrl } from '../store/selectors/router.selectors';
 
@@ -9,14 +10,21 @@ import { selectUrl } from '../store/selectors/router.selectors';
   providedIn: 'root',
 })
 export class NavigatorService {
-  constructor(private router: Router, private store: Store) {}
+  constructor(
+    private router: Router,
+    private store: Store,
+    private location: Location
+  ) {}
 
   panelActive$ = this.store.select(selectUrl).pipe(
     filter(currentRoute => !!currentRoute),
     map(cr => cr.includes(RouterOutlets.Right))
   );
 
-  openPanel(navigation: string) {
+  panelTitle$ = new BehaviorSubject('');
+
+  openPanel(navigation: string, title = '') {
+    this.panelTitle$.next(title);
     this.router.navigate([
       {
         outlets: {
@@ -35,6 +43,10 @@ export class NavigatorService {
         },
       },
     ]);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   article = new ArticleRoutes(this.router);
