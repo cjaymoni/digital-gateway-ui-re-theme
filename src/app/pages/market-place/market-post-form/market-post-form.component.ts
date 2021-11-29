@@ -51,7 +51,7 @@ export class MarketPostFormComponent implements OnInit {
         brand: [''],
         tags: [],
         images: [],
-        product_type: ['', [Validators.required]],
+        product_type: [''],
       }),
     });
   }
@@ -70,6 +70,7 @@ export class MarketPostFormComponent implements OnInit {
   get productType() {
     return this.productAdForm.get('product.product_type') as FormControl;
   }
+
   removeImage() {
     this.images.setValue([]);
   }
@@ -77,10 +78,12 @@ export class MarketPostFormComponent implements OnInit {
   onAddOrUpdateMarketPost() {
     if (this.productAdForm.valid) {
       const productAdFromForm = this.productAdForm.value;
+      productAdFromForm.product.tags = this.tags.value?.map((t: any) => t.id);
+      productAdFromForm.product.product_type = this.productType.value?.id;
 
       this.store.dispatch(
         productAdActions.addProductAd({
-          productAd: productAdFromForm,
+          productAd: { ...productAdFromForm, author: 1 },
         })
       );
     }

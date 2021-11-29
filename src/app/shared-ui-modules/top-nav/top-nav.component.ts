@@ -2,14 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { filter, map, switchMap } from 'rxjs';
-import { RouterOutlets } from 'src/app/config/app-config';
+import { Pages } from 'src/app/config/app-config';
 import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { menuItemActions } from 'src/app/store/actions/menu-items.actions';
 import { menuItemSelectors } from 'src/app/store/selectors/menu-items.selectors';
 import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
-import { Pages } from 'src/app/config/app-config';
-import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
   selector: 'app-top-nav',

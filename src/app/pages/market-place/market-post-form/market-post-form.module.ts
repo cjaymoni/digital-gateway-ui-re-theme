@@ -10,6 +10,8 @@ import { ImageUploadModule } from 'src/app/shared-ui-modules/image-upload/image-
 import { TagAutocompleteModule } from 'src/app/shared-ui-modules/tag-autocomplete/tag-autocomplete.module';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CategoryAutocompleteModule } from 'src/app/shared-ui-modules/category-autocomplete/category-autocomplete.module';
+import { DistrictAutoCompleteModule } from 'src/app/shared-ui-modules/district-auto-complete/district-auto-complete.module';
+import { ProductTypeAutocompleteModule } from 'src/app/shared-ui-modules/product-type-autocomplete/product-type-autocomplete.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -23,6 +25,8 @@ import { CategoryAutocompleteModule } from 'src/app/shared-ui-modules/category-a
     ButtonModule,
     InputMaskModule,
     CategoryAutocompleteModule,
+    DistrictAutoCompleteModule,
+    ProductTypeAutocompleteModule,
   ],
   declarations: [MarketPostFormComponent],
   exports: [MarketPostFormComponent],
