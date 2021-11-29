@@ -20,7 +20,7 @@ export class ResourceService {
   }
 
   storeResource(toStore: any, url = this.endpoint) {
-    return this.http.post(`${url}/`, toStore).pipe(map(data => data as object));
+    return this.http.post(`${url}`, toStore).pipe(map(data => data as object));
   }
 
   updateResource(toStore: any, id: any, url = this.endpoint) {
