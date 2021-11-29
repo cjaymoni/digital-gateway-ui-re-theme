@@ -6,9 +6,10 @@
       <i class="pi pi-image"></i>
     </div>
   </ng-template>
-  <div class="-mt-4">
-    <img [src]="cardImage" class="w-full h-12rem" alt="CardImage" />
-  </div>
+  <div
+    class="h-6rem div-with-background-image"
+    [style.backgroundImage]="backgroundImage"
+  ></div>
   <p-divider styleClass="divider"></p-divider>
   <div class="align-content-center">
     <a [href]="cardLink">{{ linkTitle }}</a>

@@ -4,15 +4,15 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
 } from '@angular/core';
-import { ImageUploadComponent } from '../image-upload/image-upload.component';
-import { MarketPost } from '../../models/market-post.model';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MarketPost } from 'src/app/models/market-post.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { ImageUploadComponent } from 'src/app/shared-ui-modules/image-upload/image-upload.component';
 
 @Component({
   selector: 'app-market-post-form',

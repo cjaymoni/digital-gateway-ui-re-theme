@@ -11,7 +11,6 @@ import { LayoutComponent } from './layout.component';
 import { ArticleFormModule } from '../article-form/article-form.module';
 import { AlertsModule } from '../alerts/alerts.module';
 import { RightNavCardModule } from '../right-nav-card/right-nav-card.module';
-import { MarketPostFormModule } from '../market-post-form/market-post-form.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -26,7 +25,6 @@ import { MarketPostFormModule } from '../market-post-form/market-post-form.modul
     FooterModule,
     AlertsModule,
     RightNavCardModule,
-    MarketPostFormModule,
   ],
   exports: [LayoutComponent],
 })

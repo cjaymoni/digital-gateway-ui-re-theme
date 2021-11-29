@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes, UrlSegment } from '@angular/router';
 import { RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { ArticleDetailsComponent } from 'src/app/shared-ui-modules/article-details/article-details.component';
 import { ArticleFormComponent } from 'src/app/shared-ui-modules/article-form/article-form.component';
 import { ArticleListComponent } from './article-list/article-list.component';
@@ -57,10 +58,7 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ArticleRoutesModule {
-  /**
-   *
-   */
-  constructor(private router: Router) {
-    this.router.config.push(...rightPanelRoutes);
+  constructor(private navigator: NavigatorService) {
+    this.navigator.addRightPanelRoutes(rightPanelRoutes);
   }
 }
