@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ImageUploadModule } from 'src/app/shared-ui-modules/image-upload/image-upload.module';
 import { TagAutocompleteModule } from 'src/app/shared-ui-modules/tag-autocomplete/tag-autocomplete.module';
+import { InputMaskModule } from 'primeng/inputmask';
+import { CategoryAutocompleteModule } from 'src/app/shared-ui-modules/category-autocomplete/category-autocomplete.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,6 +21,8 @@ import { TagAutocompleteModule } from 'src/app/shared-ui-modules/tag-autocomplet
     TagAutocompleteModule,
     InputTextModule,
     ButtonModule,
+    InputMaskModule,
+    CategoryAutocompleteModule,
   ],
   declarations: [MarketPostFormComponent],
   exports: [MarketPostFormComponent],
