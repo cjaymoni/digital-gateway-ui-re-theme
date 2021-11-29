@@ -24,6 +24,7 @@ export const SLUG_PREFIX = 'read';
 export enum Pages {
   Articles = 'articles',
   Forum = 'forum',
+  Login = 'login',
   MarketPlace = 'market-place',
 
   //Common Pages
