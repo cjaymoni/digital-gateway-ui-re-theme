@@ -5,6 +5,7 @@ import { userAuthActions } from '../actions/user-auth.actions';
 export const initialState: Readonly<User> = {
   email: 'testuser@test.com',
   name: 'Owuraku User',
+  username: 'Admin',
 };
 
 export const userAuthReducer = createReducer(

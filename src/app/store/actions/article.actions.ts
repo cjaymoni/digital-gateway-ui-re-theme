@@ -1,6 +1,6 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { Article, ArticleImage } from 'src/app/models/article.model';
+import { Article, AppUploadedImage } from 'src/app/models/article.model';
 
 class ArticleActions {
   readonly type = '[Article Actions]';
@@ -63,7 +63,10 @@ class ArticleActions {
 
   editArticle = createAction(
     `${this.type} Edit Article`,
-    props<{ article: Article; imageToUpload: File | ArticleImage[] | any }>()
+    props<{
+      article: Article;
+      imageToUpload: File | AppUploadedImage[] | any;
+    }>()
   );
 
   editArticleSuccessful = createAction(

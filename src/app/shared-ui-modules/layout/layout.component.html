@@ -5,8 +5,8 @@
   <nav class="col-12 topbar">
     <app-top-nav></app-top-nav>
   </nav>
-  <div class="col-12 grid">
-    <aside class="hidden col-2 lg:flex sidenav">
+  <div class="col-12 grid pt-0 pb-0">
+    <aside class="hidden col-2 lg:flex sidenav h-screen surface-800 p-0">
       <app-side-nav></app-side-nav>
     </aside>
 
@@ -14,15 +14,17 @@
       <div class="col-12">
         <router-outlet></router-outlet>
       </div>
-      <div class="leftcontent col-12 md:hidden">left content</div>
-      <div class="rightcontent col-12 md:hidden">right content</div>
+      <!-- <div class="leftcontent col-12 md:hidden">left content</div> -->
+      <div class="rightcontent col-12 md:hidden">
+        <app-right-nav-card></app-right-nav-card>
+      </div>
     </div>
 
-    <div class="hidden md:flex md:col-4 lg:col-2">
+    <div class="hidden lg:flex md:col-4 lg:col-2">
       <app-right-nav-card></app-right-nav-card>
     </div>
   </div>
-  <footer class="col-12 footer">
+  <footer class="col-12 footer pt-0">
     <app-footer></app-footer>
   </footer>
 </div>

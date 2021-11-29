@@ -1,0 +1,20 @@
+<p-card
+  *ngIf="productAd"
+  [header]="productAd.product.name"
+  styleClass="shadow-6 article-card p-2 w-full scalein animation-duration-500 justify-content-between"
+>
+  <ng-template pTemplate="header">
+    <!-- static image -->
+    <img alt="Card" src="assets/img.png" />
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <!-- <div class="flex justify-content-center align-self-end"> -->
+    <p>Price: {{ productAd.product.price }}</p>
+    <p>Contact: {{ productAd.cellphone }}</p>
+    <p><i class="pi pi-map-marker"></i>: {{ productAd.location }}</p>
+    <!-- </div> -->
+  </ng-template>
+</p-card>
+
+{{ productAd | json }}

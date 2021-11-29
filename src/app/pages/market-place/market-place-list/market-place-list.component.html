@@ -1,0 +1,10 @@
+<app-listing-page
+  [loading]="productAdsLoading$ | async"
+  title="Product Ads"
+  [itemTemplate]="productCardTemplate"
+  [items]="productAds$ | async"
+></app-listing-page>
+
+<ng-template #productCardTemplate let-productAd>
+  <app-market-card [productAd]="productAd"></app-market-card>
+</ng-template>

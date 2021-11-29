@@ -16,6 +16,7 @@ export enum FeatureNamesForStore {
   Tag = 'tag',
   Category = 'category',
   Menu = 'menuItem',
+  ProductAd = 'productAd',
 }
 
 export const SLUG_PREFIX = 'read';

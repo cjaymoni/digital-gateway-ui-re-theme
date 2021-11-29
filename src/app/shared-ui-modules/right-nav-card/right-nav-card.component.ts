@@ -43,4 +43,8 @@ export class RightNavCard implements OnInit {
     this.author = 'Kweku David';
     this.cardTag = 'Finance';
   }
+
+  get backgroundImage() {
+    return `url(${this.cardImage})`;
+  }
 }

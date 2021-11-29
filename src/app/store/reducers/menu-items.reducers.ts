@@ -6,30 +6,33 @@ import { menuItemActions } from '../actions/menu-items.actions';
 export const initialState: Readonly<MenuItemFromBackend> = {
   top_nav: [
     {
-      label: 'Blog',
+      label: 'Information Hub',
       id: 1,
       link: [Pages.Articles],
+      linkAndCommand: true,
       items: [
         {
           label: 'Finance',
-          id: 4,
+          id: 6,
           slug: 'finance',
           items: [
             {
-              label: 'Finance',
-              id: 4,
+              label: 'All',
+              id: 7,
               slug: 'finance',
+              search: 'finance',
             },
             {
-              label: 'Tax Policies',
-              id: 5,
+              label: 'Capital',
+              id: 8,
               slug: 'tax-policies',
+              search: 'tax-policies',
             },
           ],
         },
         {
           label: 'Tax Policies',
-          id: 5,
+          id: 9,
           slug: 'tax-policies',
         },
       ],
@@ -40,12 +43,12 @@ export const initialState: Readonly<MenuItemFromBackend> = {
       items: [
         {
           label: 'Most Read',
-          id: 4,
+          id: 10,
           slug: 'most-read',
         },
         {
           label: 'Latest Posts',
-          id: 5,
+          id: 11,
           slug: 'latest-posts',
         },
       ],
@@ -54,27 +57,28 @@ export const initialState: Readonly<MenuItemFromBackend> = {
       label: 'Market Place',
       id: 3,
       link: [Pages.MarketPlace],
+      linkAndCommand: true,
       items: [
         {
-          label: 'Most Viewd',
-          id: 4,
-          slug: 'most-viewed',
+          label: 'Post An Ad',
+          id: 12,
+          routerLink: [Pages.MarketPlace, Pages.add],
         },
         {
-          label: 'Latest Adverts',
-          id: 5,
-          slug: 'latest-adverts',
+          label: 'Review My Ads',
+          id: 13,
+          routerLink: [Pages.MyMarketPlaceItems],
         },
       ],
     },
     {
-      label: 'My Articles',
-      id: 7,
+      label: 'Article Moderation',
+      id: 14,
       link: [Pages.Articles, 'my-articles'],
     },
     {
-      label: 'My Fourm Posts',
-      id: 8,
+      label: 'Fourm Posts Moderation',
+      id: 15,
       link: [Pages.Forum, 'my-forum-posts'],
     },
   ],
@@ -93,5 +97,3 @@ export const menuItemReducer = createReducer(
     return { ...state, selectedMenu: null };
   })
 );
-
-const mapToMenuItems = () => {};

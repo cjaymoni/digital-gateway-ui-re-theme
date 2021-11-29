@@ -10,6 +10,7 @@ const routes: Routes = [
         module => module.ArticlesModule
       ),
   },
+  { path: 'market-place', loadChildren: () => import('./pages/market-place/market-place.module').then(m => m.MarketPlaceModule) },
 ];
 
 @NgModule({

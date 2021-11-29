@@ -1,5 +1,8 @@
 
-<p-menubar [model]="(items$ | async) || []" styleClass="sticky z-1">
+<p-menubar
+  [model]="(items$ | async) || []"
+  styleClass="sticky z-1 surface-800 text-white border-none border-noround"
+>
   <ng-template pTemplate="start" class="sty">MSME GATEWAY </ng-template>
 
   <ng-template pTemplate="end">

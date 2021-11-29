@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
-import { ArticleImage } from 'src/app/models/article.model';
+import { AppUploadedImage } from 'src/app/models/article.model';
 
 @Component({
   selector: 'app-article-image',
@@ -13,7 +13,7 @@ import { ArticleImage } from 'src/app/models/article.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleImageComponent implements OnInit {
-  @Input() images: ArticleImage[] = [];
+  @Input() images: AppUploadedImage[] = [];
   @Input() letter: string = '';
 
   constructor() {}
