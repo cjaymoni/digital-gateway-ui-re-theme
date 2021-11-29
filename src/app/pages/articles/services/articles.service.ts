@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { ArticlesEndpoint } from 'src/app/config/routes';
-import { Article, ArticleImage } from 'src/app/models/article.model';
+import { Article, AppUploadedImage } from 'src/app/models/article.model';
 import { ResourceService } from 'src/app/services/resources.service';
 
 @Injectable({
@@ -41,7 +41,7 @@ export class ArticleService extends ResourceService {
 
   private getFormDataFromArticleObject(
     article: Article,
-    imageToUpload?: File | ArticleImage[] | any
+    imageToUpload?: File | AppUploadedImage[] | any
   ) {
     const formData = new FormData();
     if (imageToUpload) {

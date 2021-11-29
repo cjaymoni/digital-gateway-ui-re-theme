@@ -3,6 +3,7 @@ import { FeatureNamesForStore } from '../config/app-config';
 import { articleReducer } from './reducers/article.reducers';
 import { categoryReducer } from './reducers/category.reducers';
 import { menuItemReducer } from './reducers/menu-items.reducers';
+import { productAdReducer } from './reducers/product-ad.reducers';
 import { tagReducer } from './reducers/tag.reducers';
 import { userAuthReducer } from './reducers/user-auth.reducers';
 
@@ -13,4 +14,5 @@ export const appReducersMap = {
   [FeatureNamesForStore.Tag]: tagReducer,
   [FeatureNamesForStore.Category]: categoryReducer,
   [FeatureNamesForStore.Menu]: menuItemReducer,
+  [FeatureNamesForStore.ProductAd]: productAdReducer,
 };

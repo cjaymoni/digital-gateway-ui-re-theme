@@ -14,7 +14,7 @@ export interface Article {
   meta_author?: string;
   is_page?: boolean;
   created_by?: number;
-  images?: ArticleImage[];
+  images?: AppUploadedImage[];
 }
 
 export enum ArticlePublishedStatus {
@@ -25,7 +25,7 @@ export enum ArticlePublishedStatus {
   Archived = 'Archived',
 }
 
-export interface ArticleImage {
+export interface AppUploadedImage {
   image: string;
   title: string;
 }

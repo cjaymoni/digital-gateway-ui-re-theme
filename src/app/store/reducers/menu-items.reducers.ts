@@ -6,7 +6,7 @@ import { menuItemActions } from '../actions/menu-items.actions';
 export const initialState: Readonly<MenuItemFromBackend> = {
   top_nav: [
     {
-      label: 'Blog',
+      label: 'Information Hub',
       id: 1,
       link: [Pages.Articles],
       items: [
@@ -16,14 +16,16 @@ export const initialState: Readonly<MenuItemFromBackend> = {
           slug: 'finance',
           items: [
             {
-              label: 'Finance',
+              label: 'All',
               id: 4,
               slug: 'finance',
+              search: 'finance',
             },
             {
-              label: 'Tax Policies',
+              label: 'Capital',
               id: 5,
               slug: 'tax-policies',
+              search: 'tax-policies',
             },
           ],
         },
@@ -54,26 +56,14 @@ export const initialState: Readonly<MenuItemFromBackend> = {
       label: 'Market Place',
       id: 3,
       link: [Pages.MarketPlace],
-      items: [
-        {
-          label: 'Most Viewd',
-          id: 4,
-          slug: 'most-viewed',
-        },
-        {
-          label: 'Latest Adverts',
-          id: 5,
-          slug: 'latest-adverts',
-        },
-      ],
     },
     {
-      label: 'My Articles',
+      label: 'Article Moderation',
       id: 7,
       link: [Pages.Articles, 'my-articles'],
     },
     {
-      label: 'My Fourm Posts',
+      label: 'Fourm Posts Moderation',
       id: 8,
       link: [Pages.Forum, 'my-forum-posts'],
     },
@@ -93,5 +83,3 @@ export const menuItemReducer = createReducer(
     return { ...state, selectedMenu: null };
   })
 );
-
-const mapToMenuItems = () => {};
