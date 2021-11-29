@@ -1,0 +1,28 @@
+<h3 class="text-center">{{ title }}</h3>
+<ng-container *ngIf="loading; else loaded">
+  <div class="flex grid skeleton">
+    <p-skeleton size="15rem"></p-skeleton>
+    <p-skeleton size="15rem"></p-skeleton>
+    <p-skeleton size="15rem"></p-skeleton>
+    <p-skeleton size="15rem"></p-skeleton>
+  </div>
+</ng-container>
+
+<ng-template #loaded>
+  <ng-container *ngIf="items.length > 0; else noresults">
+    <div class="align-items-center grid">
+      <ng-container *ngFor="let item of items">
+        <div [class]="itemClass">
+          <ng-container
+            [ngTemplateOutlet]="itemTemplate"
+            [ngTemplateOutletContext]="{ $implicit: item }"
+          ></ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #noresults>
+  <app-no-results-found></app-no-results-found>
+</ng-template>

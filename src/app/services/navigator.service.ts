@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, Routes } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, filter, map } from 'rxjs';
 import { Pages, RouterOutlets, SLUG_PREFIX } from '../config/app-config';
@@ -47,6 +47,14 @@ export class NavigatorService {
 
   goBack() {
     this.location.back();
+  }
+
+  addRightPanelRoutes(routesToAdd: Routes) {
+    this.router.config.push(...routesToAdd);
+  }
+
+  goToRoute(route: any[]) {
+    this.router.navigate(route);
   }
 
   article = new ArticleRoutes(this.router);

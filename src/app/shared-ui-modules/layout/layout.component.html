@@ -12,14 +12,15 @@
 
     <div class="col-12 md:col-8 lg:col-8 grid justify-content-center">
       <div class="col-12">
-        <app-market-post-form></app-market-post-form>
-        <!-- <router-outlet></router-outlet> -->
+        <router-outlet></router-outlet>
       </div>
-      <div class="leftcontent col-12 md:hidden">left content</div>
-      <div class="rightcontent col-12 md:hidden">right content</div>
+      <!-- <div class="leftcontent col-12 md:hidden">left content</div> -->
+      <div class="rightcontent col-12 md:hidden">
+        <app-right-nav-card></app-right-nav-card>
+      </div>
     </div>
 
-    <div class="hidden md:flex md:col-4 lg:col-2">
+    <div class="hidden lg:flex md:col-4 lg:col-2">
       <app-right-nav-card></app-right-nav-card>
     </div>
   </div>
