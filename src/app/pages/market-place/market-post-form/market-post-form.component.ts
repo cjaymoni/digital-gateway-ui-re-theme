@@ -10,9 +10,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MarketPost } from 'src/app/models/market-post.model';
+import { Store } from '@ngrx/store';
+import { ProductAd } from 'src/app/models/product-ad.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ImageUploadComponent } from 'src/app/shared-ui-modules/image-upload/image-upload.component';
+import { productAdActions } from 'src/app/store/actions/product-ad.actions';
 
 @Component({
   selector: 'app-market-post-form',
@@ -24,37 +26,68 @@ export class MarketPostFormComponent implements OnInit {
   @ViewChild('imageUpload', { static: true })
   imageUploadComponent: ImageUploadComponent | null = null;
 
-  price: number = 1;
   createForm = true;
-  marketForm!: FormGroup;
-  marketPost!: MarketPost;
+  productAdForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private navigator: NavigatorService) {}
+  productAd!: ProductAd;
+
+  constructor(
+    private fb: FormBuilder,
+    private navigator: NavigatorService,
+    private store: Store
+  ) {}
 
   ngOnInit() {
-    this.marketForm = this.fb.group({
-      name: ['', [Validators.required]],
-      description: ['', Validators.required],
-      price: ['', [Validators.required]],
-      brand: [''],
-      product_type: ['', [Validators.required]],
-      tags: [''],
-      images: [],
+    this.productAdForm = this.fb.group({
+      gh_post: [],
+      location: [],
+      cellphone: [],
+      district: [],
+      email: [],
+      product: this.fb.group({
+        name: ['', [Validators.required]],
+        description: ['', Validators.required],
+        price: ['', [Validators.required]],
+        brand: [''],
+        tags: [],
+        images: [],
+        product_type: [''],
+      }),
     });
   }
   get tags() {
-    return this.marketForm.get('tags') as FormControl;
+    return this.productAdForm.get('product.tags') as FormControl;
   }
+
   get images() {
-    return this.marketForm.get('images') as FormControl;
+    return this.productAdForm.get('product.images') as FormControl;
   }
+
   get postHasImage() {
     return this.images.value?.[0]?.image;
   }
+
+  get productType() {
+    return this.productAdForm.get('product.product_type') as FormControl;
+  }
+
   removeImage() {
     this.images.setValue([]);
   }
-  onAddOrUpdateMarketPost() {}
+
+  onAddOrUpdateMarketPost() {
+    if (this.productAdForm.valid) {
+      const productAdFromForm = this.productAdForm.value;
+      productAdFromForm.product.tags = this.tags.value?.map((t: any) => t.id);
+      productAdFromForm.product.product_type = this.productType.value?.id;
+
+      this.store.dispatch(
+        productAdActions.addProductAd({
+          productAd: { ...productAdFromForm, author: 1 },
+        })
+      );
+    }
+  }
 
   goBack() {
     this.navigator.goBack();

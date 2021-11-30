@@ -8,16 +8,19 @@ import {
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { productAdActions } from 'src/app/store/actions/product-ad.actions';
+import { productTypeActions } from 'src/app/store/actions/product-type.actions';
+import { productTypeSelectors } from 'src/app/store/selectors/product-type.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MArketPlaceGuard implements CanActivate {
+export class MarketPlaceGuard implements CanActivate {
   /**
    *
    */
   constructor(private store: Store) {
     this.store.dispatch(productAdActions.fetch());
+    this.store.dispatch(productTypeActions.fetch());
   }
   canActivate(
     route: ActivatedRouteSnapshot,

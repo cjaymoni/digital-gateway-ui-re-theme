@@ -10,11 +10,9 @@
 
   <ng-template pTemplate="footer">
     <!-- <div class="flex justify-content-center align-self-end"> -->
-    <p>Price: {{ productAd.product.price }}</p>
-    <p>Contact: {{ productAd.cellphone }}</p>
-    <p><i class="pi pi-map-marker"></i>: {{ productAd.location }}</p>
+    <div class="font-bold">Price: {{ productAd.product.price }} GHS</div>
+    <div>Contact: {{ productAd.cellphone }}</div>
+    <p><i class="pi pi-map-marker"></i> {{ productAd.location }}</p>
     <!-- </div> -->
   </ng-template>
 </p-card>
-
-{{ productAd | json }}

@@ -25,6 +25,7 @@ export class AppAutoCompleteComponent implements OnInit {
   @Input() dropdown = false;
   @Input() forceSelection = true;
   @Input() multiple = true;
+  @Input() placeholder = '';
 
   @Output() searchEvent = new EventEmitter();
   @Output() enterKeyPressed = new EventEmitter();

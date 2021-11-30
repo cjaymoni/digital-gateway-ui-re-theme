@@ -3,4 +3,5 @@
   [suggestions]="(tags$ | async) || []"
   (searchEvent)="searchTag($event.query)"
   (enterKeyPressed)="addNewTag()"
+  placeholder="Type a tag name"
 ></app-auto-complete>
