@@ -9,7 +9,6 @@ import { menuItemActions } from 'src/app/store/actions/menu-items.actions';
 import { menuItemSelectors } from 'src/app/store/selectors/menu-items.selectors';
 import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
 import { Pages } from 'src/app/config/app-config';
-import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
   selector: 'app-top-nav',

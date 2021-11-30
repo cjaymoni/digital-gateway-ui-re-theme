@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { MarketPlaceListComponent } from './market-place-list/market-place-list.component';
 import { MarketPostFormComponent } from './market-post-form/market-post-form.component';
+import { MyMarketPostsComponent } from './my-market-posts/my-market-posts.component';
 
 const rightPanelRoutes: Routes = [
   // { path: '', component: MarketPlaceComponent },
@@ -11,6 +12,7 @@ const rightPanelRoutes: Routes = [
 const routes: Routes = [
   { path: '', component: MarketPlaceListComponent },
   { path: 'add', component: MarketPostFormComponent },
+  { path: 'my-market-place-items', component: MyMarketPostsComponent },
 ];
 
 @NgModule({

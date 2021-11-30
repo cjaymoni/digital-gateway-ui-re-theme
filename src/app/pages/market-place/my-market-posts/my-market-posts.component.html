@@ -1,0 +1,40 @@
+<div class="text-center flex justify-content-between">
+  <div>MY MARKET ADS</div>
+
+  <button
+    pButton
+    class="align-self-end p-btn p-btn-lg"
+    icon="pi pi-plus"
+    label="Add New Post"
+    (click)="goToAddPostPage()"
+  ></button>
+</div>
+<!-- [data]="(myArticles$ | async) || []" -->
+<app-table
+
+[columnsDefinition]="columns"
+[actionTemplate]="actions"
+[showAction]="true"
+></app-table>
+
+<ng-template #actions let-market>
+<div class="flex justify-content-between">
+  <button
+    class="p-button p-button-rounded p-button-danger mr-3"
+    pButton
+    tooltipPosition="bottom"
+    pTooltip="View Market Ad"
+    (click)="viewMarketAd(market)"
+    icon="pi pi-eye"
+  ></button>
+
+  <button
+    class="p-button p-button-info p-button-rounded mr-auto"
+    pButton
+    pTooltip="Edit Market Ad"
+    tooltipPosition="bottom"
+    icon="pi pi-pencil"
+    (click)="editMarketAd(market)"
+  ></button>
+</div>
+</ng-template>
