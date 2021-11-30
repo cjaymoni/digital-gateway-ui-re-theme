@@ -1,114 +1,153 @@
-<ng-container>
-  <div class="fluid formgrid grid">
-    <div class="flex flex-column md:flex-row col-12">
-      <div class="field col-12 md:col-6">
-        <label for="title">Product Name</label>
-        <input
-          type="text"
-          pInputText
-          class="inputfield w-full"
-          formControlName="title"
-        />
-      </div>
-      <div class="field col-12 md:col-6">
-        <label for="title">Brand</label>
-        <input
-          type="text"
-          pInputText
-          class="inputfield w-full"
-          formControlName="title"
-        />
-      </div>
-    </div>
-    <div class="flex flex-column md:flex-row col-12">
-      <div class="field col-12 md:col-6">
-        <label for="title">Price</label>
-        <br />
-        <p-inputNumber
-          [(ngModel)]="price"
-          [showButtons]="true"
-          buttonLayout="horizontal"
-          inputId="horizontal"
-          spinnerMode="horizontal"
-          [step]="1"
-          [min]="1"
-          incrementButtonIcon="pi pi-plus"
-          decrementButtonIcon="pi pi-minus"
-          mode="currency"
-          currency="GHs"
-          styleClass="w-full"
-        >
-        </p-inputNumber>
-      </div>
-      <div class="field col-12 md:col-6">
-        <label for="title">Tag</label>
-        <app-tag-autocomplete [selectedTags]="tags"></app-tag-autocomplete>
-      </div>
-    </div>
-    <div class="flex flex-column md:flex-row col-12">
-      <div class="field col-12 md:col-6">
-        <label for="title">Contact</label>
-        <input
-          type="text"
-          pInputText
-          class="inputfield w-full"
-          formControlName="title"
-        />
-      </div>
-      <div class="field col-12 md:col-6">
-        <label for="title">Product Type</label>
-        <input
-          type="text"
-          pInputText
-          class="inputfield w-full"
-          formControlName="title"
-        />
-      </div>
-    </div>
-    <div class="field col-12">
-      <label for="content">Description</label>
-
-      <textarea
-        type="text"
-        class="inputfield w-full"
-        formControlName="title"
-        pInputTextarea
-      ></textarea>
-    </div>
-    <div class="col-12">
-      <ng-container *ngIf="!createForm && postHasImage">
-        <div class="mb-1">
-          <div class="flex justify-content-evenly align-items-center">
-            <div class="font-bold">Current Image</div>
-            <button
-              pButton
-              pTooltip="Remove current image"
-              class="p-button p-button-text p-button-rounded p-button-danger"
-              icon="pi pi-trash"
-              clickConfirmation
-              (onConfirm)="removeImage()"
-            ></button>
-          </div>
-          <div
-            class="
-              flex
-              justify-content-center
-              align-items-center
-              border-solid
-              p-1
-              border-200
-            "
-          >
-            <img
-              [src]="marketPost?.images?.[0]?.image"
-              alt=""
-              class="h-15rem"
-            />
-          </div>
+<ng-container [formGroup]="productAdForm">
+  <div class="fluid formgrid grid p-3">
+    <ng-container formGroupName="product">
+      <div class="flex flex-column md:flex-row w-full">
+        <!-- the product details -->
+        <div class="field col-12 md:col-6">
+          <label for="name">Product Name</label>
+          <input
+            type="text"
+            pInputText
+            class="inputfield w-full"
+            formControlName="name"
+            placeholder="Enter product name"
+          />
         </div>
-      </ng-container>
-      <label for="imageUpload">Product Image Upload</label>
-      <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
+        <div class="field col-12 md:col-6">
+          <label for="price">Price</label>
+          <br />
+          <p-inputNumber
+            formControlName="price"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            inputId="horizontal"
+            spinnerMode="horizontal"
+            [step]="1"
+            [min]="1"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+            mode="currency"
+            currency="GHs"
+            styleClass="w-full"
+          >
+          </p-inputNumber>
+        </div>
+      </div>
+      <div class="field col-12">
+        <label for="description">Description</label>
+        <textarea
+          type="text"
+          class="inputfield w-full"
+          formControlName="description"
+          pInputTextarea
+          placeholder="Enter a description"
+        ></textarea>
+      </div>
+      <div class="flex flex-column md:flex-row w-full">
+        <div class="field col-12 md:col-4">
+          <label for="brand">Brand</label>
+          <input
+            type="text"
+            pInputText
+            class="inputfield w-full"
+            formControlName="brand"
+            placeholder="Enter a brand name if applicable"
+          />
+        </div>
+        <div class="field col-12 md:col-4">
+          <label for="tags">Choose Tags</label>
+          <app-tag-autocomplete [selectedTags]="tags"></app-tag-autocomplete>
+        </div>
+        <div class="field col-12 md:col-4">
+          <label for="product_type">Select Product Type</label>
+          <app-product-type-autocomplete
+            [selectedProductType]="productType"
+          ></app-product-type-autocomplete>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <ng-container *ngIf="!createForm && postHasImage">
+          <div class="mb-1">
+            <div class="font-bold">Current Images</div>
+            <div
+              class="
+                w-full
+                flex
+                justify-content-center
+                align-items-center
+                border-solid
+                p-1
+                border-200
+                overflow-x-auto
+              "
+            >
+              <div *ngFor="let image of productAd.product.images">
+                <img [src]="image" alt="" class="h-15rem w-2 mr-2" />
+                <button
+                  pButton
+                  pTooltip="Remove image"
+                  class="
+                    p-button p-button-text p-button-rounded p-button-danger
+                    top-50
+                  "
+                  icon="pi pi-trash"
+                  clickConfirmation
+                  (onConfirm)="removeImage()"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <label for="imageUpload">Product Image Upload</label>
+        <app-image-upload #imageUpload [multiple]="true"></app-image-upload>
+      </div>
+    </ng-container>
+
+    <div class="flex flex-column md:flex-row w-full field mt-3">
+      <div class="field col-12 md:col-3">
+        <label for="gh_post">Ghana Post Address</label>
+        <p-inputMask
+          styleClass="w-full"
+          formControlName="gh_post"
+          mask="aa-999-9999"
+          placeholder="AA-001-1010"
+        ></p-inputMask>
+      </div>
+
+      <div class="field col">
+        <label for="location">Location</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="location"
+          placeholder="Where are you located?"
+        />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="district">District</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="district"
+          placeholder="Choose a district"
+        />
+      </div>
+    </div>
+
+    <div class="field flex flex-column md:flex-row w-full">
+      <div class="field col-12 md:col-6">
+        <label for="cellphone">Phone Number</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="cellphone"
+          placeholder="Enter your phone number"
+        />
+      </div>
     </div>
   </div>
 
@@ -120,7 +159,7 @@
       type="button"
       icon="pi pi-save"
       [label]="(createForm ? 'Add' : 'Edit') + ' MarketPost'"
-      [disabled]="marketForm.invalid"
+      [disabled]="productAdForm.invalid"
       (click)="onAddOrUpdateMarketPost()"
     ></button>
     <button

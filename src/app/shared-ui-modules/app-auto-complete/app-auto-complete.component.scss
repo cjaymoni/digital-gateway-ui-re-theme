@@ -4,6 +4,10 @@
     p-autoComplete,
     .p-autocomplete-multiple-container {
       width: 100%;
+
+      span.p-autocomplete {
+        width: 100%;
+      }
     }
   }
 }

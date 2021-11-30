@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { AppUploadedImage } from '../models/article.model';
+import { serialize } from 'object-to-formdata';
 
 export class ResourceService {
   constructor(protected http: HttpClient, protected endpoint: string) {}
@@ -52,7 +53,8 @@ export class ResourceService {
     object: any,
     imageToUpload?: File | AppUploadedImage[] | File[] | any
   ) {
-    const formData = new FormData();
+    const formData = serialize(object);
+
     if (imageToUpload) {
       if (Array.isArray(imageToUpload)) {
         // array means image didnt change so use same value
@@ -64,17 +66,6 @@ export class ResourceService {
       }
     } else {
       formData.append('images', '');
-    }
-    for (const key in object) {
-      const data = (object as any)[key];
-
-      if (Array.isArray(data)) {
-        if (data.length > 0) {
-          data.forEach(v => formData.append(key, v));
-        }
-      } else {
-        formData.append(key, data);
-      }
     }
 
     return formData;

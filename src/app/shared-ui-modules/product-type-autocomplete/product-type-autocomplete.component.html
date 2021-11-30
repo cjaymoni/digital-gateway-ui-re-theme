@@ -1,0 +1,9 @@
+<app-auto-complete
+  [control]="selectedProductType"
+  [suggestions]="(productTypes$ | async) || []"
+  (searchEvent)="searchProductType($event.query)"
+  [multiple]="false"
+  [forceSelection]="true"
+  [dropdown]="true"
+  placeholder="Type a product type name"
+></app-auto-complete>
