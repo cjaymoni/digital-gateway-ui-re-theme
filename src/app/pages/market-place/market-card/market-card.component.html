@@ -1,11 +1,14 @@
 <p-card
   *ngIf="productAd"
   [header]="productAd.product.name"
-  styleClass="shadow-6 article-card p-2 w-full scalein animation-duration-500 justify-content-between"
+  styleClass="shadow-6 article-card p-2 w-full fadein animation-duration-500 justify-content-between"
 >
   <ng-template pTemplate="header">
     <!-- static image -->
-    <img alt="Card" src="assets/img.png" />
+    <div
+      class="div-with-image-background"
+      [style.backgroundImage]="backgroundImage"
+    ></div>
   </ng-template>
 
   <ng-template pTemplate="footer">

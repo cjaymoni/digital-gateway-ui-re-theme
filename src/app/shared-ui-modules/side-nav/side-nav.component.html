@@ -1,6 +1,8 @@
-<ng-container *ngIf="selectedMenu$ | async">
-  <p-tieredMenu
-    [model]="(subMenuItems$ | async) || []"
-    styleClass="surface-800 text-white border-noround border-none"
-  ></p-tieredMenu>
-</ng-container>
+<div class="h-full">
+  <ng-container *ngIf="selectedMenu$ | async">
+    <p-tieredMenu
+      [model]="(subMenuItems$ | async) || []"
+      styleClass="border-noround border-none p-2"
+    ></p-tieredMenu>
+  </ng-container>
+</div>

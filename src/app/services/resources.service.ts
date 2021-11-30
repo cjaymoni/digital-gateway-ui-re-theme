@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import { serialize } from '../helpers/serializer';
 import { AppUploadedImage } from '../models/article.model';
-import { serialize } from 'object-to-formdata';
 
 export class ResourceService {
   constructor(protected http: HttpClient, protected endpoint: string) {}
@@ -51,21 +51,42 @@ export class ResourceService {
 
   protected getFormDataFromObject(
     object: any,
-    imageToUpload?: File | AppUploadedImage[] | File[] | any
+    imageToUpload?: File | AppUploadedImage[] | File[] | any,
+    propertyNameToAppend = ''
   ) {
     const formData = serialize(object);
 
     if (imageToUpload) {
-      if (Array.isArray(imageToUpload)) {
+      if (Array.isArray(imageToUpload) && imageToUpload.length > 0) {
+        imageToUpload.forEach((imgToUpload, index) => {
+          // determine if it is old or new
+          // old images already have a title and image property
+
+          const oldImage = Boolean(imgToUpload.title && imgToUpload.image);
+
+          formData.append(
+            `${propertyNameToAppend}images[${index}]image`,
+            oldImage ? imgToUpload.image : imgToUpload
+          );
+          formData.append(
+            `${propertyNameToAppend}images[${index}]title`,
+            oldImage ? imgToUpload.title : imgToUpload.name
+          );
+        });
         // array means image didnt change so use same value
-        formData.append('images[0]image', imageToUpload[0].image);
-        formData.append('images[0]title', imageToUpload[0].title);
       } else {
-        formData.append('images[0]image', imageToUpload, imageToUpload.name);
-        formData.append('images[0]title', imageToUpload.name);
+        formData.append(
+          propertyNameToAppend + 'images[0]image',
+          imageToUpload,
+          imageToUpload.name
+        );
+        formData.append(
+          propertyNameToAppend + 'images[0]title',
+          imageToUpload.name
+        );
       }
     } else {
-      formData.append('images', '');
+      formData.append(propertyNameToAppend + 'images', '');
     }
 
     return formData;

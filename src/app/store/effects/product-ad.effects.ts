@@ -35,8 +35,8 @@ export class ProductAdEffects {
       switchMap(({ searchParams }) =>
         this.productAdService.searchResource(searchParams).pipe(
           map((productAds: ProductAd[]) =>
-            productAdActions.fetchSuccessful({
-              productAds,
+            productAdActions.selectProductAd({
+              productAd: productAds[0],
             })
           ),
           catchError(error => {

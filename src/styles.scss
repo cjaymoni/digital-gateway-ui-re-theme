@@ -1,13 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import 'primeng/resources/themes/mdc-light-deeppurple/theme.css';
 @import 'src/styles/quill-editor';
 @import '~ngx-sharebuttons/themes/default';
 
-:root {
-  --primary-color: #2196f3;
-  --box-shadow: #a6d5fa;
-}
 body {
   margin: 0;
 }
@@ -15,4 +10,14 @@ body {
 .div-with-background-image {
   background-repeat: no-repeat;
   background-size: cover;
+
+  &:hover {
+    background-size: contain;
+  }
+}
+
+.p-menuitem-link-active {
+  span {
+    color: red !important;
+  }
 }

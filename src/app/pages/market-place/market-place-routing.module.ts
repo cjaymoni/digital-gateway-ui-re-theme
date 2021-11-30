@@ -20,6 +20,11 @@ const routes: Routes = [
     component: MarketPostFormComponent,
     canActivate: [MarketPlaceGuard],
   },
+  {
+    path: 'edit/:id',
+    component: MarketPostFormComponent,
+    canActivate: [MarketPlaceGuard],
+  },
 ];
 
 @NgModule({

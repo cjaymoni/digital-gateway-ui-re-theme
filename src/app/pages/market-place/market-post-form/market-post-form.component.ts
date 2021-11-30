@@ -11,10 +11,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { filter, Subscription, tap } from 'rxjs';
 import { ProductAd } from 'src/app/models/product-ad.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ImageUploadComponent } from 'src/app/shared-ui-modules/image-upload/image-upload.component';
 import { productAdActions } from 'src/app/store/actions/product-ad.actions';
+import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
 
 @Component({
   selector: 'app-market-post-form',
@@ -28,6 +30,9 @@ export class MarketPostFormComponent implements OnInit {
 
   createForm = true;
   productAdForm!: FormGroup;
+
+  // selectedProductAd$ =
+  subscription!: Subscription;
 
   productAd!: ProductAd;
 
@@ -54,6 +59,8 @@ export class MarketPostFormComponent implements OnInit {
         product_type: [''],
       }),
     });
+
+    this.subscription = this.getProductAdToEditSubscription();
   }
   get tags() {
     return this.productAdForm.get('product.tags') as FormControl;
@@ -84,6 +91,9 @@ export class MarketPostFormComponent implements OnInit {
       this.store.dispatch(
         productAdActions.addProductAd({
           productAd: { ...productAdFromForm, author: 1 },
+          imagesToUpload: (
+            this.imageUploadComponent?.getFilesToUpload() || []
+          ).concat(this.images.value || []),
         })
       );
     }
@@ -91,5 +101,19 @@ export class MarketPostFormComponent implements OnInit {
 
   goBack() {
     this.navigator.goBack();
+  }
+
+  private getProductAdToEditSubscription() {
+    return this.store
+      .select(productAdSelectors.selectedProductAd)
+      .pipe(
+        filter(data => !!data),
+        tap((productAd: ProductAd) => {
+          this.productAdForm.patchValue(productAd);
+          this.productAd = productAd;
+          this.createForm = false;
+        })
+      )
+      .subscribe();
   }
 }
