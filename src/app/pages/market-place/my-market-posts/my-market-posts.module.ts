@@ -4,6 +4,7 @@ import { MyMarketPostsComponent } from './my-market-posts.component';
 import { AppTableModule } from 'src/app/shared-ui-modules/app-table/app-table.module';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
+import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { TooltipModule } from 'primeng/tooltip';
     AppTableModule,
     ButtonModule,
     TooltipModule,
+    AppPipesModule,
   ],
-  declarations: [MyMarketPostsComponent]
+  declarations: [MyMarketPostsComponent],
 })
-export class MyMarketPostsModule { }
+export class MyMarketPostsModule {}
