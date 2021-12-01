@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, filter, map, switchMap, take } from 'rxjs';
+import { TagType } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { Tag } from 'src/app/models/tag.model';
 import { tagActions } from 'src/app/store/actions/tag.actions';
@@ -21,12 +22,15 @@ import { tagSelectors } from 'src/app/store/selectors/tag.selectors';
 })
 export class TagAutocompleteComponent implements OnInit {
   @Input() selectedTags = new FormControl();
+
+  @Input() tagType = TagType.article;
+
   searchQuery$ = new BehaviorSubject('');
 
   tags$ = this.searchQuery$.pipe(
     filter(query => !!query),
     switchMap(query =>
-      this.store.select(tagSelectors.getByName(query)).pipe(
+      this.store.select(tagSelectors.getTagByName(query, this.tagType)).pipe(
         map((tags: Tag[]) => {
           const tagsArray = [...tags];
           return tagsArray.map(tag => {
@@ -64,6 +68,7 @@ export class TagAutocompleteComponent implements OnInit {
         tag: {
           name: typedQuery,
           slug: slugify(typedQuery),
+          tag_type: this.tagType,
         },
       })
     );

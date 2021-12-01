@@ -1,7 +1,16 @@
 <ng-container [formGroup]="productAdForm">
   <div class="fluid formgrid grid p-3">
-    <ng-container formGroupName="product">
-      <div class="flex flex-column md:flex-row w-full">
+    <div class="flex flex-column md:flex-row w-full">
+      <div class="col-12 md:col-3 align-items-end justify-content-end">
+        <label for="adType">Select Ad Type</label>
+        <p-selectButton
+          [options]="adTypes"
+          formControlName="ad_type"
+          optionLabel="name"
+          styleClass="mt-2 customSelectButton"
+        ></p-selectButton>
+      </div>
+      <ng-container formGroupName="product">
         <!-- the product details -->
         <div class="field col-12 md:col-6">
           <label for="name">Product Name</label>
@@ -13,7 +22,7 @@
             placeholder="Enter product name"
           />
         </div>
-        <div class="field col-12 md:col-6">
+        <div class="field col-12 md:col-3">
           <label for="price">Price</label>
           <br />
           <p-inputNumber
@@ -29,10 +38,13 @@
             mode="currency"
             currency="GHs"
             styleClass="w-full"
+            inputStyleClass="w-full"
           >
           </p-inputNumber>
         </div>
-      </div>
+      </ng-container>
+    </div>
+    <ng-container formGroupName="product">
       <div class="field col-12">
         <label for="description">Description</label>
         <textarea
@@ -56,7 +68,10 @@
         </div>
         <div class="field col-12 md:col-4">
           <label for="tags">Choose Tags</label>
-          <app-tag-autocomplete [selectedTags]="tags"></app-tag-autocomplete>
+          <app-tag-autocomplete
+            [selectedTags]="tags"
+            [tagType]="adTagType"
+          ></app-tag-autocomplete>
         </div>
         <div class="field col-12 md:col-4">
           <label for="product_type">Select Product Type</label>

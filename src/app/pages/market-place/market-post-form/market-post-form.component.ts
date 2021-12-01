@@ -3,6 +3,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -11,7 +12,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { filter, Subscription, tap } from 'rxjs';
+import { filter, Subscription, take, tap } from 'rxjs';
+import { TagType } from 'src/app/config/app-config';
 import { AppUploadedImage } from 'src/app/models/article.model';
 import { ProductAd } from 'src/app/models/product-ad.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -25,7 +27,7 @@ import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors
   styleUrls: ['./market-post-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MarketPostFormComponent implements OnInit {
+export class MarketPostFormComponent implements OnInit, OnDestroy {
   @ViewChild('imageUpload', { static: true })
   imageUploadComponent: ImageUploadComponent | null = null;
 
@@ -37,11 +39,28 @@ export class MarketPostFormComponent implements OnInit {
 
   productAd!: ProductAd;
 
+  adTagType = TagType.ad;
+
+  adTypes = [
+    {
+      name: 'Bid',
+      value: 'bid',
+    },
+    {
+      name: 'Offer',
+      value: 'offer',
+    },
+  ];
+
   constructor(
     private fb: FormBuilder,
     private navigator: NavigatorService,
     private store: Store
   ) {}
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 
   ngOnInit() {
     this.productAdForm = this.fb.group({
@@ -50,6 +69,8 @@ export class MarketPostFormComponent implements OnInit {
       cellphone: [],
       district: [],
       email: [],
+      expires: [],
+      ad_type: [this.adTypes[0], [Validators.required]],
       product: this.fb.group({
         name: ['', [Validators.required]],
         description: ['', Validators.required],
@@ -87,10 +108,11 @@ export class MarketPostFormComponent implements OnInit {
 
   onAddOrUpdateMarketPost() {
     if (this.productAdForm.valid) {
-      const productAdFromForm = this.productAdForm.value;
+      const productAdFromForm = { ...this.productAdForm.value };
       productAdFromForm.product.tags = this.tags.value?.map((t: any) => t.id);
       productAdFromForm.product.product_type = this.productType.value?.id;
-      productAdFromForm.product.id = this.productAd.product.id;
+      productAdFromForm.product.id = this.productAd?.product?.id;
+      productAdFromForm.ad_type = this.productAdForm.value.ad_type.value;
 
       if (this.createForm) {
         this.store.dispatch(
@@ -102,15 +124,15 @@ export class MarketPostFormComponent implements OnInit {
           })
         );
       } else {
+        this.store.dispatch(
+          productAdActions.editProductAd({
+            productAd: { ...productAdFromForm, author: 1 },
+            imagesToUpload: (
+              this.imageUploadComponent?.getFilesToUpload() || []
+            ).concat(this.images.value || []),
+          })
+        );
       }
-      this.store.dispatch(
-        productAdActions.editProductAd({
-          productAd: { ...productAdFromForm, author: 1 },
-          imagesToUpload: (
-            this.imageUploadComponent?.getFilesToUpload() || []
-          ).concat(this.images.value || []),
-        })
-      );
     }
   }
 

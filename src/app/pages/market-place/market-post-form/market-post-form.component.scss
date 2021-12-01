@@ -2,3 +2,13 @@
   justify-items: flex-end;
   align-items: flex-end;
 }
+
+:host ::ng-deep {
+  .customSelectButton {
+    div:not(.p-highlight) {
+      span {
+        opacity: 0.4;
+      }
+    }
+  }
+}
