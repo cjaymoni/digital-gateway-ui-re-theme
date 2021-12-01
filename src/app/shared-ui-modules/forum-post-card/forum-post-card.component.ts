@@ -1,16 +1,24 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+} from '@angular/core';
+import { Forum } from 'src/app/models/forum.model';
+import { Store } from '@ngrx/store';
+import { NavigatorService } from 'src/app/services/navigator.service';
+import { forumActions } from '../../store/actions/forum.actions';
 
 @Component({
   selector: 'app-forum-post-card',
   templateUrl: './forum-post-card.component.html',
   styleUrls: ['./forum-post-card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForumPostCardComponent implements OnInit {
+  @Input() forum: Forum | null = null;
 
-  constructor() { }
+  constructor(private store: Store, private navigator: NavigatorService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
