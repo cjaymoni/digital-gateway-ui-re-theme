@@ -1,0 +1,54 @@
+<div class="text-center flex justify-content-between">
+  <div>MY FORUMS</div>
+
+  <button
+    pButton
+    class="align-self-end p-btn p-btn-lg"
+    icon="pi pi-plus"
+    label="Add New Forum"
+    (click)="goToAddForumPage()"
+  ></button>
+</div>
+<app-table
+  [data]="(myForums$ | async) || []"
+  [columnsDefinition]="columns"
+  [actionTemplate]="actions"
+  [showAction]="true"
+></app-table>
+
+<ng-template #actions let-forum>
+  <div class="flex justify-content-between">
+    <button
+      class="p-button p-button-rounded p-button-danger mr-3"
+      pButton
+      tooltipPosition="bottom"
+      pTooltip="View Forum"
+      (click)="viewForum(forum)"
+      icon="pi pi-eye"
+    ></button>
+
+    <button
+      class="p-button p-button-info p-button-rounded mr-auto"
+      pButton
+      pTooltip="Edit Forum"
+      tooltipPosition="bottom"
+      icon="pi pi-pencil"
+      (click)="editForum(forum)"
+    ></button>
+  </div>
+</ng-template>
+
+<ng-template #statusTemplate let-status>
+  <!-- [severity]="PublishedStatusMapping[status]" -->
+  <p-message [text]="status" severity="danger"></p-message>
+</ng-template>
+
+<ng-template #tagsTemplate let-tags>
+  <div
+    class="flex flex-column flex-wrap justify-content-center align-items-center"
+  >
+    <ng-container *ngFor="let tag of tags">
+      <p-tag styleClass="mb-1" [value]="tag.name"></p-tag>
+    </ng-container>
+  </div>
+</ng-template>
