@@ -10,7 +10,18 @@ const routes: Routes = [
         module => module.ArticlesModule
       ),
   },
-  { path: 'market-place', loadChildren: () => import('./pages/market-place/market-place.module').then(m => m.MarketPlaceModule) },
+  {
+    path: 'market-place',
+    loadChildren: () =>
+      import('./pages/market-place/market-place.module').then(
+        m => m.MarketPlaceModule
+      ),
+  },
+  {
+    path: 'forum',
+    loadChildren: () =>
+      import('./pages/forum/forum.module').then(m => m.ForumModule),
+  },
 ];
 
 @NgModule({

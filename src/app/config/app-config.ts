@@ -19,6 +19,8 @@ export enum FeatureNamesForStore {
   ProductAd = 'productAd',
   Districts = 'district',
   ProductType = 'productType',
+  Forum = 'forum',
+  ForumPost = 'forumPost',
 }
 
 export const SLUG_PREFIX = 'read';
