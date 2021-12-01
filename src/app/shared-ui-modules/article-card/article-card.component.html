@@ -1,24 +1,49 @@
-<div (click)="openArticle()">
-  <p-card
-    *ngIf="article"
-    styleClass="shadow-6 article-card p-2 w-full scalein animation-duration-500 justify-content-between"
-  >
-    <ng-template pTemplate="header">
-      <div class="flex justify-content-center flex-wrap">
-        <div class="absolute p-4 text-white font-bold">
-          <h3 class="bg-gray-500 px-4">
-            {{ article.category?.name }}
-          </h3>
-          <h1>
-            {{ article.title }}
-          </h1>
-        </div>
-      </div>
+<div
+  *ngIf="article"
+  (click)="openArticle()"
+  [pTooltip]="article.title"
+  tooltipPosition="bottom"
+  class="
+    shadow-7
+    p-0
+    w-full
+    scalein
+    animation-duration-500
+    justify-content-between
+    relative
+    article-card
+    overflow-hidden
+    h-12rem
+  "
+>
+  <app-article-image
+    [images]="article.images || []"
+    [title]="article.title?.substr(0, 1) | uppercase"
+    [coverBackground]="true"
+  ></app-article-image>
+  <div class="tint h-full w-full absolute z-0"></div>
 
-      <app-article-image
-        [images]="article?.images || []"
-        [title]="article.title.substr(0, 1) | uppercase"
-      ></app-article-image>
-    </ng-template>
-  </p-card>
+  <!-- <div class="absolute p-4 text-white font-bold bottom-0"> -->
+  <div class="bg-gray-500 absolute top-0 text-white w-max shadow-2 z-1 p-1">
+    {{ article.category?.name }}
+  </div>
+  <div
+    class="text-white w-max text-sm font-italic z-1 p-1 absolute article-date"
+  >
+    {{ article.updated_on | date: 'longDate' }}
+  </div>
+  <div
+    class="
+      absolute
+      bottom-0
+      text-white text-2xl
+      z-1
+      article-title
+      overflow-hidden
+      text-center
+      p-1
+    "
+  >
+    {{ article.title }}
+  </div>
 </div>
