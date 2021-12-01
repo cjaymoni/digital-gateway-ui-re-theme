@@ -67,7 +67,7 @@ export const initialState: Readonly<MenuItemFromBackend> = {
         {
           label: 'Review My Ads',
           id: 13,
-          routerLink: [Pages.MyMarketPlaceItems],
+          routerLink: [Pages.MarketPlace, Pages.MyMarketPlaceItems],
         },
       ],
     },
