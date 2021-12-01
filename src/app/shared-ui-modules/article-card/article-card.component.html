@@ -1,32 +1,24 @@
-<p-card
-  *ngIf="article"
-  [header]="article.title"
-  [subheader]="article.slug"
-  styleClass="shadow-6 article-card p-2 w-full scalein animation-duration-500 justify-content-between"
->
-  <ng-template pTemplate="header">
-    <div class="article-category p-1 bg-gray-900 text-white">
-      {{ article.category?.name }}
-    </div>
-    <app-article-image
-      [images]="article?.images || []"
-      [title]="article.title.substr(0, 1) | uppercase"
-    ></app-article-image>
-  </ng-template>
+<div (click)="openArticle()">
+  <p-card
+    *ngIf="article"
+    styleClass="shadow-6 article-card p-2 w-full scalein animation-duration-500 justify-content-between"
+  >
+    <ng-template pTemplate="header">
+      <div class="flex justify-content-center flex-wrap">
+        <div class="absolute p-4 text-white font-bold">
+          <h3 class="bg-gray-500 px-4">
+            {{ article.category?.name }}
+          </h3>
+          <h1>
+            {{ article.title }}
+          </h1>
+        </div>
+      </div>
 
-  <ng-template pTemplate="footer">
-    <div class="flex justify-content-center align-self-end">
-      <button
-        pButton
-        class="
-          p-button-outlined p-button-danger
-          justify-content-center
-          align-self-end
-        "
-        label="Read More"
-        icon="pi pi-book"
-        (click)="openArticle()"
-      ></button>
-    </div>
-  </ng-template>
-</p-card>
+      <app-article-image
+        [images]="article?.images || []"
+        [title]="article.title.substr(0, 1) | uppercase"
+      ></app-article-image>
+    </ng-template>
+  </p-card>
+</div>
