@@ -54,6 +54,7 @@ export class ResourceService {
     imageToUpload?: File | AppUploadedImage[] | File[] | any,
     propertyNameToAppend = ''
   ) {
+    delete object['images'];
     const formData = serialize(object);
 
     if (imageToUpload) {
@@ -62,7 +63,7 @@ export class ResourceService {
           // determine if it is old or new
           // old images already have a title and image property
 
-          const oldImage = Boolean(imgToUpload.title && imgToUpload.image);
+          const oldImage = Boolean(imgToUpload.id);
 
           formData.append(
             `${propertyNameToAppend}images[${index}]image`,
@@ -74,17 +75,18 @@ export class ResourceService {
           );
         });
         // array means image didnt change so use same value
-      } else {
-        formData.append(
-          propertyNameToAppend + 'images[0]image',
-          imageToUpload,
-          imageToUpload.name
-        );
-        formData.append(
-          propertyNameToAppend + 'images[0]title',
-          imageToUpload.name
-        );
       }
+      // else {
+      //   formData.append(
+      //     propertyNameToAppend + 'images[0]image',
+      //     imageToUpload,
+      //     imageToUpload.name
+      //   );
+      //   formData.append(
+      //     propertyNameToAppend + 'images[0]title',
+      //     imageToUpload.name
+      //   );
+      // }
     } else {
       formData.append(propertyNameToAppend + 'images', '');
     }

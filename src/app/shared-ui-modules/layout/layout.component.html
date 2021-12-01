@@ -6,12 +6,23 @@
     <app-top-nav></app-top-nav>
   </nav>
   <div class="col-12 grid pt-0 pb-0">
-    <div class="hidden col-2 lg:flex surface-800 p-0">
+    <div class="hidden col-2 lg:flex p-0 leftside">
       <app-side-nav></app-side-nav>
     </div>
 
-    <div class="col-12 md:col-8 lg:col-8 grid justify-content-center h-full">
-      <div class="col-12 p-2">
+    <div
+      class="
+        col-12
+        md:col-8
+        lg:col-8
+        grid
+        justify-content-center
+        h-full
+        pt-5
+        px-3
+      "
+    >
+      <div class="col-12 h-full">
         <router-outlet></router-outlet>
       </div>
       <!-- <div class="leftcontent col-12 md:hidden">left content</div> -->
@@ -20,7 +31,7 @@
       </div>
     </div>
 
-    <div class="hidden lg:flex md:col-4 lg:col-2 h-full">
+    <div class="hidden lg:flex md:col-4 lg:col-2 h-full pt-5">
       <app-right-nav-card></app-right-nav-card>
     </div>
   </div>

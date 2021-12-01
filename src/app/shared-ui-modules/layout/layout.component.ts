@@ -15,10 +15,6 @@ import { AppAlertService } from '../alerts/service/app-alert.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent implements OnInit {
-  @HostListener('window:resize')
-  calculateHeight() {
-    console.log('resized');
-  }
   RouterOutlets = RouterOutlets;
 
   constructor() {}

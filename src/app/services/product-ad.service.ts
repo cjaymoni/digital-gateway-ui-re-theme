@@ -30,7 +30,7 @@ export class ProductAdService extends ResourceService {
       imagesToUpload,
       this.PRODUCT_PROPERTY
     );
-    return this.updateResourcePut(dataToStore, productAd.id).pipe(
+    return this.updateResourcePut(dataToStore, productAd.product.id).pipe(
       map(data => data as ProductAd)
     );
   }

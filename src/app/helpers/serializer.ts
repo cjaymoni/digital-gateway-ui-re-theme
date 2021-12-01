@@ -44,7 +44,7 @@ function initCfg(value: any) {
   return isUndefined(value) ? false : value;
 }
 
-export function serialize(obj: any, cfg?: any, fd?: any, pre?: any) {
+export function serialize(obj: any, cfg?: any, fd?: FormData, pre = '') {
   cfg = cfg || {};
   fd = fd || new FormData();
 
@@ -62,7 +62,7 @@ export function serialize(obj: any, cfg?: any, fd?: any, pre?: any) {
     }
   } else if (isBoolean(obj)) {
     if (cfg.booleansAsIntegers) {
-      fd.append(pre, obj ? 1 : 0);
+      fd.append(pre, obj ? '1' : '0');
     } else {
       fd.append(pre, obj);
     }
@@ -96,7 +96,8 @@ export function serialize(obj: any, cfg?: any, fd?: any, pre?: any) {
 
       serialize(value, cfg, fd, key);
     });
-  } else {
+  } else if (!pre.includes('images')) {
+    // images will be added subsequently using a different method
     fd.append(pre, obj);
   }
 

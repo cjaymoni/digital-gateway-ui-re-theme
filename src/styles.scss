@@ -3,6 +3,10 @@
 @import 'src/styles/quill-editor';
 @import '~ngx-sharebuttons/themes/default';
 
+:root {
+  --menu-background: #27272a;
+}
+
 body {
   margin: 0;
 }

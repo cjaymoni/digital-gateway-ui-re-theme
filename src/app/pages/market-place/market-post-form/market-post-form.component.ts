@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter, Subscription, tap } from 'rxjs';
+import { AppUploadedImage } from 'src/app/models/article.model';
 import { ProductAd } from 'src/app/models/product-ad.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ImageUploadComponent } from 'src/app/shared-ui-modules/image-upload/image-upload.component';
@@ -78,8 +79,10 @@ export class MarketPostFormComponent implements OnInit {
     return this.productAdForm.get('product.product_type') as FormControl;
   }
 
-  removeImage() {
-    this.images.setValue([]);
+  removeImage(index: number) {
+    const images = [...this.images.value] as AppUploadedImage[];
+    images.splice(index, 1);
+    this.images.setValue(images);
   }
 
   onAddOrUpdateMarketPost() {
@@ -87,9 +90,21 @@ export class MarketPostFormComponent implements OnInit {
       const productAdFromForm = this.productAdForm.value;
       productAdFromForm.product.tags = this.tags.value?.map((t: any) => t.id);
       productAdFromForm.product.product_type = this.productType.value?.id;
+      productAdFromForm.product.id = this.productAd.product.id;
 
+      if (this.createForm) {
+        this.store.dispatch(
+          productAdActions.addProductAd({
+            productAd: { ...productAdFromForm, author: 1 },
+            imagesToUpload: (
+              this.imageUploadComponent?.getFilesToUpload() || []
+            ).concat(this.images.value || []),
+          })
+        );
+      } else {
+      }
       this.store.dispatch(
-        productAdActions.addProductAd({
+        productAdActions.editProductAd({
           productAd: { ...productAdFromForm, author: 1 },
           imagesToUpload: (
             this.imageUploadComponent?.getFilesToUpload() || []
