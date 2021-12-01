@@ -149,6 +149,7 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
           this.productAdForm.patchValue(productAd);
           this.productAd = productAd;
           this.createForm = false;
+          this.navigator.setPanelTitle('Edit Product');
         })
       )
       .subscribe();
