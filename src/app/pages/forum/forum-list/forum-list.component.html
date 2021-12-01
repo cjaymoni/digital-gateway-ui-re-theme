@@ -1,0 +1,10 @@
+<app-listing-page
+  [loading]="loadingForums$ | async"
+  title="FORUMS"
+  [itemTemplate]="forumCardTemplate"
+  [items]="forums$ | async"
+></app-listing-page>
+
+<ng-template #forumCardTemplate let-forum>
+  <app-forum-post-card [forum]="forum"></app-forum-post-card>
+</ng-template>
