@@ -18,4 +18,8 @@ export class MarketCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  get backgroundImage() {
+    return `url(${this.productAd?.product.images?.[0]?.image})`;
+  }
 }

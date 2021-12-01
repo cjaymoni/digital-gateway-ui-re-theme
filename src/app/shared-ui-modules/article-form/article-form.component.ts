@@ -101,7 +101,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
             article: { ...toSend, id: this.article.id },
             imageToUpload: this.articleHasImage
               ? this.article.images
-              : this.imageUploadComponent?.getFilesToUpload()?.[0],
+              : this.imageUploadComponent?.getFilesToUpload(),
           })
         );
       }

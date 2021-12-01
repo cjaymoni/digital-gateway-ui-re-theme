@@ -9,18 +9,28 @@ import { ResourceService } from './resources.service';
   providedIn: 'root',
 })
 export class ProductAdService extends ResourceService {
+  PRODUCT_PROPERTY = 'product.';
+
   constructor(http: HttpClient) {
     super(http, ProductAdEndpoint);
   }
 
   createAd(productAd: ProductAd, imagesToUpload?: File[]) {
-    const dataToStore = this.getFormDataFromObject(productAd, imagesToUpload);
+    const dataToStore = this.getFormDataFromObject(
+      productAd,
+      imagesToUpload,
+      this.PRODUCT_PROPERTY
+    );
     return this.storeResource(dataToStore).pipe(map(data => data as ProductAd));
   }
 
   updateAd(productAd: ProductAd, imagesToUpload?: File[]) {
-    const dataToStore = this.getFormDataFromObject(productAd, imagesToUpload);
-    return this.updateResourcePut(dataToStore, productAd.id).pipe(
+    const dataToStore = this.getFormDataFromObject(
+      productAd,
+      imagesToUpload,
+      this.PRODUCT_PROPERTY
+    );
+    return this.updateResourcePut(dataToStore, productAd.product.id).pipe(
       map(data => data as ProductAd)
     );
   }

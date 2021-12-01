@@ -82,18 +82,32 @@
                 overflow-x-auto
               "
             >
-              <div *ngFor="let image of productAd.product.images">
-                <img [src]="image" alt="" class="h-15rem w-2 mr-2" />
+              <div
+                *ngFor="
+                  let image of productAd.product.images;
+                  let index = index
+                "
+                class="h-8rem w-4 mr-2 static"
+              >
+                <!-- src="assets/img.png" -->
+                <img
+                  [src]="image.image"
+                  class="w-full h-full border-round relative"
+                  alt=""
+                />
                 <button
                   pButton
-                  pTooltip="Remove image"
+                  pTooltip="Remove this image"
+                  tooltipPosition="top"
                   class="
-                    p-button p-button-text p-button-rounded p-button-danger
+                    p-button p-button-rounded p-button-danger
                     top-50
+                    left-50
+                    absolute
                   "
                   icon="pi pi-trash"
                   clickConfirmation
-                  (onConfirm)="removeImage()"
+                  (onConfirm)="removeImage(index)"
                 ></button>
               </div>
             </div>

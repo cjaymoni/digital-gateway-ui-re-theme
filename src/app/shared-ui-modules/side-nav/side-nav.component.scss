@@ -1,12 +1,11 @@
 :host ::ng-deep {
   .p-tieredmenu {
+    height: 100%;
     width: 100%;
-    ul > li > a > span.p-menuitem-text {
-      color: white !important;
-    }
   }
 }
 
 :host {
   width: 100%;
+  min-height: 100%;
 }

@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { productAdActions } from 'src/app/store/actions/product-ad.actions';
 import { productTypeActions } from 'src/app/store/actions/product-type.actions';
-import { productTypeSelectors } from 'src/app/store/selectors/product-type.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +29,18 @@ export class MarketPlaceGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    const id = route.params?.['id'];
+
+    if (!!id) {
+      this.store.dispatch(
+        productAdActions.findAndSelectProductAd({
+          searchParams: {
+            product: id,
+          },
+        })
+      );
+    }
+
     return true;
   }
 }

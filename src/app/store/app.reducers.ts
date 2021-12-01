@@ -3,6 +3,8 @@ import { FeatureNamesForStore } from '../config/app-config';
 import { articleReducer } from './reducers/article.reducers';
 import { categoryReducer } from './reducers/category.reducers';
 import { districtReducer } from './reducers/district.reducer';
+import { forumPostReducer } from './reducers/forum-post.reducers';
+import { forumReducer } from './reducers/forum.reducer';
 import { menuItemReducer } from './reducers/menu-items.reducers';
 import { productAdReducer } from './reducers/product-ad.reducers';
 import { productTypeReducer } from './reducers/product-types.reducers';
@@ -19,4 +21,6 @@ export const appReducersMap = {
   [FeatureNamesForStore.ProductAd]: productAdReducer,
   [FeatureNamesForStore.Districts]: districtReducer,
   [FeatureNamesForStore.ProductType]: productTypeReducer,
+  [FeatureNamesForStore.Forum]: forumReducer,
+  [FeatureNamesForStore.ForumPost]: forumPostReducer,
 };

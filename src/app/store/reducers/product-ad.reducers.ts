@@ -10,10 +10,15 @@ export interface ProductAdState extends EntityState<ProductAd> {
   loading: boolean;
   selectedProductAdToEdit: ProductAd | null;
 }
+export function selectId(productAd: ProductAd): string {
+  //In this case this would be optional since primary key is id
+  return productAd.product.id?.toString() || '';
+}
 
 export const productAdEntityAdapter: EntityAdapter<ProductAd> =
   createEntityAdapter<ProductAd>({
     sortComparer: false,
+    selectId,
   });
 
 export const initialState: ProductAdState =
@@ -39,10 +44,10 @@ export const productAdReducer = createReducer(
     return { ...state, loading: false };
   }),
   on(productAdActions.selectProductAd, (state, { productAd }) => {
-    return { ...state, selectedArticle: productAd };
+    return { ...state, selectedProductAd: productAd };
   }),
   on(productAdActions.selectProductAdToEdit, (state, { productAd }) => {
-    return { ...state, selectedArticleToEdit: productAd };
+    return { ...state, selectedProductAdToEdit: productAd };
   }),
   on(productAdActions.addProductAdSuccessful, (state, { productAd }) => {
     return productAdEntityAdapter.addOne(productAd, state);

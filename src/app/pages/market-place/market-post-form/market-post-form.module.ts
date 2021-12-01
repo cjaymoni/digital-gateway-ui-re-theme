@@ -12,6 +12,8 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { CategoryAutocompleteModule } from 'src/app/shared-ui-modules/category-autocomplete/category-autocomplete.module';
 import { DistrictAutoCompleteModule } from 'src/app/shared-ui-modules/district-auto-complete/district-auto-complete.module';
 import { ProductTypeAutocompleteModule } from 'src/app/shared-ui-modules/product-type-autocomplete/product-type-autocomplete.module';
+import { DirectivesModule } from 'src/app/directives/directives.module';
+import { TooltipModule } from 'primeng/tooltip';
 @NgModule({
   imports: [
     CommonModule,
@@ -27,6 +29,8 @@ import { ProductTypeAutocompleteModule } from 'src/app/shared-ui-modules/product
     CategoryAutocompleteModule,
     DistrictAutoCompleteModule,
     ProductTypeAutocompleteModule,
+    DirectivesModule,
+    TooltipModule,
   ],
   declarations: [MarketPostFormComponent],
   exports: [MarketPostFormComponent],

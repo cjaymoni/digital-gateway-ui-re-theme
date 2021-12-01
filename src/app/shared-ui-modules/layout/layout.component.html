@@ -1,17 +1,28 @@
 <app-alert></app-alert>
 <app-toasts></app-toasts>
 <app-dialog></app-dialog>
-<div class="grid justify-content-center align-items-center">
-  <nav class="col-12 topbar">
+<div class="grid h-full">
+  <nav class="topbar w-full">
     <app-top-nav></app-top-nav>
   </nav>
   <div class="col-12 grid pt-0 pb-0">
-    <aside class="hidden col-2 lg:flex sidenav h-screen surface-800 p-0">
+    <div class="hidden col-2 lg:flex p-0 leftside">
       <app-side-nav></app-side-nav>
-    </aside>
+    </div>
 
-    <div class="col-12 md:col-8 lg:col-8 grid justify-content-center">
-      <div class="col-12">
+    <div
+      class="
+        col-12
+        md:col-8
+        lg:col-8
+        grid
+        justify-content-center
+        h-full
+        pt-5
+        px-3
+      "
+    >
+      <div class="col-12 h-full">
         <router-outlet></router-outlet>
       </div>
       <!-- <div class="leftcontent col-12 md:hidden">left content</div> -->
@@ -20,15 +31,14 @@
       </div>
     </div>
 
-    <div class="hidden lg:flex md:col-4 lg:col-2">
+    <div class="hidden lg:flex md:col-4 lg:col-2 h-full pt-5">
       <app-right-nav-card></app-right-nav-card>
     </div>
   </div>
-  <footer class="col-12 footer pt-0">
+  <footer class="col-12 footer p-0">
     <app-footer></app-footer>
   </footer>
-</div>
-<div>
+
   <app-right-overlay-panel>
     <router-outlet name="right-panel"></router-outlet>
   </app-right-overlay-panel>
