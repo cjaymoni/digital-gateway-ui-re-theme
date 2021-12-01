@@ -9,32 +9,40 @@
     (click)="goToAddPostPage()"
   ></button>
 </div>
-<!-- [data]="(myArticles$ | async) || []" -->
 <app-table
-
+[data]="(myMarketAds$ | async) || []"
 [columnsDefinition]="columns"
 [actionTemplate]="actions"
 [showAction]="true"
 ></app-table>
 
-<ng-template #actions let-market>
+<ng-template #actions let-productAd>
 <div class="flex justify-content-between">
   <button
     class="p-button p-button-rounded p-button-danger mr-3"
     pButton
     tooltipPosition="bottom"
     pTooltip="View Market Ad"
-    (click)="viewMarketAd(market)"
+    (click)="viewMarketAd(productAd)"
     icon="pi pi-eye"
   ></button>
 
   <button
-    class="p-button p-button-info p-button-rounded mr-auto"
+    class="p-button p-button-info p-button-rounded mr-3"
     pButton
     pTooltip="Edit Market Ad"
     tooltipPosition="bottom"
     icon="pi pi-pencil"
-    (click)="editMarketAd(market)"
+    (click)="editMarketAd(productAd)"
+  ></button>
+
+  <button
+    class="p-button p-button-danger p-button-rounded mr-auto"
+    pButton
+    pTooltip="Expire Market Ad"
+    tooltipPosition="bottom"
+    icon="pi pi-trash"
+    (click)="expireMarketAd(productAd)"
   ></button>
 </div>
 </ng-template>

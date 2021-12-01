@@ -1,4 +1,10 @@
 import { AfterViewInit, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Pages, PublishedStatusMapping } from 'src/app/config/app-config';
+import { Store } from '@ngrx/store';
+import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
+import { productAdActions } from 'src/app/store/actions/product-ad.actions';
+import { NavigatorService } from 'src/app/services/navigator.service';
+import { ProductAd } from 'src/app/models/product-ad.model';
 
 @Component({
   selector: 'app-my-market-posts',
@@ -7,16 +13,20 @@ import { AfterViewInit, Component, OnInit, ChangeDetectionStrategy } from '@angu
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyMarketPostsComponent implements OnInit, AfterViewInit {
+  myMarketAds$ = this.store.select(productAdSelectors.all);
 
   columns: any[] = [];
 
-  constructor() { }
+  constructor(
+    private store: Store,
+    private navigator: NavigatorService,
+  ) { }
 
   ngAfterViewInit(): void {
     this.columns = [
-      { header: 'PRODUCT', field: '' },
-      { header: 'DESCRIPTION', field: '' },
-      { header: 'PRICE', field: ''},
+      { header: 'PRODUCT', field: 'product', subField: 'name' },
+      { header: 'DESCRIPTION', field: 'product', subField: 'description' },
+      { header: 'PRICE', field: 'product', subField: 'price'},
     ];
   }
 
@@ -25,8 +35,28 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
 
   goToAddPostPage(){}
 
-  viewMarketAd(market: any){}
+  viewMarketAd(productAd: ProductAd){
+    this.selectProductAd(productAd);
+    this.navigator.openPanel(Pages.view, 'Preview Product Ad');
+  }
 
-  editMarketAd(market: any){}
+  editMarketAd(productAd: ProductAd){
+    this.store.dispatch(
+      productAdActions.selectProductAdToEdit({
+        productAd,
+      })
+    );
+    this.navigator.openPanel(Pages.edit, 'Edit Product');
+  }
+
+  expireMarketAd(productAd: ProductAd){}
+
+  private selectProductAd(productAd: ProductAd) {
+    this.store.dispatch(
+      productAdActions.selectProductAd({
+        productAd,
+      })
+    );
+  }
 
 }
