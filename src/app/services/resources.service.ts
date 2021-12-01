@@ -17,7 +17,7 @@ export class ResourceService {
   ): Observable<any[]> {
     return this.http
       .get(`${url}`, { params: { ...otherParams } })
-      .pipe(map(data => data as any[]));
+      .pipe(map((data: any) => data.results as any[]));
   }
 
   storeResource(toStore: any, url = this.endpoint) {
