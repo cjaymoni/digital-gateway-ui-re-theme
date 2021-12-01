@@ -21,4 +21,14 @@ export class ForumPostCardComponent implements OnInit {
   constructor(private store: Store, private navigator: NavigatorService) {}
 
   ngOnInit(): void {}
+
+  openForum() {
+    this.store.dispatch(
+      forumActions.selectForum({
+        forum: this.forum as Forum,
+      })
+    );
+
+    this.navigator.forum.goToReadForumPage(this.forum?.name as string);
+  }
 }

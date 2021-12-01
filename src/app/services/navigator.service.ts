@@ -95,4 +95,7 @@ class ForumRoutes extends AppRoutesConfig {
   constructor(router: Router) {
     super(Pages.Forum, router);
   }
+  goToReadForumPage(forumTitle: string) {
+    this.router.navigate([this.page, `${SLUG_PREFIX}-${forumTitle}`]);
+  }
 }

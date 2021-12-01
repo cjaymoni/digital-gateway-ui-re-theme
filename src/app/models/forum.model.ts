@@ -4,10 +4,11 @@ import { Comment } from './comments.model';
 export interface Forum {
   id?: string | number | any;
   name: string;
-  coverImage: AppUploadedImage[];
-  moderators: Moderator[];
-  tags: any;
-  posts: ForumPost[];
+  coverImage?: AppUploadedImage[];
+  moderators?: Moderator[] | any;
+  tags?: any;
+  posts?: ForumPost[];
+  description?: string;
 }
 
 export interface ForumPost {

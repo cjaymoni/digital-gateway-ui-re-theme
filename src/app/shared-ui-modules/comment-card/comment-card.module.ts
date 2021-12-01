@@ -5,6 +5,7 @@ import { VotesModule } from '../votes/votes.module';
 import { AppPipesModule } from '../../pipes/app-pipes.module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { CommentsModule } from '../comments/comments.module';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [CommentCardComponent],
@@ -13,8 +14,9 @@ import { CommentsModule } from '../comments/comments.module';
     VotesModule,
     CommentsModule,
     AppPipesModule,
-    DirectivesModule
+    DirectivesModule,
+    ButtonModule,
   ],
-  exports :[CommentCardComponent]
+  exports: [CommentCardComponent],
 })
-export class CommentCardModule { }
+export class CommentCardModule {}

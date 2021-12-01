@@ -40,6 +40,8 @@ export const initialState: Readonly<MenuItemFromBackend> = {
     {
       label: 'Forum',
       id: 2,
+      link: [Pages.Forum],
+      linkAndCommand: true,
       items: [
         {
           label: 'Most Read',
@@ -79,7 +81,7 @@ export const initialState: Readonly<MenuItemFromBackend> = {
     {
       label: 'Fourm Posts Moderation',
       id: 15,
-      link: [Pages.Forum, 'my-forum-posts'],
+      link: [Pages.Forum, 'my-forums'],
     },
   ],
   selectedMenu: null,

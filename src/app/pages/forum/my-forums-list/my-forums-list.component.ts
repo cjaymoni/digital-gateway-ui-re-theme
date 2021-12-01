@@ -12,6 +12,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { forumSelectors } from '../../../store/selectors/forum.selectors';
 import { Forum } from '../../../models/forum.model';
+import { Pages } from 'src/app/config/app-config';
 
 @Component({
   selector: 'app-my-forums-list',
@@ -34,16 +35,35 @@ export class MyForumsListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.columns = [
-      { header: 'TITLE', field: 'title' },
-      { header: 'TOTAL COMMENTS', field: 'comment_count' },
-      { header: 'CREATED_BY', field: 'submitter', subField: 'username' },
+      { header: 'TITLE', field: 'name' },
+      { header: 'TAGS', field: 'tags', template: this.tagsTemplate },
     ];
   }
   ngOnInit() {
     this.title.setTitle('My Forums');
   }
 
-  goToAddForumPage() {}
-  viewForum(forum: Forum) {}
-  editForum(forum: Forum) {}
+  goToAddForumPage() {
+    this.navigator.forum.goToAddPage();
+  }
+  viewForum(forum: Forum) {
+    this.selectForum(forum);
+    this.navigator.openPanel(Pages.view, 'Preview Forum');
+  }
+  editForum(forum: Forum) {
+    this.store.dispatch(
+      forumActions.selectForumToEdit({
+        forum,
+      })
+    );
+    this.navigator.openPanel(Pages.edit, 'Edit Forum');
+  }
+
+  private selectForum(forum: Forum) {
+    this.store.dispatch(
+      forumActions.selectForum({
+        forum,
+      })
+    );
+  }
 }
