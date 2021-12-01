@@ -30,8 +30,9 @@ export class MarketPlaceGuard implements CanActivate {
     | boolean
     | UrlTree {
     const id = route.params?.['id'];
+    const idExists = Boolean(id);
 
-    if (!!id) {
+    if (idExists) {
       this.store.dispatch(
         productAdActions.findAndSelectProductAd({
           searchParams: {

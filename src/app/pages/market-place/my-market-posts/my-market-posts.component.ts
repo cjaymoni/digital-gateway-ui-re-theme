@@ -57,7 +57,10 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
         productAd,
       })
     );
-    this.navigator.openPanel(Pages.edit, 'Edit Product');
+    this.navigator.openPanel(
+      [Pages.edit, productAd.product.id?.toString() || ''],
+      'Edit Product'
+    );
   }
 
   expireMarketAd(productAd: ProductAd) {}
