@@ -21,9 +21,17 @@ export class NavigatorService {
     map(cr => cr.includes(RouterOutlets.Right))
   );
 
-  panelTitle$ = new BehaviorSubject('');
+  setPanelTitle(title: string) {
+    this.panelTitle$.next(title);
+  }
 
-  openPanel(navigation: string, title = '') {
+  getPanelTitle() {
+    return this.panelTitle$.asObservable();
+  }
+
+  private panelTitle$ = new BehaviorSubject('');
+
+  openPanel(navigation: string | string[], title = '') {
     this.panelTitle$.next(title);
     this.router.navigate([
       {
@@ -78,6 +86,10 @@ class AppRoutesConfig {
 
   goToViewPage() {
     this.router.navigate([this.page, Pages.view]);
+  }
+
+  goToModerationPage() {
+    this.router.navigate([this.page, Pages.MyArticles]);
   }
 }
 

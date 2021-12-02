@@ -71,7 +71,7 @@
         class="mr-1"
         type="button"
         icon="pi pi-save"
-        [label]="(createForm ? 'Add' : 'Edit') + ' Article'"
+        [label]="(createForm ? 'Add' : 'Update') + ' Article'"
         [disabled]="articleForm.invalid"
         (click)="onAddOrUpdateArticle()"
       ></button>
