@@ -7,12 +7,12 @@ function requireHTTPS(req, res, next) {
 }
 const express = require('express');
 const app = express();
-app.use(requireHTTPS);
+// app.use(requireHTTPS);
 
-app.use(express.static('./dist/msme-ui'));
+app.use(express.static(__dirname + '/dist/MSME-UI'));
 
-app.get('*', function (req, res) {
-  res.sendFile('index.html', { root: './dist/msme-ui' });
+app.get('/*', function (req, res) {
+  res.sendFile('index.html', { root: __dirname + '/dist/MSME-UI' });
 });
 
 const port = process.env.PORT || 8080;
