@@ -31,4 +31,7 @@ export class ForumPostCardComponent implements OnInit {
 
     this.navigator.forum.goToReadForumPage(this.forum?.name as string);
   }
+
+  dislikeForum() {}
+  likeForum() {}
 }

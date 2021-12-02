@@ -4,13 +4,23 @@
     pRipple
     type="button"
     icon="pi pi-thumbs-up"
-    class="p-button-rounded p-button-text p-button-primary"
+    class="p-button-rounded p-button-outlined text-green-700 mr-2"
+    pTooltip="Like"
+    tooltipPosition="bottom"
+    tooltipStyleClass="text-green-700"
+    [disabled]="disableLike"
+    (click)="like()"
   ></button>
   <button
     pButton
     pRipple
     type="button"
     icon="pi pi-thumbs-down"
-    class="p-button-rounded p-button-text p-button-danger"
+    class="p-button-rounded p-button-outlined p-button-danger"
+    pTooltip="Dislike"
+    tooltipPosition="bottom"
+    tooltipStyleClass="text-red-500"
+    [disabled]="disableDislike"
+    (click)="dislike()"
   ></button>
 </div>

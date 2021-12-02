@@ -5,6 +5,7 @@ import { CardModule } from 'primeng/card';
 import { CommentsModule } from '../comments/comments.module';
 import { VotesModule } from '../votes/votes.module';
 import { ButtonModule } from 'primeng/button';
+import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
 
 @NgModule({
   declarations: [ForumPostCardComponent],
@@ -14,6 +15,7 @@ import { ButtonModule } from 'primeng/button';
     CommentsModule,
     VotesModule,
     ButtonModule,
+    AppPipesModule,
   ],
   exports: [ForumPostCardComponent],
 })
