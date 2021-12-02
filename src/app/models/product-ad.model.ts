@@ -17,7 +17,7 @@ export interface ProductAd {
 export interface ProductType {
   name: string;
   description: string;
-  parent: string;
+  parent: string | null;
   id?: number;
 }
 

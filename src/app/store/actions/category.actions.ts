@@ -12,7 +12,10 @@ class CategoryActions {
     props<{ categories: Category[] }>()
   );
 
-  fetchError = createAction(`${this.type} Fetch Error`);
+  fetchError = createAction(
+    `${this.type} Fetch Error`,
+    props<{ error: any }>()
+  );
 
   addCategory = createAction(
     `${this.type} Add Category`,

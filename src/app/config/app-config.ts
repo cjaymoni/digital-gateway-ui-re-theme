@@ -86,3 +86,6 @@ export enum TagType {
   product = 'product',
   ad = 'ad',
 }
+
+export const GenericErrorMessage =
+  'Sorry, an error occurred. Rest assured, it will be fixed';
