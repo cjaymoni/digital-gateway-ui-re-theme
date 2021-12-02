@@ -23,10 +23,17 @@ const routes: Routes = [
       import('./pages/forum/forum.module').then(m => m.ForumModule),
   },
   {
-    path: 'forumPost',
+    path: 'forum-post',
     loadChildren: () =>
       import('./pages/forum-posts/forum-post.module').then(
         m => m.ForumPostModule
+      ),
+  },
+  {
+    path: 'content-management',
+    loadChildren: () =>
+      import('./pages/content-management/content-management.module').then(
+        m => m.ContentManagementModule
       ),
   },
 ];

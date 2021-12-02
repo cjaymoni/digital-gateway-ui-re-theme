@@ -15,6 +15,7 @@ import { AppUploadedImage } from 'src/app/models/article.model';
 export class ArticleImageComponent implements OnInit {
   @Input() images: AppUploadedImage[] = [];
   @Input() letter: string = '';
+  @Input() coverBackground = false;
 
   constructor() {}
 

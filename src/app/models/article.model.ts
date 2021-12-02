@@ -15,6 +15,8 @@ export interface Article {
   is_page?: boolean;
   created_by?: number;
   images?: AppUploadedImage[];
+  updated_on?: string;
+  created_on?: string;
 }
 
 export enum ArticlePublishedStatus {

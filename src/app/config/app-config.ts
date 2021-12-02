@@ -81,3 +81,13 @@ export enum DialogPosition {
   BOTTOM = 'bottom',
   CENTER = 'center',
 }
+
+export enum TagType {
+  forum = 'forum',
+  article = 'article',
+  product = 'product',
+  ad = 'ad',
+}
+
+export const GenericErrorMessage =
+  'Sorry, an error occurred. Rest assured, it will be fixed';

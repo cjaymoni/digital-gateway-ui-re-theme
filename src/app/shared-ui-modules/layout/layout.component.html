@@ -2,10 +2,10 @@
 <app-toasts></app-toasts>
 <app-dialog></app-dialog>
 <div class="grid h-full">
-  <nav class="topbar w-full">
+  <nav class="topbar w-full sticky top-0 z-5">
     <app-top-nav></app-top-nav>
   </nav>
-  <div class="col-12 grid pt-0 pb-0">
+  <div class="col-12 grid pt-0 pb-0 justify-content-center">
     <div class="hidden col-2 lg:flex p-0 leftside">
       <app-side-nav></app-side-nav>
     </div>
@@ -22,10 +22,9 @@
         px-3
       "
     >
-      <div class="col-12 h-full">
+      <div class="col-12 min-h-full md:min-h-screen">
         <router-outlet></router-outlet>
       </div>
-      <!-- <div class="leftcontent col-12 md:hidden">left content</div> -->
       <div class="rightcontent col-12 md:hidden">
         <app-right-nav-card></app-right-nav-card>
       </div>

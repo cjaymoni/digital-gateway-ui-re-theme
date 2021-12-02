@@ -1,11 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-
+import { Directive, ElementRef, EventEmitter, Output } from '@angular/core';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
 
 @Directive({
