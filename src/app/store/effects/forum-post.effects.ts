@@ -4,7 +4,7 @@ import { of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { ForumPost } from 'src/app/models/forum.model';
-import { ForumPostsService } from 'src/app/pages/forum/services/forum-post.service';
+import { ForumPostsService } from 'src/app/pages/forum-posts/services/forum-post.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { forumPostActions } from '../actions/forum-post.action';
 

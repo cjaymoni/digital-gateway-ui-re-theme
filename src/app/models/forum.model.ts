@@ -14,14 +14,14 @@ export interface Forum {
 export interface ForumPost {
   id?: string | number | any;
   title: string;
-  content: string;
-  comment_count: number;
-  submitter: Submitter[];
-  upvote_count: number;
-  downvote_count: number;
-  score: number;
-  forums: any;
-  comments: Comment[];
+  content?: string;
+  comment_count?: number;
+  submitter?: Submitter[] | any;
+  upvote_count?: number;
+  downvote_count?: number;
+  score?: number;
+  forums?: any;
+  comments?: Comment[];
 }
 
 export interface Moderator {

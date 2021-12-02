@@ -59,6 +59,7 @@ export class NavigatorService {
 
   article = new ArticleRoutes(this.router);
   forum = new ForumRoutes(this.router);
+  forumPost = new ForumPostRoutes(this.router);
 }
 
 class AppRoutesConfig {
@@ -97,5 +98,14 @@ class ForumRoutes extends AppRoutesConfig {
   }
   goToReadForumPage(forumTitle: string) {
     this.router.navigate([this.page, `${SLUG_PREFIX}-${forumTitle}`]);
+  }
+}
+
+class ForumPostRoutes extends AppRoutesConfig {
+  constructor(router: Router) {
+    super(Pages.ForumPost, router);
+  }
+  goToReadForumPostPage(forumPostTitle: string) {
+    this.router.navigate([this.page, `${SLUG_PREFIX}-${forumPostTitle}`]);
   }
 }

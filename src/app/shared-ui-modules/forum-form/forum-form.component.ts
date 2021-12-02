@@ -29,7 +29,7 @@ import { Tag } from 'src/app/models/tag.model';
   styleUrls: ['./forum-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ForumFormComponent implements OnInit {
+export class ForumFormComponent implements OnInit, OnDestroy {
   @ViewChild('imageUpload', { static: true })
   imageUploadComponent: ImageUploadComponent | null = null;
 
@@ -65,7 +65,7 @@ export class ForumFormComponent implements OnInit {
     });
 
     this.oldTitle = this.title.getTitle();
-    this.title.setTitle(this.createForm ? 'Add' : 'Update' + ' Article');
+    this.title.setTitle(this.createForm ? 'Add' : 'Update' + ' Forum');
     this.subscription = this.getForumToEditSubscription();
     this.subscription.add(this.addOrEditSuccessSubscription());
   }

@@ -22,6 +22,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/forum/forum.module').then(m => m.ForumModule),
   },
+  {
+    path: 'forumPost',
+    loadChildren: () =>
+      import('./pages/forum-posts/forum-post.module').then(
+        m => m.ForumPostModule
+      ),
+  },
 ];
 
 @NgModule({

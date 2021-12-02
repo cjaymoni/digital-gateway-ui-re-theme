@@ -27,6 +27,7 @@ export class MyForumsListComponent implements OnInit, AfterViewInit {
     undefined;
 
   columns: any[] = [];
+
   constructor(
     private store: Store,
     private navigator: NavigatorService,

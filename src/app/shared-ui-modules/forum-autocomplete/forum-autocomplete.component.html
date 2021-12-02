@@ -1,0 +1,9 @@
+<app-auto-complete
+  [control]="selectedForum"
+  [suggestions]="(forums$ | async) || []"
+  (searchEvent)="searchForum($event.query)"
+  [multiple]="false"
+  [forceSelection]="true"
+  [dropdown]="true"
+  placeholder="Type a forum name"
+></app-auto-complete>
