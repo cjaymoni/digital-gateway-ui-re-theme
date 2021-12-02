@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TcpLayoutComponent } from './tcp-layout/tcp-layout.component';
+import { ContentManagementListPageComponent } from './content-management-list-page/content-management-list-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TcpLayoutComponent,
+    component: ContentManagementListPageComponent,
   },
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TcpManagementRoutingModule {}
+export class ContentManagementRoutingModule {}

@@ -25,7 +25,9 @@ const routes: Routes = [
   {
     path: 'content-management',
     loadChildren: () =>
-      import('./pages/tcp-management/tcp-management.module').then(m => m.TcpManagementModule),
+      import('./pages/content-management/content-management.module').then(
+        m => m.ContentManagementModule
+      ),
   },
 ];
 

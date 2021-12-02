@@ -12,7 +12,10 @@ class TagActions {
     props<{ tags: Tag[] }>()
   );
 
-  fetchError = createAction(`${this.type} Fetch Error`);
+  fetchError = createAction(
+    `${this.type} Fetch Error`,
+    props<{ error: any }>()
+  );
 
   addTag = createAction(`${this.type} Add Tag`, props<{ tag: Tag }>());
 
