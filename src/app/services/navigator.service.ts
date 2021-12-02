@@ -87,6 +87,10 @@ class AppRoutesConfig {
   goToViewPage() {
     this.router.navigate([this.page, Pages.view]);
   }
+
+  goToModerationPage() {
+    this.router.navigate([this.page, Pages.MyArticles]);
+  }
 }
 
 class ArticleRoutes extends AppRoutesConfig {

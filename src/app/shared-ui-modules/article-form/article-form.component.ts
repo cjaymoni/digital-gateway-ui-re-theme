@@ -141,6 +141,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
         ),
         map(_ => {
           this.navigator.hidePanel();
+          this.navigator.article.goToModerationPage();
         })
       )
       .subscribe();
@@ -155,6 +156,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
           this.createForm = false;
           this.article = article;
           this.articleForm.patchValue(article);
+          this.navigator.setPanelTitle('Update Article');
         })
       )
       .subscribe();
