@@ -28,7 +28,7 @@ export const SLUG_PREFIX = 'read';
 export enum Pages {
   Articles = 'articles',
   Forum = 'forum',
-  ForumPost = 'forumPost',
+  ForumPost = 'forum-post',
   Login = 'login',
   MarketPlace = 'market-place',
 
@@ -42,6 +42,9 @@ export enum Pages {
   MyForum = 'my-forums',
   MyForumPost = 'my-forum-posts',
   MyMarketPlaceItems = 'my-market-place-items',
+
+  //content management
+  ContentManagement = 'content-management',
 }
 
 export enum PrimeNgSeverity {

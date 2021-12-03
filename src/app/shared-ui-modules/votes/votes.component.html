@@ -9,7 +9,8 @@
     tooltipPosition="bottom"
     tooltipStyleClass="text-green-700"
     [disabled]="disableLike"
-    (click)="like()"
+    proceedIfLoggedIn
+    (onProceed)="like()"
   ></button>
   <button
     pButton
@@ -21,6 +22,7 @@
     tooltipPosition="bottom"
     tooltipStyleClass="text-red-500"
     [disabled]="disableDislike"
-    (click)="dislike()"
+    proceedIfLoggedIn
+    (onProceed)="dislike()"
   ></button>
 </div>

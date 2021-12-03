@@ -11,26 +11,26 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'market-place',
+    path: Pages.MarketPlace,
     loadChildren: () =>
       import('./pages/market-place/market-place.module').then(
         m => m.MarketPlaceModule
       ),
   },
   {
-    path: 'forum',
+    path: Pages.Forum,
     loadChildren: () =>
       import('./pages/forum/forum.module').then(m => m.ForumModule),
   },
   {
-    path: 'forum-post',
+    path: Pages.ForumPost,
     loadChildren: () =>
       import('./pages/forum-posts/forum-post.module').then(
         m => m.ForumPostModule
       ),
   },
   {
-    path: 'content-management',
+    path: Pages.ContentManagement,
     loadChildren: () =>
       import('./pages/content-management/content-management.module').then(
         m => m.ContentManagementModule

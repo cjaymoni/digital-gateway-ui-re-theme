@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Router, RouterLink, Routes } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, filter, map } from 'rxjs';
 import { Pages, RouterOutlets, SLUG_PREFIX } from '../config/app-config';
@@ -65,9 +65,18 @@ export class NavigatorService {
     this.router.navigate(route);
   }
 
+  goToLogin() {
+    this.router.navigate([Pages.Login]);
+  }
+
+  goToLoginPage = () => {
+    this.openPanel(Pages.Login);
+  };
+
   article = new ArticleRoutes(this.router);
   forum = new ForumRoutes(this.router);
   forumPost = new ForumPostRoutes(this.router);
+  auth = new AuthRoutes(this.router);
 }
 
 class AppRoutesConfig {
@@ -88,10 +97,6 @@ class AppRoutesConfig {
   goToViewPage() {
     this.router.navigate([this.page, Pages.view]);
   }
-
-  goToModerationPage() {
-    this.router.navigate([this.page, Pages.MyArticles]);
-  }
 }
 
 class ArticleRoutes extends AppRoutesConfig {
@@ -102,14 +107,18 @@ class ArticleRoutes extends AppRoutesConfig {
   goToReadArticlePage(articleSlug: string) {
     this.router.navigate([this.page, `${SLUG_PREFIX}-${articleSlug}`]);
   }
+
+  goToModerationPage() {
+    this.router.navigate([this.page, Pages.MyArticles]);
+  }
 }
 
 class ForumRoutes extends AppRoutesConfig {
   constructor(router: Router) {
     super(Pages.Forum, router);
   }
-  goToReadForumPage(forumTitle: string) {
-    this.router.navigate([this.page, `${SLUG_PREFIX}-${forumTitle}`]);
+  goToReadForumPage(forumSlug: string) {
+    this.router.navigate([this.page, `${SLUG_PREFIX}-${forumSlug}`]);
   }
 }
 
@@ -117,7 +126,15 @@ class ForumPostRoutes extends AppRoutesConfig {
   constructor(router: Router) {
     super(Pages.ForumPost, router);
   }
-  goToReadForumPostPage(forumPostTitle: string) {
-    this.router.navigate([this.page, `${SLUG_PREFIX}-${forumPostTitle}`]);
+  goToReadForumPostPage(forumPostSlug: string) {
+    this.router.navigate([this.page, `${SLUG_PREFIX}-${forumPostSlug}`]);
   }
+}
+
+class AuthRoutes extends AppRoutesConfig {
+  constructor(router: Router) {
+    super(Pages.Login, router);
+  }
+
+  goToSignUp() {}
 }
