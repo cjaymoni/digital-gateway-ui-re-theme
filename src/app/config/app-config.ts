@@ -34,7 +34,7 @@ export interface IPageItems {
   add: string;
   edit: string;
   view: string;
-  matcher: any;
+  matcher: () => UrlSegment | null;
 }
 
 export const Pages: { [key: string]: IPageItems | any } | any = {
@@ -46,7 +46,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     edit: 'edit-article:id',
     view: 'view-article:id',
     matcher: (url: UrlSegment[]) => {
-      return urlMatcherForEditAndView(url, 'articles');
+      return urlMatcherForEditAndView(url, 'article');
     },
   },
   Forum: {
@@ -100,6 +100,8 @@ export const urlMatcherForEditAndView = (
   const path: string = url[0]?.path;
   const startsWithViewOrEdit =
     path.startsWith('view-' + matcher) || path.startsWith('edit-' + matcher);
+  console.log(startsWithViewOrEdit, path, matcher);
+
   return startsWithViewOrEdit ? { consumed: url } : null;
 };
 
@@ -151,17 +153,30 @@ export enum TagType {
 export const GenericErrorMessage =
   'Sorry, an error occurred. Rest assured, it will be fixed';
 
+export const INFO_HUB_ID = 'info-hub';
 export const MainMenu: MenuItem[] = [
   {
-    id: 'info-hub',
+    id: INFO_HUB_ID,
     label: 'Information Hub',
+    routerLink: [Pages.Articles.main],
+    items: [
+      {
+        id: 'finance',
+        label: 'Finance',
+        queryParams: { search: 'finance' },
+        routerLinkActiveOptions: [],
+        routerLink: [Pages.Articles.main],
+      },
+    ],
   },
   {
     id: 'forum',
     label: 'Forums',
+    routerLink: [Pages.Forum.main],
   },
   {
     id: 'market-place',
     label: 'Market Place',
+    routerLink: [Pages.MarketPlace.main],
   },
 ];

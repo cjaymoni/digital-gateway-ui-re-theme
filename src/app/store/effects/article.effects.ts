@@ -73,6 +73,25 @@ export class ArticleEffects {
     )
   );
 
+  searchAllArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(articleActions.searchArticle),
+      switchMap(({ searchParams }) =>
+        this.articleService.searchArticle(searchParams).pipe(
+          map((articles: Article[]) =>
+            articleActions.fetchSuccessful({
+              articles,
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
   addArticles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(articleActions.addArticle),

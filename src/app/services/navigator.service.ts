@@ -53,7 +53,6 @@ export class NavigatorService {
 
   addRightPanelRoutes(routesToAdd: Routes) {
     this.router.config.push(...routesToAdd);
-    console.log(this.router.config);
   }
 
   goToRoute(route: any[]) {

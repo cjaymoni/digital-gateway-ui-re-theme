@@ -30,9 +30,24 @@ export class ArticleGuard implements CanActivate {
     | UrlTree {
     const shouldFetchArticle = route.data['fetch'];
 
+    const search = route.queryParams['search'];
+
+    console.log(search);
+
+    if (search) {
+      this.store.dispatch(
+        articleActions.searchArticle({
+          searchParams: {
+            category: search,
+            tag: search,
+          },
+        })
+      );
+    }
+
     if (shouldFetchArticle) {
       // search backend using the slug
-      const slug = route.url[0].path.replace(`${SLUG_PREFIX}-`, '');
+      const slug = route.url[0].path;
 
       this.store.dispatch(
         articleActions.findAndSelectArticle({

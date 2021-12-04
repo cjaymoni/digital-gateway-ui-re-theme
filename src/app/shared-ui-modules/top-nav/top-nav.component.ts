@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { filter, map, of, switchMap, tap } from 'rxjs';
 import { Pages } from 'src/app/config/app-config';
 import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -28,10 +28,7 @@ export class TopNavComponent implements OnInit {
     private navigator: NavigatorService
   ) {}
 
-  items$ = this.store.select(menuItemSelectors.menuItems).pipe(
-    map(menu => [menu] as MenuItem[]),
-    tap(menu => console.log(menu))
-  );
+  items$ = this.store.select(menuItemSelectors.menuItems);
 
   // items$ = this.device.isHandheld$.pipe(
   //   switchMap(isHandheld =>
@@ -41,7 +38,7 @@ export class TopNavComponent implements OnInit {
   //           .pipe(map(menu => menu as MenuItem[]))
   //       : this.store.select(menuItemSelectors.topMenuItems).pipe(
   //           map(topMenuItems =>
-  //             topMenuItems.map(item => {
+  //             topMenuItems.map((item: MenuItem) => {
   //               item.command = event => {
   //                 this.selectMenu(event.item.id, item.routerLink);
   //               };
@@ -52,6 +49,24 @@ export class TopNavComponent implements OnInit {
   //         )
   //   )
   // );
+
+  // items$ = of([
+  //   {
+  //     id: 'info-hub',
+  //     label: 'Information Hub',
+  //     routerLink: [Pages.Articles.main],
+  //   },
+  //   {
+  //     id: 'forum',
+  //     label: 'Forums',
+  //     routerLink: [Pages.Forum.main],
+  //   },
+  //   {
+  //     id: 'market-place',
+  //     label: 'Market Place',
+  //     routerLink: [Pages.MarketPlace.main],
+  //   },
+  // ]);
 
   ngOnInit(): void {}
 

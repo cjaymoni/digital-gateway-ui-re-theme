@@ -9,28 +9,16 @@ import { ArticleGuard } from './guard/article.guard';
 import { SelectArticleGuard } from './guard/select-article.guard';
 import { MyArticlesListComponent } from './my-articles-list/my-articles-list.component';
 
-export function slugMatcher(url: UrlSegment[]) {
-  // console.log(url);
-  // return { consumed: url };
-  // return url[0]?.path.startsWith('') ? { consumed: url } : null;
-}
-
 const rightPanelRoutes: Routes = [
   {
-    // path: Pages.Articles.view,
-    matcher: (url: UrlSegment[]) => {
-      return url[0]?.path.startsWith('view-article') ? { consumed: url } : null;
-    },
+    matcher: Pages.Articles.matcher,
     component: ArticleDetailsComponent,
     outlet: RouterOutlets.Right,
     data: { selectArticle: true },
     canActivate: [SelectArticleGuard],
   },
   {
-    // path: Pages.Articles.edit,
-    matcher: (url: UrlSegment[]) => {
-      return url[0]?.path.startsWith('edit-article') ? { consumed: url } : null;
-    },
+    matcher: Pages.Articles.matcher,
     component: ArticleFormComponent,
     outlet: RouterOutlets.Right,
     canActivate: [SelectArticleGuard],
@@ -56,7 +44,6 @@ const routes: Routes = [
     canActivate: [ArticleGuard],
   },
   {
-    // matcher: slugMatcher,
     path: Pages.Articles.viewDetails,
     component: ArticleDetailsComponent,
     data: { fetch: true },
