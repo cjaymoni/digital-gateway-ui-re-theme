@@ -16,6 +16,18 @@
     <div class="font-bold">Price: {{ productAd.product.price }} GHS</div>
     <div>Contact: {{ productAd.cellphone }}</div>
     <p><i class="pi pi-map-marker"></i> {{ productAd.location }}</p>
+      <button
+        pButton
+        class="
+          p-button-outlined p-button-danger
+          justify-content-center
+          align-self-end
+        "
+        label="View Ad"
+        icon="pi pi-eye"
+        (click)="openMarketAd()"
+      ></button>
+
     <!-- </div> -->
   </ng-template>
 </p-card>
