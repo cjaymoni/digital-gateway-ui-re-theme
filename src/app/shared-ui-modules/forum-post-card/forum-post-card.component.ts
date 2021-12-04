@@ -29,7 +29,7 @@ export class ForumPostCardComponent implements OnInit {
       })
     );
 
-    this.navigator.forum.goToReadForumPage(this.forum?.name as string);
+    this.navigator.forum.goToViewDetailsPage(this.forum?.name as string);
   }
 
   dislikeForum() {}

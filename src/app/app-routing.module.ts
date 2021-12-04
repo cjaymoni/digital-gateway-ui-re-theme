@@ -4,26 +4,26 @@ import { Pages } from './config/app-config';
 
 const routes: Routes = [
   {
-    path: Pages.Articles,
+    path: Pages.Articles.main,
     loadChildren: () =>
       import('./pages/articles/articles.module').then(
         module => module.ArticlesModule
       ),
   },
   {
-    path: Pages.MarketPlace,
+    path: Pages.MarketPlace.main,
     loadChildren: () =>
       import('./pages/market-place/market-place.module').then(
         m => m.MarketPlaceModule
       ),
   },
   {
-    path: Pages.Forum,
+    path: Pages.Forum.main,
     loadChildren: () =>
       import('./pages/forum/forum.module').then(m => m.ForumModule),
   },
   {
-    path: Pages.ForumPost,
+    path: Pages.ForumPost.main,
     loadChildren: () =>
       import('./pages/forum-posts/forum-post.module').then(
         m => m.ForumPostModule
@@ -31,6 +31,13 @@ const routes: Routes = [
   },
   {
     path: Pages.ContentManagement,
+    loadChildren: () =>
+      import('./pages/content-management/content-management.module').then(
+        m => m.ContentManagementModule
+      ),
+  },
+  {
+    path: Pages.SiteSettings,
     loadChildren: () =>
       import('./pages/content-management/content-management.module').then(
         m => m.ContentManagementModule

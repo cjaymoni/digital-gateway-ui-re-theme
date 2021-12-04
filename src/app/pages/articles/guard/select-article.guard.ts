@@ -13,7 +13,7 @@ import { articleActions } from 'src/app/store/actions/article.actions';
 @Injectable({
   providedIn: 'root',
 })
-export class ArticleGuard implements CanActivate {
+export class SelectArticleGuard implements CanActivate {
   /**
    *
    */
@@ -28,18 +28,13 @@ export class ArticleGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const shouldFetchArticle = route.data['fetch'];
+    const articleId = route.url[0].path.split(':')[1];
+    this.store.dispatch(
+      articleActions.findAndSelectArticleById({
+        id: articleId,
+      })
+    );
 
-    if (shouldFetchArticle) {
-      // search backend using the slug
-      const slug = route.url[0].path.replace(`${SLUG_PREFIX}-`, '');
-
-      this.store.dispatch(
-        articleActions.findAndSelectArticle({
-          searchParams: { slug },
-        })
-      );
-    }
     return true;
   }
 }

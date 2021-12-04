@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
@@ -37,6 +38,30 @@ export class ArticleEffects {
           map((articles: Article[]) =>
             articleActions.selectArticle({
               article: articles?.[0],
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  searchArticleById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(articleActions.findAndSelectArticleById),
+      switchMap(({ id }) =>
+        this.articleService.getOneResource(id).pipe(
+          tap(article => {
+            this.store.dispatch(
+              articleActions.selectArticleToEdit({ article })
+            );
+          }),
+          map((article: Article) =>
+            articleActions.selectArticle({
+              article,
             })
           ),
           catchError(error => {
@@ -105,6 +130,7 @@ export class ArticleEffects {
   constructor(
     private actions$: Actions,
     private articleService: ArticleService,
-    private alert: AppAlertService
+    private alert: AppAlertService,
+    private store: Store
   ) {}
 }

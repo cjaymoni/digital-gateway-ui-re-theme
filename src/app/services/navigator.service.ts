@@ -3,7 +3,12 @@ import { Injectable } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, filter, map } from 'rxjs';
-import { Pages, RouterOutlets, SLUG_PREFIX } from '../config/app-config';
+import {
+  IPageItems,
+  Pages,
+  RouterOutlets,
+  SLUG_PREFIX,
+} from '../config/app-config';
 import { selectUrl } from '../store/selectors/router.selectors';
 
 @Injectable({
@@ -29,10 +34,52 @@ export class NavigatorService {
     return this.panelTitle$.asObservable();
   }
 
+  hidePanel() {
+    this.router.navigate([
+      '',
+      {
+        outlets: {
+          [RouterOutlets.Right]: null,
+        },
+      },
+    ]);
+  }
+
   private panelTitle$ = new BehaviorSubject('');
 
-  openPanel(navigation: string | string[], title = '') {
-    this.panelTitle$.next(title);
+  goBack() {
+    this.location.back();
+  }
+
+  addRightPanelRoutes(routesToAdd: Routes) {
+    this.router.config.push(...routesToAdd);
+    console.log(this.router.config);
+  }
+
+  goToRoute(route: any[]) {
+    this.router.navigate(route);
+  }
+
+  article = new ArticleRoutes(this.router, this.panelTitle$);
+  forum = new ForumRoutes(this.router, this.panelTitle$);
+  forumPost = new ForumPostRoutes(this.router, this.panelTitle$);
+  marketAd = new AppRoutesConfig(
+    Pages.MarketPlace,
+    this.router,
+    this.panelTitle$
+  );
+  auth = new AuthRoutes(this.router, this.panelTitle$);
+}
+
+class AppRoutesConfig {
+  constructor(
+    protected page: IPageItems,
+    protected router: Router,
+    protected panelTitleSubject$: BehaviorSubject<string>
+  ) {}
+
+  openPanel(navigation: string | string[] | any, title = '') {
+    this.panelTitleSubject$.next(title);
     this.router.navigate([
       {
         outlets: {
@@ -53,78 +100,56 @@ export class NavigatorService {
     ]);
   }
 
-  goBack() {
-    this.location.back();
-  }
-
-  addRightPanelRoutes(routesToAdd: Routes) {
-    this.router.config.push(...routesToAdd);
-  }
-
-  goToRoute(route: any[]) {
-    this.router.navigate(route);
-  }
-
-  goToLogin() {
-    this.router.navigate([Pages.Login]);
-  }
-
-  goToLoginPage = () => {
-    this.openPanel(Pages.Login);
-  };
-
-  article = new ArticleRoutes(this.router);
-  forum = new ForumRoutes(this.router);
-  forumPost = new ForumPostRoutes(this.router);
-  auth = new AuthRoutes(this.router);
-}
-
-class AppRoutesConfig {
-  constructor(protected page: Pages, protected router: Router) {}
-
   go() {
-    this.router.navigate([this.page]);
+    this.router.navigate([this.page.main]);
   }
 
   goToAddPage() {
-    this.router.navigate([this.page, Pages.add]);
+    this.router.navigate([this.page.main, this.page.add]);
   }
 
-  goToEditPage() {
-    this.router.navigate([this.page, Pages.edit]);
+  goToEditPage(id: string, title = 'UPDATE') {
+    this.openPanel([this.page.edit.replace('id', id)], title);
   }
 
-  goToViewPage() {
-    this.router.navigate([this.page, Pages.view]);
+  goToViewPage(id: string, title = 'PREVIEW') {
+    this.openPanel([this.page.view.replace('id', id)], title);
+  }
+
+  goToViewDetailsPage(slug: string) {
+    this.router.navigate([
+      this.page.main,
+      this.page.viewDetails.replace(':slug', slug),
+    ]);
+  }
+
+  goToListPage() {
+    this.router.navigate([this.page.main, this.page.myList]);
   }
 }
 
 class ArticleRoutes extends AppRoutesConfig {
-  constructor(router: Router) {
-    super(Pages.Articles, router);
+  constructor(router: Router, subject: BehaviorSubject<string>) {
+    super(Pages['Articles'], router, subject);
   }
 
-  goToReadArticlePage(articleSlug: string) {
-    this.router.navigate([this.page, `${SLUG_PREFIX}-${articleSlug}`]);
-  }
-
-  goToModerationPage() {
-    this.router.navigate([this.page, Pages.MyArticles]);
-  }
+  // goToReadArticlePage(articleSlug: string) {
+  //   this.router.navigate([this.page, `${SLUG_PREFIX}-${articleSlug}`]);
+  // }
 }
 
 class ForumRoutes extends AppRoutesConfig {
-  constructor(router: Router) {
-    super(Pages.Forum, router);
+  constructor(router: Router, subject: BehaviorSubject<string>) {
+    super(Pages['Forum'], router, subject);
   }
-  goToReadForumPage(forumSlug: string) {
-    this.router.navigate([this.page, `${SLUG_PREFIX}-${forumSlug}`]);
-  }
+  // goToReadForumPage(forumSlug: string) {
+  //   this.router.navigate([this.page, `${SLUG_PREFIX}-${forumSlug}`]);
+  // }
 }
 
 class ForumPostRoutes extends AppRoutesConfig {
-  constructor(router: Router) {
-    super(Pages.ForumPost, router);
+  constructor(router: Router, subject: BehaviorSubject<string>) {
+    super(Pages['ForumPost'], router, subject);
   }
   goToReadForumPostPage(forumPostSlug: string) {
     this.router.navigate([this.page, `${SLUG_PREFIX}-${forumPostSlug}`]);
@@ -132,9 +157,15 @@ class ForumPostRoutes extends AppRoutesConfig {
 }
 
 class AuthRoutes extends AppRoutesConfig {
-  constructor(router: Router) {
-    super(Pages.Login, router);
+  constructor(router: Router, subject: BehaviorSubject<string>) {
+    super(Pages['Auth'], router, subject);
   }
 
-  goToSignUp() {}
+  goToSignUp() {
+    this.openPanel(Pages['Auth'].signup, 'Signup to create an account');
+  }
+
+  goToLogin(title = 'Welcome back. Please Login') {
+    this.openPanel(Pages['Auth'].login, title);
+  }
 }

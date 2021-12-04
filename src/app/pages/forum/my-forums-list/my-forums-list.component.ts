@@ -47,17 +47,19 @@ export class MyForumsListComponent implements OnInit, AfterViewInit {
   goToAddForumPage() {
     this.navigator.forum.goToAddPage();
   }
+
   viewForum(forum: Forum) {
     this.selectForum(forum);
-    this.navigator.openPanel(Pages.view, 'Preview Forum');
+    this.navigator.forum.goToViewPage(forum.id, 'Preview Forum');
   }
+
   editForum(forum: Forum) {
     this.store.dispatch(
       forumActions.selectForumToEdit({
         forum,
       })
     );
-    this.navigator.openPanel(Pages.edit, 'Edit Forum');
+    this.navigator.forum.goToEditPage(forum.id, 'Edit Forum');
   }
 
   private selectForum(forum: Forum) {

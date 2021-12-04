@@ -31,7 +31,7 @@ export class AppProceedIfLoggedDirective {
                 'You need to log in to perform this action',
                 PrimeNgAlerts.INFO
               );
-              return this.navigator.goToLoginPage();
+              return this.navigator.auth.goToLogin();
             }
           })
         )

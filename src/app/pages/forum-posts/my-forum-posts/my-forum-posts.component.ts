@@ -46,17 +46,19 @@ export class MyForumPostsComponent implements OnInit, AfterViewInit {
   goToAddForumPostPage() {
     this.navigator.forumPost.goToAddPage();
   }
+
   viewForumPost(forumPost: ForumPost) {
     this.selectForumPost(forumPost);
-    this.navigator.openPanel(Pages.view, 'Preview Forum Post');
+    this.navigator.forum.goToViewPage(forumPost.id, 'Preview Forum Post');
   }
+
   editForumPost(forumPost: ForumPost) {
     this.store.dispatch(
       forumPostActions.selectForumPostToEdit({
         forumPost,
       })
     );
-    this.navigator.openPanel(Pages.edit, 'Edit Forum Post');
+    this.navigator.forumPost.goToViewPage(forumPost.id, 'Edit Forum Post');
   }
 
   private selectForumPost(forumPost: ForumPost) {

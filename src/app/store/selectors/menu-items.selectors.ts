@@ -10,21 +10,17 @@ export const menus = createFeatureSelector<Readonly<MenuItemFromBackend>>(
 class MenuItemSelectors {
   selectedMenu = createSelector(menus, menus => menus['selectedMenu']);
 
-  menuItems = createSelector(menus, menus => menus['top_nav'] || []);
+  menuItems = createSelector(menus, menus => menus['menus']);
 
   subMenuItems = createSelector(menus, menus => {
-    const menu = (menus['top_nav'] as MenuItem[]).find(
+    const menu = (menus['menus'] as MenuItem[]).find(
       m => m.id === menus['selectedMenu']
     );
 
     return menu?.items || [];
   });
 
-  topMenuItems = createSelector(menus, menus => {
-    return (menus['top_nav'] as MenuItem[]).map(m => {
-      return { ...m, items: undefined };
-    });
-  });
+  topMenuItems = createSelector(menus, menus => menus['menus']);
 }
 
 export const menuItemSelectors = new MenuItemSelectors();

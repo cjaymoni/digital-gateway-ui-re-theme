@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, UrlSegment } from '@angular/router';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
+import { Pages, RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
 import { ForumPostGuard } from './guard/forum-post.guard';
 import { MyForumPostsComponent } from './my-forum-posts/my-forum-posts.component';
 import { ForumPostDetailsComponent } from '../../shared-ui-modules/forum-post-details/forum-post-details.component';
@@ -12,13 +12,13 @@ export function slugMatcher(url: UrlSegment[]) {
 }
 const rightPanelRoutes: Routes = [
   {
-    path: 'view',
+    path: Pages.ForumPost.view,
     component: ForumPostDetailsComponent,
     outlet: RouterOutlets.Right,
     canActivate: [ForumPostGuard],
   },
   {
-    path: 'edit',
+    path: Pages.ForumPost.edit,
     component: ForumPostFormComponent,
     outlet: RouterOutlets.Right,
     canActivate: [ForumPostGuard],
@@ -28,20 +28,21 @@ const rightPanelRoutes: Routes = [
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'my-forum-posts',
+    redirectTo: Pages.ForumPost.myList,
   },
   {
-    path: 'my-forum-posts',
+    path: Pages.ForumPost.myList,
     component: MyForumPostsComponent,
     canActivate: [ForumPostGuard],
   },
   {
-    path: 'add',
+    path: Pages.ForumPost.add,
     component: ForumPostFormComponent,
     canActivate: [ForumPostGuard],
   },
   {
-    matcher: slugMatcher,
+    // matcher: slugMatcher,
+    path: Pages.ForumPost.viewDetails,
     component: ForumPostDetailsComponent,
     data: { fetch: true },
     canActivate: [ForumPostGuard],

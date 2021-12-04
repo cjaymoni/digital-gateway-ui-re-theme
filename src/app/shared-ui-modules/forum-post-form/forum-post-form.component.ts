@@ -102,7 +102,7 @@ export class ForumPostFormComponent implements OnInit, OnDestroy {
           forumPostActions.editForumPostSuccessful
         ),
         map(_ => {
-          this.navigator.hidePanel();
+          this.navigator.goBack();
         })
       )
       .subscribe();

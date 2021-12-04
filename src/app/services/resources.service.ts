@@ -7,7 +7,7 @@ export class ResourceService {
   constructor(protected http: HttpClient, protected endpoint: string) {}
 
   getOneResource(id: any, url: string = this.endpoint) {
-    return this.http.get(`${url + id}/`);
+    return this.http.get(`${url + id}/`).pipe(map(data => data as any));
   }
 
   getResources(
