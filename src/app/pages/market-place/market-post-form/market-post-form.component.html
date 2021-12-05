@@ -1,6 +1,6 @@
 <ng-container [formGroup]="productAdForm">
   <div class="fluid formgrid grid p-3">
-    <div class="flex flex-column md:flex-row w-full">
+    <div class="flex flex-column md:flex-row w-full flex-wrap">
       <div class="col-12 md:col-3 align-items-end justify-content-end">
         <label for="adType">Select Ad Type</label>
         <p-selectButton
@@ -49,9 +49,11 @@
         <label for="description">Description</label>
         <textarea
           type="text"
-          class="inputfield w-full"
+          class="inputfield w-full h-auto"
           formControlName="description"
           pInputTextarea
+          [autoResize]="true"
+          [rows]="6"
           placeholder="Enter a description"
         ></textarea>
       </div>

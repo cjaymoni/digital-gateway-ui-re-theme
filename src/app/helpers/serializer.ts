@@ -48,7 +48,7 @@ export function serialize(obj: any, cfg?: any, fd?: FormData, pre = '') {
   cfg = cfg || {};
   fd = fd || new FormData();
 
-  cfg.indices = initCfg(cfg.indices);
+  cfg.indices = true;
   cfg.nullsAsUndefineds = initCfg(cfg.nullsAsUndefineds);
   cfg.booleansAsIntegers = initCfg(cfg.booleansAsIntegers);
   cfg.allowEmptyArrays = initCfg(cfg.allowEmptyArrays);
