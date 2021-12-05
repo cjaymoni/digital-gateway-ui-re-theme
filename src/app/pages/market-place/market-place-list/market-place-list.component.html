@@ -1,8 +1,9 @@
 <app-listing-page
   [loading]="productAdsLoading$ | async"
-  title="Product Ads"
+  [title]="'Product Ads'"
   [itemTemplate]="productCardTemplate"
   [items]="productAds$ | async"
+  itemClass="col-12 sm:col-6 xl:col-4"
 ></app-listing-page>
 
 <ng-template #productCardTemplate let-productAd>

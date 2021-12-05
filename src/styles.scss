@@ -18,10 +18,19 @@ body {
   &:hover {
     background-size: contain;
   }
+
+  background-color: bisque;
+  height: 10rem;
 }
 
 .p-menuitem-link-active {
   span {
     color: red !important;
+  }
+}
+
+.p-message-no-icon {
+  .p-inline-message-icon::before {
+    content: '';
   }
 }

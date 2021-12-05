@@ -1,41 +1,40 @@
 <ng-container *ngIf="product$ | async; else loading">
   <div class="text-center flex justify-content-center flex-column">
-    <div class="text-lg md:text-6xl m-0 font-bold">
+    <div class="text-lg md:text-2xl m-0 font-bold mb-2">
       {{ (product$ | async).product.name | uppercase }}
     </div>
-    <div class="py-3 col-12">
-      <p-image src="assets/img.png" alt="Image"></p-image>
-    </div>
-    <div>
-      <p-carousel [value]="productImage" [numVisible]="6" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
-        <ng-template let-product pTemplate="item">
-          <div class="product-item">
-            <div class="product-item-content">
-              <div class="p-mb-3">
-                <img src="assets/{{product.image}}" [alt]="product.name" class="product-image" />
-              </div>
-            </div>
-          </div>
-        </ng-template>
-    </p-carousel>
-    </div>
+    <p-galleria [value]="(product$ | async).product.images">
+      <ng-template pTemplate="item" let-item>
+        <img [src]="item.image" [alt]="item.title" />
+      </ng-template>
+      <ng-template pTemplate="thumbnail" let-item>
+        <div class="p-grid p-nogutter p-justify-center">
+          <img [src]="item.image" />
+        </div>
+      </ng-template>
+    </p-galleria>
   </div>
-  <div class="flex">
-    <div class="flex-auto flex align-items-center justify-content-center m-2 px-5 py-3">Price</div>
-    <div class="flex-auto flex align-items-center justify-content-center m-2 px-5 py-3">Bid</div>
-    <div class="flex-auto flex align-items-center justify-content-center m-2 px-5 py-3">Brand</div>
+  <div class="flex text-lg shadow-1 p-4">
+    <div class="flex-auto flex align-items-center justify-content-center">
+      PRICE : {{ (product$ | async).product.price }}
+    </div>
+    <div class="flex-auto flex align-items-center justify-content-center">
+      TYPE : {{ (product$ | async).ad_type | uppercase }}
+    </div>
+    <div class="flex-auto flex align-items-center justify-content-center">
+      CONTACT : {{ (product$ | async).cellphone | uppercase }}
+    </div>
   </div>
   <div class="flex ml-3 py-4">
-    <p>
-      <i class="pi pi-map-marker"></i> {{ (product$ | async).location }}
-    </p>
+    <p><i class="pi pi-map-marker"></i> {{ (product$ | async).location }}</p>
   </div>
   <div>
-    <p-card header="Description">
-      <p>
+    <div class="text-lg shadow-1 p-4">
+      <div class="mb-3">Description:</div>
+      <div class="text-left">
         {{ (product$ | async).product.description }}
-      </p>
-    </p-card>
+      </div>
+    </div>
   </div>
 </ng-container>
 <ng-template #loading>

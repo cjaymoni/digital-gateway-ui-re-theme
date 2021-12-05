@@ -5,6 +5,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { SkeletonModule } from 'primeng/skeleton';
+import { GalleriaModule } from 'primeng/galleria';
 
 @NgModule({
   imports: [
@@ -13,8 +14,9 @@ import { SkeletonModule } from 'primeng/skeleton';
     CardModule,
     ImageModule,
     SkeletonModule,
+    GalleriaModule,
   ],
   exports: [MarketListDetailsComponent],
-  declarations: [MarketListDetailsComponent]
+  declarations: [MarketListDetailsComponent],
 })
-export class MarketListDetailsModule { }
+export class MarketListDetailsModule {}
