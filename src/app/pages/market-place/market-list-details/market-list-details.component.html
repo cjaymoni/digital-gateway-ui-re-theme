@@ -3,13 +3,21 @@
     <div class="text-lg md:text-2xl m-0 font-bold mb-2">
       {{ (product$ | async).product.name | uppercase }}
     </div>
-    <p-galleria [value]="(product$ | async).product.images">
+    <p-galleria
+      [value]="(product$ | async).product.images"
+      [responsiveOptions]="responsiveOptions"
+    >
       <ng-template pTemplate="item" let-item>
-        <img [src]="item.image" [alt]="item.title" />
+        <p-image
+          [src]="item.image"
+          [alt]="item.title"
+          class="h-20rem"
+          [preview]="true"
+        ></p-image>
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
-        <div class="p-grid p-nogutter p-justify-center">
-          <img [src]="item.image" />
+        <div class="grid grid-nogutter justify-content-center">
+          <img [src]="item.image" class="w-10rem h-10rem" />
         </div>
       </ng-template>
     </p-galleria>
