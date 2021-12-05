@@ -2,3 +2,13 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.background-cover {
+  background-size: cover !important;
+}
+
+.image-container:hover {
+  .tint {
+    display: block;
+  }
+}

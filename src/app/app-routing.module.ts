@@ -22,6 +22,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/forum/forum.module').then(m => m.ForumModule),
   },
+  {
+    path: 'content-management',
+    loadChildren: () =>
+      import('./pages/content-management/content-management.module').then(
+        m => m.ContentManagementModule
+      ),
+  },
 ];
 
 @NgModule({

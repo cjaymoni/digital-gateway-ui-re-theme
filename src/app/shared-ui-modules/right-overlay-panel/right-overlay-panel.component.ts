@@ -26,7 +26,7 @@ export class RightOverlayPanelComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
 
-  title$ = this.navigator.panelTitle$;
+  title$ = this.navigator.getPanelTitle();
 
   ngOnInit(): void {
     this.subscription = this.navigator.panelActive$

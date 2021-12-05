@@ -16,7 +16,7 @@ const rightPanelRoutes: Routes = [
     canActivate: [MarketPlaceGuard],
   },
   {
-    path: 'edit',
+    path: 'edit/:id',
     component: MarketPostFormComponent,
     outlet: RouterOutlets.Right,
     canActivate: [MarketPlaceGuard],
