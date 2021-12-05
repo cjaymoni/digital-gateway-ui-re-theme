@@ -67,6 +67,7 @@ export class NavigatorService {
 
   article = new ArticleRoutes(this.router);
   forum = new ForumRoutes(this.router);
+  market = new MarketAdRoutes(this.router);
 }
 
 class AppRoutesConfig {
@@ -106,5 +107,11 @@ class ArticleRoutes extends AppRoutesConfig {
 class ForumRoutes extends AppRoutesConfig {
   constructor(router: Router) {
     super(Pages.Forum, router);
+  }
+}
+
+class MarketAdRoutes extends AppRoutesConfig {
+  constructor(router: Router) {
+    super(Pages.MarketPlace, router);
   }
 }
