@@ -1,18 +1,33 @@
-<p-card
-  *ngIf="forum"
-  styleClass="shadow-6  p-2 w-full scalein animation-duration-500 justify-content-between"
+<div
+  class="
+    forum-post-card
+    transition-all transition-delay-500
+    shadow-5
+    p-component p-3
+    border-round
+    fadeindown
+    animation-duration-1000
+    mt-3
+  "
+  *ngIf="forumPost"
 >
-  <ng-template pTemplate="header">
-    <div class="p-card-title">
-      {{ forum.name }}
-    </div>
-    <div class="p-card-subtitle">Author Name | Date</div>
-  </ng-template>
-  <div></div>
-  <ng-template pTemplate="footer">
-    <div class="flex justify-content-between align-items-center">
+  <div class="text-2xl font-bold">
+    {{ forumPost.title | uppercase }}
+  </div>
+  <div>Author Name | Date</div>
+  <div
+    class="mt-2"
+    [innerHTML]="domSanitizer.bypassSecurityTrustHtml(forumPost.content || '')"
+  ></div>
+  <hr />
+  <div class="flex justify-content-between align-items-center">
+    <div>
       <app-comments></app-comments>
+    </div>
+    <div>
       <app-votes></app-votes>
+    </div>
+    <div>
       <button
         pButton
         class="
@@ -20,8 +35,17 @@
           justify-content-center
           align-self-end
         "
-        label="Read More"
+        icon="pi pi-reply"
+        label="Comment"
+        (click)="show()"
       ></button>
     </div>
-  </ng-template>
-</p-card>
+  </div>
+  <div *ngIf="showCommentForm">
+    <app-comment-form></app-comment-form>
+  </div>
+</div>
+
+<!-- <div class="fadeindown animation-duration-1000">
+  <app-comment-card></app-comment-card>
+</div> -->

@@ -1,29 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes, UrlSegment } from '@angular/router';
-import { RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
+import { Pages, RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ArticleDetailsComponent } from 'src/app/shared-ui-modules/article-details/article-details.component';
 import { ArticleFormComponent } from 'src/app/shared-ui-modules/article-form/article-form.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleGuard } from './guard/article.guard';
+import { SelectArticleGuard } from './guard/select-article.guard';
 import { MyArticlesListComponent } from './my-articles-list/my-articles-list.component';
-
-export function slugMatcher(url: UrlSegment[]) {
-  return url[0]?.path.startsWith(SLUG_PREFIX) ? { consumed: url } : null;
-}
 
 const rightPanelRoutes: Routes = [
   {
-    path: 'view',
+    matcher: Pages.Articles.matcher,
     component: ArticleDetailsComponent,
     outlet: RouterOutlets.Right,
-    canActivate: [ArticleGuard],
+    data: { selectArticle: true },
+    canActivate: [SelectArticleGuard],
   },
   {
-    path: 'edit',
+    matcher: Pages.Articles.matcher,
     component: ArticleFormComponent,
     outlet: RouterOutlets.Right,
-    canActivate: [ArticleGuard],
+    canActivate: [SelectArticleGuard],
   },
 ];
 
@@ -33,20 +31,25 @@ const routes: Routes = [
     component: ArticleListComponent,
     canActivate: [ArticleGuard],
   },
+  {
+    path: 'search/:category',
+    component: ArticleListComponent,
+    canActivate: [ArticleGuard],
+  },
 
   {
-    path: 'my-articles',
+    path: Pages.Articles.myList,
     component: MyArticlesListComponent,
     canActivate: [ArticleGuard],
   },
 
   {
-    path: 'add',
+    path: Pages.Articles.add,
     component: ArticleFormComponent,
     canActivate: [ArticleGuard],
   },
   {
-    matcher: slugMatcher,
+    path: Pages.Articles.viewDetails,
     component: ArticleDetailsComponent,
     data: { fetch: true },
     canActivate: [ArticleGuard],

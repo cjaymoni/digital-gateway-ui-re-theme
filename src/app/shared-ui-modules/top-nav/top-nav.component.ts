@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
-import { filter, map, switchMap } from 'rxjs';
+import { filter, map, of, switchMap, tap } from 'rxjs';
 import { Pages } from 'src/app/config/app-config';
 import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -28,25 +28,7 @@ export class TopNavComponent implements OnInit {
     private navigator: NavigatorService
   ) {}
 
-  items$ = this.device.isHandheld$.pipe(
-    switchMap(isHandheld =>
-      isHandheld
-        ? this.store
-            .select(menuItemSelectors.menuItems)
-            .pipe(map(menu => menu as MenuItem[]))
-        : this.store.select(menuItemSelectors.topMenuItems).pipe(
-            map(topMenuItems =>
-              topMenuItems.map(item => {
-                item.command = event => {
-                  this.selectMenu(event.item.id, item.routerLink);
-                };
-                item.routerLink = (item as any)?.link;
-                return item;
-              })
-            )
-          )
-    )
-  );
+  items$ = this.store.select(menuItemSelectors.menuItems);
 
   ngOnInit(): void {}
 
@@ -63,6 +45,6 @@ export class TopNavComponent implements OnInit {
   }
 
   goToLoginPage() {
-    this.navigator.openPanel(Pages.Login);
+    this.navigator.auth.goToLogin('Login to continue');
   }
 }

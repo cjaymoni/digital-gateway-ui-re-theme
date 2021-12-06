@@ -2,29 +2,26 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { FeatureNamesForStore } from 'src/app/config/app-config';
 import { MenuItemFromBackend } from 'src/app/models/menu-item.model';
+import { MenuState } from '../reducers/menu-items.reducers';
 
-export const menus = createFeatureSelector<Readonly<MenuItemFromBackend>>(
+export const menuState = createFeatureSelector<Readonly<MenuState>>(
   FeatureNamesForStore.Menu
 );
 
 class MenuItemSelectors {
-  selectedMenu = createSelector(menus, menus => menus['selectedMenu']);
+  selectedMenu = createSelector(menuState, state => state.selectedMenu);
 
-  menuItems = createSelector(menus, menus => menus['top_nav'] || []);
+  menuItems = createSelector(menuState, state => state.menus);
 
-  subMenuItems = createSelector(menus, menus => {
-    const menu = (menus['top_nav'] as MenuItem[]).find(
-      m => m.id === menus['selectedMenu']
+  subMenuItems = createSelector(menuState, state => {
+    const menu = (state.menus as MenuItem[]).find(
+      m => m.id === state.selectedMenu
     );
 
     return menu?.items || [];
   });
 
-  topMenuItems = createSelector(menus, menus => {
-    return (menus['top_nav'] as MenuItem[]).map(m => {
-      return { ...m, items: undefined };
-    });
-  });
+  topMenuItems = createSelector(menuState, state => state.menus);
 }
 
 export const menuItemSelectors = new MenuItemSelectors();

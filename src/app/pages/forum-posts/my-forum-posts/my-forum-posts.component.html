@@ -1,0 +1,39 @@
+<div class="text-center flex justify-content-between">
+  <div>MY FORUM POSTS</div>
+
+  <button
+    pButton
+    class="align-self-end p-btn p-btn-lg"
+    icon="pi pi-plus"
+    label="Add New Forum Post"
+    (click)="goToAddForumPostPage()"
+  ></button>
+</div>
+<app-table
+  [data]="(myForumPosts$ | async) || []"
+  [columnsDefinition]="columns"
+  [actionTemplate]="actions"
+  [showAction]="true"
+></app-table>
+
+<ng-template #actions let-forumPost>
+  <div class="flex justify-content-between">
+    <button
+      class="p-button p-button-rounded p-button-danger mr-3"
+      pButton
+      tooltipPosition="bottom"
+      pTooltip="View Forum Post"
+      (click)="viewForumPost(forumPost)"
+      icon="pi pi-eye"
+    ></button>
+
+    <button
+      class="p-button p-button-info p-button-rounded mr-auto"
+      pButton
+      pTooltip="Edit Forum Post"
+      tooltipPosition="bottom"
+      icon="pi pi-pencil"
+      (click)="editForumPost(forumPost)"
+    ></button>
+  </div>
+</ng-template>

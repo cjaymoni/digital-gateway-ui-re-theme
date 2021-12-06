@@ -1,6 +1,13 @@
 <ng-container *ngIf="!images.length; else articleImage">
   <div
-    class="flex justify-content-center align-content-center h-full bg-gray-400"
+    class="
+      flex
+      justify-content-center
+      align-content-center
+      h-10rem
+      md:h-full
+      bg-gray-400
+    "
   >
     <div class="text-white text-700">
       {{ letter | uppercase }}
@@ -10,7 +17,7 @@
 
 <ng-template #articleImage>
   <div
-    class="h-full article-image"
+    class="h-10rem md:h-full article-image"
     [ngClass]="coverBackground ? 'background-cover' : ''"
     [style.backgroundImage]="imageUrl"
   ></div>

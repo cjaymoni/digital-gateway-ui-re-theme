@@ -1,31 +1,85 @@
-<div class="formgrid grid">
-  <div class="field col-12">
-    <label for="title">Title</label>
-    <input pInputText id="title" type="text" class="inputfield w-full" />
-  </div>
+<ng-container [formGroup]="forumForm">
+  <div class="formgrid grid">
+    <div class="field col-12">
+      <label for="title">Title</label>
+      <input
+        pInputText
+        id="title"
+        type="text"
+        class="inputfield w-full"
+        formControlName="name"
+        placeholder="Forum Title"
+      />
+    </div>
 
-  <div class="field col-12">
-    <label for="title">Tag</label>
-    <app-auto-complete class="w-full"></app-auto-complete>
-  </div>
+    <div class="field col-12">
+      <label for="title">Tag</label>
+      <app-tag-autocomplete [selectedTags]="tags"></app-tag-autocomplete>
+    </div>
 
-  <div class="field col-12">
-    <label for="title">Category</label>
-    <app-auto-complete></app-auto-complete>
-  </div>
+    <div class="field col-12">
+      <label for="description">Description</label>
 
-  <div class="field col-12 mb-8">
-    <label for="post">Forum Post</label>
-    <app-content-box></app-content-box>
-  </div>
+      <textarea
+        id="description"
+        class="inputfield w-full"
+        formControlName="description"
+        pInputTextarea
+        placeholder="Forum Description"
+      ></textarea>
+    </div>
+    <div class="col-12">
+      <ng-container *ngIf="!createForm && forumHasImage">
+        <div class="mb-1">
+          <div class="flex justify-content-evenly align-items-center">
+            <div class="font-bold">Current Image</div>
+            <button
+              pButton
+              pTooltip="Remove current image"
+              class="p-button p-button-text p-button-rounded p-button-danger"
+              icon="pi pi-trash"
+              clickConfirmation
+              (onConfirm)="removeImage()"
+            ></button>
+          </div>
+          <div
+            class="
+              flex
+              justify-content-center
+              align-items-center
+              border-solid
+              p-1
+              border-200
+            "
+          >
+            <img [src]="forum?.coverImage?.[0]?.image" alt="" class="h-15rem" />
+          </div>
+        </div>
+      </ng-container>
+      <label for="imageUpload">Image Upload</label>
+      <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
+    </div>
 
-  <div class="field col-12">
-    <button
-      pButton
-      pRipple
-      class="align-self-center"
-      type="button"
-      label="Add Forum Post"
-    ></button>
+    <div class="col-12 ml-auto flex justify-content-end mt-2">
+      <button
+        pButton
+        pRipple
+        class="mr-1"
+        type="button"
+        icon="pi pi-save"
+        [label]="(createForm ? 'Add' : 'Edit') + ' Forum'"
+        [disabled]="forumForm.invalid"
+        (click)="onAddOrUpdateForum()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        class="p-button-danger mr-1"
+        icon="pi pi-times"
+        type="button"
+        label="Cancel"
+        (click)="goBack()"
+      ></button>
+    </div>
   </div>
-</div>
+</ng-container>

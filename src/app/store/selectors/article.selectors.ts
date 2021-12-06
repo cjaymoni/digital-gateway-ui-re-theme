@@ -1,6 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { FeatureNamesForStore } from 'src/app/config/app-config';
-import { articleEntityAdapter } from '../reducers/article.reducers';
+import {
+  articleEntityAdapter,
+  ArticleState,
+} from '../reducers/article.reducers';
 import { DefaultAdapterSelectors } from './default.adapter.selectors';
 
 const articleFeatureSelector = createFeatureSelector(
@@ -18,6 +21,11 @@ class ArticleSelectors extends DefaultAdapterSelectors {
   selectedArticleToEdit = createSelector(
     this.state,
     state => state.selectedArticleToEdit
+  );
+
+  searchResults = createSelector(
+    this.state,
+    (state: ArticleState) => state.searchResults
   );
 }
 

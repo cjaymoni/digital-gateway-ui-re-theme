@@ -23,6 +23,10 @@ export class ForumsService extends ResourceService {
     );
   }
 
+  findForumUsingSlug(slug: string) {
+    return this.searchForum({ slug });
+  }
+
   addForum(forum: Forum, imageToUpload?: File) {
     const formData = this.getFormDataFromForumObject(forum, imageToUpload);
     return this.storeResource(formData).pipe(map(data => data as Forum));

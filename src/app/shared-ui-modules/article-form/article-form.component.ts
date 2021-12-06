@@ -140,8 +140,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
           articleActions.editArticleSuccessful
         ),
         map(_ => {
-          this.navigator.hidePanel();
-          this.navigator.article.goToModerationPage();
+          this.navigator.goBack();
         })
       )
       .subscribe();

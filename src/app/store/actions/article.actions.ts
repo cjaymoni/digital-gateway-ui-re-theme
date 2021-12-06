@@ -49,7 +49,19 @@ class ArticleActions {
     }>()
   );
 
+  findAndSelectArticleById = createAction(
+    `${this.type} Find And Select Article By Id`,
+    props<{
+      id: string | number;
+    }>()
+  );
+
   searchArticleSuccess = createAction(`${this.type} Search Article Success`);
+
+  fetchSearchSuccessful = createAction(
+    `${this.type} Fetch Search Successful`,
+    props<{ articles: Article[] }>()
+  );
 
   addArticle = createAction(
     `${this.type} Add Article`,

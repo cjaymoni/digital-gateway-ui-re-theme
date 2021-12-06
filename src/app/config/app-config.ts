@@ -1,3 +1,5 @@
+import { UrlSegment } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
@@ -25,22 +27,83 @@ export enum FeatureNamesForStore {
 
 export const SLUG_PREFIX = 'read';
 
-export enum Pages {
-  Articles = 'articles',
-  Forum = 'forum',
-  Login = 'login',
-  MarketPlace = 'market-place',
-
-  //Common Pages
-  add = 'add',
-  edit = 'edit',
-  view = 'view',
-
-  //Articles
-  MyArticles = 'my-articles',
-  MyForum = 'my-forum-posts',
-  MyMarketPlaceItems = 'my-market-place-items',
+export interface IPageItems {
+  main: string;
+  myList: string;
+  viewDetails: string;
+  add: string;
+  edit: string;
+  view: string;
+  matcher: () => UrlSegment | null;
 }
+
+export const Pages: { [key: string]: IPageItems | any } | any = {
+  Articles: {
+    main: 'articles',
+    myList: 'my-articles',
+    viewDetails: ':slug',
+    add: 'post-article',
+    edit: 'edit-article:id',
+    view: 'view-article:id',
+    matcher: (url: UrlSegment[]) => {
+      return urlMatcherForEditAndView(url, 'article');
+    },
+  },
+  Forum: {
+    main: 'forum',
+    edit: 'edit-forum:id',
+    view: 'view-forum:id',
+    viewDetails: ':slug',
+    myList: 'my-forums',
+    add: 'post-forum',
+    matcher: (url: UrlSegment[]) => {
+      return urlMatcherForEditAndView(url, 'forum');
+    },
+  },
+  ForumPost: {
+    main: 'forum-post',
+    edit: 'edit-forum-post:id',
+    view: 'view-forum-post:id',
+    viewDetails: ':slug',
+    add: 'post-forum',
+    myList: 'my-forum-post',
+    matcher: (url: UrlSegment[]) => {
+      return urlMatcherForEditAndView(url, 'forum-post');
+    },
+  },
+  Auth: {
+    login: 'login',
+    signup: 'signup',
+  },
+
+  MarketPlace: {
+    main: 'market-place',
+    add: 'post-ad',
+    edit: 'edit-ad:id',
+    view: 'view-ad:id',
+    viewDetails: 'ad-details/:id',
+    myList: 'my-market-place',
+    matcher: (url: UrlSegment[]) => {
+      return urlMatcherForEditAndView(url, 'ad');
+    },
+  },
+
+  //content management
+  ContentManagement: 'content-management',
+  SiteSettings: 'site-settings',
+};
+
+export const urlMatcherForEditAndView = (
+  url: UrlSegment[],
+  matcher: string
+) => {
+  const path: string = url[0]?.path;
+  const startsWithViewOrEdit =
+    path.startsWith('view-' + matcher) || path.startsWith('edit-' + matcher);
+  console.log(startsWithViewOrEdit, path, matcher);
+
+  return startsWithViewOrEdit ? { consumed: url } : null;
+};
 
 export enum PrimeNgSeverity {
   Info = 'info',
@@ -89,3 +152,56 @@ export enum TagType {
 
 export const GenericErrorMessage =
   'Sorry, an error occurred. Rest assured, it will be fixed';
+
+export const INFO_HUB_ID = 'info-hub';
+export const MainMenu: MenuItem[] = [
+  {
+    id: INFO_HUB_ID,
+    label: 'Information Hub',
+    // routerLink: [Pages.Articles.main],
+    icon: 'pi pi-folder-open',
+    items: [],
+  },
+  {
+    id: 'forum',
+    label: 'Forums',
+    icon: 'pi pi-discord',
+
+    // routerLink: [Pages.Forum.main],
+    items: [
+      {
+        id: 'view-forums',
+        label: 'View Recent Forums',
+        routerLinkActiveOptions: [],
+        routerLink: [Pages.Forum.main],
+      },
+      {
+        id: 'create-forum',
+        label: 'Create A Post',
+        routerLinkActiveOptions: [],
+        routerLink: [Pages.Forum.main, Pages.Forum.add],
+      },
+    ],
+  },
+  {
+    id: 'market-place',
+    label: 'Market Place',
+    icon: 'pi pi-shopping-bag',
+
+    // routerLink: [Pages.MarketPlace.main],
+    items: [
+      {
+        id: 'view-add',
+        label: 'View Product Ads',
+        routerLinkActiveOptions: [],
+        routerLink: [Pages.MarketPlace.main],
+      },
+      {
+        id: 'create-add',
+        label: 'Create An Ad',
+        routerLinkActiveOptions: [],
+        routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
+      },
+    ],
+  },
+];
