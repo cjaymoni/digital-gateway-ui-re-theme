@@ -16,22 +16,20 @@ import { forumActions } from '../../store/actions/forum.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForumPostCardComponent implements OnInit {
-  @Input() forum: Forum | null = null;
+  @Input() forumPost: any;
+  showCommentForm: boolean = false;
 
   constructor(private store: Store, private navigator: NavigatorService) {}
 
   ngOnInit(): void {}
 
   openForum() {
-    this.store.dispatch(
-      forumActions.selectForum({
-        forum: this.forum as Forum,
-      })
-    );
-
-    this.navigator.forum.goToViewDetailsPage(this.forum?.name as string);
+    this.navigator.forum.goToViewDetailsPage(this.forumPost?.name as string);
   }
 
   dislikeForum() {}
   likeForum() {}
+  show() {
+    this.showCommentForm = !this.showCommentForm;
+  }
 }

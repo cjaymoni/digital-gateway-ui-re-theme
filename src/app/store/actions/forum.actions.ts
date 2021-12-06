@@ -49,7 +49,16 @@ class ForumActions {
       searchParams: { [key: string]: any };
     }>()
   );
+
+  findAndSelectForumById = createAction(
+    `${this.type} Find And Select Forum By Id`,
+    props<{
+      id: string | number;
+    }>()
+  );
+
   searchForumSuccess = createAction(`${this.type} Search Forum Success`);
+
   addForum = createAction(
     `${this.type} Add Forum`,
     props<{ forum: Forum; imageToUpload?: File }>()

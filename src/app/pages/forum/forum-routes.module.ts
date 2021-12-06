@@ -7,22 +7,24 @@ import { Pages, RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
 import { ForumDetailsComponent } from 'src/app/shared-ui-modules/forum-details/forum-details.component';
 import { ForumFormComponent } from 'src/app/shared-ui-modules/forum-form/forum-form.component';
 import { MyForumsListComponent } from './my-forums-list/my-forums-list.component';
+import { SelectForumGuard } from './guard/select-forum.guard';
 
 export function slugMatcher(url: UrlSegment[]) {
   return url[0]?.path.startsWith(SLUG_PREFIX) ? { consumed: url } : null;
 }
 const rightPanelRoutes: Routes = [
   {
-    path: Pages.Forum.view,
+    matcher: Pages.Forum.matcher,
     component: ForumDetailsComponent,
     outlet: RouterOutlets.Right,
-    canActivate: [ForumGuard],
+    data: { selectForum: true },
+    canActivate: [SelectForumGuard],
   },
   {
-    path: Pages.Forum.edit,
+    matcher: Pages.Forum.matcher,
     component: ForumFormComponent,
     outlet: RouterOutlets.Right,
-    canActivate: [ForumGuard],
+    canActivate: [SelectForumGuard],
   },
 ];
 

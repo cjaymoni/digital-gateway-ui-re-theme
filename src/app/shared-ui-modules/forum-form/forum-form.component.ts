@@ -139,6 +139,7 @@ export class ForumFormComponent implements OnInit, OnDestroy {
           this.createForm = false;
           this.forum = forum;
           this.forumForm.patchValue(forum);
+          this.navigator.setPanelTitle('Edit Forum');
         })
       )
       .subscribe();

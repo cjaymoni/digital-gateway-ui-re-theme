@@ -6,22 +6,24 @@ import { ForumPostGuard } from './guard/forum-post.guard';
 import { MyForumPostsComponent } from './my-forum-posts/my-forum-posts.component';
 import { ForumPostDetailsComponent } from '../../shared-ui-modules/forum-post-details/forum-post-details.component';
 import { ForumPostFormComponent } from '../../shared-ui-modules/forum-post-form/forum-post-form.component';
+import { SelectForumPostGuard } from './guard/select-forum-post.guard';
 
 export function slugMatcher(url: UrlSegment[]) {
   return url[0]?.path.startsWith(SLUG_PREFIX) ? { consumed: url } : null;
 }
 const rightPanelRoutes: Routes = [
   {
-    path: Pages.ForumPost.view,
-    component: ForumPostDetailsComponent,
-    outlet: RouterOutlets.Right,
-    canActivate: [ForumPostGuard],
-  },
-  {
-    path: Pages.ForumPost.edit,
+    matcher: Pages.ForumPost.matcher,
     component: ForumPostFormComponent,
     outlet: RouterOutlets.Right,
-    canActivate: [ForumPostGuard],
+    data: { selectForum: true },
+    canActivate: [SelectForumPostGuard],
+  },
+  {
+    matcher: Pages.ForumPost.matcher,
+    component: ForumPostFormComponent,
+    outlet: RouterOutlets.Right,
+    canActivate: [SelectForumPostGuard],
   },
 ];
 

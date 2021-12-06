@@ -9,10 +9,8 @@ import {
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { forumActions } from 'src/app/store/actions/forum.actions';
 import { forumSelectors } from '../../../store/selectors/forum.selectors';
 import { Forum } from '../../../models/forum.model';
-import { Pages } from 'src/app/config/app-config';
 
 @Component({
   selector: 'app-my-forums-list',
@@ -49,24 +47,10 @@ export class MyForumsListComponent implements OnInit, AfterViewInit {
   }
 
   viewForum(forum: Forum) {
-    this.selectForum(forum);
     this.navigator.forum.goToViewPage(forum.id, 'Preview Forum');
   }
 
   editForum(forum: Forum) {
-    this.store.dispatch(
-      forumActions.selectForumToEdit({
-        forum,
-      })
-    );
     this.navigator.forum.goToEditPage(forum.id, 'Edit Forum');
-  }
-
-  private selectForum(forum: Forum) {
-    this.store.dispatch(
-      forumActions.selectForum({
-        forum,
-      })
-    );
   }
 }
