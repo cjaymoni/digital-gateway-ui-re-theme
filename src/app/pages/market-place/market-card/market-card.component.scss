@@ -17,13 +17,7 @@
     }
   }
 
-  .article-card {
-    min-height: 380px;
-    cursor: pointer;
+  .ad-card {
+    min-height: 200px !important;
   }
-}
-
-.article-category {
-  position: absolute;
-  width: fit-content;
 }

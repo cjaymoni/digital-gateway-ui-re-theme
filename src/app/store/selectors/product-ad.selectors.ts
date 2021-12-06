@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { FeatureNamesForStore } from 'src/app/config/app-config';
+import { ProductAd } from 'src/app/models/product-ad.model';
 import { productAdEntityAdapter } from '../reducers/product-ad.reducers';
 import { DefaultAdapterSelectors } from './default.adapter.selectors';
 
@@ -20,7 +21,7 @@ class ProductAdSelectors extends DefaultAdapterSelectors {
   );
   selectedProductToEdit = createSelector(
     this.state,
-    state => state.selectedProductToEdit
+    state => state.selectedProductToEdit as ProductAd
   );
 }
 

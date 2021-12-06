@@ -6,6 +6,7 @@ import { MarketPlaceGuard } from './guard/market-place.guard';
 import { MarketPlaceListComponent } from './market-place-list/market-place-list.component';
 import { MarketPostFormComponent } from './market-post-form/market-post-form.component';
 import { MyMarketPostsComponent } from './my-market-posts/my-market-posts.component';
+import { MarketListDetailsComponent } from './market-list-details/market-list-details.component';
 
 const rightPanelRoutes: Routes = [
   {
@@ -39,7 +40,8 @@ const routes: Routes = [
   },
   {
     path: Pages.MarketPlace.viewDetails,
-    component: MarketPlaceListComponent,
+    component: MarketListDetailsComponent,
+    canActivate: [MarketPlaceGuard],
   },
 ];
 

@@ -82,7 +82,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
       const toSend = {
         title: article.title,
         content: article.content,
-        category: [article.category.id],
+        category: article.category.id,
         tags: (article.tags as Tag[]).map(tag => tag.id),
         slug: slugify(article.title),
         created_by: 1,
@@ -92,7 +92,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
         this.store.dispatch(
           articleActions.addArticle({
             article: toSend,
-            imageToUpload: this.imageUploadComponent?.getFilesToUpload()?.[0],
+            imageToUpload: this.imageUploadComponent?.getFilesToUpload(),
           })
         );
       } else {

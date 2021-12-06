@@ -65,28 +65,24 @@ export class ResourceService {
 
           const oldImage = Boolean(imgToUpload.id);
 
-          formData.append(
-            `${propertyNameToAppend}images[${index}]image`,
-            oldImage ? imgToUpload.image : imgToUpload
-          );
-          formData.append(
-            `${propertyNameToAppend}images[${index}]title`,
-            oldImage ? imgToUpload.title : imgToUpload.name
-          );
+          if (oldImage) {
+            formData.append(
+              `${propertyNameToAppend}images[${index}]id`,
+              imgToUpload.id
+            );
+          } else {
+            formData.append(
+              `${propertyNameToAppend}images[${index}]title`,
+              imgToUpload.name
+            );
+
+            formData.append(
+              `${propertyNameToAppend}images[${index}]image`,
+              imgToUpload
+            );
+          }
         });
-        // array means image didnt change so use same value
       }
-      // else {
-      //   formData.append(
-      //     propertyNameToAppend + 'images[0]image',
-      //     imageToUpload,
-      //     imageToUpload.name
-      //   );
-      //   formData.append(
-      //     propertyNameToAppend + 'images[0]title',
-      //     imageToUpload.name
-      //   );
-      // }
     } else {
       formData.append(propertyNameToAppend + 'images', '');
     }

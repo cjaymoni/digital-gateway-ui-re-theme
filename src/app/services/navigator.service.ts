@@ -62,11 +62,7 @@ export class NavigatorService {
   article = new ArticleRoutes(this.router, this.panelTitle$);
   forum = new ForumRoutes(this.router, this.panelTitle$);
   forumPost = new ForumPostRoutes(this.router, this.panelTitle$);
-  marketAd = new AppRoutesConfig(
-    Pages.MarketPlace,
-    this.router,
-    this.panelTitle$
-  );
+  marketAd = new MarketAdRoutes(this.router, this.panelTitle$);
   auth = new AuthRoutes(this.router, this.panelTitle$);
 }
 
@@ -166,5 +162,18 @@ class AuthRoutes extends AppRoutesConfig {
 
   goToLogin(title = 'Welcome back. Please Login') {
     this.openPanel(Pages['Auth'].login, title);
+  }
+}
+
+class MarketAdRoutes extends AppRoutesConfig {
+  constructor(router: Router, subject: BehaviorSubject<string>) {
+    super(Pages.MarketPlace, router, subject);
+  }
+
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
   }
 }

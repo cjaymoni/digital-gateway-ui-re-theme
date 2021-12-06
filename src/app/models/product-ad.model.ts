@@ -12,6 +12,7 @@ export interface ProductAd {
   email: string;
   author: User;
   product: Product;
+  ad_type: string;
 }
 
 export interface ProductType {

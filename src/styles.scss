@@ -18,6 +18,9 @@ body {
   &:hover {
     background-size: cover;
   }
+
+  background-color: bisque;
+  height: 10rem;
 }
 
 .p-menuitem-link-active {
@@ -26,6 +29,8 @@ body {
   }
 }
 
-*[title]:hover::after {
-  content: '';
+.p-message-no-icon {
+  .p-inline-message-icon::before {
+    content: '';
+  }
 }
