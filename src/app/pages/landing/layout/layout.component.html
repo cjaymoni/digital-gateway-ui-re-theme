@@ -1,0 +1,42 @@
+<p-carousel [value]="productImage"
+  styleClass="custom-carousel"
+  [numVisible]="1"
+  [numScroll]="1"
+  [circular]="true"
+  [autoplayInterval]="3000"
+  [responsiveOptions]="responsiveOptions">
+  <ng-template let-product pTemplate="item">
+    <div class="carousel-item">
+      <div class="carousel-item-content">
+        <div class="p-mb-3">
+          <img src="assets/{{product.image}}" [alt]="product.name" class="carousel-image" />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>
+<div>
+  <h5>Forum</h5>
+</div>
+<div>
+  <h5>Marketing Info</h5>
+</div>
+<div>
+  <h5>Multimedia</h5>
+</div>
+<div *ngIf="articles$ | async;">
+  <h5>Featured Articles</h5>
+  <p-carousel [value]="articles$"
+    styleClass="custom-carousel"
+    [numVisible]="3"
+    [numScroll]="1"
+    [circular]="true"
+    [autoplayInterval]="3000"
+    [responsiveOptions]="responsiveOptions">
+    <ng-template pTemplate="item" let-article>
+      <div class="px-2">
+        <app-article-card [article]="article"></app-article-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

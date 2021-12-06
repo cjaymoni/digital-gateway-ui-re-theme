@@ -4,6 +4,13 @@ import { Pages } from './config/app-config';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: () =>
+      import('./pages/landing/landing.module').then(
+        m => m.LandingModule
+      ),
+  },
+  {
     path: Pages.Articles,
     loadChildren: () =>
       import('./pages/articles/articles.module').then(
