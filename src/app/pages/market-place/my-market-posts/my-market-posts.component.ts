@@ -1,17 +1,16 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   OnInit,
-  ChangeDetectionStrategy,
-  ViewChild,
   TemplateRef,
+  ViewChild,
 } from '@angular/core';
-import { Pages, PublishedStatusMapping } from 'src/app/config/app-config';
 import { Store } from '@ngrx/store';
-import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
-import { productAdActions } from 'src/app/store/actions/product-ad.actions';
-import { NavigatorService } from 'src/app/services/navigator.service';
 import { ProductAd } from 'src/app/models/product-ad.model';
+import { NavigatorService } from 'src/app/services/navigator.service';
+import { productAdActions } from 'src/app/store/actions/product-ad.actions';
+import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
 
 @Component({
   selector: 'app-my-market-posts',
@@ -48,7 +47,10 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
 
   viewMarketAd(productAd: ProductAd) {
     this.selectProductAd(productAd);
-    this.navigator.openPanel(Pages.view, 'Preview Product Ad');
+    this.navigator.marketAd.goToViewPage(
+      productAd.product.id,
+      'Preview Product Ad'
+    );
   }
 
   editMarketAd(productAd: ProductAd) {
@@ -57,10 +59,7 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
         productAd,
       })
     );
-    this.navigator.openPanel(
-      [Pages.edit, productAd.product.id?.toString() || ''],
-      'Edit Product'
-    );
+    this.navigator.marketAd.goToEditPage(productAd.product.id, 'Edit Product');
   }
 
   expireMarketAd(productAd: ProductAd) {}

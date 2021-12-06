@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { ForumPost } from 'src/app/models/forum.model';
-import { ForumPostsService } from 'src/app/pages/forum/services/forum-post.service';
+import { ForumPostsService } from 'src/app/pages/forum-posts/services/forum-post.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { forumPostActions } from '../actions/forum-post.action';
 
@@ -37,6 +38,49 @@ export class ForumPostEffects {
           map((forumPosts: ForumPost[]) =>
             forumPostActions.selectForumPost({
               forumPost: forumPosts?.[0],
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(forumPostActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  searchForumPostById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumPostActions.findAndSelectForumPostById),
+      switchMap(({ id }) =>
+        this.forumPostService.getOneResource(id).pipe(
+          tap(forumPost => {
+            this.store.dispatch(
+              forumPostActions.selectForumPostToEdit({ forumPost })
+            );
+          }),
+          map((forumPost: ForumPost) =>
+            forumPostActions.selectForumPost({
+              forumPost,
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(forumPostActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  searchAllForumPosts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumPostActions.searchForumPost),
+      switchMap(({ searchParams }) =>
+        this.forumPostService.searchForumPost(searchParams).pipe(
+          map((forumPosts: ForumPost[]) =>
+            forumPostActions.fetchSuccessful({
+              forumPosts,
             })
           ),
           catchError(error => {
@@ -105,6 +149,7 @@ export class ForumPostEffects {
   constructor(
     private actions$: Actions,
     private forumPostService: ForumPostsService,
-    private alert: AppAlertService
+    private alert: AppAlertService,
+    private store: Store
   ) {}
 }

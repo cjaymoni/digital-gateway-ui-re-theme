@@ -29,6 +29,6 @@ export class ArticleCardComponent implements OnInit {
       })
     );
 
-    this.navigator.article.goToReadArticlePage(this.article?.slug as string);
+    this.navigator.article.goToViewDetailsPage(this.article?.slug as string);
   }
 }

@@ -1,94 +1,55 @@
 import { createReducer, on } from '@ngrx/store';
-import { Pages } from 'src/app/config/app-config';
+import { MenuItem } from 'primeng/api';
+import { INFO_HUB_ID, Pages } from 'src/app/config/app-config';
 import { MenuItemFromBackend } from 'src/app/models/menu-item.model';
 import { menuItemActions } from '../actions/menu-items.actions';
+import { MainMenu } from './../../config/app-config';
 
-export const initialState: Readonly<MenuItemFromBackend> = {
-  top_nav: [
-    {
-      label: 'Information Hub',
-      id: 1,
-      link: [Pages.Articles],
-      linkAndCommand: true,
-      items: [
-        {
-          label: 'Finance',
-          id: 6,
-          slug: 'finance',
-          items: [
-            {
-              label: 'All',
-              id: 7,
-              slug: 'finance',
-              search: 'finance',
-            },
-            {
-              label: 'Capital',
-              id: 8,
-              slug: 'tax-policies',
-              search: 'tax-policies',
-            },
-          ],
-        },
-        {
-          label: 'Tax Policies',
-          id: 9,
-          slug: 'tax-policies',
-        },
-      ],
-    },
-    {
-      label: 'Forum',
-      id: 2,
-      items: [
-        {
-          label: 'Most Read',
-          id: 10,
-          slug: 'most-read',
-        },
-        {
-          label: 'Latest Posts',
-          id: 11,
-          slug: 'latest-posts',
-        },
-      ],
-    },
-    {
-      label: 'Market Place',
-      id: 3,
-      link: [Pages.MarketPlace],
-      linkAndCommand: true,
-      items: [
-        {
-          label: 'Post An Ad',
-          id: 12,
-          routerLink: [Pages.MarketPlace, Pages.add],
-        },
-        {
-          label: 'Review My Ads',
-          id: 13,
-          routerLink: [Pages.MarketPlace, Pages.MyMarketPlaceItems],
-        },
-      ],
-    },
-    {
-      label: 'Article Moderation',
-      id: 14,
-      link: [Pages.Articles, 'my-articles'],
-    },
-    {
-      label: 'Fourm Posts Moderation',
-      id: 15,
-      link: [Pages.Forum, 'my-forum-posts'],
-    },
-  ],
+export interface MenuState {
+  menus: MenuItem[];
+  selectedMenu: any;
+}
+
+export const initialState: Readonly<MenuState> = {
+  menus: [...MainMenu],
   selectedMenu: null,
 };
 
 export const menuItemReducer = createReducer(
   initialState,
   on(menuItemActions.fetchSuccessful, (state, { menuItems }) => {
-    return { ...menuItems };
+    const menuItemsCopy = [...state.menus];
+    const newMenuItems = menuItemsCopy.map(mi => {
+      const menuI = { ...mi };
+      if (menuI.id === INFO_HUB_ID) {
+        const menuItemCopy = [...menuItems];
+        const itemsArray = (menuItemCopy as any[]).map(m => {
+          const newMenu = { ...m };
+          newMenu.label = m.name;
+          newMenu.routerLink = [
+            Pages.Articles.main,
+            'search',
+            m.slug.toLowerCase(),
+          ];
+          console.log(newMenu.routerLink);
+
+          return newMenu;
+        });
+
+        // const addedViewArray =
+        itemsArray.splice(0, 0, {
+          id: 'view-add',
+          label: 'View Recent Articles',
+          routerLinkActiveOptions: [],
+          routerLink: [Pages.Articles.main],
+        });
+
+        menuI.items = itemsArray;
+      }
+      return menuI;
+    });
+
+    return { ...state, menus: newMenuItems };
   }),
   on(menuItemActions.selectMenuItem, (state, { menuItemId }) => {
     return { ...state, selectedMenu: menuItemId };

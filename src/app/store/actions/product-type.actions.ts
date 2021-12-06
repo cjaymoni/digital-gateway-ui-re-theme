@@ -46,6 +46,8 @@ class ProductTypeActions {
     `${this.type} Delete ProductType Successful`,
     props<{ id: number }>()
   );
+
+  clearSelected = createAction(`${this.type} Fetch`);
 }
 
 export const productTypeActions = new ProductTypeActions();

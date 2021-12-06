@@ -6,9 +6,12 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { debounceTime, filter, map, Observable, take, tap } from 'rxjs';
 import { SLUG_PREFIX } from 'src/app/config/app-config';
+import { Category } from 'src/app/models/category.model';
 import { articleActions } from 'src/app/store/actions/article.actions';
+import { categorySelectors } from 'src/app/store/selectors/category.selectors';
+import { selectRouteParams } from 'src/app/store/selectors/router.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -29,9 +32,10 @@ export class ArticleGuard implements CanActivate {
     | boolean
     | UrlTree {
     const shouldFetchArticle = route.data['fetch'];
+
     if (shouldFetchArticle) {
       // search backend using the slug
-      const slug = route.url[0].path.replace(`${SLUG_PREFIX}-`, '');
+      const slug = route.url[0].path;
 
       this.store.dispatch(
         articleActions.findAndSelectArticle({
@@ -39,6 +43,7 @@ export class ArticleGuard implements CanActivate {
         })
       );
     }
+
     return true;
   }
 }

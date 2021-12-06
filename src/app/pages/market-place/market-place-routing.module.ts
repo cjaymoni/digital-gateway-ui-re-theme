@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
+import { Pages, RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { MarketPlaceGuard } from './guard/market-place.guard';
 import { MarketPlaceListComponent } from './market-place-list/market-place-list.component';
@@ -10,13 +10,13 @@ import { MarketListDetailsComponent } from './market-list-details/market-list-de
 
 const rightPanelRoutes: Routes = [
   {
-    path: 'view',
+    path: Pages.MarketPlace.view,
     component: MarketPlaceListComponent,
     outlet: RouterOutlets.Right,
     canActivate: [MarketPlaceGuard],
   },
   {
-    path: 'edit/:id',
+    path: Pages.MarketPlace.edit,
     component: MarketPostFormComponent,
     outlet: RouterOutlets.Right,
     canActivate: [MarketPlaceGuard],
@@ -30,18 +30,18 @@ const routes: Routes = [
     canActivate: [MarketPlaceGuard],
   },
   {
-    path: 'add',
+    path: Pages.MarketPlace.add,
     component: MarketPostFormComponent,
     canActivate: [MarketPlaceGuard],
   },
   {
-    path: 'view',
-    component: MarketListDetailsComponent,
-    canActivate: [MarketPlaceGuard],
+    path: Pages.MarketPlace.myList,
+    component: MyMarketPostsComponent,
   },
   {
-    path: 'my-market-place-items',
-    component: MyMarketPostsComponent,
+    path: Pages.MarketPlace.viewDetails,
+    component: MarketListDetailsComponent,
+    canActivate: [MarketPlaceGuard],
   },
 ];
 

@@ -1,13 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnInit,
-  ChangeDetectionStrategy,
 } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { NavigatorService } from 'src/app/services/navigator.service';
-import { productAdActions } from 'src/app/store/actions/product-ad.actions';
 import { ProductAd } from 'src/app/models/product-ad.model';
+import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
   selector: 'app-market-card',
@@ -18,10 +16,7 @@ import { ProductAd } from 'src/app/models/product-ad.model';
 export class MarketCardComponent implements OnInit {
   @Input() productAd: ProductAd | null = null;
 
-  constructor(
-    private store: Store,
-    private navigator: NavigatorService,
-  ) {}
+  constructor(private navigator: NavigatorService) {}
 
   ngOnInit() {}
 
@@ -29,13 +24,7 @@ export class MarketCardComponent implements OnInit {
     return `url(${this.productAd?.product.images?.[0]?.image})`;
   }
 
-  openMarketAd(){
-    this.store.dispatch(
-      productAdActions.selectProductAd({
-        productAd: this.productAd as ProductAd,
-      })
-    );
-
-    this.navigator.market.goToViewPage();
+  openMarketAd() {
+    this.navigator.marketAd.goToViewDetailsPage(this.productAd?.product.id);
   }
 }

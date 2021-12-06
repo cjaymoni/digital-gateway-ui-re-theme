@@ -1,0 +1,30 @@
+<div
+  *ngIf="forum$ | async; else loading"
+  styleClass="shadow-6  p-2 w-full scalein animation-duration-500 justify-content-between"
+>
+  <div class="flex justify-content-between">
+    <div class="text-2xl font-bold">
+      {{ (forum$ | async).name | uppercase }}
+    </div>
+    <button
+      pButton
+      icon="pi pi-plus"
+      class="p-button-outlined p-button-danger flex align-items-center"
+      label="Add Forum Post"
+      (click)="goToAddForumPost()"
+    ></button>
+  </div>
+
+  <div class="mt-3">
+    {{ (forum$ | async).description }}
+    <hr />
+  </div>
+</div>
+<div class="text-lg text-center font-semibold">TOPICS UNDER DISCUSSION</div>
+<ng-container *ngFor="let forumPosts of forumPosts$ | async">
+  <app-forum-post-card [forumPost]="forumPosts"></app-forum-post-card>
+</ng-container>
+
+<ng-template #loading>
+  <p-skeleton></p-skeleton>
+</ng-template>

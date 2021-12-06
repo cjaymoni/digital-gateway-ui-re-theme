@@ -15,6 +15,7 @@ import { GalleriaModule } from 'primeng/galleria';
     ImageModule,
     SkeletonModule,
     GalleriaModule,
+    ImageModule,
   ],
   exports: [MarketListDetailsComponent],
   declarations: [MarketListDetailsComponent],
