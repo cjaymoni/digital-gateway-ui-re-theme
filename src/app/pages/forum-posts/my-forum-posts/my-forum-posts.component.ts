@@ -52,6 +52,6 @@ export class MyForumPostsComponent implements OnInit, AfterViewInit {
   }
 
   editForumPost(forumPost: ForumPost) {
-    this.navigator.forumPost.goToViewPage(forumPost.id, 'Edit Forum Post');
+    this.navigator.forumPost.goToEditPage(forumPost.id, 'Edit Forum Post');
   }
 }

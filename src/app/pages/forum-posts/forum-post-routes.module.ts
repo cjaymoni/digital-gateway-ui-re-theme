@@ -13,14 +13,14 @@ export function slugMatcher(url: UrlSegment[]) {
 }
 const rightPanelRoutes: Routes = [
   {
-    matcher: Pages.ForumPost.matcher,
-    component: ForumPostFormComponent,
+    matcher: Pages.ForumPost.matcher.view,
+    component: ForumPostDetailsComponent,
     outlet: RouterOutlets.Right,
     data: { selectForum: true },
     canActivate: [SelectForumPostGuard],
   },
   {
-    matcher: Pages.ForumPost.matcher,
+    matcher: Pages.ForumPost.matcher.edit,
     component: ForumPostFormComponent,
     outlet: RouterOutlets.Right,
     canActivate: [SelectForumPostGuard],

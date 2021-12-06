@@ -31,7 +31,6 @@ export const menuItemReducer = createReducer(
             'search',
             m.slug.toLowerCase(),
           ];
-          console.log(newMenu.routerLink);
 
           return newMenu;
         });

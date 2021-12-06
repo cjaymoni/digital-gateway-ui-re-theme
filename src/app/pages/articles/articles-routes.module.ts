@@ -11,14 +11,14 @@ import { MyArticlesListComponent } from './my-articles-list/my-articles-list.com
 
 const rightPanelRoutes: Routes = [
   {
-    matcher: Pages.Articles.matcher,
+    matcher: Pages.Articles.matcher.view,
     component: ArticleDetailsComponent,
     outlet: RouterOutlets.Right,
     data: { selectArticle: true },
     canActivate: [SelectArticleGuard],
   },
   {
-    matcher: Pages.Articles.matcher,
+    matcher: Pages.Articles.matcher.edit,
     component: ArticleFormComponent,
     outlet: RouterOutlets.Right,
     canActivate: [SelectArticleGuard],
