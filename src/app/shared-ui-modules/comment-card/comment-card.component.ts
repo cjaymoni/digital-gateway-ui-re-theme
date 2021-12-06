@@ -4,13 +4,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   selector: 'app-comment-card',
   templateUrl: './comment-card.component.html',
   styleUrls: ['./comment-card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentCardComponent implements OnInit {
+  showCommentForm: boolean = false;
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  show() {
+    this.showCommentForm = !this.showCommentForm;
   }
-
 }

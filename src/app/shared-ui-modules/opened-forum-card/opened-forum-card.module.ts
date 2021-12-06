@@ -1,21 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpenedForumCardComponent } from './opened-forum-card.component';
-import { VotesModule } from '../votes/votes.module';
-import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ButtonModule } from 'primeng/button';
-import { CommentCardModule } from '../comment-card/comment-card.module';
+import { ForumPostCardModule } from '../forum-post-card/forum-post-card.module';
+import { AppPipesModule } from '../../pipes/app-pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    VotesModule,
-    CardModule,
     SkeletonModule,
     ButtonModule,
-    CommentCardModule,
+    ForumPostCardModule,
+    AppPipesModule,
   ],
+
   declarations: [OpenedForumCardComponent],
   exports: [OpenedForumCardComponent],
 })

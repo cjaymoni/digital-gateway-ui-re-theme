@@ -2,38 +2,49 @@
   class="
     forum-post-card
     transition-all transition-delay-500
-    shadow-4
+    shadow-5
     p-component p-3
     border-round
     fadeindown
     animation-duration-1000
+    mt-3
   "
-  *ngIf="forum"
+  *ngIf="forumPost"
 >
   <div class="text-2xl font-bold">
-    {{ forum.name | uppercase }}
+    {{ forumPost.title | uppercase }}
   </div>
-  <div class="text-600 font-italic mb-1">Author Name | Date</div>
-  <div>
-    {{ forum.description || '' | appEllipsis: 250 }}
+  <div>Author Name | Date</div>
+  <div class="mt-2">
+    {{ forumPost.content || '' | appEllipsis: 250 }}
     <hr />
   </div>
   <div class="flex justify-content-between align-items-center">
-    <app-comments></app-comments>
-    <app-votes
-      (dislikeClickEvent)="dislikeForum()"
-      (likeClickEvent)="likeForum()"
-    ></app-votes>
-    <button
-      pButton
-      icon="pi pi-arrow-right"
-      class="
-        p-button-outlined p-button-danger
-        justify-content-center
-        align-self-end
-      "
-      label="Go to Forum"
-      (click)="openForum()"
-    ></button>
+    <div>
+      <app-comments></app-comments>
+    </div>
+    <div>
+      <app-votes></app-votes>
+    </div>
+    <div>
+      <button
+        pButton
+        class="
+          p-button-outlined p-button-danger
+          justify-content-center
+          align-self-end
+        "
+        icon="pi pi-reply"
+        label="Comment"
+        (click)="show()"
+      ></button>
+    </div>
   </div>
+  <div *ngIf="showCommentForm">
+    <app-comment-form></app-comment-form>
+  </div>
+</div>
+
+<div>
+  <app-comment-card></app-comment-card>
 </div>

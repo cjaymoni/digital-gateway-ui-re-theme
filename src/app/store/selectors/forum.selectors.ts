@@ -12,6 +12,10 @@ class ForumSelectors extends DefaultAdapterSelectors {
   alll = createSelector(this.state, state => state);
   filtered = createSelector(this.state, state => state);
   selectedForum = createSelector(this.state, state => state.selectedForum);
+  selectedForumPost = createSelector(
+    this.selectedForum,
+    selected => selected.posts
+  );
   selectedForumToEdit = createSelector(
     this.state,
     state => state.selectedForumToEdit

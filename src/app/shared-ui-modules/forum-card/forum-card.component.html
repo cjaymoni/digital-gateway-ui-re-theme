@@ -1,0 +1,35 @@
+<div
+  class="
+    forum-post-card
+    transition-all transition-delay-500
+    shadow-4
+    p-component p-3
+    border-round
+    fadeindown
+    animation-duration-1000
+  "
+  *ngIf="forum"
+>
+  <div class="text-2xl font-bold">
+    {{ forum.name | uppercase }}
+  </div>
+  <div>
+    {{ forum.description || '' | appEllipsis: 250 }}
+    <hr />
+  </div>
+  <div class="flex justify-content-end">
+    <button
+      pButton
+      icon="pi pi-arrow-right"
+      class="
+        p-button-outlined p-button-danger
+        align-self-end
+        flex
+        align-items-center
+        justify-content-center
+      "
+      label="Go to Forum"
+      (click)="openForum()"
+    ></button>
+  </div>
+</div>

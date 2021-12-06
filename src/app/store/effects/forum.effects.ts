@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
@@ -48,6 +49,46 @@ export class ForumEffects {
     )
   );
 
+  searchForumById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.findAndSelectForumById),
+      switchMap(({ id }) =>
+        this.forumService.getOneResource(id).pipe(
+          tap(forum => {
+            this.store.dispatch(forumActions.selectForumToEdit({ forum }));
+          }),
+          map((forum: Forum) =>
+            forumActions.selectForum({
+              forum,
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  searchAllForums$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.searchForum),
+      switchMap(({ searchParams }) =>
+        this.forumService.searchForum(searchParams).pipe(
+          map((forums: Forum[]) =>
+            forumActions.fetchSuccessful({
+              forums,
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
   addForums$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumActions.addForum),
@@ -105,6 +146,7 @@ export class ForumEffects {
   constructor(
     private actions$: Actions,
     private forumService: ForumsService,
-    private alert: AppAlertService
+    private alert: AppAlertService,
+    private store: Store
   ) {}
 }
