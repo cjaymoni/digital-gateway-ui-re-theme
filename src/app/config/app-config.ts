@@ -158,25 +158,50 @@ export const MainMenu: MenuItem[] = [
   {
     id: INFO_HUB_ID,
     label: 'Information Hub',
-    routerLink: [Pages.Articles.main],
-    items: [
-      {
-        id: 'finance',
-        label: 'Finance',
-        queryParams: { search: 'finance' },
-        routerLinkActiveOptions: [],
-        routerLink: [Pages.Articles.main],
-      },
-    ],
+    // routerLink: [Pages.Articles.main],
+    icon: 'pi pi-folder-open',
+    items: [],
   },
   {
     id: 'forum',
     label: 'Forums',
-    routerLink: [Pages.Forum.main],
+    icon: 'pi pi-discord',
+
+    // routerLink: [Pages.Forum.main],
+    items: [
+      {
+        id: 'view-forums',
+        label: 'View Recent Forums',
+        routerLinkActiveOptions: [],
+        routerLink: [Pages.Forum.main],
+      },
+      {
+        id: 'create-forum',
+        label: 'Create A Post',
+        routerLinkActiveOptions: [],
+        routerLink: [Pages.Forum.main, Pages.Forum.add],
+      },
+    ],
   },
   {
     id: 'market-place',
     label: 'Market Place',
-    routerLink: [Pages.MarketPlace.main],
+    icon: 'pi pi-shopping-bag',
+
+    // routerLink: [Pages.MarketPlace.main],
+    items: [
+      {
+        id: 'view-add',
+        label: 'View Product Ads',
+        routerLinkActiveOptions: [],
+        routerLink: [Pages.MarketPlace.main],
+      },
+      {
+        id: 'create-add',
+        label: 'Create An Ad',
+        routerLinkActiveOptions: [],
+        routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
+      },
+    ],
   },
 ];

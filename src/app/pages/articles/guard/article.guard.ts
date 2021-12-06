@@ -29,17 +29,14 @@ export class ArticleGuard implements CanActivate {
     | boolean
     | UrlTree {
     const shouldFetchArticle = route.data['fetch'];
-
     const search = route.queryParams['search'];
-
-    console.log(search);
+    const id = route.queryParams['id'];
 
     if (search) {
       this.store.dispatch(
         articleActions.searchArticle({
           searchParams: {
-            category: search,
-            tag: search,
+            category: id,
           },
         })
       );

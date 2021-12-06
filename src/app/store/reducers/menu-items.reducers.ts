@@ -27,8 +27,16 @@ export const menuItemReducer = createReducer(
           const newMenu = { ...m };
           newMenu.label = m.name;
           newMenu.routerLink = [Pages.Articles.main];
-          newMenu.queryParams = { search: m.slug.toLowerCase() };
+          newMenu.queryParams = { search: m.slug.toLowerCase(), id: m.id };
           return newMenu;
+        });
+
+        // const addedViewArray =
+        itemsArray.splice(0, 0, {
+          id: 'view-add',
+          label: 'View Recent Articles',
+          routerLinkActiveOptions: [],
+          routerLink: [Pages.Articles.main],
         });
 
         menuI.items = itemsArray;

@@ -11,9 +11,6 @@ export class MenuItemEffects {
     this.actions$.pipe(
       ofType(categoryActions.fetchSuccessful),
       switchMap(({ categories }) => {
-        // const menuItemsForInfoHub = [...categories];
-        // console.log(menuItemsForInfoHub);
-
         return of(
           menuItemActions.fetchSuccessful({
             menuItems: categories as MenuItem[],
