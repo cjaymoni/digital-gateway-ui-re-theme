@@ -79,7 +79,7 @@ export class ArticleEffects {
       switchMap(({ searchParams }) =>
         this.articleService.searchArticle(searchParams).pipe(
           map((articles: Article[]) =>
-            articleActions.fetchSuccessful({
+            articleActions.fetchSearchSuccessful({
               articles,
             })
           ),

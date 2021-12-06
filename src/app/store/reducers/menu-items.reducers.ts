@@ -26,8 +26,13 @@ export const menuItemReducer = createReducer(
         const itemsArray = (menuItemCopy as any[]).map(m => {
           const newMenu = { ...m };
           newMenu.label = m.name;
-          newMenu.routerLink = [Pages.Articles.main];
-          newMenu.queryParams = { search: m.slug.toLowerCase(), id: m.id };
+          newMenu.routerLink = [
+            Pages.Articles.main,
+            'search',
+            m.slug.toLowerCase(),
+          ];
+          console.log(newMenu.routerLink);
+
           return newMenu;
         });
 
@@ -43,7 +48,6 @@ export const menuItemReducer = createReducer(
       }
       return menuI;
     });
-    console.log(newMenuItems);
 
     return { ...state, menus: newMenuItems };
   }),

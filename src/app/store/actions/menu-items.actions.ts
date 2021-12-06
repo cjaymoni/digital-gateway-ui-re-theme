@@ -10,7 +10,7 @@ class MenuItemActions {
 
   fetchSuccessful = createAction(
     `${this.type} Fetch Successful`,
-    props<{ menuItems: MenuItem[] }>()
+    props<{ menuItems: MenuItem[] | any[] }>()
   );
 
   selectMenuItem = createAction(

@@ -30,44 +30,6 @@ export class TopNavComponent implements OnInit {
 
   items$ = this.store.select(menuItemSelectors.menuItems);
 
-  // items$ = this.device.isHandheld$.pipe(
-  //   switchMap(isHandheld =>
-  //     isHandheld
-  //       ? this.store
-  //           .select(menuItemSelectors.menuItems)
-  //           .pipe(map(menu => menu as MenuItem[]))
-  //       : this.store.select(menuItemSelectors.topMenuItems).pipe(
-  //           map(topMenuItems =>
-  //             topMenuItems.map((item: MenuItem) => {
-  //               item.command = event => {
-  //                 this.selectMenu(event.item.id, item.routerLink);
-  //               };
-  //               item.routerLink = (item as any)?.link;
-  //               return item;
-  //             })
-  //           )
-  //         )
-  //   )
-  // );
-
-  // items$ = of([
-  //   {
-  //     id: 'info-hub',
-  //     label: 'Information Hub',
-  //     routerLink: [Pages.Articles.main],
-  //   },
-  //   {
-  //     id: 'forum',
-  //     label: 'Forums',
-  //     routerLink: [Pages.Forum.main],
-  //   },
-  //   {
-  //     id: 'market-place',
-  //     label: 'Market Place',
-  //     routerLink: [Pages.MarketPlace.main],
-  //   },
-  // ]);
-
   ngOnInit(): void {}
 
   selectMenu(id: number, link?: [string]) {

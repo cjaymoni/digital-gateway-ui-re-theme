@@ -20,10 +20,10 @@
     <hr />
   </div>
 </div>
-
-<div *ngFor="let forumPosts of forumPosts$ | async">
+<div class="text-lg text-center font-semibold">TOPICS UNDER DISCUSSION</div>
+<ng-container *ngFor="let forumPosts of forumPosts$ | async">
   <app-forum-post-card [forumPost]="forumPosts"></app-forum-post-card>
-</div>
+</ng-container>
 
 <ng-template #loading>
   <p-skeleton></p-skeleton>

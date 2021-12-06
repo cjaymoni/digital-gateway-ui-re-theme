@@ -58,6 +58,11 @@ class ArticleActions {
 
   searchArticleSuccess = createAction(`${this.type} Search Article Success`);
 
+  fetchSearchSuccessful = createAction(
+    `${this.type} Fetch Search Successful`,
+    props<{ articles: Article[] }>()
+  );
+
   addArticle = createAction(
     `${this.type} Add Article`,
     props<{ article: Article; imageToUpload?: File[] }>()

@@ -40,6 +40,8 @@ export class MarketPlaceGuard implements CanActivate {
           },
         })
       );
+    } else {
+      this.store.dispatch(productAdActions.clearAllSelected());
     }
 
     return true;

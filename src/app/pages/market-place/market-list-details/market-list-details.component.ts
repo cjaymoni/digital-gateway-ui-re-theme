@@ -3,15 +3,17 @@ import {
   Input,
   OnInit,
   ChangeDetectionStrategy,
+  OnDestroy,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { productTypeActions } from 'src/app/store/actions/product-type.actions';
 import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
 
 @Component({
   selector: 'app-market-list-details',
   templateUrl: './market-list-details.component.html',
   styleUrls: ['./market-list-details.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarketListDetailsComponent implements OnInit {
   @Input() product$ = this.store.select(productAdSelectors.selectedProductAd);
@@ -32,19 +34,6 @@ export class MarketListDetailsComponent implements OnInit {
       numVisible: 1,
       numScroll: 1,
     },
-  ];
-
-  productImage = [
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
   ];
 
   constructor(private store: Store) {}

@@ -59,6 +59,10 @@ export class NavigatorService {
     this.router.navigate(route);
   }
 
+  noReuse() {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
+
   article = new ArticleRoutes(this.router, this.panelTitle$);
   forum = new ForumRoutes(this.router, this.panelTitle$);
   forumPost = new ForumPostRoutes(this.router, this.panelTitle$);

@@ -31,6 +31,11 @@ const routes: Routes = [
     component: ArticleListComponent,
     canActivate: [ArticleGuard],
   },
+  {
+    path: 'search/:category',
+    component: ArticleListComponent,
+    canActivate: [ArticleGuard],
+  },
 
   {
     path: Pages.Articles.myList,

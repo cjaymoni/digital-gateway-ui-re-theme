@@ -33,6 +33,11 @@ export class DefaultAdapterSelectors {
       )
     );
 
+  getBySlug = (slug: string) =>
+    createSelector(this.all, (all: any[]) =>
+      all.find(one => one?.slug === slug)
+    );
+
   all = createSelector(this.state, this.selectAll);
 
   loading = createSelector(this.state, state => state.loading);
