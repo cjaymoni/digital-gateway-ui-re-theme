@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
+import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
 
 @Component({
   selector: 'app-layout',
@@ -35,6 +36,7 @@ export class LayoutComponent implements OnInit {
     { image: 'img.png', name: 'ex' },
   ];
 
+  productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);
 
   constructor(private store: Store) { }

@@ -20,13 +20,26 @@
 </div>
 <div>
   <h5>Marketing Info</h5>
+  <p-carousel [value]="(productAds$ | async) || []"
+    styleClass="custom-carousel"
+    [numVisible]="3"
+    [numScroll]="1"
+    [circular]="true"
+    [autoplayInterval]="3000"
+    [responsiveOptions]="responsiveOptions">
+    <ng-template pTemplate="item" let-productAd>
+      <div class="px-2">
+        <app-market-card [productAd]="productAd"></app-market-card>
+      </div>
+    </ng-template>
+  </p-carousel>
 </div>
 <div>
   <h5>Multimedia</h5>
 </div>
 <div *ngIf="articles$ | async;">
   <h5>Featured Articles</h5>
-  <p-carousel [value]="articles$"
+  <p-carousel [value]="(articles$ | async) || []"
     styleClass="custom-carousel"
     [numVisible]="3"
     [numScroll]="1"
