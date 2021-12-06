@@ -9,6 +9,7 @@ export const DEFAULT_PAGE_SIZE = 100;
 export enum RouterOutlets {
   Main = 'main',
   Right = 'right-panel',
+  Modal = 'modal',
 }
 
 export enum FeatureNamesForStore {
@@ -43,8 +44,9 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     myList: 'my-articles',
     viewDetails: ':slug',
     add: 'post-article',
-    edit: 'edit-article:id',
-    view: 'view-article:id',
+    edit: 'edit-article/:article-id',
+    view: 'view-article/:article-id',
+
     matcher: {
       view: (url: UrlSegment[]) => {
         return urlMatcherForEditAndView(url, 'article');
@@ -56,8 +58,8 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   },
   Forum: {
     main: 'forum',
-    edit: 'edit-forum:id',
-    view: 'view-forum:id',
+    edit: 'edit-forum/:forum-id',
+    view: 'view-forum/:forum-id',
     viewDetails: ':slug',
     myList: 'my-forums',
     add: 'post-forum',
@@ -72,8 +74,8 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   },
   ForumPost: {
     main: 'forum-post',
-    edit: 'edit-forum-post:id',
-    view: 'view-forum-post:id',
+    edit: 'edit-forum-post/:forum-post-id',
+    view: 'view-forum-post/:forum-post-id',
     viewDetails: ':slug',
     add: 'post-forum',
     myList: 'my-forum-post',
@@ -94,8 +96,8 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   MarketPlace: {
     main: 'market-place',
     add: 'post-ad',
-    edit: 'edit-ad:id',
-    view: 'view-ad:id',
+    edit: 'edit-ad/:id',
+    view: 'view-ad/:id',
     viewDetails: 'ad-details/:id',
     myList: 'my-market-place',
     matcher: {
@@ -274,3 +276,11 @@ export const LoggedInMenu: MenuItem[] = [
     icon: 'pi pi-power-off',
   },
 ];
+
+export enum Context {
+  Article = Pages.Articles.main,
+  Forum = Pages.Forum.main,
+  ForumPost = Pages.ForumPost.main,
+  MarketPlace = Pages.MarketPlace.main,
+  // Auth = Pages.Auth.
+}

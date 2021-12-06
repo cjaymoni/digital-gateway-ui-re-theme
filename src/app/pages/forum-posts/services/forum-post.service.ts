@@ -18,7 +18,7 @@ export class ForumPostsService extends ResourceService {
       const element = searchParams[key];
     }
     return this.getResources(this.endpoint, undefined, searchParams).pipe(
-      map(data => data as ForumPost[])
+      map((data: any) => data.results as ForumPost[])
     );
   }
 

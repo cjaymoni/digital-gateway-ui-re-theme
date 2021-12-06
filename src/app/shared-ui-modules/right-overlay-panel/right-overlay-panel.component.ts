@@ -38,6 +38,7 @@ export class RightOverlayPanelComponent implements OnInit, OnDestroy {
   }
 
   hidePanel() {
+    // this.
     this.navigator.hidePanel();
   }
 

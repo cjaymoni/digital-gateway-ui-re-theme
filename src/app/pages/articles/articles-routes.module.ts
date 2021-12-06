@@ -9,26 +9,22 @@ import { ArticleGuard } from './guard/article.guard';
 import { SelectArticleGuard } from './guard/select-article.guard';
 import { MyArticlesListComponent } from './my-articles-list/my-articles-list.component';
 
-const rightPanelRoutes: Routes = [
-  {
-    matcher: Pages.Articles.matcher.view,
-    component: ArticleDetailsComponent,
-    outlet: RouterOutlets.Right,
-    data: { selectArticle: true },
-    canActivate: [SelectArticleGuard],
-  },
-  {
-    matcher: Pages.Articles.matcher.edit,
-    component: ArticleFormComponent,
-    outlet: RouterOutlets.Right,
-    canActivate: [SelectArticleGuard],
-  },
-];
-
 const routes: Routes = [
   {
     path: '',
     component: ArticleListComponent,
+    canActivate: [ArticleGuard],
+  },
+  {
+    path: Pages.Articles.view,
+    component: ArticleDetailsComponent,
+    outlet: RouterOutlets.Modal,
+    canActivate: [ArticleGuard],
+  },
+  {
+    path: Pages.Articles.edit,
+    component: ArticleFormComponent,
+    outlet: RouterOutlets.Modal,
     canActivate: [ArticleGuard],
   },
   {
@@ -46,6 +42,7 @@ const routes: Routes = [
   {
     path: Pages.Articles.add,
     component: ArticleFormComponent,
+    outlet: RouterOutlets.Modal,
     canActivate: [ArticleGuard],
   },
   {
@@ -60,8 +57,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ArticleRoutesModule {
-  constructor(private navigator: NavigatorService) {
-    this.navigator.addRightPanelRoutes(rightPanelRoutes);
-  }
-}
+export class ArticleRoutesModule {}

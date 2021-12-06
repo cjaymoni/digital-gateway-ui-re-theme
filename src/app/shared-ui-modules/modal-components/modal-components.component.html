@@ -1,16 +1,8 @@
-<p-sidebar
-  [(visible)]="show"
-  [blockScroll]="true"
-  [dismissible]="false"
-  styleClass="p-sidebar-lg w-full lg:w-5"
-  position="right"
-  (onHide)="hidePanel()"
-  [fullScreen]="(device.isHandheld$ | async) || false"
->
+<div class="w-full h-full">
   <div class="flex col-12 justify-content-between sticky top-0 z-1 bg-white">
     <div class="p-2 col-10">
       <div class="text-xl font-bold text-center uppercase white-space-normal">
-        {{ title$ | async }}
+        <!-- {{ title$ | async }} -->
       </div>
     </div>
 
@@ -20,8 +12,8 @@
       type="button"
       icon="pi pi-times"
       class="p-button-text p-button-secondary"
-      (click)="hidePanel()"
+      (click)="close()"
     ></button>
   </div>
-  <ng-content></ng-content>
-</p-sidebar>
+  <router-outlet name="modal"></router-outlet>
+</div>

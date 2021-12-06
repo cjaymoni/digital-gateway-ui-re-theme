@@ -34,3 +34,9 @@ body {
     content: '';
   }
 }
+
+.no-dialog-header {
+  .p-dialog-header {
+    display: none;
+  }
+}

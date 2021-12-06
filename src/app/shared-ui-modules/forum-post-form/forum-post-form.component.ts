@@ -110,7 +110,7 @@ export class ForumPostFormComponent implements OnInit, OnDestroy {
 
   private getForumPostToEditSubscription() {
     return this.store
-      .select(forumPostSelectors.selectedForumPostToEdit)
+      .select(forumPostSelectors.selectedForumPost)
       .pipe(
         filter(data => !!data),
         tap((forumPost: ForumPost) => {

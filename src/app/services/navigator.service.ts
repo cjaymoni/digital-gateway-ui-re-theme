@@ -1,15 +1,20 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Router, Routes } from '@angular/router';
+import { Router, RouterOutlet, Routes } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, filter, map } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, take, tap } from 'rxjs';
 import {
+  Context,
   IPageItems,
   Pages,
   RouterOutlets,
   SLUG_PREFIX,
 } from '../config/app-config';
-import { selectUrl } from '../store/selectors/router.selectors';
+import {
+  selectCurrentRoute,
+  selectFragment,
+  selectUrl,
+} from '../store/selectors/router.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +26,25 @@ export class NavigatorService {
     private location: Location
   ) {}
 
+  panelCloseEvent$ = new Observable();
+
+  currentContext$ = this.store.select(selectUrl).pipe(
+    filter(d => !!d),
+    map(url => {
+      const context = url.split('/')[1];
+      // return Context[context as any];
+      return context;
+    })
+  );
+
   panelActive$ = this.store.select(selectUrl).pipe(
     filter(currentRoute => !!currentRoute),
     map(cr => cr.includes(RouterOutlets.Right))
+  );
+
+  modalActive$ = this.store.select(selectUrl).pipe(
+    filter(currentRoute => !!currentRoute),
+    map(cr => cr.includes(RouterOutlets.Modal))
   );
 
   setPanelTitle(title: string) {
@@ -35,14 +56,41 @@ export class NavigatorService {
   }
 
   hidePanel() {
-    this.router.navigate([
-      '',
-      {
-        outlets: {
-          [RouterOutlets.Right]: null,
-        },
-      },
-    ]);
+    this.currentContext$
+      .pipe(
+        take(1),
+        tap(context => {
+          this.router.navigate([
+            context,
+            {
+              outlets: {
+                [RouterOutlets.Right]: null,
+              },
+            },
+          ]);
+        })
+      )
+      .subscribe();
+  }
+
+  closeModal() {
+    this.currentContext$
+      .pipe(
+        take(1),
+        tap(context => {
+          console.log(context);
+
+          this.router.navigate([
+            context,
+            {
+              outlets: {
+                [RouterOutlets.Modal]: null,
+              },
+            },
+          ]);
+        })
+      )
+      .subscribe();
   }
 
   private panelTitle$ = new BehaviorSubject('');
@@ -77,23 +125,27 @@ class AppRoutesConfig {
     protected panelTitleSubject$: BehaviorSubject<string>
   ) {}
 
-  openPanel(navigation: string | string[] | any, title = '') {
+  openPanel(navigation: string[], title = '') {
     this.panelTitleSubject$.next(title);
     this.router.navigate([
+      navigation[0], //main
       {
         outlets: {
-          [RouterOutlets.Right]: navigation,
+          [RouterOutlets.Right]: navigation.slice(1),
         },
       },
     ]);
   }
 
-  hidePanel() {
+  openModal(navigation: string[], title = '') {
+    this.panelTitleSubject$.next(title);
+    console.log(navigation);
+
     this.router.navigate([
-      '',
+      navigation[0], //main
       {
         outlets: {
-          [RouterOutlets.Right]: null,
+          [RouterOutlets.Modal]: navigation.slice(1),
         },
       },
     ]);
@@ -103,16 +155,40 @@ class AppRoutesConfig {
     this.router.navigate([this.page.main]);
   }
 
-  goToAddPage() {
-    this.router.navigate([this.page.main, this.page.add]);
+  goToAddPage(route = RouterOutlets.Main) {
+    const nav = [this.page.main, this.page.add];
+    route === RouterOutlets.Right
+      ? this.openPanel(nav, 'CREATE NEW')
+      : route === RouterOutlets.Modal
+      ? this.openModal(nav, 'CREATE NEW')
+      : this.router.navigate(nav);
   }
 
-  goToEditPage(id: string, title = 'UPDATE') {
-    this.openPanel([this.page.edit.replace('id', id)], title);
+  goToEditPage(id: string, title = 'UPDATE', route = RouterOutlets.Right) {
+    const nav = this.page.edit.split('/');
+    nav[1] = id; //replace id after split
+    route === RouterOutlets.Right
+      ? this.openPanel([this.page.main, ...nav], title)
+      : this.openModal([this.page.main, ...nav], title);
   }
 
-  goToViewPage(id: string, title = 'PREVIEW') {
-    this.openPanel([this.page.view.replace('id', id)], title);
+  closePanel() {
+    this.router.navigate([
+      this.page.main,
+      {
+        outlets: {
+          [RouterOutlets.Right]: null,
+        },
+      },
+    ]);
+  }
+
+  goToViewPage(id: string, title = 'PREVIEW', route = RouterOutlets.Right) {
+    const nav = this.page.view.split('/');
+    nav[1] = id; //replace id after split
+    route === RouterOutlets.Right
+      ? this.openPanel([this.page.main, ...nav], title)
+      : this.openModal([this.page.main, ...nav], title);
   }
 
   goToViewDetailsPage(slug: string) {
@@ -174,10 +250,10 @@ class MarketAdRoutes extends AppRoutesConfig {
     super(Pages.MarketPlace, router, subject);
   }
 
-  // override goToViewDetailsPage(id: any) {
-  //   this.router.navigate([
-  //     this.page.main,
-  //     ...this.page.viewDetails.replace(':id', id).split('/'),
-  //   ]);
-  // }
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
+  }
 }

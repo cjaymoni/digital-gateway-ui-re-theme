@@ -6,7 +6,8 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { filter, Observable, take, tap } from 'rxjs';
+import { selectRouteNestedParam } from 'src/app/store/selectors/router.selectors';
 import { forumPostActions } from '../../../store/actions/forum-post.action';
 
 @Injectable({
@@ -27,6 +28,22 @@ export class ForumPostGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    console.log('gaurd');
+
+    this.store
+      .select(selectRouteNestedParam('forum-post-id'))
+      .pipe(
+        filter(d => !!d),
+        take(1),
+        tap(forumPostId => {
+          this.store.dispatch(
+            forumPostActions.findAndSelectForumPostById({
+              id: forumPostId,
+            })
+          );
+        })
+      )
+      .subscribe();
     return true;
   }
 }
