@@ -7,6 +7,14 @@
         : 'hidden'
     "
   >
+  <ng-container *ngIf="addTemplate; else default">
+    <ng-container
+      [ngTemplateOutlet]="addTemplate"
+    ></ng-container>
+  </ng-container>
+
+  <ng-template #default></ng-template>
+
     <input
       pInput
       type="text"

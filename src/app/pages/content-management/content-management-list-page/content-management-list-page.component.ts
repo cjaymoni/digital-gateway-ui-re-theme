@@ -1,4 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { TagType } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
@@ -21,7 +27,9 @@ import { tagSelectors } from 'src/app/store/selectors/tag.selectors';
 export class ContentManagementListPageComponent implements OnInit {
   TagTypes = TagType;
 
-  constructor(private store: Store) {}
+  categoryForm!: FormGroup;
+
+  constructor(private store: Store, private fb: FormBuilder,) {}
 
   productTags$ = this.store.select(tagSelectors.productTags);
   articleTags$ = this.store.select(tagSelectors.articleTags);
@@ -30,7 +38,15 @@ export class ContentManagementListPageComponent implements OnInit {
   category$ = this.store.select(categorySelectors.all);
   productTypes$ = this.store.select(productTypeSelectors.all);
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.categoryForm = this.fb.group({
+      category: ['', [Validators.required]],
+    });
+  }
+
+  get category() {
+    return this.categoryForm.get('category') as FormControl;
+  }
 
   removeTag(tag: Tag) {
     this.store.dispatch(

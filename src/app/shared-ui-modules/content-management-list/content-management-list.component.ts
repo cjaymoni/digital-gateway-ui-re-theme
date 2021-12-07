@@ -6,6 +6,7 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
+  TemplateRef,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
@@ -19,6 +20,7 @@ export class ContentManagementListComponent implements OnInit {
   @Input() title: string = '';
   @Input() placeholder = 'Type name here';
   @Input() availableList: any[] = [];
+  @Input() addTemplate!: TemplateRef<any>;
 
   @Output() addItemEvent = new EventEmitter();
   @Output() removeItemEvent = new EventEmitter();
