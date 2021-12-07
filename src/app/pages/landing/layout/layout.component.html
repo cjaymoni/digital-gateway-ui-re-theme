@@ -1,15 +1,15 @@
-<p-carousel [value]="productImage"
+<p-carousel [value]="sliderContent"
   styleClass="custom-carousel"
   [numVisible]="1"
   [numScroll]="1"
   [circular]="true"
   [autoplayInterval]="10000"
   [responsiveOptions]="responsiveOptions">
-  <ng-template let-product pTemplate="item">
-    <div class="carousel-item">
-      <div class="carousel-item-content">
+  <ng-template let-item pTemplate="item">
+    <div class="py-5">
+      <div class="text-center flex justify-content-center">
         <div class="p-mb-3">
-          <img src="assets/{{product.image}}" [alt]="product.name" class="carousel-image" />
+          <img src="{{item}}" [alt]="item" class="w-100" />
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
 </div>
 <div>
   <h5>Multimedia</h5>
-  <p-carousel [value]="productImage"
+  <p-carousel [value]="multimedia"
     styleClass="custom-carousel"
     [numVisible]="3"
     [numScroll]="1"
@@ -66,4 +66,9 @@
       </div>
     </ng-template>
   </p-carousel>
+</div>
+<div>
+  <p-card header="Partners">
+    <!-- company Logos here -->
+  </p-card>
 </div>

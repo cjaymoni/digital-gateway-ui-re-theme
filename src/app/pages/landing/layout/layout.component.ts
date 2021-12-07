@@ -29,12 +29,8 @@ export class LayoutComponent implements OnInit {
     },
   ];
 
-  productImage = [
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-    { image: 'img.png', name: 'ex' },
-  ];
+  sliderContent = [];
+  multimedia = [];
 
   productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);
