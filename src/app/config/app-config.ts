@@ -9,6 +9,7 @@ export const DEFAULT_PAGE_SIZE = 100;
 export enum RouterOutlets {
   Main = 'main',
   Right = 'right-panel',
+  Modal = 'modal',
 }
 
 export enum FeatureNamesForStore {
@@ -44,33 +45,49 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     myList: 'my-articles',
     viewDetails: ':slug',
     add: 'post-article',
-    edit: 'edit-article:id',
-    view: 'view-article:id',
-    matcher: (url: UrlSegment[]) => {
-      return urlMatcherForEditAndView(url, 'article');
+    edit: 'edit-article/:article-id',
+    view: 'view-article/:article-id',
+
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'article');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'article', false);
+      },
     },
   },
   Forum: {
     main: 'forum',
-    edit: 'edit-forum:id',
-    view: 'view-forum:id',
+    edit: 'edit-forum/:forum-id',
+    view: 'view-forum/:forum-id',
     viewDetails: ':slug',
     viewPostDetails: 'slug:id',
     myList: 'my-forums',
     add: 'post-forum',
-    matcher: (url: UrlSegment[]) => {
-      return urlMatcherForEditAndView(url, 'forum');
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'forum');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'forum', false);
+      },
     },
   },
   ForumPost: {
     main: 'forum-post',
-    edit: 'edit-forum-post:id',
-    view: 'view-forum-post:id',
+    edit: 'edit-forum-post/:forum-post-id',
+    view: 'view-forum-post/:forum-post-id',
     viewDetails: ':slug',
     add: 'post-forum',
     myList: 'my-forum-post',
-    matcher: (url: UrlSegment[]) => {
-      return urlMatcherForEditAndView(url, 'forum-post');
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'forum-post');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'forum-post', false);
+      },
     },
   },
   Auth: {
@@ -81,12 +98,17 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   MarketPlace: {
     main: 'market-place',
     add: 'post-ad',
-    edit: 'edit-ad:id',
-    view: 'view-ad:id',
+    edit: 'edit-ad/:id',
+    view: 'view-ad/:id',
     viewDetails: 'ad-details/:id',
     myList: 'my-market-place',
-    matcher: (url: UrlSegment[]) => {
-      return urlMatcherForEditAndView(url, 'ad');
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'ad');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'ad', false);
+      },
     },
   },
 
@@ -97,12 +119,16 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
 
 export const urlMatcherForEditAndView = (
   url: UrlSegment[],
-  matcher: string
+  matcher: string,
+  view = true
 ) => {
   const path: string = url[0]?.path;
-  const startsWithViewOrEdit =
-    path.startsWith('view-' + matcher) || path.startsWith('edit-' + matcher);
-  console.log(startsWithViewOrEdit, path, matcher);
+  const startsWithViewOrEdit = view
+    ? path.startsWith('view-' + matcher)
+    : path.startsWith('edit-' + matcher)
+    ? true
+    : false;
+  console.log(startsWithViewOrEdit);
 
   return startsWithViewOrEdit ? { consumed: url } : null;
 };
@@ -207,3 +233,56 @@ export const MainMenu: MenuItem[] = [
     ],
   },
 ];
+
+export const LoggedInMenu: MenuItem[] = [
+  {
+    id: 'profile',
+    label: 'Profile',
+    // routerLink: [Pages.Articles.main],
+    icon: 'pi pi-user',
+  },
+  {
+    id: 'my-articles',
+    label: 'My Articles',
+    routerLink: [Pages.Articles.main, Pages.Articles.myList],
+    icon: 'pi pi-list',
+  },
+  {
+    id: 'my-forum-post',
+    label: 'My Forum Posts',
+    routerLink: [Pages.ForumPost.main, Pages.ForumPost.myList],
+    icon: 'pi pi-list',
+  },
+  {
+    id: 'my-market-ad',
+    label: 'My Market Ads',
+    routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.myList],
+    icon: 'pi pi-shopping-bag',
+  },
+  {
+    id: 'site-settings',
+    label: 'Site Settings',
+    // routerLink: [Pages.Articles.main],
+    icon: 'pi pi-cog',
+  },
+  {
+    id: 'content-settings',
+    label: 'Content Management',
+    routerLink: [Pages.ContentManagement],
+    icon: 'pi pi-cog',
+  },
+  {
+    id: 'logout',
+    label: 'Logout',
+    // routerLink: [Pages.Articles.main],
+    icon: 'pi pi-power-off',
+  },
+];
+
+export enum Context {
+  Article = Pages.Articles.main,
+  Forum = Pages.Forum.main,
+  ForumPost = Pages.ForumPost.main,
+  MarketPlace = Pages.MarketPlace.main,
+  // Auth = Pages.Auth.
+}

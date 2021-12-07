@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MenuItem } from 'primeng/api';
-import { filter, map, of, switchMap, tap } from 'rxjs';
-import { Pages } from 'src/app/config/app-config';
+import { filter } from 'rxjs';
+import { LoggedInMenu } from 'src/app/config/app-config';
 import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { menuItemActions } from 'src/app/store/actions/menu-items.actions';
@@ -29,6 +28,8 @@ export class TopNavComponent implements OnInit {
   ) {}
 
   items$ = this.store.select(menuItemSelectors.menuItems);
+
+  loggedInMenu = LoggedInMenu;
 
   ngOnInit(): void {}
 

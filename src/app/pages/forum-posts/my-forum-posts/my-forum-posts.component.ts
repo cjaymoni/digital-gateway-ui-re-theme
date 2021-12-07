@@ -1,16 +1,15 @@
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   OnInit,
-  ChangeDetectionStrategy,
-  AfterViewInit,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
+import { RouterOutlets } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { forumPostSelectors } from '../../../store/selectors/forum-post.selectors';
 import { ForumPost } from '../../../models/forum.model';
-import { Pages } from 'src/app/config/app-config';
-import { forumPostActions } from '../../../store/actions/forum-post.action';
+import { forumPostSelectors } from '../../../store/selectors/forum-post.selectors';
 
 @Component({
   selector: 'app-my-forum-posts',
@@ -48,10 +47,18 @@ export class MyForumPostsComponent implements OnInit, AfterViewInit {
   }
 
   viewForumPost(forumPost: ForumPost) {
-    this.navigator.forumPost.goToViewPage(forumPost.id, 'Preview Forum Post');
+    this.navigator.forumPost.goToViewPage(
+      forumPost.id,
+      'Preview Forum Post',
+      RouterOutlets.Modal
+    );
   }
 
   editForumPost(forumPost: ForumPost) {
-    this.navigator.forumPost.goToViewPage(forumPost.id, 'Edit Forum Post');
+    this.navigator.forumPost.goToEditPage(
+      forumPost.id,
+      'Edit Forum Post',
+      RouterOutlets.Modal
+    );
   }
 }

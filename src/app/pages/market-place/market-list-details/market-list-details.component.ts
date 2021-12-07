@@ -1,12 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ChangeDetectionStrategy,
-  OnDestroy,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { productTypeActions } from 'src/app/store/actions/product-type.actions';
 import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
 
 @Component({
