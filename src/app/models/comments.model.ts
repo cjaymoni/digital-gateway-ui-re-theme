@@ -1,12 +1,14 @@
 export interface Comment {
   id?: string | number | any;
   text: string;
-  author: Author[];
-  parent: ParentComment[];
+  author: Author | any;
+  parent?: ParentComment[];
   post: number | any;
-  upvote_count: number;
-  downvote_count: number;
-  score: number;
+  upvote_count?: number;
+  downvote_count?: number;
+  score?: number;
+  slug?: string;
+  subcomments?: any[];
 }
 
 export interface SubComment {

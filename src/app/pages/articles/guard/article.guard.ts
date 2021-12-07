@@ -6,17 +6,9 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { debounceTime, filter, map, Observable, take, tap } from 'rxjs';
-import { SLUG_PREFIX } from 'src/app/config/app-config';
-import { Category } from 'src/app/models/category.model';
+import { filter, Observable, tap } from 'rxjs';
 import { articleActions } from 'src/app/store/actions/article.actions';
-import { categorySelectors } from 'src/app/store/selectors/category.selectors';
-import {
-  selectRouteNestedParam,
-  selectRouteNestedParams,
-  selectRouteParam,
-  selectRouteParams,
-} from 'src/app/store/selectors/router.selectors';
+import { selectRouteNestedParam } from 'src/app/store/selectors/router.selectors';
 
 @Injectable({
   providedIn: 'root',

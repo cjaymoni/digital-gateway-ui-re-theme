@@ -135,6 +135,29 @@ export class ForumEffects {
     )
   );
 
+  addComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.comments.addComment),
+      switchMap(({ comment }) =>
+        this.forumService.postComment(comment).pipe(
+          map((savedComment: any) =>
+            forumActions.comments.addCommentSuccessful({
+              comment: savedComment,
+            })
+          ),
+          tap(saved => this.showToast('Comment Added Successfully')),
+          catchError(error => {
+            this.alert.showToast(
+              'Error adding comment. Try again',
+              PrimeNgAlerts.ERROR
+            );
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }

@@ -1,12 +1,12 @@
 <div
   class="
     forum-post-card
-    transition-all transition-delay-500
     shadow-4
     p-component p-3
     border-round
     fadeindown
     animation-duration-1000
+    hover:text-pink-700
   "
   *ngIf="forum"
   (click)="openForum()"
@@ -16,9 +16,11 @@
   </div>
 
   <hr />
-
-  <div class="flex justify-content-between">
+  <div class="font-italic text-purple-800 font-semibold">
+    {{ forum.posts?.length }} Topic(s)
+  </div>
+  <!-- <div class="flex justify-content-between">
     <app-comments></app-comments>
     <app-votes></app-votes>
-  </div>
+  </div> -->
 </div>

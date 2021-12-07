@@ -62,7 +62,8 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     edit: 'edit-forum/:forum-id',
     view: 'view-forum/:forum-id',
     viewDetails: ':slug',
-    viewPostDetails: 'slug:id',
+    viewPostDetails: ':slug/:id',
+    viewPost: ':slug/post/:post-slug',
     myList: 'my-forums',
     add: 'post-forum',
     matcher: {
@@ -285,4 +286,9 @@ export enum Context {
   ForumPost = Pages.ForumPost.main,
   MarketPlace = Pages.MarketPlace.main,
   // Auth = Pages.Auth.
+}
+
+export enum VoteType {
+  downvote = 'D',
+  upvote = 'U',
 }

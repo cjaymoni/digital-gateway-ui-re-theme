@@ -8,6 +8,7 @@
     pTooltip="Like"
     tooltipPosition="bottom"
     tooltipStyleClass="text-green-700"
+    [label]="likeCount.toString()"
     [disabled]="disableLike"
     proceedIfLoggedIn
     (onProceed)="like()"
@@ -22,6 +23,7 @@
     tooltipPosition="bottom"
     tooltipStyleClass="text-red-500"
     [disabled]="disableDislike"
+    [label]="dislikeCount.toString()"
     proceedIfLoggedIn
     (onProceed)="dislike()"
   ></button>

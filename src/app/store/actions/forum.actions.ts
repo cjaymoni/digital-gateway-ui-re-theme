@@ -1,7 +1,8 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
 import { AppUploadedImage } from 'src/app/models/article.model';
-import { Forum } from 'src/app/models/forum.model';
+import { Forum, ForumPost } from 'src/app/models/forum.model';
+import { CommentActions } from './comments.action';
 
 class ForumActions {
   readonly type = '[Forum  Actions]';
@@ -24,6 +25,13 @@ class ForumActions {
     `${this.type} Select Forum`,
     props<{
       forum: Forum;
+    }>()
+  );
+
+  selectForumPost = createAction(
+    `${this.type} Select Forum Post`,
+    props<{
+      forumPost: ForumPost;
     }>()
   );
 
@@ -93,5 +101,7 @@ class ForumActions {
   );
 
   clearAllSelected = createAction(`${this.type} Clear All Selected Forum`);
+
+  comments = new CommentActions();
 }
 export const forumActions = new ForumActions();

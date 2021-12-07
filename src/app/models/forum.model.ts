@@ -22,7 +22,7 @@ export interface ForumPost {
   downvote_count?: number;
   score?: number;
   forums?: any;
-  comments?: Comment[];
+  comments?: Comment[] | any;
   slug?: string;
 }
 

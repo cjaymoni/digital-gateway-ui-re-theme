@@ -17,6 +17,9 @@ export class VotesComponent implements OnInit {
   @Input() disableLike = false;
   @Input() disableDislike = false;
 
+  @Input() dislikeCount = 0;
+  @Input() likeCount = 0;
+
   @Output() likeClickEvent = new EventEmitter();
   @Output() dislikeClickEvent = new EventEmitter();
 

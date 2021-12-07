@@ -1,45 +1,58 @@
 <div
   class="
     forum-post-card
-    transition-all transition-delay-500
     shadow-5
     p-component p-3
     border-round
     fadeindown
     animation-duration-1000
-    mt-3
+    hover:text-purple-700
   "
   (click)="openForumPost()"
   *ngIf="forumPost"
 >
-  <div class="flex">
-    <p-avatar
-      [image]="avatar"
-      styleClass="mr-2"
-      size="large"
-      shape="circle"
-    ></p-avatar>
-    <div class="text-lg font-bold mt-1">
-      {{ forumPost.title | uppercase }}
-      <div class="text-sm">Author Name | Date</div>
+  <div class="flex justify-content-between align-content-center">
+    <div class="flex">
+      <p-avatar
+        [image]="avatar"
+        styleClass="mr-2"
+        size="large"
+        shape="circle"
+      ></p-avatar>
+      <div class="text-lg font-bold mt-1">
+        {{ forumPost.title | uppercase }}
+        <div class="text-sm">
+          {{ forumPost.submitter.username }}
+          | Date
+        </div>
+      </div>
+    </div>
+
+    <div class="align-content-end">
+      <app-comments
+        [commentCount]="forumPost.comment_count || 0"
+      ></app-comments>
     </div>
   </div>
+
   <div
-    class="mt-2"
+    class=""
     [innerHTML]="
       domSanitizer.bypassSecurityTrustHtml(
-        forumPost.content | appEllipsis: 100 || ''
+        forumPost.content || '' | appEllipsis: 100
       )
     "
   ></div>
 
-  <hr />
-  <div class="flex justify-content-between align-items-center">
+  <!-- <hr /> -->
+  <!-- <div class="flex justify-content-between align-items-center">
     <div>
-      <app-comments></app-comments>
+      <app-comments
+        [commentCount]="forumPost.comment_count || 0"
+      ></app-comments>
     </div>
     <div>
       <app-votes></app-votes>
     </div>
-  </div>
+  </div> -->
 </div>

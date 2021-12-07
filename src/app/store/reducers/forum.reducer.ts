@@ -1,6 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { Forum } from 'src/app/models/forum.model';
+import { Comment } from 'src/app/models/comments.model';
+import { Forum, ForumPost } from 'src/app/models/forum.model';
 import { forumActions } from '../actions/forum.actions';
 
 export interface ForumState extends EntityState<Forum> {
@@ -9,6 +10,9 @@ export interface ForumState extends EntityState<Forum> {
   searchQuery: '';
   loading: boolean;
   selectedForumToEdit: Forum | null;
+  selectedForumPost: ForumPost | null;
+  postsOfSelectedForum: ForumPost[];
+  commentsOfSelectedForumPosts: Comment[];
 }
 
 export const forumEntityAdapter: EntityAdapter<Forum> =
@@ -21,6 +25,10 @@ export const initialState: ForumState = forumEntityAdapter.getInitialState({
   searchQuery: '',
   loading: false,
   selectedForumToEdit: null,
+  selectedForumPost: null,
+  postsOfSelectedForum: [],
+  commentsOfSelectedForumPosts: [],
+  commentsOfSelectedComments: [],
 });
 
 export const forumReducer = createReducer(
@@ -38,10 +46,26 @@ export const forumReducer = createReducer(
     return { ...state, loading: false };
   }),
   on(forumActions.selectForum, (state, { forum }) => {
-    return { ...state, selectedForum: forum };
+    return {
+      ...state,
+      selectedForum: forum,
+      postsOfSelectedForum: forum.posts,
+    };
+  }),
+  on(forumActions.selectForumPost, (state, { forumPost }) => {
+    return {
+      ...state,
+      selectedForumPost: forumPost,
+      commentsOfSelectedForumPosts: forumPost.comments || [],
+    };
   }),
   on(forumActions.selectForumToEdit, (state, { forum }) => {
     return { ...state, selectedForumToEdit: forum };
+  }),
+  on(forumActions.comments.addCommentSuccessful, (state, { comment }) => {
+    const copyOfComments = [...state.commentsOfSelectedForumPosts];
+    const newComments = [comment].concat(copyOfComments);
+    return { ...state, commentsOfSelectedForumPosts: newComments };
   }),
   on(forumActions.addForumSuccessful, (state, { forum }) => {
     return forumEntityAdapter.addOne(forum, state);

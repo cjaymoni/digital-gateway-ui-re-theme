@@ -29,7 +29,9 @@ export class OpenedForumCardComponent implements OnInit {
     filter(forum => !!forum),
     tap(forum => this.title.setTitle(forum.name))
   );
-  forumPosts$ = this.store.select(forumSelectors.selectedForumPost);
+  forumPosts$ = this.store
+    .select(forumSelectors.postsOfSelectedForum)
+    .pipe(filter(d => !!d));
   loadingForums$ = this.store.select(forumSelectors.loading);
 
   ngOnInit() {}

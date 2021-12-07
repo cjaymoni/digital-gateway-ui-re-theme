@@ -217,12 +217,18 @@ class ForumRoutes extends AppRoutesConfig {
   constructor(router: Router, subject: BehaviorSubject<string>) {
     super(Pages['Forum'], router, subject);
   }
-  goToReadForumPost(forumSlug: string, id: string) {
+  goToReadForumPost(forumSlug: string, forumPostSlug: string) {
+    const nav = [
+      // this.page.viewPostDetails.replace('forum-room', forumRoom),
+      ...(this.page as any).viewPost
+        .replace(':slug', forumSlug)
+        .replace(':post', forumPostSlug)
+        .split('/'),
+    ];
     this.router.navigate([
       this.page.main,
       // this.page.viewPostDetails.replace('forum-room', forumRoom),
-      this.page.viewPostDetails.replace(':slug', forumSlug),
-      this.page.viewPostDetails.replace('id', id),
+      ...nav,
     ]);
   }
 }

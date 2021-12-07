@@ -1,16 +1,37 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-comment-form',
   templateUrl: './comment-form.component.html',
   styleUrls: ['./comment-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentFormComponent implements OnInit {
+  @Output() commentAddEvent = new EventEmitter<any>();
+  @Output() cancelEvent = new EventEmitter<any>();
 
-  constructor() { }
+  commentFormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(4),
+  ]);
 
-  ngOnInit() {
+  constructor() {}
+
+  ngOnInit() {}
+
+  addComment() {
+    if (this.commentFormControl.valid)
+      this.commentAddEvent.emit(this.commentFormControl.value);
   }
 
+  cancel() {
+    this.cancelEvent.emit();
+  }
 }

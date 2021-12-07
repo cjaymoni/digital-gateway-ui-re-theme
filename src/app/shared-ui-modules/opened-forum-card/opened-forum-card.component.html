@@ -1,5 +1,5 @@
 <div *ngIf="forum$ | async; else loading">
-  <div class="flex justify-content-between">
+  <div class="flex justify-content-between p-component">
     <div class="text-2xl font-bold">
       {{ (forum$ | async).name | uppercase }}
     </div>
@@ -17,13 +17,15 @@
     <hr />
   </div>
 </div>
-<div class="text-lg text-center font-semibold mt-2">
-  TOPICS UNDER DISCUSSION
-</div>
-<ng-container *ngFor="let forumPosts of forumPosts$ | async">
-  <app-forum-post-card [forumPost]="forumPosts"></app-forum-post-card>
-</ng-container>
+<ng-container *ngIf="forumPosts$ | async">
+  <div class="text-lg text-center font-semibold mt-2 p-component">
+    TOPICS UNDER DISCUSSION
+  </div>
 
+  <ng-container *ngFor="let forumPosts of forumPosts$ | async">
+    <app-forum-post-card [forumPost]="forumPosts"></app-forum-post-card>
+  </ng-container>
+</ng-container>
 <ng-template #loading>
   <p-skeleton></p-skeleton>
 </ng-template>

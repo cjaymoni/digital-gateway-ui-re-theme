@@ -9,6 +9,7 @@ import { ForumFormComponent } from 'src/app/shared-ui-modules/forum-form/forum-f
 import { MyForumsListComponent } from './my-forums-list/my-forums-list.component';
 import { SelectForumGuard } from './guard/select-forum.guard';
 import { ForumPostDetailsModule } from '../../shared-ui-modules/forum-post-details/forum-post-details.module';
+import { ForumPostDetailsComponent } from 'src/app/shared-ui-modules/forum-post-details/forum-post-details.component';
 
 export function slugMatcher(url: UrlSegment[]) {
   return url[0]?.path.startsWith(SLUG_PREFIX) ? { consumed: url } : null;
@@ -46,14 +47,17 @@ const routes: Routes = [
     canActivate: [ForumGuard],
   },
   {
-    // matcher: slugMatcher,
+    path: Pages.Forum.viewPost,
+    component: ForumPostDetailsComponent,
+    canActivate: [ForumGuard],
+  },
+  {
     path: Pages.Forum.viewDetails,
     component: ForumDetailsComponent,
     data: { fetch: true },
     canActivate: [ForumGuard],
   },
   {
-    // matcher: slugMatcher,
     path: Pages.Forum.viewPostDetails,
     component: ForumPostDetailsModule,
     data: { fetch: true },

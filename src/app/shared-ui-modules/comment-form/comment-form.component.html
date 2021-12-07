@@ -5,14 +5,17 @@
     id="comment"
     class="w-full"
     placeholder="Enter comment here"
+    [formControl]="commentFormControl"
   ></textarea>
 
   <div class="flex justify-content-end mt-2">
     <button
       pButton
-      class="p-button-outlined p-button-danger justify-content-center mr-2"
+      class="p-button-info justify-content-center mr-2"
       icon="pi pi-reply"
       label="Submit"
+      [disabled]="commentFormControl.invalid"
+      (click)="addComment()"
     ></button>
     <button
       pButton
@@ -23,6 +26,7 @@
       "
       icon="pi pi-times"
       label="Cancel"
+      (click)="cancel()"
     ></button>
   </div>
 </div>
