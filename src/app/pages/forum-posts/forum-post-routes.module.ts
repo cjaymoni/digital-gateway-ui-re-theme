@@ -28,14 +28,14 @@ const routes: Routes = [
   {
     path: Pages.ForumPost.view,
     component: ForumPostDetailsComponent,
-    outlet: RouterOutlets.Right,
+    outlet: RouterOutlets.Modal,
     data: { selectForum: true },
     canActivate: [ForumPostGuard],
   },
   {
     path: Pages.ForumPost.edit,
     component: ForumPostFormComponent,
-    outlet: RouterOutlets.Right,
+    outlet: RouterOutlets.Modal,
     canActivate: [ForumPostGuard],
   },
   {

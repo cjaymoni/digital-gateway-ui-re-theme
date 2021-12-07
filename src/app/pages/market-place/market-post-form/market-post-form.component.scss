@@ -10,5 +10,12 @@
         opacity: 0.4;
       }
     }
+    .p-button-label {
+      text-transform: capitalize;
+    }
   }
+}
+
+.remove-button {
+  top: -4px;
 }

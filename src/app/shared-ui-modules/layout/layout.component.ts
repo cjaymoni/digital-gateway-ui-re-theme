@@ -23,6 +23,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   modalActiveSubcription$!: Subscription;
 
+  modalActive$ = this.navigator.modalActive$;
+
   modalRef!: DynamicDialogRef;
 
   constructor(
@@ -35,7 +37,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.modalActiveSubcription$ = this.navigator.modalActive$
+    this.modalActiveSubcription$ = this.modalActive$
       .pipe(
         tap(active => {
           if (active) {

@@ -104,9 +104,8 @@
                   let image of productAd.product.images;
                   let index = index
                 "
-                class="h-8rem w-4 mr-2 static"
+                class="h-10rem w-3 mr-2 relative"
               >
-                <!-- src="assets/img.png" -->
                 <img
                   [src]="image.image"
                   class="w-full h-full border-round relative"
@@ -118,9 +117,9 @@
                   tooltipPosition="top"
                   class="
                     p-button p-button-rounded p-button-danger
-                    top-50
                     left-50
                     absolute
+                    remove-button
                   "
                   icon="pi pi-trash"
                   clickConfirmation
