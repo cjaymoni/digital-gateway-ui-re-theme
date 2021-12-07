@@ -85,7 +85,7 @@ export class ContentManagementListPageComponent implements OnInit {
           created_by: 1,
           is_active: true,
           description: categoryName,
-          parent: null,
+          parent: this.categoryForm.value.category.id,
         },
       })
     );
