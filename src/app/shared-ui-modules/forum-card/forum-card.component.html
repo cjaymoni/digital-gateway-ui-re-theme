@@ -9,27 +9,16 @@
     animation-duration-1000
   "
   *ngIf="forum"
+  (click)="openForum()"
 >
-  <div class="text-2xl font-bold">
+  <div class="text-1xl font-bold">
     {{ forum.name | uppercase }}
   </div>
-  <div>
-    {{ forum.description || '' | appEllipsis: 250 }}
-    <hr />
-  </div>
-  <div class="flex justify-content-end">
-    <button
-      pButton
-      icon="pi pi-arrow-right"
-      class="
-        p-button-outlined p-button-danger
-        align-self-end
-        flex
-        align-items-center
-        justify-content-center
-      "
-      label="Go to Forum"
-      (click)="openForum()"
-    ></button>
+
+  <hr />
+
+  <div class="flex justify-content-between">
+    <app-comments></app-comments>
+    <app-votes></app-votes>
   </div>
 </div>

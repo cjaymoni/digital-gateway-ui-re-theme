@@ -31,6 +31,7 @@ export interface IPageItems {
   main: string;
   myList: string;
   viewDetails: string;
+  viewPostDetails: string;
   add: string;
   edit: string;
   view: string;
@@ -54,6 +55,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     edit: 'edit-forum:id',
     view: 'view-forum:id',
     viewDetails: ':slug',
+    viewPostDetails: 'slug:id',
     myList: 'my-forums',
     add: 'post-forum',
     matcher: (url: UrlSegment[]) => {

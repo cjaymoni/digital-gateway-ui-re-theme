@@ -8,6 +8,7 @@ import { Forum } from 'src/app/models/forum.model';
 import { ForumsService } from 'src/app/pages/forum/services/forums.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { forumActions } from '../actions/forum.actions';
+import { slugify } from '../../helpers/app.helper.functions';
 
 @Injectable()
 export class ForumEffects {
@@ -93,18 +94,20 @@ export class ForumEffects {
     this.actions$.pipe(
       ofType(forumActions.addForum),
       switchMap(({ forum, imageToUpload }) =>
-        this.forumService.addForum(forum, imageToUpload).pipe(
-          map((savedForum: any) =>
-            forumActions.addForumSuccessful({
-              forum: savedForum,
+        this.forumService
+          .addForum({ ...forum, slug: slugify(forum.name) }, imageToUpload)
+          .pipe(
+            map((savedForum: any) =>
+              forumActions.addForumSuccessful({
+                forum: savedForum,
+              })
+            ),
+            tap(saved => this.showToast('Forum Saved Successfully')),
+            catchError(error => {
+              this.showError(error);
+              return of(forumActions.fetchError);
             })
-          ),
-          tap(saved => this.showToast('Forum Saved Successfully')),
-          catchError(error => {
-            this.showError(error);
-            return of(forumActions.fetchError);
-          })
-        )
+          )
       )
     )
   );

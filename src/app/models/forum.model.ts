@@ -3,17 +3,18 @@ import { Comment } from './comments.model';
 
 export interface Forum {
   id?: string | number | any;
-  name?: string;
+  name: string;
   coverImage?: AppUploadedImage[];
   moderators?: Moderator[] | any;
   tags?: any;
   posts?: ForumPost[] | any;
   description?: string;
+  slug?: string;
 }
 
 export interface ForumPost {
   id?: string | number | any;
-  title?: string;
+  title: string;
   content?: string;
   comment_count?: number;
   submitter?: Submitter[] | any;
@@ -22,6 +23,7 @@ export interface ForumPost {
   score?: number;
   forums?: any;
   comments?: Comment[];
+  slug?: string;
 }
 
 export interface Moderator {

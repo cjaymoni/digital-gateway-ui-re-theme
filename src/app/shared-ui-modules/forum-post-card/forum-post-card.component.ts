@@ -4,8 +4,6 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
-import { Forum } from 'src/app/models/forum.model';
-import { Store } from '@ngrx/store';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumActions } from '../../store/actions/forum.actions';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -18,23 +16,23 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ForumPostCardComponent implements OnInit {
   @Input() forumPost: any;
-  showCommentForm: boolean = false;
+
+  @Input() avatar: any;
 
   constructor(
-    private store: Store,
     private navigator: NavigatorService,
     public domSanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {}
 
-  openForum() {
-    this.navigator.forum.goToViewDetailsPage(this.forumPost?.name as string);
+  openForumPost() {
+    this.navigator.forum.goToReadForumPost(
+      this.forumPost?.title as string,
+      this.forumPost?.id
+    );
   }
 
   dislikeForum() {}
   likeForum() {}
-  show() {
-    this.showCommentForm = !this.showCommentForm;
-  }
 }

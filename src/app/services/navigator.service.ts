@@ -141,9 +141,14 @@ class ForumRoutes extends AppRoutesConfig {
   constructor(router: Router, subject: BehaviorSubject<string>) {
     super(Pages['Forum'], router, subject);
   }
-  // goToReadForumPage(forumSlug: string) {
-  //   this.router.navigate([this.page, `${SLUG_PREFIX}-${forumSlug}`]);
-  // }
+  goToReadForumPost(forumSlug: string, id: string) {
+    this.router.navigate([
+      this.page.main,
+      // this.page.viewPostDetails.replace('forum-room', forumRoom),
+      this.page.viewPostDetails.replace(':slug', forumSlug),
+      this.page.viewPostDetails.replace('id', id),
+    ]);
+  }
 }
 
 class ForumPostRoutes extends AppRoutesConfig {

@@ -8,6 +8,7 @@ import { ForumPost } from 'src/app/models/forum.model';
 import { ForumPostsService } from 'src/app/pages/forum-posts/services/forum-post.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { forumPostActions } from '../actions/forum-post.action';
+import { slugify } from '../../helpers/app.helper.functions';
 
 @Injectable()
 export class ForumPostEffects {
@@ -96,18 +97,20 @@ export class ForumPostEffects {
     this.actions$.pipe(
       ofType(forumPostActions.addForumPost),
       switchMap(({ forumPost }) =>
-        this.forumPostService.addForumPost(forumPost).pipe(
-          map((savedForumPost: any) =>
-            forumPostActions.addForumPostSuccessful({
-              forumPost: savedForumPost,
+        this.forumPostService
+          .addForumPost({ ...forumPost, slug: slugify(forumPost.title) })
+          .pipe(
+            map((savedForumPost: any) =>
+              forumPostActions.addForumPostSuccessful({
+                forumPost: savedForumPost,
+              })
+            ),
+            tap(saved => this.showToast('Forum Post Saved Successfully')),
+            catchError(error => {
+              this.showError(error);
+              return of(forumPostActions.fetchError);
             })
-          ),
-          tap(saved => this.showToast('Forum Post Saved Successfully')),
-          catchError(error => {
-            this.showError(error);
-            return of(forumPostActions.fetchError);
-          })
-        )
+          )
       )
     )
   );
