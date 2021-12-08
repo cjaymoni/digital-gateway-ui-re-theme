@@ -1,19 +1,31 @@
-<ng-container *ngIf="comment">
-  <ng-container
-    [ngTemplateOutlet]="commentTemplate"
-    [ngTemplateOutletContext]="{ $implicit: comment }"
-  ></ng-container>
+<div
+  class="transition-all transition-duration-200 transition-ease-in"
+  [ngClass]="
+    showSubComments && comment.subcomments
+      ? ' p-2 border-1 border-indigo-700 border-dashed border-round'
+      : ''
+  "
+>
+  <ng-container *ngIf="comment">
+    <ng-container
+      [ngTemplateOutlet]="commentTemplate"
+      [ngTemplateOutletContext]="{ $implicit: comment }"
+    ></ng-container>
 
-  <ng-container *ngIf="showSubComments && comment.subcomments">
-    <ng-container *ngFor="let item of comment.subcomments">
-      <ng-container
-        [ngTemplateOutlet]="commentTemplate"
-        [ngTemplateOutletContext]="{ $implicit: item }"
-      ></ng-container>
+    <ng-container *ngIf="showSubComments && comment.subcomments">
+      <p-divider align="center">
+        <span class="p-tag">Replies</span>
+      </p-divider>
+
+      <ng-container *ngFor="let item of comment.subcomments; let index = index">
+        <ng-container
+          [ngTemplateOutlet]="commentTemplate"
+          [ngTemplateOutletContext]="{ $implicit: item }"
+        ></ng-container>
+      </ng-container>
     </ng-container>
   </ng-container>
-</ng-container>
-
+</div>
 <ng-template #commentTemplate let-comment>
   <div
     class="
@@ -22,7 +34,6 @@
       shadow-4
       p-3
       flex flex-column
-      mt-2
       scalein
       animation-duration-500
     "
@@ -50,6 +61,7 @@
       </div>
       <div>
         <app-comments
+          *ngIf="showCommentButton"
           [commentCount]="comment.subcomments?.length || 0"
           (commentsClickedEvent)="loadSubcomments()"
         ></app-comments>
@@ -60,6 +72,8 @@
           [likeCount]="comment.upvotes || 0"
           (likeClickEvent)="likeComment()"
           (dislikeClickEvent)="dislikeComment()"
+          [type]="CommentType.Comment"
+          [id]="comment.id"
         ></app-votes>
       </div>
     </div>

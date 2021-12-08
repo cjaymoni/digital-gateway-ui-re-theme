@@ -96,6 +96,12 @@ export class ForumsService extends ResourceService {
     ).pipe(map(comment => comment as any));
   }
 
+  fetchComment(id: number) {
+    return this.getOneResource(id, CommentsEndpoint).pipe(
+      map(comment => comment as Comment)
+    );
+  }
+
   private getFormDataFromForumObject(
     forum: Forum,
     imageToUpload?: File | AppUploadedImage[] | any

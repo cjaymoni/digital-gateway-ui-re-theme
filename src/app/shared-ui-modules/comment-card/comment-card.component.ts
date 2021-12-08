@@ -3,10 +3,20 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Input,
+  OnDestroy,
 } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { take, tap } from 'rxjs';
-import { Pages } from 'src/app/config/app-config';
+import {
+  debounceTime,
+  filter,
+  map,
+  Subscription,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs';
+import { CommentType, Pages } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { Comment } from 'src/app/models/comments.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -19,17 +29,36 @@ import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
   styleUrls: ['./comment-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentCardComponent implements OnInit {
+export class CommentCardComponent implements OnInit, OnDestroy {
   @Input() comment!: Comment;
 
   @Input() loadSubCommentsOnClick = false;
 
-  showSubComments = false;
+  @Input() showSubComments = false;
+
+  @Input() showCommentButton = true;
+
+  subscription!: Subscription;
 
   showCommentForm: boolean = false;
-  constructor(private store: Store, private navigator: NavigatorService) {}
 
-  ngOnInit() {}
+  CommentType = CommentType;
+
+  constructor(
+    private store: Store,
+    private navigator: NavigatorService,
+    private action$: Actions
+  ) {}
+
+  ngOnInit() {
+    this.subscription = this.updateSubcommentListSubscription();
+    this.subscription.add(this.updateLikeSubscription());
+    this.subscription.add(this.updateDislikeSubscription());
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
+  }
 
   show() {
     this.showCommentForm = true;
@@ -55,7 +84,7 @@ export class CommentCardComponent implements OnInit {
           );
         })
       )
-      .subscribe();
+      .subscribe(_ => (this.showCommentForm = false));
   }
 
   hideCommentForm() {
@@ -87,5 +116,43 @@ export class CommentCardComponent implements OnInit {
     } else {
       this.showSubComments = !this.showSubComments;
     }
+  }
+
+  updateSubcommentListSubscription() {
+    return this.action$
+      .pipe(
+        ofType(forumActions.comments.addCommentSuccessful),
+        map(({ comment }) => {})
+      )
+      .subscribe();
+  }
+
+  updateLikeSubscription() {
+    return this.action$
+      .pipe(
+        ofType(forumActions.comments.likeCommentSuccessful),
+        filter(({ id }) => id === this.comment.id),
+        debounceTime(500),
+        map(({ id }) => {
+          const newComment = { ...this.comment };
+          newComment.upvotes++;
+          this.comment = newComment;
+        })
+      )
+      .subscribe();
+  }
+
+  updateDislikeSubscription() {
+    return this.action$
+      .pipe(
+        ofType(forumActions.comments.dislikeCommentSuccessful),
+        debounceTime(500),
+        filter(({ id }) => id === this.comment.id),
+        map(({ id }) => {
+          this.comment.downvotes++;
+          console.log(id === this.comment.id);
+        })
+      )
+      .subscribe();
   }
 }

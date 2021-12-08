@@ -25,6 +25,8 @@
           (likeClickEvent)="likeForumPost()"
           [dislikeCount]="(forumPost$ | async)?.downvotes || 0"
           [likeCount]="(forumPost$ | async)?.upvotes || 0"
+          [type]="CommentType.ForumPost"
+          [id]="(forumPost$ | async)?.id"
         ></app-votes>
       </div>
       <div>

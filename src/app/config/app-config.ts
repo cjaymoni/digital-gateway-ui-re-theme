@@ -293,3 +293,12 @@ export enum VoteType {
   downvote = 'D',
   upvote = 'U',
 }
+
+export enum CommentType {
+  ForumPost,
+  Comment,
+}
+
+export const trackById = (index: number, comment: any): number => {
+  return comment.id;
+};

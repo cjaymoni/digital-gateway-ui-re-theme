@@ -16,6 +16,8 @@ import {
 export class CommentsComponent implements OnInit {
   @Input() commentCount = 0;
 
+  @Input() label!: string;
+
   @Output() commentsClickedEvent = new EventEmitter();
   constructor() {}
 

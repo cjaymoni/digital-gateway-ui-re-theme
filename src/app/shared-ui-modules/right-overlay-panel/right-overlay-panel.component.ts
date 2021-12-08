@@ -45,4 +45,8 @@ export class RightOverlayPanelComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
+
+  goBack() {
+    this.navigator.goBack();
+  }
 }

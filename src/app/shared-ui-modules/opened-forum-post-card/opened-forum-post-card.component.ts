@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, Subscription, take, tap } from 'rxjs';
+import { CommentType, trackById } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
@@ -27,6 +28,10 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
   forumPost$ = this.store.select(forumSelectors.selectedForumPost);
 
   forumComments$ = this.store.select(forumSelectors.commentsOfSelectedForum);
+
+  trackById = trackById;
+
+  CommentType = CommentType;
 
   constructor(
     public domSanitizer: DomSanitizer,
@@ -104,9 +109,5 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-  }
-
-  trackById(index: number, comment: any): number {
-    return comment.id;
   }
 }

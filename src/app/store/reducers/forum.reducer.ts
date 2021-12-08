@@ -39,15 +39,18 @@ export const forumReducer = createReducer(
   on(forumActions.fetch, state => {
     return { ...state, loading: true };
   }),
+
   on(forumActions.fetchSuccessful, (state, { forums }) => {
     return forumEntityAdapter.setAll(forums, {
       ...state,
       loading: false,
     });
   }),
+
   on(forumActions.fetchError, state => {
     return { ...state, loading: false };
   }),
+
   on(forumActions.selectForum, (state, { forum }) => {
     return {
       ...state,
@@ -55,6 +58,7 @@ export const forumReducer = createReducer(
       postsOfSelectedForum: forum.posts,
     };
   }),
+
   on(forumActions.selectForumPost, (state, { forumPost }) => {
     return {
       ...state,
@@ -62,14 +66,39 @@ export const forumReducer = createReducer(
       commentsOfSelectedForumPosts: forumPost.comments || [],
     };
   }),
+
   on(forumActions.selectForumToEdit, (state, { forum }) => {
     return { ...state, selectedForumToEdit: forum };
   }),
+
   on(forumActions.comments.addCommentSuccessful, (state, { comment }) => {
+    // situation 1 : comment added to another selected comment
+    // i.e side panel opened ( side panel will handle showing list)
+    if (comment.parent && comment.parent === state.selectedComment?.id) {
+      return state;
+    }
+
+    //situation 2: comment is a comment of another post but not the selected post
+    // find and update comments of selected forumpost (only update as subcomment)
+    if (comment.parent) {
+      const copyOfComments = [...state.commentsOfSelectedForumPosts];
+      const updatedCopy = copyOfComments.map(comm => {
+        const _comment = { ...comm };
+        if (_comment.id === comment.parent) {
+          _comment.subcomments = [comment].concat(_comment.subcomments || []);
+        }
+        return _comment;
+      });
+      return { ...state, commentsOfSelectedForumPosts: updatedCopy };
+    }
+
+    // find forumPost and add comment to commentsOfSelectedPost
+
     const copyOfComments = [...state.commentsOfSelectedForumPosts];
     const newComments = [comment].concat(copyOfComments);
     return { ...state, commentsOfSelectedForumPosts: newComments };
   }),
+
   on(forumActions.likePostSuccessful, (state, { id }) => {
     const copyOfSelectedPost: ForumPost = { ...state.selectedForumPost };
     if (!!copyOfSelectedPost) {
@@ -77,6 +106,7 @@ export const forumReducer = createReducer(
     }
     return { ...state, selectedForumPost: copyOfSelectedPost };
   }),
+
   on(forumActions.dislikePostSuccessful, (state, { id }) => {
     const copyOfSelectedPost: ForumPost = { ...state.selectedForumPost };
     if (!!copyOfSelectedPost) {

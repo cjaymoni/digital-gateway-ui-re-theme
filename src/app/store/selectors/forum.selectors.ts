@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { FeatureNamesForStore } from 'src/app/config/app-config';
 import { Comment } from 'src/app/models/comments.model';
-import { ForumPost } from 'src/app/models/forum.model';
+import { Forum, ForumPost } from 'src/app/models/forum.model';
 import { forumEntityAdapter, ForumState } from '../reducers/forum.reducer';
 import { DefaultAdapterSelectors } from './default.adapter.selectors';
 
@@ -14,7 +14,10 @@ class ForumSelectors extends DefaultAdapterSelectors {
 
   filtered = createSelector(this.state, state => state);
 
-  selectedForum = createSelector(this.state, state => state.selectedForum);
+  selectedForum = createSelector(
+    this.state,
+    state => state.selectedForum as Forum
+  );
 
   postsOfSelectedForum = createSelector(
     this.selectedForum,

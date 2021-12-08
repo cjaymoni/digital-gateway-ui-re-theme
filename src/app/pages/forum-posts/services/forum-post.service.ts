@@ -23,8 +23,8 @@ export class ForumPostsService extends ResourceService {
   }
 
   addForumPost(forum: ForumPost) {
-    const formData = this.getFormDataFromForumPostObject(forum);
-    return this.storeResource(formData).pipe(map(data => data as ForumPost));
+    // const formData = this.getFormDataFromForumPostObject(forum);
+    return this.storeResource(forum).pipe(map(data => data as ForumPost));
   }
 
   editForumPost(forum: ForumPost) {
