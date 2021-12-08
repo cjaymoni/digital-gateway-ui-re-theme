@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { FeatureNamesForStore } from 'src/app/config/app-config';
+import { Comment } from 'src/app/models/comments.model';
 import { ForumPost } from 'src/app/models/forum.model';
 import { forumEntityAdapter, ForumState } from '../reducers/forum.reducer';
 import { DefaultAdapterSelectors } from './default.adapter.selectors';
@@ -38,6 +39,21 @@ class ForumSelectors extends DefaultAdapterSelectors {
   commentsOfSelectedForum = createSelector(
     this.state,
     (state: ForumState) => state.commentsOfSelectedForumPosts
+  );
+
+  selectedCommentById = (id: number) =>
+    createSelector(this.commentsOfSelectedForum, (comments: Comment[]) => {
+      return comments.find(c => c.id == id);
+    });
+
+  selectedComment = createSelector(
+    this.state,
+    (state: ForumState) => state.selectedComment
+  );
+
+  commentsOfSelectedComment = createSelector(
+    this.state,
+    (state: ForumState) => state.commentsOfSelectedComment
   );
 }
 

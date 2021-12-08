@@ -28,13 +28,6 @@ export class SelectForumGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const forumId = route.url[0].path.split(':')[1];
-    this.store.dispatch(
-      forumActions.findAndSelectForumById({
-        id: forumId,
-      })
-    );
-
     return true;
   }
 }

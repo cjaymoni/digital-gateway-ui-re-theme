@@ -1,0 +1,3 @@
+<ng-container *ngFor="let comment of selectedCommentComments$ | async">
+  <app-comment-card [comment]="comment"></app-comment-card>
+</ng-container>

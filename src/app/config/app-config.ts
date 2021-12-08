@@ -66,6 +66,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     viewPost: ':slug/post/:post-slug',
     myList: 'my-forums',
     add: 'post-forum',
+    viewSubComments: 'comments/:comment-id',
     matcher: {
       view: (url: UrlSegment[]) => {
         return urlMatcherForEditAndView(url, 'forum');

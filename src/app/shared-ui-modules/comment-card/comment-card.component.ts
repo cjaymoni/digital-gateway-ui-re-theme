@@ -6,8 +6,10 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { take, tap } from 'rxjs';
+import { Pages } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { Comment } from 'src/app/models/comments.model';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 
@@ -20,8 +22,12 @@ import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 export class CommentCardComponent implements OnInit {
   @Input() comment!: Comment;
 
+  @Input() loadSubCommentsOnClick = false;
+
+  showSubComments = false;
+
   showCommentForm: boolean = false;
-  constructor(private store: Store) {}
+  constructor(private store: Store, private navigator: NavigatorService) {}
 
   ngOnInit() {}
 
@@ -56,7 +62,30 @@ export class CommentCardComponent implements OnInit {
     this.showCommentForm = false;
   }
 
-  likeComment() {}
+  likeComment() {
+    this.store.dispatch(
+      forumActions.comments.likeComment({
+        id: this.comment.id,
+      })
+    );
+  }
 
-  dislikeComment() {}
+  dislikeComment() {
+    this.store.dispatch(
+      forumActions.comments.dislikeComment({
+        id: this.comment.id,
+      })
+    );
+  }
+
+  loadSubcomments() {
+    if (this.loadSubCommentsOnClick) {
+      this.navigator.forum.openPanel(
+        [Pages.Forum.main, 'comments', this.comment.id],
+        'COMMENTS'
+      );
+    } else {
+      this.showSubComments = !this.showSubComments;
+    }
+  }
 }

@@ -10,6 +10,7 @@ import { MyForumsListComponent } from './my-forums-list/my-forums-list.component
 import { SelectForumGuard } from './guard/select-forum.guard';
 import { ForumPostDetailsModule } from '../../shared-ui-modules/forum-post-details/forum-post-details.module';
 import { ForumPostDetailsComponent } from 'src/app/shared-ui-modules/forum-post-details/forum-post-details.component';
+import { CommentsOfCommentsComponent } from './comments-of-comments/comments-of-comments.component';
 
 export function slugMatcher(url: UrlSegment[]) {
   return url[0]?.path.startsWith(SLUG_PREFIX) ? { consumed: url } : null;
@@ -34,6 +35,12 @@ const routes: Routes = [
   {
     path: '',
     component: ForumListComponent,
+    canActivate: [ForumGuard],
+  },
+  {
+    path: Pages.Forum.viewSubComments,
+    component: CommentsOfCommentsComponent,
+    outlet: RouterOutlets.Right,
     canActivate: [ForumGuard],
   },
   {

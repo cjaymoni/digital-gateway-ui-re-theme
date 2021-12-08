@@ -102,6 +102,34 @@ class ForumActions {
 
   clearAllSelected = createAction(`${this.type} Clear All Selected Forum`);
 
+  likePost = createAction(
+    `${this.type} Like Forum Post`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  likePostSuccessful = createAction(
+    `${this.type} Like Forum Post Successful`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  dislikePost = createAction(
+    `${this.type} Dislike Forum Post`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  dislikePostSuccessful = createAction(
+    `${this.type} Dislike Forum Post Successful`,
+    props<{
+      id: number;
+    }>()
+  );
+
   comments = new CommentActions();
 }
 export const forumActions = new ForumActions();

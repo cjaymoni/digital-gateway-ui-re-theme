@@ -18,12 +18,14 @@ export interface ForumPost {
   content?: string;
   comment_count?: number;
   submitter?: Submitter[] | any;
-  upvote_count?: number;
-  downvote_count?: number;
-  score?: number;
+  upvotes?: number | any;
+  downvotes?: number | any;
+  score?: number | any;
   forums?: any;
   comments?: Comment[] | any;
   slug?: string;
+  // upvotes: number;
+  // downvotes: number;
 }
 
 export interface Moderator {

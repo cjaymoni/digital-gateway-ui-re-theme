@@ -6,13 +6,15 @@ import { forumActions } from '../actions/forum.actions';
 
 export interface ForumState extends EntityState<Forum> {
   // additional entity state properties
-  selectedForum: Forum | null;
+  selectedForum?: Forum | any;
   searchQuery: '';
   loading: boolean;
-  selectedForumToEdit: Forum | null;
-  selectedForumPost: ForumPost | null;
+  selectedForumToEdit: Forum | any;
+  selectedForumPost: ForumPost | any;
   postsOfSelectedForum: ForumPost[];
   commentsOfSelectedForumPosts: Comment[];
+  selectedComment: Comment | any;
+  commentsOfSelectedComment: Comment[];
 }
 
 export const forumEntityAdapter: EntityAdapter<Forum> =
@@ -28,7 +30,8 @@ export const initialState: ForumState = forumEntityAdapter.getInitialState({
   selectedForumPost: null,
   postsOfSelectedForum: [],
   commentsOfSelectedForumPosts: [],
-  commentsOfSelectedComments: [],
+  commentsOfSelectedComment: [],
+  selectedComment: null,
 });
 
 export const forumReducer = createReducer(
@@ -66,6 +69,54 @@ export const forumReducer = createReducer(
     const copyOfComments = [...state.commentsOfSelectedForumPosts];
     const newComments = [comment].concat(copyOfComments);
     return { ...state, commentsOfSelectedForumPosts: newComments };
+  }),
+  on(forumActions.likePostSuccessful, (state, { id }) => {
+    const copyOfSelectedPost: ForumPost = { ...state.selectedForumPost };
+    if (!!copyOfSelectedPost) {
+      copyOfSelectedPost.upvotes++;
+    }
+    return { ...state, selectedForumPost: copyOfSelectedPost };
+  }),
+  on(forumActions.dislikePostSuccessful, (state, { id }) => {
+    const copyOfSelectedPost: ForumPost = { ...state.selectedForumPost };
+    if (!!copyOfSelectedPost) {
+      copyOfSelectedPost.downvotes++;
+    }
+    return { ...state, selectedForumPost: copyOfSelectedPost };
+  }),
+  on(forumActions.comments.likeCommentSuccessful, (state, { id }) => {
+    const copyOfCommentsOfSelectedPost: Comment[] = [
+      ...state.commentsOfSelectedForumPosts,
+    ];
+    const newComments = copyOfCommentsOfSelectedPost.map(comment => {
+      const copy = { ...comment };
+      if (comment.id === id) {
+        copy.upvotes++;
+      }
+      return copy;
+    });
+    return { ...state, commentsOfSelectedForumPosts: newComments };
+  }),
+  on(forumActions.comments.dislikeCommentSuccessful, (state, { id }) => {
+    const copyOfCommentsOfSelectedPost: Comment[] = [
+      ...state.commentsOfSelectedForumPosts,
+    ];
+
+    const newComments = copyOfCommentsOfSelectedPost.map(comment => {
+      const copy = { ...comment };
+      if (comment.id === id) {
+        copy.downvotes++;
+      }
+      return copy;
+    });
+    return { ...state, commentsOfSelectedForumPosts: newComments };
+  }),
+  on(forumActions.comments.selectComment, (state, { comment }) => {
+    return {
+      ...state,
+      selectedComment: comment,
+      commentsOfSelectedComment: comment.subcomments || [],
+    };
   }),
   on(forumActions.addForumSuccessful, (state, { forum }) => {
     return forumEntityAdapter.addOne(forum, state);

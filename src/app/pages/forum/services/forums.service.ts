@@ -57,7 +57,9 @@ export class ForumsService extends ResourceService {
       {
         vote_type: VoteType.upvote,
       },
-      CommentsEndpoint + id + '/vote/'
+      null,
+      CommentsEndpoint + id + '/vote',
+      true
     ).pipe(map(comment => comment as any));
   }
 
@@ -66,7 +68,9 @@ export class ForumsService extends ResourceService {
       {
         vote_type: VoteType.downvote,
       },
-      CommentsEndpoint + id + '/vote/'
+      null,
+      CommentsEndpoint + id + '/vote',
+      true
     ).pipe(map(comment => comment as any));
   }
 
@@ -75,7 +79,9 @@ export class ForumsService extends ResourceService {
       {
         vote_type: VoteType.downvote,
       },
-      ForumPostEndpoint + id + '/vote/'
+      null,
+      ForumPostEndpoint + id + '/vote',
+      true
     ).pipe(map(comment => comment as any));
   }
 
@@ -84,7 +90,9 @@ export class ForumsService extends ResourceService {
       {
         vote_type: VoteType.downvote,
       },
-      ForumPostEndpoint + id + '/vote/'
+      null,
+      ForumPostEndpoint + id + '/vote',
+      true
     ).pipe(map(comment => comment as any));
   }
 

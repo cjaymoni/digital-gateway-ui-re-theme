@@ -4,8 +4,8 @@ export interface Comment {
   author: Author | any;
   parent?: ParentComment[];
   post: number | any;
-  upvote_count?: number;
-  downvote_count?: number;
+  upvotes?: number | any;
+  downvotes?: number | any;
   score?: number;
   slug?: string;
   subcomments?: any[];
@@ -17,8 +17,8 @@ export interface SubComment {
   author: Author[];
   parent: ParentComment[];
   post: number | any;
-  upvote_count: number;
-  downvote_count: number;
+  upvotes: number;
+  downvotes: number;
   score: number;
 }
 export interface ParentComment {
@@ -27,8 +27,8 @@ export interface ParentComment {
   author: Author[];
   parent: null;
   post: number | any;
-  upvote_count: number;
-  downvote_count: number;
+  upvotes: number;
+  downvotes: number;
   score: number;
 }
 

@@ -158,6 +158,94 @@ export class ForumEffects {
     )
   );
 
+  likeComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.comments.likeComment),
+      switchMap(({ id }) =>
+        this.forumService.upvoteComment(id).pipe(
+          map((_: any) =>
+            forumActions.comments.likeCommentSuccessful({
+              id,
+            })
+          ),
+          catchError(error => {
+            this.alert.showToast(
+              'Error occured. Try again',
+              PrimeNgAlerts.ERROR
+            );
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  dislikeComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.comments.dislikeComment),
+      switchMap(({ id }) =>
+        this.forumService.downvoteComment(id).pipe(
+          map((_: any) =>
+            forumActions.comments.dislikeCommentSuccessful({
+              id,
+            })
+          ),
+          catchError(error => {
+            this.alert.showToast(
+              'Error occurred. Try again',
+              PrimeNgAlerts.ERROR
+            );
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  likeForumPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.likePost),
+      switchMap(({ id }) =>
+        this.forumService.upvoteForumPost(id).pipe(
+          map((_: any) =>
+            forumActions.likePostSuccessful({
+              id,
+            })
+          ),
+          catchError(error => {
+            this.alert.showToast(
+              'Error occurred. Try again',
+              PrimeNgAlerts.ERROR
+            );
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  dislikeForumPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.dislikePost),
+      switchMap(({ id }) =>
+        this.forumService.downvoteForumPost(id).pipe(
+          map((_: any) =>
+            forumActions.dislikePostSuccessful({
+              id,
+            })
+          ),
+          catchError(error => {
+            this.alert.showToast(
+              'Error occurred. Try again',
+              PrimeNgAlerts.ERROR
+            );
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }

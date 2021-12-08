@@ -76,7 +76,37 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  likeForumPost() {}
+  likeForumPost() {
+    this.forumPost$
+      .pipe(
+        take(1),
+        map(selectedForum => {
+          this.store.dispatch(
+            forumActions.likePost({
+              id: selectedForum.id,
+            })
+          );
+        })
+      )
+      .subscribe();
+  }
 
-  dislikeForumPost() {}
+  dislikeForumPost() {
+    this.forumPost$
+      .pipe(
+        take(1),
+        map(selectedForum => {
+          this.store.dispatch(
+            forumActions.dislikePost({
+              id: selectedForum.id,
+            })
+          );
+        })
+      )
+      .subscribe();
+  }
+
+  trackById(index: number, comment: any): number {
+    return comment.id;
+  }
 }
