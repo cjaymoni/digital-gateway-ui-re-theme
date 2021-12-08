@@ -22,5 +22,6 @@ export class AppBootstrap {
     this.store.dispatch(productTypeActions.fetch());
     this.store.dispatch(articleActions.fetch());
     this.store.dispatch(productAdActions.fetch());
+    this.store.dispatch(forumActions.fetch());
   }
 }

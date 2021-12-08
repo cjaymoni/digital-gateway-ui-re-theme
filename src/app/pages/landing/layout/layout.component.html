@@ -1,4 +1,4 @@
-<p-carousel [value]="sliderContent"
+<p-carousel [value]="(articles$ | async) || []"
   styleClass="custom-carousel"
   [numVisible]="1"
   [numScroll]="1"
@@ -9,7 +9,7 @@
     <div class="py-5">
       <div class="text-center flex justify-content-center">
         <div class="p-mb-3">
-          <img src="{{item}}" [alt]="item" class="w-100" />
+          <img src="{{item.image}}" [alt]="item.title" class="w-100" />
         </div>
       </div>
     </div>
@@ -17,19 +17,19 @@
 </p-carousel>
 <div>
   <h5>Forum</h5>
-  <app-forum-card></app-forum-card>
+  <app-forum-card [forum]="forum$ | async"></app-forum-card>
 </div>
 <div>
   <h5>Marketing Info</h5>
   <p-carousel [value]="(productAds$ | async) || []"
-    styleClass="custom-carousel"
+    styleClass="custom-carousel py-2"
     [numVisible]="3"
     [numScroll]="1"
     [circular]="true"
     [autoplayInterval]="3000"
     [responsiveOptions]="responsiveOptions">
     <ng-template pTemplate="item" let-productAd>
-      <div class="px-2">
+      <div class="px-2 py-2">
         <app-market-card [productAd]="productAd"></app-market-card>
       </div>
     </ng-template>
@@ -61,14 +61,45 @@
     [autoplayInterval]="3000"
     [responsiveOptions]="responsiveOptions">
     <ng-template pTemplate="item" let-article>
-      <div class="px-2">
+      <div class="px-2 py-2">
         <app-article-card [article]="article"></app-article-card>
       </div>
     </ng-template>
   </p-carousel>
 </div>
 <div>
-  <p-card header="Partners">
-    <!-- company Logos here -->
+  <p-card header="Partners" class="">
+    <div class="grid">
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/AITI_LOGO.png" alt="aiti" class="w-10rem h-5rem" />
+      </div>
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/absa.png" alt="aiti" class="w-10rem h-5rem"  />
+      </div>
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/access.png" alt="aiti" class="w-10rem h-5rem" />
+      </div>
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/gh-kumas_.gif" alt="aiti" class="w-10rem h-5rem" />
+      </div>
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/jomoro.png" alt="aiti" class="w-10rem h-5rem" />
+      </div>
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/ketu.png" alt="aiti" class="w-10rem h-5rem" />
+      </div>
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/mesti.png" alt="aiti" class="w-10rem h-5rem" />
+      </div>
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/sic.png" alt="aiti" class="w-10rem h-5rem" />
+      </div>
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/undp.png" alt="aiti" class="w-10rem h-5rem" />
+      </div>
+      <div class="col-4 flex justify-content-center">
+        <img src="assets/img/zenith.png" alt="aiti" class="w-10rem h-5rem" />
+      </div>
+    </div>
   </p-card>
 </div>

@@ -1,8 +1,26 @@
 <div class="h-full">
-  <ng-container *ngIf="selectedMenu$ | async">
-    <p-tieredMenu
-      [model]="(subMenuItems$ | async) || []"
-      styleClass="border-noround border-none p-2"
-    ></p-tieredMenu>
+  <ng-container *ngIf="categories | async">
+    <div class="text-lg md:text-base text-white mt-5 font-bold mb-2 ml-auto flex justify-content-center">
+      Featured Categories
+    </div>
+
+    <div *ngFor="let category of categories|async" class="pt-1 ml-auto flex justify-content-center">
+      <div class="border-2 border-white-alpha-20 w-11 h-auto py-2 px-3 text-white">
+        {{category.name}}
+      </div>
+    </div>
+
+    <div class="ml-auto flex justify-content-center pt-2">
+
+      <button
+        pButton
+        pRipple
+        class="mr-1"
+        type="button"
+        label="View More"
+        (click)="viewMore()"
+      ></button>
+    </div>
+
   </ng-container>
 </div>
