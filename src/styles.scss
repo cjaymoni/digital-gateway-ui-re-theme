@@ -13,11 +13,7 @@ body {
 
 .div-with-background-image {
   background-repeat: no-repeat;
-  background-size: contain;
-
-  &:hover {
-    background-size: cover;
-  }
+  background-size: cover;
 
   background-color: bisque;
   height: 10rem;

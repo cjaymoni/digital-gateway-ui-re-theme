@@ -8,6 +8,7 @@ import { CommentsModule } from '../comments/comments.module';
 import { ButtonModule } from 'primeng/button';
 import { CommentFormModule } from '../comment-form/comment-form.module';
 import { DividerModule } from 'primeng/divider';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [CommentCardComponent],
@@ -19,6 +20,8 @@ import { DividerModule } from 'primeng/divider';
     DirectivesModule,
     ButtonModule,
     CommentFormModule,
+    DividerModule,
+    AvatarModule,
     DividerModule,
   ],
   exports: [CommentCardComponent],

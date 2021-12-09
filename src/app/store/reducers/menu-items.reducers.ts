@@ -2,7 +2,6 @@ import { createReducer, on } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { INFO_HUB_ID, Pages } from 'src/app/config/app-config';
 import { Category } from 'src/app/models/category.model';
-import { MenuItemFromBackend } from 'src/app/models/menu-item.model';
 import { menuItemActions } from '../actions/menu-items.actions';
 import { MainMenu } from './../../config/app-config';
 
@@ -18,25 +17,26 @@ export const initialState: Readonly<MenuState> = {
 
 export const menuItemReducer = createReducer(
   initialState,
-  on(menuItemActions.fetchSuccessful, (state, { menuItems }) => {
+  on(menuItemActions.fetchSuccessful, (state, { categories }) => {
     const menuItemsCopy = [...state.menus];
     const newMenuItems = menuItemsCopy.map(mi => {
       const menuI = { ...mi };
       if (menuI.id === INFO_HUB_ID) {
-        const menuItemCopy = [...menuItems];
-        const itemsArray = (menuItemCopy as any[]).map(m => {
-          const newMenu = { ...m };
-          newMenu.label = m.name;
-          newMenu.routerLink = [Pages.Articles.main];
-          newMenu.queryParams = { search: m.slug.toLowerCase() };
-          return newMenu;
-        });
+        const menuItemCopy: Category[] = [...categories];
+
+        const itemsArray: MenuItem[] = [];
+
+        for (const category of menuItemCopy) {
+          if (!category.parent) {
+            const menu = convertToMenu(category);
+            itemsArray.push(menu);
+          }
+        }
 
         menuI.items = itemsArray;
       }
       return menuI;
     });
-    console.log(newMenuItems);
 
     return { ...state, menus: newMenuItems };
   }),
@@ -49,10 +49,21 @@ export const menuItemReducer = createReducer(
 );
 
 const convertToMenu = (category: Category): MenuItem => {
-  // if(category.)
-
-  return {
-    label: category.name.toUpperCase(),
+  const name = category.name;
+  const menuItem: MenuItem = {
+    label: name.charAt(0).toUpperCase() + name.slice(1),
     routerLink: [Pages.Articles.main, 'search', category.slug.toLowerCase()],
   };
+
+  if (category.subcategories!.length > 0) {
+    const copySub = [...category.subcategories!];
+    const subs = [];
+
+    for (const category of copySub) {
+      const subMenu = convertToMenu(category);
+      subs.push(subMenu);
+    }
+    menuItem.items = subs;
+  }
+  return menuItem;
 };

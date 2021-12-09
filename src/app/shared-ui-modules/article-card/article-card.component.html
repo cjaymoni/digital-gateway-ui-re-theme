@@ -1,6 +1,6 @@
 <ng-container *ngIf="article">
   <div
-    (click)="openArticle()"
+    (click)="openArticle(); $event.stopPropagation()"
     [pTooltip]="article.title"
     tooltipPosition="top"
     class="
@@ -13,7 +13,7 @@
       relative
       article-card
       overflow-hidden
-      h-12rem
+      h-10rem
     "
   >
     <app-article-image
@@ -33,7 +33,19 @@
       {{ article.updated_on | date: 'longDate' }}
     </div>
   </div>
-  <div class="text-lg z-1 article-title overflow-hidden text-center p-1">
+  <div
+    class="
+      text-lg
+      z-1
+      article-title
+      overflow-hidden
+      text-center
+      p-1
+      hover:text-pink-600
+      cursor-pointer
+    "
+    (click)="openArticle(); $event.stopPropagation()"
+  >
     {{ article.title }}
   </div>
 </ng-container>

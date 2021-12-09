@@ -10,7 +10,7 @@
 
 <ng-template #loaded>
   <ng-container *ngIf="items.length > 0; else noresults">
-    <div class="align-items-center grid">
+    <div class="grid">
       <ng-container *ngFor="let item of items">
         <div [class]="itemClass">
           <ng-container

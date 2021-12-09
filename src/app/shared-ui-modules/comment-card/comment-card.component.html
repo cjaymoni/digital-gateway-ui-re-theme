@@ -1,27 +1,40 @@
 <div
   class="
-    p-card
     box
-    shadow-4
-    p-3
+    w-full
+    shadow-1
+    md:shadow-4
+    p-2
+    md:p-3
     flex flex-column
-    fadeinright
+    fadein
+    md:fadeinright
+    border-round
     animation-duration-500
   "
 >
-  <div class="overflow-hidden text-overflow-ellipsis">
-    {{ comment.text }}
-    <hr />
+  <div class="flex">
+    <div class="flex flex-column md:flex-row">
+      <div class="flex mr-2">
+        <p-avatar shape="circle"></p-avatar>
+      </div>
+      <div class="flex text-xs flex-column text-gray-500">
+        <div class="font-bold">{{ comment.author.username }}</div>
+        <div class="font-italic">Date</div>
+      </div>
+    </div>
+    <p-divider styleClass="mx-2 md:mx-3" layout="vertical"></p-divider>
+    <div class="overflow-hidden text-overflow-ellipsis">
+      {{ comment.text }}
+    </div>
   </div>
 
-  <div class="">{{ comment.author.username }}| Date</div>
-
-  <div class="flex justify-content-between align-items-center mt-3">
+  <div class="flex justify-content-between align-items-center">
     <div>
       <button
         pButton
         class="
-          p-button-outlined p-button-danger
+          p-button-danger p-button-text
           justify-content-center
           align-self-end
         "

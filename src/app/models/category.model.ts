@@ -6,4 +6,5 @@ export interface Category {
   parent: number | null;
   is_active: boolean;
   created_by: number;
+  subcategories?: Category[];
 }

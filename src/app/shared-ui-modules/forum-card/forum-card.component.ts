@@ -1,13 +1,11 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
   Input,
+  OnInit,
 } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Forum } from 'src/app/models/forum.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { forumActions } from 'src/app/store/actions/forum.actions';
 
 @Component({
   selector: 'app-forum-card',
@@ -18,17 +16,11 @@ import { forumActions } from 'src/app/store/actions/forum.actions';
 export class ForumCardComponent implements OnInit {
   @Input() forum: Forum | null = null;
 
-  constructor(private store: Store, private navigator: NavigatorService) {}
+  constructor(private navigator: NavigatorService) {}
 
   ngOnInit() {}
 
   openForum() {
-    this.store.dispatch(
-      forumActions.selectForum({
-        forum: this.forum as Forum,
-      })
-    );
-
     this.navigator.forum.goToViewDetailsPage(this.forum?.slug as string);
   }
 

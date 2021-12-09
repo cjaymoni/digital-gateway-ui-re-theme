@@ -144,7 +144,6 @@ export class NavigatorService {
         };
         breadcrumbs.push(breadcrumb);
       }
-      console.log(breadcrumbs);
 
       // Add another element for the next route part
       this.addBreadcrumb(routeUrl, breadcrumbs, route.firstChild!);

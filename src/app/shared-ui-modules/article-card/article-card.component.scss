@@ -56,6 +56,11 @@ $text-shadow: 2px 2px 6px black;
   text-overflow: ellipsis;
   width: calc(99%);
 
+  &:hover {
+    text-decoration: underline;
+    font-size: larger;
+  }
+
   @supports (-webkit-line-clamp: 2) {
     text-overflow: ellipsis;
     white-space: initial;

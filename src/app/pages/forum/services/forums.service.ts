@@ -77,7 +77,7 @@ export class ForumsService extends ResourceService {
   upvoteForumPost(id: any) {
     return this.updateResource(
       {
-        vote_type: VoteType.downvote,
+        vote_type: VoteType.upvote,
       },
       null,
       ForumPostEndpoint + id + '/vote',

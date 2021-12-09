@@ -24,6 +24,7 @@ const routes: Routes = [
     path: Pages.Forum.main,
     loadChildren: () =>
       import('./pages/forum/forum.module').then(m => m.ForumModule),
+    data: { breadcrumb: 'Forums' },
   },
   {
     path: Pages.ForumPost.main,
@@ -31,6 +32,7 @@ const routes: Routes = [
       import('./pages/forum-posts/forum-post.module').then(
         m => m.ForumPostModule
       ),
+    data: { breadcrumb: 'Forum Post' },
   },
   {
     path: Pages.ContentManagement,
@@ -38,6 +40,7 @@ const routes: Routes = [
       import('./pages/content-management/content-management.module').then(
         m => m.ContentManagementModule
       ),
+    data: { breadcrumb: 'Content Management' },
   },
   {
     path: Pages.SiteSettings,
@@ -45,6 +48,7 @@ const routes: Routes = [
       import('./pages/content-management/content-management.module').then(
         m => m.ContentManagementModule
       ),
+    data: { breadcrumb: 'Theme Settings' },
   },
 ];
 

@@ -5,7 +5,19 @@
   <nav class="topbar w-full sticky top-0 z-5">
     <app-top-nav></app-top-nav>
   </nav>
-  <div class="col-12 grid pt-0 pb-0 justify-content-center">
+  <div
+    class="
+      col-12
+      grid
+      pt-0
+      pb-0
+      px-4
+      md:px-0
+      justify-content-center
+      m-0
+      min-h-screen
+    "
+  >
     <div class="hidden col-2 lg:flex p-0 leftside">
       <app-side-nav></app-side-nav>
     </div>
@@ -18,11 +30,13 @@
         grid
         justify-content-center
         h-full
+        p-0
         pt-5
-        px-3
+        px-1
+        md:px-3
       "
     >
-      <div class="col-12 min-h-full md:min-h-screen">
+      <div class="col-12 min-h-full md:min-h-screen p-0">
         <div class="flex">
           <div class="mr-3 hidden lg:flex">
             <app-back-button styleClass="h-2rem"></app-back-button>
