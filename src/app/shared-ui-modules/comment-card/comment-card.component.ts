@@ -19,6 +19,7 @@ import {
 import { CommentType, Pages } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { Comment } from 'src/app/models/comments.model';
+import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
@@ -44,10 +45,13 @@ export class CommentCardComponent implements OnInit, OnDestroy {
 
   CommentType = CommentType;
 
+  isHandheld$ = this.device.isHandheld$;
+
   constructor(
     private store: Store,
     private navigator: NavigatorService,
-    private action$: Actions
+    private action$: Actions,
+    private device: DeviceService
   ) {}
 
   ngOnInit() {
@@ -109,10 +113,7 @@ export class CommentCardComponent implements OnInit, OnDestroy {
 
   loadSubcomments() {
     if (this.loadSubCommentsOnClick) {
-      this.navigator.forum.openPanel(
-        [Pages.Forum.main, 'comments', this.comment.id],
-        'COMMENTS'
-      );
+      this.navigator.forum.loadComments(this.comment.id);
     } else {
       this.showSubComments = !this.showSubComments;
     }

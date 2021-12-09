@@ -2,14 +2,46 @@
   [model]="(items$ | async) || []"
   styleClass="sticky z-1 border-none border-noround"
 >
-  <ng-template pTemplate="start" class="ml-5">
-    <div class="flex align-content-center flex-column">
-      <div>MSME GATEWAY</div>
+  <ng-template pTemplate="start">
+    <div
+      class="flex align-content-center flex-row justify-content-between w-full"
+    >
+      <div class="lg:hidden mr-3">
+        <app-back-button></app-back-button>
+      </div>
 
-      <ng-container
-        *ngIf="isHandheld$ | async"
-        [ngTemplateOutlet]="search"
-      ></ng-container>
+      <div
+        class="
+          flex
+          align-content-center
+          justify-content-center
+          text-lg
+          font-bold
+          fadein
+          animation-duration-500 animation-ease-in-out
+          cursor-pointer
+          hover:font-italic hover:text-pink-600
+        "
+        routerLink="/"
+      >
+        MSME GATEWAY
+      </div>
+
+      <div class="lg:hidden flex justify-content-between align-items-center">
+        <button
+          class="p-button-outlined p-button-rounded p-button-primary mr-1"
+          icon="pi pi-search"
+          pStyleClass=".searchButton"
+          enterClass="hidden"
+          enterActiveClass="flex"
+          enterToClass="flex"
+          leaveClass="flex"
+          leaveActiveClass="fadeoutup"
+          leaveToClass="hidden"
+          pButton
+        ></button>
+        <ng-container [ngTemplateOutlet]="userLoginMenu"></ng-container>
+      </div>
     </div>
   </ng-template>
 
@@ -23,11 +55,43 @@
     </ng-container>
   </ng-template>
 </p-menubar>
+<div
+  class="
+    absolute
+    w-full
+    surface-700
+    h-4rem
+    hidden
+    animation-duration-500 animation-ease-out
+    justify-content-center
+    align-items-center
+    fadeinup
+    p-1
+    searchButton
+    lg:hidden
+  "
+>
+  <div>
+    <ng-container [ngTemplateOutlet]="search"></ng-container>
+  </div>
+
+  <!-- <ng-container [ngTemplateOutlet]="userLoginMenu"></ng-container> -->
+</div>
 
 <ng-template #search>
   <span class="p-input-icon-right mr-3">
-    <i class="pi pi-search"></i>
-    <input type="text" pInputText placeholder="What are you looking for?" />
+    <i
+      class="pi pi-search bg-green-800 text-white h-full"
+      *ngIf="searchInputControl.valid"
+      (click)="$event.stopPropagation(); searchTerm()"
+    ></i>
+    <input
+      type="text"
+      pInputText
+      class="w-20rem lg:w-30rem"
+      placeholder="What are you looking for? (Enter at least 4 characters)"
+      [formControl]="searchInputControl"
+    />
   </span>
 </ng-template>
 

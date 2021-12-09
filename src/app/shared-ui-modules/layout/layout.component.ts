@@ -27,6 +27,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   modalRef!: DynamicDialogRef;
 
+  breadcrumbs$ = this.navigator.breadCrumbs$;
+
+  home = {
+    label: 'Home',
+    routerLink: ['/'],
+    title: 'Go To Home',
+  };
+
   constructor(
     private appAlert: AppAlertService,
     private navigator: NavigatorService

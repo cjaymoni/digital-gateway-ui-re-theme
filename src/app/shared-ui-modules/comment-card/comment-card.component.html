@@ -1,88 +1,58 @@
 <div
-  class="transition-all transition-duration-200 transition-ease-in"
-  [ngClass]="
-    showSubComments && comment.subcomments
-      ? ' p-2 border-1 border-indigo-700 border-dashed border-round'
-      : ''
+  class="
+    p-card
+    box
+    shadow-4
+    p-3
+    flex flex-column
+    fadeinright
+    animation-duration-500
   "
 >
-  <ng-container *ngIf="comment">
-    <ng-container
-      [ngTemplateOutlet]="commentTemplate"
-      [ngTemplateOutletContext]="{ $implicit: comment }"
-    ></ng-container>
+  <div class="overflow-hidden text-overflow-ellipsis">
+    {{ comment.text }}
+    <hr />
+  </div>
 
-    <ng-container *ngIf="showSubComments && comment.subcomments">
-      <p-divider align="center">
-        <span class="p-tag">Replies</span>
-      </p-divider>
+  <div class="">{{ comment.author.username }}| Date</div>
 
-      <ng-container *ngFor="let item of comment.subcomments; let index = index">
-        <ng-container
-          [ngTemplateOutlet]="commentTemplate"
-          [ngTemplateOutletContext]="{ $implicit: item }"
-        ></ng-container>
-      </ng-container>
-    </ng-container>
-  </ng-container>
-</div>
-<ng-template #commentTemplate let-comment>
-  <div
-    class="
-      p-card
-      box
-      shadow-4
-      p-3
-      flex flex-column
-      scalein
-      animation-duration-500
-    "
-  >
-    <div class="overflow-hidden text-overflow-ellipsis">
-      {{ comment.text | appEllipsis: 200 }}
-      <hr />
+  <div class="flex justify-content-between align-items-center mt-3">
+    <div>
+      <button
+        pButton
+        class="
+          p-button-outlined p-button-danger
+          justify-content-center
+          align-self-end
+        "
+        icon="pi pi-reply"
+        label="Reply"
+        (click)="show()"
+      ></button>
     </div>
-
-    <div class="">{{ comment.author.username }}| Date</div>
-
-    <div class="flex justify-content-between align-items-center mt-3">
-      <div>
-        <button
-          pButton
-          class="
-            p-button-outlined p-button-danger
-            justify-content-center
-            align-self-end
-          "
-          icon="pi pi-reply"
-          label="Reply"
-          (click)="show()"
-        ></button>
-      </div>
-      <div>
-        <app-comments
-          *ngIf="showCommentButton"
-          [commentCount]="comment.subcomments?.length || 0"
-          (commentsClickedEvent)="loadSubcomments()"
-        ></app-comments>
-      </div>
-      <div>
-        <app-votes
-          [dislikeCount]="comment.downvotes || 0"
-          [likeCount]="comment.upvotes || 0"
-          (likeClickEvent)="likeComment()"
-          (dislikeClickEvent)="dislikeComment()"
-          [type]="CommentType.Comment"
-          [id]="comment.id"
-        ></app-votes>
-      </div>
+    <div>
+      <app-comments
+        *ngIf="showCommentButton"
+        [commentCount]="comment.subcomments?.length || 0"
+        (commentsClickedEvent)="loadSubcomments()"
+      ></app-comments>
     </div>
-
-    <div *ngIf="showCommentForm">
-      <app-comment-form
-        (commentAddEvent)="addCommentToForumPost($event)"
-        (cancelEvent)="hideCommentForm()"
-      ></app-comment-form>
+    <div>
+      <app-votes
+        [dislikeCount]="comment.downvotes || 0"
+        [likeCount]="comment.upvotes || 0"
+        (likeClickEvent)="likeComment()"
+        (dislikeClickEvent)="dislikeComment()"
+        [type]="CommentType.Comment"
+        [id]="comment.id"
+      ></app-votes>
     </div>
   </div>
-</ng-template>
+
+  <div *ngIf="showCommentForm" class="mt-2">
+    <app-comment-form
+      (commentAddEvent)="addCommentToForumPost($event)"
+      (cancelEvent)="hideCommentForm()"
+    ></app-comment-form>
+  </div>
+</div>

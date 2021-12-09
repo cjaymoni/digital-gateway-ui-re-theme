@@ -9,6 +9,9 @@ const routes: Routes = [
       import('./pages/articles/articles.module').then(
         module => module.ArticlesModule
       ),
+    data: {
+      breadcrumb: 'Articles',
+    },
   },
   {
     path: Pages.MarketPlace.main,

@@ -6,6 +6,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { DeviceService } from 'src/app/services/device.service';
 
 @Component({
   selector: 'app-comment-form',
@@ -22,7 +23,9 @@ export class CommentFormComponent implements OnInit {
     Validators.minLength(4),
   ]);
 
-  constructor() {}
+  isHandheld$ = this.device.isHandheld$;
+
+  constructor(private device: DeviceService) {}
 
   ngOnInit() {}
 

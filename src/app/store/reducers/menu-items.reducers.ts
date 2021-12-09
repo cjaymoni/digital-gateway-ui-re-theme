@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { INFO_HUB_ID, Pages } from 'src/app/config/app-config';
+import { Category } from 'src/app/models/category.model';
 import { MenuItemFromBackend } from 'src/app/models/menu-item.model';
 import { menuItemActions } from '../actions/menu-items.actions';
 import { MainMenu } from './../../config/app-config';
@@ -26,27 +27,16 @@ export const menuItemReducer = createReducer(
         const itemsArray = (menuItemCopy as any[]).map(m => {
           const newMenu = { ...m };
           newMenu.label = m.name;
-          newMenu.routerLink = [
-            Pages.Articles.main,
-            'search',
-            m.slug.toLowerCase(),
-          ];
-
+          newMenu.routerLink = [Pages.Articles.main];
+          newMenu.queryParams = { search: m.slug.toLowerCase() };
           return newMenu;
-        });
-
-        // const addedViewArray =
-        itemsArray.splice(0, 0, {
-          id: 'view-add',
-          label: 'View Recent Articles',
-          routerLinkActiveOptions: [],
-          routerLink: [Pages.Articles.main],
         });
 
         menuI.items = itemsArray;
       }
       return menuI;
     });
+    console.log(newMenuItems);
 
     return { ...state, menus: newMenuItems };
   }),
@@ -57,3 +47,12 @@ export const menuItemReducer = createReducer(
     return { ...state, selectedMenu: null };
   })
 );
+
+const convertToMenu = (category: Category): MenuItem => {
+  // if(category.)
+
+  return {
+    label: category.name.toUpperCase(),
+    routerLink: [Pages.Articles.main, 'search', category.slug.toLowerCase()],
+  };
+};

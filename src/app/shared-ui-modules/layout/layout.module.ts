@@ -12,6 +12,8 @@ import { ArticleFormModule } from '../article-form/article-form.module';
 import { AlertsModule } from '../alerts/alerts.module';
 import { RightNavCardModule } from '../right-nav-card/right-nav-card.module';
 import { ModalComponentsModule } from '../modal-components/modal-components.module';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { BackButtonModule } from '../back-button/back-button.module';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -27,6 +29,8 @@ import { ModalComponentsModule } from '../modal-components/modal-components.modu
     AlertsModule,
     RightNavCardModule,
     ModalComponentsModule,
+    BreadcrumbModule,
+    BackButtonModule,
   ],
   exports: [LayoutComponent],
 })

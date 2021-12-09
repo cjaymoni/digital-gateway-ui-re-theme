@@ -1,7 +1,14 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Router, RouterOutlet, Routes } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+  Routes,
+} from '@angular/router';
 import { Store } from '@ngrx/store';
+import { MenuItem } from 'primeng/api';
 import { BehaviorSubject, filter, map, Observable, take, tap } from 'rxjs';
 import {
   Context,
@@ -24,9 +31,36 @@ export class NavigatorService {
     private router: Router,
     private store: Store,
     private location: Location
-  ) {}
+  ) {
+    this.router.events
+      .pipe(
+        // Filter the NavigationEnd events as the breadcrumb is updated only when the route reaches its end
+        filter(event => event instanceof NavigationEnd)
+      )
+      .subscribe(event => {
+        // Construct the breadcrumb hierarchy
+        const root = this.router.routerState.snapshot.root;
+        const breadcrumbs: MenuItem[] = [];
+        this.addBreadcrumb([], breadcrumbs, root);
+        // Emit the new hierarchy
+
+        const unique = breadcrumbs.reduce(
+          (a, b) =>
+            a.find(({ routerLink }) => routerLink === b.routerLink)
+              ? a
+              : a.concat(b as any),
+          []
+        );
+
+        this.breadCrumbs$.next(unique);
+      });
+  }
+
+  readonly breadCrumbs$ = new BehaviorSubject<MenuItem[]>([]);
 
   panelCloseEvent$ = new Observable();
+
+  private panelTitle$ = new BehaviorSubject('');
 
   currentContext$ = this.store.select(selectUrl).pipe(
     filter(d => !!d),
@@ -93,7 +127,29 @@ export class NavigatorService {
       .subscribe();
   }
 
-  private panelTitle$ = new BehaviorSubject('');
+  private addBreadcrumb(
+    parentUrl: string[],
+    breadcrumbs: MenuItem[],
+    route?: ActivatedRouteSnapshot
+  ) {
+    if (route) {
+      // Construct the route URL
+      const routeUrl = parentUrl.concat(route.url.map(url => url.path));
+
+      // Add an element for the current route part
+      if (route.data['breadcrumb']) {
+        const breadcrumb = {
+          label: route.data['breadcrumb'],
+          routerLink: '/' + routeUrl.join('/'),
+        };
+        breadcrumbs.push(breadcrumb);
+      }
+      console.log(breadcrumbs);
+
+      // Add another element for the next route part
+      this.addBreadcrumb(routeUrl, breadcrumbs, route.firstChild!);
+    }
+  }
 
   goBack() {
     this.location.back();
@@ -229,6 +285,19 @@ class ForumRoutes extends AppRoutesConfig {
       this.page.main,
       // this.page.viewPostDetails.replace('forum-room', forumRoom),
       ...nav,
+    ]);
+  }
+
+  loadComments(id: any) {
+    this.panelTitleSubject$.next('COMMENTS');
+    this.router.navigate([
+      this.page.main, //main
+      {
+        outlets: {
+          [RouterOutlets.Right]: ['comments', id],
+        },
+        skipLocationChange: true,
+      },
     ]);
   }
 }
