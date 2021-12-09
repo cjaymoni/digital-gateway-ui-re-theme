@@ -157,13 +157,8 @@
       </div>
       <div class="field col-12 md:col-6">
         <label for="district">District</label>
-        <input
-          type="text"
-          pInputText
-          class="inputfield w-full"
-          formControlName="district"
-          placeholder="Choose a district"
-        />
+        <app-district-auto-complete [selectedDistrict]="district">
+        </app-district-auto-complete>
       </div>
     </div>
 
