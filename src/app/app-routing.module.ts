@@ -39,8 +39,8 @@ const routes: Routes = [
   {
     path: Pages.SiteSettings,
     loadChildren: () =>
-      import('./pages/content-management/content-management.module').then(
-        m => m.ContentManagementModule
+      import('./pages/app-settings/app-settings.module').then(
+        m => m.AppSettingsModule
       ),
   },
 ];

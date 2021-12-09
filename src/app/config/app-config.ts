@@ -264,7 +264,7 @@ export const LoggedInMenu: MenuItem[] = [
   {
     id: 'site-settings',
     label: 'Site Settings',
-    // routerLink: [Pages.Articles.main],
+    routerLink: [Pages.SiteSettings],
     icon: 'pi pi-cog',
   },
   {
