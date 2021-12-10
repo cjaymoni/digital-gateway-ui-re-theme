@@ -16,11 +16,11 @@
   </ng-template>
 </p-carousel>
 <div>
-  <h5>Forum</h5>
+  <h5 class="text-lg md:text-base">Forum</h5>
   <app-forum-card [forum]="forum$ | async"></app-forum-card>
 </div>
 <div>
-  <h5>Marketing Info</h5>
+  <h5 class="text-lg md:text-base">Marketing Info</h5>
   <p-carousel [value]="(productAds$ | async) || []"
     styleClass="custom-carousel py-2"
     [numVisible]="3"
@@ -36,7 +36,7 @@
   </p-carousel>
 </div>
 <div>
-  <h5>Multimedia</h5>
+  <h5 class="text-lg md:text-base">Multimedia</h5>
   <p-carousel [value]="multimedia"
     styleClass="custom-carousel"
     [numVisible]="3"
@@ -44,15 +44,23 @@
     [circular]="true"
     [autoplayInterval]="3000"
     [responsiveOptions]="responsiveOptions">
-    <ng-template pTemplate="item" let-productAd>
-      <div class="px-2">
-        <app-right-nav-card></app-right-nav-card>
+    <ng-template pTemplate="item" let-multimedia>
+      <div class="px-2 flex justify-content-center">
+        <iframe
+          class="h-20rem w-9"
+          src="https://www.youtube.com/embed/4gBpIi-gXhc"
+          title="{{multimedia.title}}"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          >
+        </iframe>
       </div>
     </ng-template>
   </p-carousel>
 </div>
 <div *ngIf="articles$ | async;">
-  <h5>Featured Articles</h5>
+  <h5 class="text-lg md:text-base">Featured Articles</h5>
   <p-carousel [value]="(articles$ | async) || []"
     styleClass="custom-carousel"
     [numVisible]="3"
