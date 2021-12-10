@@ -37,6 +37,7 @@
       [availableList]="(category$ | async) || []"
       (removeItemEvent)="removeCategory($event)"
       (addItemEvent)="addCategory($event)"
+      [addTemplate]="addTemplate"
     ></app-content-list>
   </div>
   <div class="col-12 md:col-6 lg:col-6">
@@ -48,3 +49,12 @@
     ></app-content-list>
   </div>
 </div>
+
+<ng-template #addTemplate>
+  <div class="w-9">
+    <label for="category">Parent Category</label>
+    <app-category-autocomplete
+      [selectedCategory]="category"
+    ></app-category-autocomplete>
+  </div>
+</ng-template>

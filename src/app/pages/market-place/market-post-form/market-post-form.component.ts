@@ -100,6 +100,10 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
     return this.productAdForm.get('product.product_type') as FormControl;
   }
 
+  get district() {
+    return this.productAdForm.get('district') as FormControl;
+  }
+
   removeImage(index: number) {
     const images = [...this.images.value] as AppUploadedImage[];
     images.splice(index, 1);

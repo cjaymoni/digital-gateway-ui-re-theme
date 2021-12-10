@@ -10,13 +10,13 @@ import { MarketListDetailsComponent } from './market-list-details/market-list-de
 
 const rightPanelRoutes: Routes = [
   {
-    path: Pages.MarketPlace.view,
-    component: MarketPlaceListComponent,
+    path: Pages.MarketPlace.matcher.view,
+    component: MarketListDetailsComponent,
     outlet: RouterOutlets.Right,
     canActivate: [MarketPlaceGuard],
   },
   {
-    path: Pages.MarketPlace.edit,
+    path: Pages.MarketPlace.matcher.edit,
     component: MarketPostFormComponent,
     outlet: RouterOutlets.Right,
     canActivate: [MarketPlaceGuard],

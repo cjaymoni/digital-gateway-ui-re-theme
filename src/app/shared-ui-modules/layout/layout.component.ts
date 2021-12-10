@@ -1,23 +1,21 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  HostListener,
-} from '@angular/core';
-import { PrimeNgAlerts, RouterOutlets } from 'src/app/config/app-config';
-import { NavigatorService } from 'src/app/services/navigator.service';
-import { AppAlertService } from '../alerts/service/app-alert.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { RouterOutlets } from 'src/app/config/app-config';
+import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ThemeSettingsStore],
 })
 export class LayoutComponent implements OnInit {
   RouterOutlets = RouterOutlets;
 
-  constructor() {}
+  featuredCategoriesArray$ = this.themeSettings.featuredCategoryArray$;
+  // featuredCategories$ = this.themeSettings.featuredCatgories$;
+
+  constructor(private readonly themeSettings: ThemeSettingsStore) {}
 
   ngOnInit(): void {}
 }

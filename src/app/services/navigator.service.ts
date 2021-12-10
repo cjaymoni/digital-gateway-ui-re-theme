@@ -174,10 +174,10 @@ class MarketAdRoutes extends AppRoutesConfig {
     super(Pages.MarketPlace, router, subject);
   }
 
-  override goToViewDetailsPage(id: any) {
-    this.router.navigate([
-      this.page.main,
-      ...this.page.viewDetails.replace(':id', id).split('/'),
-    ]);
-  }
+  // override goToViewDetailsPage(id: any) {
+  //   this.router.navigate([
+  //     this.page.main,
+  //     ...this.page.viewDetails.replace(':id', id).split('/'),
+  //   ]);
+  // }
 }

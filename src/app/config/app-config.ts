@@ -45,8 +45,13 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     add: 'post-article',
     edit: 'edit-article:id',
     view: 'view-article:id',
-    matcher: (url: UrlSegment[]) => {
-      return urlMatcherForEditAndView(url, 'article');
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'article');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'article', false);
+      },
     },
   },
   Forum: {
@@ -56,8 +61,13 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     viewDetails: ':slug',
     myList: 'my-forums',
     add: 'post-forum',
-    matcher: (url: UrlSegment[]) => {
-      return urlMatcherForEditAndView(url, 'forum');
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'forum');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'forum', false);
+      },
     },
   },
   ForumPost: {
@@ -67,8 +77,13 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     viewDetails: ':slug',
     add: 'post-forum',
     myList: 'my-forum-post',
-    matcher: (url: UrlSegment[]) => {
-      return urlMatcherForEditAndView(url, 'forum-post');
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'forum-post');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'forum-post', false);
+      },
     },
   },
   Auth: {
@@ -83,8 +98,13 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     view: 'view-ad:id',
     viewDetails: 'ad-details/:id',
     myList: 'my-market-place',
-    matcher: (url: UrlSegment[]) => {
-      return urlMatcherForEditAndView(url, 'ad');
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'ad');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'ad', false);
+      },
     },
   },
 
@@ -95,12 +115,16 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
 
 export const urlMatcherForEditAndView = (
   url: UrlSegment[],
-  matcher: string
+  matcher: string,
+  view = true
 ) => {
   const path: string = url[0]?.path;
-  const startsWithViewOrEdit =
-    path.startsWith('view-' + matcher) || path.startsWith('edit-' + matcher);
-  console.log(startsWithViewOrEdit, path, matcher);
+  const startsWithViewOrEdit = view
+    ? path.startsWith('view-' + matcher)
+    : path.startsWith('edit-' + matcher)
+    ? true
+    : false;
+  console.log(startsWithViewOrEdit);
 
   return startsWithViewOrEdit ? { consumed: url } : null;
 };
@@ -203,5 +227,50 @@ export const MainMenu: MenuItem[] = [
         routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
       },
     ],
+  },
+];
+
+export const LoggedInMenu: MenuItem[] = [
+  {
+    id: 'profile',
+    label: 'Profile',
+    // routerLink: [Pages.Articles.main],
+    icon: 'pi pi-user',
+  },
+  {
+    id: 'my-articles',
+    label: 'My Articles',
+    routerLink: [Pages.Articles.main, Pages.Articles.myList],
+    icon: 'pi pi-list',
+  },
+  {
+    id: 'my-forum-post',
+    label: 'My Forum Posts',
+    routerLink: [Pages.ForumPost.main, Pages.ForumPost.myList],
+    icon: 'pi pi-list',
+  },
+  {
+    id: 'my-market-ad',
+    label: 'My Market Ads',
+    routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.myList],
+    icon: 'pi pi-shopping-bag',
+  },
+  {
+    id: 'site-settings',
+    label: 'Site Settings',
+    // routerLink: [Pages.Articles.main],
+    icon: 'pi pi-cog',
+  },
+  {
+    id: 'content-settings',
+    label: 'Content Management',
+    routerLink: [Pages.ContentManagement],
+    icon: 'pi pi-cog',
+  },
+  {
+    id: 'logout',
+    label: 'Logout',
+    // routerLink: [Pages.Articles.main],
+    icon: 'pi pi-power-off',
   },
 ];
