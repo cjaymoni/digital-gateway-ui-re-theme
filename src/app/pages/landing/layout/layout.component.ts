@@ -31,11 +31,7 @@ export class LayoutComponent implements OnInit {
   ];
 
   sliderContent = [];
-  multimedia = [
-    "https://www.youtube.com/embed/4gBpIi-gXhc",
-    "https://www.youtube.com/embed/4gBpIi-gXhc",
-    "https://www.youtube.com/embed/4gBpIi-gXhc"
-  ];
+  multimedia = [{},{},{}];
 
   productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);

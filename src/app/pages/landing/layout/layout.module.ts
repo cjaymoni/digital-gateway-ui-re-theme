@@ -7,6 +7,7 @@ import { ArticleCardModule } from 'src/app/shared-ui-modules/article-card/articl
 import { MarketCardModule } from '../../market-place/market-card/market-card.module';
 import { RightNavCardModule } from 'src/app/shared-ui-modules/right-nav-card/right-nav-card.module';
 import { ForumCardModule } from 'src/app/shared-ui-modules/forum-card/forum-card.module';
+import { MultimediaModule } from '../multimedia/multimedia.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { ForumCardModule } from 'src/app/shared-ui-modules/forum-card/forum-card
     RightNavCardModule,
     ForumCardModule,
     CardModule,
+    MultimediaModule,
   ],
   declarations: [LayoutComponent]
 })
