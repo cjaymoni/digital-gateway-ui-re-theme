@@ -22,10 +22,11 @@
         px-3
       "
     >
-      <div class="col-12 min-h-full md:min-h-screen">
-        <!-- <router-outlet></router-outlet> -->
-
-        <div>{{ featuredCategoriesArray$ | async | json }}</div>
+      <div class="col-12 min-h-screen">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="leftside col-12 md:hidden">
+        <app-side-nav></app-side-nav>
       </div>
       <div class="rightcontent col-12 md:hidden">
         <app-right-nav-card></app-right-nav-card>

@@ -1,19 +1,42 @@
 <div class="h-full">
-  <ng-container *ngIf="categories | async">
-    <div class="text-lg md:text-base text-white mt-5 font-bold mb-2 ml-auto flex justify-content-center">
+  <ng-container *ngIf="featuredCategory$ | async">
+    <div
+      class="
+        text-lg
+        md:text-base
+        text-white
+        mt-5
+        font-bold
+        mb-2
+        ml-auto
+        flex
+        justify-content-center
+      "
+    >
       Featured Categories
     </div>
 
-    <div *ngFor="let category of categories|async" class="pt-1 ml-auto flex justify-content-center">
-      <a href="articles/search/{{category.slug}}" class="border-2 border-white-alpha-20 w-11 h-auto py-2 px-3 text-white no-underline">
-        <!-- <div> -->
-          {{category.name}}
-        <!-- </div> -->
+    <div
+      *ngFor="let featured of featuredCategory$ | async"
+      class="pt-1 ml-auto flex justify-content-center"
+    >
+      <a
+        [routerLink]="['articles', 'search', featured.category.slug]"
+        class="
+          border-2 border-white-alpha-20
+          w-11
+          h-auto
+          py-2
+          px-3
+          text-white
+          no-underline
+        "
+      >
+        {{ featured.category.name }}
       </a>
     </div>
 
     <div class="ml-auto flex justify-content-center pt-2">
-
       <button
         pButton
         pRipple
@@ -23,6 +46,5 @@
         (click)="viewMore()"
       ></button>
     </div>
-
   </ng-container>
 </div>

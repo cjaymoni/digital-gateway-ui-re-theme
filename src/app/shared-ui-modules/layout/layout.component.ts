@@ -12,10 +12,7 @@ import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 export class LayoutComponent implements OnInit {
   RouterOutlets = RouterOutlets;
 
-  featuredCategoriesArray$ = this.themeSettings.featuredCategoryArray$;
-  // featuredCategories$ = this.themeSettings.featuredCatgories$;
-
-  constructor(private readonly themeSettings: ThemeSettingsStore) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }
