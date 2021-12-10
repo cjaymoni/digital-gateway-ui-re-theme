@@ -1,0 +1,67 @@
+<h3 class="text-center">User Profile</h3>
+
+<div class="flex justify-content-center">
+  <p-avatar icon="pi pi-user" size="xlarge" shape="circle"></p-avatar>
+</div>
+
+<div class="flex flex-column mt-3">
+  <div class="text-center">Seth Maame</div>
+  <div class="text-center mt-3">setho@gmail.com</div>
+</div>
+<p-divider></p-divider>
+
+<div>
+  <h3>Edit Profile</h3>
+  <div class="fluid formgrid grid p-3">
+    <div class="flex flex-column md:flex-row w-full">
+      <div class="field col-12 md:col-6">
+        <label for="fname">First Name</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="fname"
+        />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="lname">Last Name</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="lname"
+        />
+      </div>
+    </div>
+    <div class="flex flex-column md:flex-row w-full">
+      <div class="field col-12 md:col-6">
+        <label for="fname">Email Address</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="fname"
+        />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="lname">Password</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="lname"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-12 ml-auto flex justify-content-end">
+    <button
+      pButton
+      pRipple
+      class="mr-1"
+      type="button"
+      icon="pi pi-save"
+      label="Update Profile"
+    ></button>
+  </div>
+</div>

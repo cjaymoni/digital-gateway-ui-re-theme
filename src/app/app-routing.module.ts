@@ -43,6 +43,13 @@ const routes: Routes = [
         m => m.AppSettingsModule
       ),
   },
+  {
+    path: Pages.UserProfile,
+    loadChildren: () =>
+      import('./pages/user-profile/user-profile.module').then(
+        m => m.UserProfileModule
+      ),
+  },
 ];
 
 @NgModule({
