@@ -3,6 +3,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -13,11 +14,13 @@ import {
 import { Title } from '@angular/platform-browser';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { filter, map, Subscription, tap } from 'rxjs';
+import { filter, map, Subscription, take, tap } from 'rxjs';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 import { ForumPost } from '../../models/forum.model';
 import { forumPostActions } from '../../store/actions/forum-post.action';
 import { forumPostSelectors } from '../../store/selectors/forum-post.selectors';
+import { ImageUploadComponent } from '../image-upload/image-upload.component';
 
 @Component({
   selector: 'app-forum-post-form',
@@ -26,6 +29,9 @@ import { forumPostSelectors } from '../../store/selectors/forum-post.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForumPostFormComponent implements OnInit, OnDestroy {
+  @ViewChild('imageUpload')
+  imageUpload!: ImageUploadComponent;
+
   forumPostForm!: FormGroup;
 
   oldTitle = '';
@@ -35,6 +41,12 @@ export class ForumPostFormComponent implements OnInit, OnDestroy {
   createForm = true;
 
   forumPost!: ForumPost;
+
+  selectedForum$ = this.store.select(forumSelectors.selectedForum).pipe(
+    filter(d => !!d),
+    take(1),
+    tap(selected => this.forumPostForm?.get('forum')?.patchValue(selected))
+  );
 
   constructor(
     private fb: FormBuilder,
@@ -71,6 +83,9 @@ export class ForumPostFormComponent implements OnInit, OnDestroy {
   onAddOrUpdateForumPost() {
     if (this.forumPostForm.valid) {
       const forumPost = this.forumPostForm.value;
+      const images = (forumPost.images || []).concat(
+        this.imageUpload.getFilesToUpload() || []
+      );
       const toSend = {
         title: forumPost.title,
         content: forumPost.content,
@@ -82,12 +97,14 @@ export class ForumPostFormComponent implements OnInit, OnDestroy {
         this.store.dispatch(
           forumPostActions.addForumPost({
             forumPost: toSend,
+            imageToUpload: images,
           })
         );
       } else {
         this.store.dispatch(
           forumPostActions.editForumPost({
             forumPost: { ...toSend, id: this.forumPost.id },
+            imageToUpload: images,
           })
         );
       }
@@ -102,7 +119,7 @@ export class ForumPostFormComponent implements OnInit, OnDestroy {
           forumPostActions.editForumPostSuccessful
         ),
         map(_ => {
-          this.navigator.goBack();
+          this.navigator.forum.go();
         })
       )
       .subscribe();
@@ -121,6 +138,7 @@ export class ForumPostFormComponent implements OnInit, OnDestroy {
       )
       .subscribe();
   }
+
   goBack() {
     this.navigator.goBack();
   }

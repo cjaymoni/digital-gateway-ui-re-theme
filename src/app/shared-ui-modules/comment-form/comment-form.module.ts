@@ -5,7 +5,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarModule } from 'primeng/sidebar';
-
+import { DirectivesModule } from 'src/app/directives/directives.module';
+import { ClickOutsideModule } from 'ng-click-outside';
 @NgModule({
   imports: [
     CommonModule,
@@ -14,6 +15,8 @@ import { SidebarModule } from 'primeng/sidebar';
     FormsModule,
     ReactiveFormsModule,
     SidebarModule,
+    DirectivesModule,
+    ClickOutsideModule,
   ],
   declarations: [CommentFormComponent],
   exports: [CommentFormComponent],

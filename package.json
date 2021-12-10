@@ -30,6 +30,7 @@
     "@ngrx/router-store": "^13.0.1",
     "@ngrx/store": "^13.0.1",
     "@ngrx/store-devtools": "^13.0.1",
+    "ng-click-outside": "^9.0.1",
     "ngx-quill": "^16.0.1",
     "ngx-sharebuttons": "^9.0.0",
     "primeflex": "^3.1.0",

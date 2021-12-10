@@ -6,6 +6,8 @@ import { CommentFormModule } from '../comment-form/comment-form.module';
 import { VotesModule } from '../votes/votes.module';
 import { CommentCardModule } from '../comment-card/comment-card.module';
 import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   imports: [
@@ -15,6 +17,8 @@ import { ButtonModule } from 'primeng/button';
     CommentCardModule,
     VotesModule,
     ButtonModule,
+    AvatarModule,
+    ImageModule,
   ],
   declarations: [OpenedForumPostCardComponent],
   exports: [OpenedForumPostCardComponent],

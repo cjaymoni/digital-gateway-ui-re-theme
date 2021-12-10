@@ -67,10 +67,7 @@ class ForumActions {
 
   searchForumSuccess = createAction(`${this.type} Search Forum Success`);
 
-  addForum = createAction(
-    `${this.type} Add Forum`,
-    props<{ forum: Forum; imageToUpload?: File }>()
-  );
+  addForum = createAction(`${this.type} Add Forum`, props<{ forum: Forum }>());
 
   addForumSuccessful = createAction(
     `${this.type} Add Forum Post Successful`,
@@ -81,7 +78,6 @@ class ForumActions {
     `${this.type} Edit Forum Post`,
     props<{
       forum: Forum;
-      imageToUpload: File | AppUploadedImage[] | any;
     }>()
   );
 

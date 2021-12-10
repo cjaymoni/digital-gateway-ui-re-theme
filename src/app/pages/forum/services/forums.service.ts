@@ -33,15 +33,12 @@ export class ForumsService extends ResourceService {
     return this.searchForum({ slug });
   }
 
-  addForum(forum: Forum, imageToUpload?: File) {
-    const formData = this.getFormDataFromForumObject(forum, imageToUpload);
-    return this.storeResource(formData).pipe(map(data => data as Forum));
+  addForum(forum: Forum) {
+    return this.storeResource(forum).pipe(map(data => data as Forum));
   }
 
-  editForum(forum: Forum, imageToUpload?: File) {
-    const formData = this.getFormDataFromForumObject(forum, imageToUpload);
-
-    return this.updateResourcePut(formData, forum.id).pipe(
+  editForum(forum: Forum) {
+    return this.updateResourcePut(forum, forum.id).pipe(
       map(data => data as Forum)
     );
   }

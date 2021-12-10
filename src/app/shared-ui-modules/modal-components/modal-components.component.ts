@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -9,8 +9,9 @@ import { NavigatorService } from 'src/app/services/navigator.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponentsComponent implements OnInit {
+  modalTitle$ = this.navigator.getModalTitle();
+
   constructor(
-    private dialogService: DialogService,
     private dialogRef: DynamicDialogRef,
     private navigator: NavigatorService
   ) {}

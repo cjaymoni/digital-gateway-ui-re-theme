@@ -4,24 +4,18 @@ import {
   ActivatedRouteSnapshot,
   NavigationEnd,
   Router,
-  RouterOutlet,
   Routes,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { BehaviorSubject, filter, map, Observable, take, tap } from 'rxjs';
 import {
-  Context,
   IPageItems,
   Pages,
   RouterOutlets,
   SLUG_PREFIX,
 } from '../config/app-config';
-import {
-  selectCurrentRoute,
-  selectFragment,
-  selectUrl,
-} from '../store/selectors/router.selectors';
+import { selectUrl } from '../store/selectors/router.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -62,11 +56,12 @@ export class NavigatorService {
 
   private panelTitle$ = new BehaviorSubject('');
 
+  private modalTitle$ = new BehaviorSubject('');
+
   currentContext$ = this.store.select(selectUrl).pipe(
     filter(d => !!d),
     map(url => {
       const context = url.split('/')[1];
-      // return Context[context as any];
       return context;
     })
   );
@@ -87,6 +82,14 @@ export class NavigatorService {
 
   getPanelTitle() {
     return this.panelTitle$.asObservable();
+  }
+
+  setModalTitle(title: string) {
+    this.modalTitle$.next(title);
+  }
+
+  getModalTitle() {
+    return this.modalTitle$.asObservable();
   }
 
   hidePanel() {
@@ -112,8 +115,6 @@ export class NavigatorService {
       .pipe(
         take(1),
         tap(context => {
-          console.log(context);
-
           this.router.navigate([
             context,
             {
@@ -162,22 +163,27 @@ export class NavigatorService {
     this.router.navigate(route);
   }
 
-  noReuse() {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-  }
-
-  article = new ArticleRoutes(this.router, this.panelTitle$);
-  forum = new ForumRoutes(this.router, this.panelTitle$);
-  forumPost = new ForumPostRoutes(this.router, this.panelTitle$);
-  marketAd = new MarketAdRoutes(this.router, this.panelTitle$);
-  auth = new AuthRoutes(this.router, this.panelTitle$);
+  article = new ArticleRoutes(this.router, this.panelTitle$, this.modalTitle$);
+  forum = new ForumRoutes(this.router, this.panelTitle$, this.modalTitle$);
+  forumPost = new ForumPostRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
+  marketAd = new MarketAdRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
+  auth = new AuthRoutes(this.router, this.panelTitle$, this.modalTitle$);
 }
 
 class AppRoutesConfig {
   constructor(
     protected page: IPageItems,
     protected router: Router,
-    protected panelTitleSubject$: BehaviorSubject<string>
+    protected panelTitleSubject$: BehaviorSubject<string>,
+    protected modalTitleSubject$: BehaviorSubject<string>
   ) {}
 
   openPanel(navigation: string[], title = '') {
@@ -193,9 +199,7 @@ class AppRoutesConfig {
   }
 
   openModal(navigation: string[], title = '') {
-    this.panelTitleSubject$.next(title);
-    console.log(navigation);
-
+    this.modalTitleSubject$.next(title);
     this.router.navigate([
       navigation[0], //main
       {
@@ -259,8 +263,12 @@ class AppRoutesConfig {
 }
 
 class ArticleRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages['Articles'], router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages['Articles'], router, subject, modalsubject);
   }
 
   // goToReadArticlePage(articleSlug: string) {
@@ -269,8 +277,12 @@ class ArticleRoutes extends AppRoutesConfig {
 }
 
 class ForumRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages['Forum'], router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages['Forum'], router, subject, modalsubject);
   }
   goToReadForumPost(forumSlug: string, forumPostSlug: string) {
     const nav = [
@@ -302,8 +314,12 @@ class ForumRoutes extends AppRoutesConfig {
 }
 
 class ForumPostRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages['ForumPost'], router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages['ForumPost'], router, subject, modalsubject);
   }
   goToReadForumPostPage(forumPostSlug: string) {
     this.router.navigate([this.page, `${SLUG_PREFIX}-${forumPostSlug}`]);
@@ -311,8 +327,12 @@ class ForumPostRoutes extends AppRoutesConfig {
 }
 
 class AuthRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages['Auth'], router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages['Auth'], router, subject, modalsubject);
   }
 
   goToSignUp() {
@@ -325,8 +345,12 @@ class AuthRoutes extends AppRoutesConfig {
 }
 
 class MarketAdRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages.MarketPlace, router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.MarketPlace, router, subject, modalsubject);
   }
 
   override goToViewDetailsPage(id: any) {

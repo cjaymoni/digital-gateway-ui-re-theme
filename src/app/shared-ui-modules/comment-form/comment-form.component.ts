@@ -4,6 +4,9 @@ import {
   ChangeDetectionStrategy,
   Output,
   EventEmitter,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DeviceService } from 'src/app/services/device.service';
@@ -36,5 +39,9 @@ export class CommentFormComponent implements OnInit {
 
   cancel() {
     this.cancelEvent.emit();
+  }
+
+  onClickedOutside(e: any) {
+    console.log('e :>> ', e);
   }
 }

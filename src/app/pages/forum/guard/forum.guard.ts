@@ -35,15 +35,6 @@ export class ForumGuard implements CanActivate {
         filter(d => Object.keys(d).length > 0),
         take(1),
         tap((params: any) => {
-          if (params.slug) {
-            this.store.dispatch(
-              forumActions.findAndSelectForum({
-                searchParams: {
-                  slug: params.slug,
-                },
-              })
-            );
-          }
           if (params['post-slug']) {
             this.store
               .select(
@@ -62,6 +53,16 @@ export class ForumGuard implements CanActivate {
                 })
               )
               .subscribe();
+          }
+
+          if (params.slug) {
+            this.store.dispatch(
+              forumActions.findAndSelectForum({
+                searchParams: {
+                  slug: params.slug,
+                },
+              })
+            );
           }
 
           if (params['comment-id']) {

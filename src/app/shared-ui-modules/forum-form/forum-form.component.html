@@ -14,7 +14,10 @@
 
     <div class="field col-12">
       <label for="title">Tag</label>
-      <app-tag-autocomplete [selectedTags]="tags"></app-tag-autocomplete>
+      <app-tag-autocomplete
+        [tagType]="forumTagType"
+        [selectedTags]="tags"
+      ></app-tag-autocomplete>
     </div>
 
     <div class="field col-12">
@@ -28,37 +31,6 @@
         placeholder="Forum Description"
       ></textarea>
     </div>
-    <div class="col-12">
-      <ng-container *ngIf="!createForm && forumHasImage">
-        <div class="mb-1">
-          <div class="flex justify-content-evenly align-items-center">
-            <div class="font-bold">Current Image</div>
-            <button
-              pButton
-              pTooltip="Remove current image"
-              class="p-button p-button-text p-button-rounded p-button-danger"
-              icon="pi pi-trash"
-              clickConfirmation
-              (onConfirm)="removeImage()"
-            ></button>
-          </div>
-          <div
-            class="
-              flex
-              justify-content-center
-              align-items-center
-              border-solid
-              p-1
-              border-200
-            "
-          >
-            <img [src]="forum?.coverImage?.[0]?.image" alt="" class="h-15rem" />
-          </div>
-        </div>
-      </ng-container>
-      <label for="imageUpload">Image Upload</label>
-      <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
-    </div>
 
     <div class="col-12 ml-auto flex justify-content-end mt-2">
       <button
@@ -67,7 +39,7 @@
         class="mr-1"
         type="button"
         icon="pi pi-save"
-        [label]="(createForm ? 'Add' : 'Edit') + ' Forum'"
+        [label]="(createForm ? 'Add' : 'Update') + ' Forum'"
         [disabled]="forumForm.invalid"
         (click)="onAddOrUpdateForum()"
       ></button>

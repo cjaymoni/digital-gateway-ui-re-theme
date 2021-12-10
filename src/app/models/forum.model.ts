@@ -24,8 +24,7 @@ export interface ForumPost {
   forums?: any;
   comments?: Comment[] | any;
   slug?: string;
-  // upvotes: number;
-  // downvotes: number;
+  images?: AppUploadedImage[];
 }
 
 export interface Moderator {

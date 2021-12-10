@@ -22,6 +22,7 @@ import { ImageUploadComponent } from '../image-upload/image-upload.component';
 import { forumActions } from '../../store/actions/forum.actions';
 import { forumSelectors } from '../../store/selectors/forum.selectors';
 import { Tag } from 'src/app/models/tag.model';
+import { TagType } from 'src/app/config/app-config';
 
 @Component({
   selector: 'app-forum-form',
@@ -30,9 +31,6 @@ import { Tag } from 'src/app/models/tag.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForumFormComponent implements OnInit, OnDestroy {
-  @ViewChild('imageUpload', { static: true })
-  imageUploadComponent: ImageUploadComponent | null = null;
-
   forumForm!: FormGroup;
 
   oldTitle = '';
@@ -42,6 +40,8 @@ export class ForumFormComponent implements OnInit, OnDestroy {
   createForm = true;
 
   forum!: Forum;
+
+  forumTagType = TagType.forum;
 
   constructor(
     private fb: FormBuilder,
@@ -92,24 +92,21 @@ export class ForumFormComponent implements OnInit, OnDestroy {
         name: forum.name,
         description: forum.description,
         tags: (forum.tags as Tag[]).map(tag => tag.id),
+        tag: 1,
         created_by: 1,
-        moderators: 1,
+        moderators: [1],
       };
 
       if (this.createForm) {
         this.store.dispatch(
           forumActions.addForum({
             forum: toSend,
-            imageToUpload: this.imageUploadComponent?.getFilesToUpload()?.[0],
           })
         );
       } else {
         this.store.dispatch(
           forumActions.editForum({
             forum: { ...toSend, id: this.forum.id },
-            imageToUpload: this.forumHasImage
-              ? this.forum.coverImage
-              : this.imageUploadComponent?.getFilesToUpload(),
           })
         );
       }
@@ -124,7 +121,7 @@ export class ForumFormComponent implements OnInit, OnDestroy {
           forumActions.editForumSuccessful
         ),
         map(_ => {
-          this.navigator.goBack();
+          this.navigator.forum.go();
         })
       )
       .subscribe();

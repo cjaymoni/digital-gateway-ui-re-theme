@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, Observable, take, tap } from 'rxjs';
+import { forumActions } from 'src/app/store/actions/forum.actions';
 import { selectRouteNestedParam } from 'src/app/store/selectors/router.selectors';
 import { forumPostActions } from '../../../store/actions/forum-post.action';
 
@@ -18,7 +19,7 @@ export class ForumPostGuard implements CanActivate {
    *
    */
   constructor(private store: Store) {
-    this.store.dispatch(forumPostActions.fetch());
+    this.store.dispatch(forumActions.fetch());
   }
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -28,8 +29,6 @@ export class ForumPostGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log('gaurd');
-
     this.store
       .select(selectRouteNestedParam('forum-post-id'))
       .pipe(

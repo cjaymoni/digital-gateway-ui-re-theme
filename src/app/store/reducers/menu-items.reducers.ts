@@ -53,6 +53,7 @@ const convertToMenu = (category: Category): MenuItem => {
   const menuItem: MenuItem = {
     label: name.charAt(0).toUpperCase() + name.slice(1),
     routerLink: [Pages.Articles.main, 'search', category.slug.toLowerCase()],
+    icon: 'pi pi-tag',
   };
 
   if (category.subcategories!.length > 0) {

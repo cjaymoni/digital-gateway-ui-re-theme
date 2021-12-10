@@ -10,8 +10,6 @@ import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 import { DEFAULT_PAGE_SIZE } from 'src/app/config/app-config';
-import { PaginatorService } from 'src/app/services/paginator.service';
-
 @Component({
   selector: 'app-table',
   templateUrl: './app-table.component.html',
@@ -76,7 +74,7 @@ export class AppTableComponent implements OnInit, AfterViewInit {
     return {};
   };
 
-  constructor(public paginatorService: PaginatorService) {}
+  constructor() {}
 
   selectedData = [];
   searchFormControl = new FormControl('');
@@ -122,10 +120,10 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   getOptions() {
     const options = [50, 100, 200];
 
-    const max = this.paginatorService.paginatorDetails.total;
-    if (max > options[options.length - 1]) {
-      options.push(max);
-    }
+    // const max = this.paginatorService.paginatorDetails.total;
+    // if (max > options[options.length - 1]) {
+    //   options.push(max);
+    // }
     return options;
   }
 

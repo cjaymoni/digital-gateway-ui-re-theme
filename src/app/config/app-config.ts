@@ -188,7 +188,6 @@ export const MainMenu: MenuItem[] = [
   {
     id: INFO_HUB_ID,
     label: 'Information Hub',
-    // routerLink: [Pages.Articles.main],
     icon: 'pi pi-folder-open',
     items: [],
   },
@@ -196,19 +195,17 @@ export const MainMenu: MenuItem[] = [
     id: 'forum',
     label: 'Forums',
     icon: 'pi pi-discord',
-
-    // routerLink: [Pages.Forum.main],
     items: [
       {
         id: 'view-forums',
-        label: 'View Recent Forums',
-        routerLinkActiveOptions: [],
+        label: 'View Forums',
+        icon: 'pi pi-eye',
         routerLink: [Pages.Forum.main],
       },
       {
         id: 'create-forum',
-        label: 'Create A Post',
-        routerLinkActiveOptions: [],
+        label: 'Create A Forum',
+        icon: 'pi pi-plus',
         routerLink: [Pages.Forum.main, Pages.Forum.add],
       },
     ],
@@ -217,19 +214,17 @@ export const MainMenu: MenuItem[] = [
     id: 'market-place',
     label: 'Market Place',
     icon: 'pi pi-shopping-bag',
-
-    // routerLink: [Pages.MarketPlace.main],
     items: [
       {
         id: 'view-add',
         label: 'View Product Ads',
-        routerLinkActiveOptions: [],
+        icon: 'pi pi-eye',
         routerLink: [Pages.MarketPlace.main],
       },
       {
         id: 'create-add',
         label: 'Create An Ad',
-        routerLinkActiveOptions: [],
+        icon: 'pi pi-plus',
         routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
       },
     ],
@@ -240,7 +235,6 @@ export const LoggedInMenu: MenuItem[] = [
   {
     id: 'profile',
     label: 'Profile',
-    // routerLink: [Pages.Articles.main],
     icon: 'pi pi-user',
   },
   {
@@ -264,7 +258,6 @@ export const LoggedInMenu: MenuItem[] = [
   {
     id: 'site-settings',
     label: 'Site Settings',
-    // routerLink: [Pages.Articles.main],
     icon: 'pi pi-cog',
   },
   {
@@ -276,7 +269,6 @@ export const LoggedInMenu: MenuItem[] = [
   {
     id: 'logout',
     label: 'Logout',
-    // routerLink: [Pages.Articles.main],
     icon: 'pi pi-power-off',
   },
 ];

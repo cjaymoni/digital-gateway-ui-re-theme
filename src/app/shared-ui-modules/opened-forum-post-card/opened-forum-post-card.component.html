@@ -1,9 +1,16 @@
 <ng-container *ngIf="forumPost$ | async">
-  <div class="p-2 w-full fadein animation-duration-500 p-component">
-    <div class="text-3xl font-bold">
-      {{ (forumPost$ | async)?.title | uppercase }}
+  <div class="p-3 w-full fadein animation-duration-500 p-component shadow-2">
+    <div class="flex justify-content-between align-content-center">
+      <div class="flex">
+        <p-avatar styleClass="mr-2" size="large" shape="circle"></p-avatar>
+        <div class="text-xl font-bold mt-1">
+          {{ (forumPost$ | async)?.title | uppercase }}
+          <div class="text-sm">
+            {{ (forumPost$ | async)?.submitter.username }}
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="text-sm">Author Name | Date</div>
     <div
       class="mt-2"
       [innerHTML]="
@@ -12,19 +19,32 @@
         )
       "
     ></div>
-    <hr />
-    <div class="flex justify-content-between align-items-center">
+    <ng-container *ngIf="(forumPost$ | async)?.images?.length! > 0">
+      <div class="flex h-auto justify-content-center align-items-center mt-2">
+        <div
+          class="col-6 md:col-4 xl:col-3"
+          *ngFor="let image of (forumPost$ | async)?.images"
+        >
+          <p-image
+            [src]="image.image"
+            [preview]="true"
+            imageClass="w-full h-full border-round border-gray-800 border-solid"
+          ></p-image>
+        </div>
+      </div>
+    </ng-container>
+    <div class="flex justify-content-between align-items-center mt-2">
       <div>
         <button
           [style.visibility]="showCommentForm ? 'hidden' : 'visible'"
           pButton
           class="
-            p-button-outlined p-button-danger
+            p-button-text p-button-danger
             justify-content-center
             align-self-end
           "
           icon="pi pi-reply"
-          label="Comment"
+          label="Reply"
           (click)="displayCommentForm()"
         ></button>
       </div>
@@ -41,7 +61,7 @@
 
       <div>
         <app-comments
-          [commentCount]="(forumPost$ | async)?.comment_count || 0"
+          [commentCount]="(forumPost$ | async)?.comments?.length || 0"
         ></app-comments>
       </div>
     </div>

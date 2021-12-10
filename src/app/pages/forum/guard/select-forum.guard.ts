@@ -7,18 +7,17 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { SLUG_PREFIX } from 'src/app/config/app-config';
-import { forumPostActions } from '../../../store/actions/forum-post.action';
+import { forumActions } from '../../../store/actions/forum.actions';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SelectForumPostGuard implements CanActivate {
+export class SelectForumGuard implements CanActivate {
   /**
    *
    */
   constructor(private store: Store) {
-    this.store.dispatch(forumPostActions.fetch());
+    this.store.dispatch(forumActions.fetch());
   }
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -28,13 +27,6 @@ export class SelectForumPostGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const forumPostId = route.url[0].path.split(':')[1];
-    this.store.dispatch(
-      forumPostActions.findAndSelectForumPostById({
-        id: forumPostId,
-      })
-    );
-
     return true;
   }
 }

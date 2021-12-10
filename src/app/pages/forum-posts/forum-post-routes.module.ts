@@ -6,10 +6,6 @@ import { ForumPostFormComponent } from '../../shared-ui-modules/forum-post-form/
 import { ForumPostGuard } from './guard/forum-post.guard';
 import { MyForumPostsComponent } from './my-forum-posts/my-forum-posts.component';
 
-export function slugMatcher(url: UrlSegment[]) {
-  return url[0]?.path.startsWith(SLUG_PREFIX) ? { consumed: url } : null;
-}
-
 const routes: Routes = [
   {
     path: '',
@@ -19,17 +15,19 @@ const routes: Routes = [
     path: Pages.ForumPost.myList,
     component: MyForumPostsComponent,
     canActivate: [ForumPostGuard],
+    data: { breadcrumb: 'Moderation' },
   },
   {
     path: Pages.ForumPost.add,
     component: ForumPostFormComponent,
     canActivate: [ForumPostGuard],
+    data: { breadcrumb: 'Add Forum Post' },
   },
   {
     path: Pages.ForumPost.view,
     component: ForumPostDetailsComponent,
     outlet: RouterOutlets.Modal,
-    data: { selectForum: true },
+    data: { selectForum: true, breadcrumb: 'Preview Forum Post' },
     canActivate: [ForumPostGuard],
   },
   {
@@ -37,12 +35,12 @@ const routes: Routes = [
     component: ForumPostFormComponent,
     outlet: RouterOutlets.Modal,
     canActivate: [ForumPostGuard],
+    data: { breadcrumb: 'Edit Forum Post' },
   },
   {
-    // matcher: slugMatcher,
     path: Pages.ForumPost.viewDetails,
     component: ForumPostDetailsComponent,
-    data: { fetch: true },
+    data: { fetch: true, breadcrumb: 'View Forum Post' },
     canActivate: [ForumPostGuard],
   },
 ];

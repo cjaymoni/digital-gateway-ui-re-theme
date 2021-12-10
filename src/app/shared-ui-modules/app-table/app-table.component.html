@@ -181,14 +181,3 @@
     </p-table>
   </div>
 </ng-template>
-
-<p-paginator
-  [style]="{ padding: '2px' }"
-  *ngIf="false"
-  [rows]="paginatorService.paginatorDetails.per_page"
-  [totalRecords]="totalDataLength"
-  [rowsPerPageOptions]="getOptions()"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} records"
-  (onPageChange)="onPageChange($event)"
-></p-paginator>

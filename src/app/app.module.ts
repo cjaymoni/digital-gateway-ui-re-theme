@@ -13,7 +13,6 @@ import { appStoreEffects } from './store/app.effects';
 import { appReducersMap } from './store/app.reducers';
 import { TestComponentModule } from './test/test-component/test-component.module';
 import { LoginModule } from './pages/login/login.module';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [AppComponent],

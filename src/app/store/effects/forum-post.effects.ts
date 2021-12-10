@@ -96,9 +96,12 @@ export class ForumPostEffects {
   addForumPosts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumPostActions.addForumPost),
-      switchMap(({ forumPost }) =>
+      switchMap(({ forumPost, imageToUpload }) =>
         this.forumPostService
-          .addForumPost({ ...forumPost, slug: slugify(forumPost.title) })
+          .addForumPost(
+            { ...forumPost, slug: slugify(forumPost.title) },
+            imageToUpload
+          )
           .pipe(
             map((savedForumPost: any) =>
               forumPostActions.addForumPostSuccessful({
@@ -118,8 +121,8 @@ export class ForumPostEffects {
   editForumPosts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumPostActions.editForumPost),
-      switchMap(({ forumPost }) =>
-        this.forumPostService.editForumPost(forumPost).pipe(
+      switchMap(({ forumPost, imageToUpload }) =>
+        this.forumPostService.editForumPost(forumPost, imageToUpload).pipe(
           map((updatedForumPost: any) =>
             forumPostActions.editForumPostSuccessful({
               updatedForumPost: {

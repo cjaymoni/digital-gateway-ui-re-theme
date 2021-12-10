@@ -94,52 +94,20 @@ export const forumReducer = createReducer(
 
     // find forumPost and add comment to commentsOfSelectedPost
 
+    const _copySelectedForumPost = { ...state.selectedForumPost };
+    if (comment.post === state.selectedForumPost?.id) {
+      _copySelectedForumPost.comments = [comment].concat(
+        _copySelectedForumPost.comments
+      );
+    }
+
     const copyOfComments = [...state.commentsOfSelectedForumPosts];
     const newComments = [comment].concat(copyOfComments);
-    return { ...state, commentsOfSelectedForumPosts: newComments };
-  }),
-
-  on(forumActions.likePostSuccessful, (state, { id }) => {
-    const copyOfSelectedPost: ForumPost = { ...state.selectedForumPost };
-    if (!!copyOfSelectedPost) {
-      copyOfSelectedPost.upvotes++;
-    }
-    return { ...state, selectedForumPost: copyOfSelectedPost };
-  }),
-
-  on(forumActions.dislikePostSuccessful, (state, { id }) => {
-    const copyOfSelectedPost: ForumPost = { ...state.selectedForumPost };
-    if (!!copyOfSelectedPost) {
-      copyOfSelectedPost.downvotes++;
-    }
-    return { ...state, selectedForumPost: copyOfSelectedPost };
-  }),
-  on(forumActions.comments.likeCommentSuccessful, (state, { id }) => {
-    const copyOfCommentsOfSelectedPost: Comment[] = [
-      ...state.commentsOfSelectedForumPosts,
-    ];
-    const newComments = copyOfCommentsOfSelectedPost.map(comment => {
-      const copy = { ...comment };
-      if (comment.id === id) {
-        copy.upvotes++;
-      }
-      return copy;
-    });
-    return { ...state, commentsOfSelectedForumPosts: newComments };
-  }),
-  on(forumActions.comments.dislikeCommentSuccessful, (state, { id }) => {
-    const copyOfCommentsOfSelectedPost: Comment[] = [
-      ...state.commentsOfSelectedForumPosts,
-    ];
-
-    const newComments = copyOfCommentsOfSelectedPost.map(comment => {
-      const copy = { ...comment };
-      if (comment.id === id) {
-        copy.downvotes++;
-      }
-      return copy;
-    });
-    return { ...state, commentsOfSelectedForumPosts: newComments };
+    return {
+      ...state,
+      commentsOfSelectedForumPosts: newComments,
+      selectedForumPost: _copySelectedForumPost,
+    };
   }),
   on(forumActions.comments.selectComment, (state, { comment }) => {
     return {

@@ -36,3 +36,14 @@ body {
     display: none;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .p-dialog-content {
+    padding: 8px !important;
+    padding-top: 0 !important;
+  }
+
+  .p-dialog {
+    max-height: 100% !important;
+  }
+}
