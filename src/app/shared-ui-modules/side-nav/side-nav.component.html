@@ -5,9 +5,11 @@
     </div>
 
     <div *ngFor="let category of categories|async" class="pt-1 ml-auto flex justify-content-center">
-      <div class="border-2 border-white-alpha-20 w-11 h-auto py-2 px-3 text-white">
-        {{category.name}}
-      </div>
+      <a href="articles/search/{{category.slug}}" class="border-2 border-white-alpha-20 w-11 h-auto py-2 px-3 text-white">
+        <div>
+          {{category.name}}
+        </div>
+      </a>
     </div>
 
     <div class="ml-auto flex justify-content-center pt-2">
