@@ -31,9 +31,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   breadcrumbs$ = this.navigator.breadCrumbs$;
 
   home = {
-    label: 'Home',
     routerLink: ['/'],
     title: 'Go To Home',
+    icon: 'pi pi-home',
   };
 
   constructor(

@@ -8,13 +8,12 @@ import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent implements OnInit {
-
   responsiveOptions = [
     {
-      breakpoint: '1024px',
+      breakpoint: '1020px',
       numVisible: 5,
       numScroll: 3,
     },
@@ -31,15 +30,13 @@ export class LayoutComponent implements OnInit {
   ];
 
   sliderContent = [];
-  multimedia = [{},{},{}];
+  multimedia = [{}, {}, {}];
 
   productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);
   forum$ = this.store.select(forumSelectors.getById(1));
 
-  constructor(private store: Store) { }
+  constructor(private store: Store) {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -24,8 +24,6 @@ export class ThemeSettingsService extends ResourceService {
       this.getEvents(),
     ]).pipe(
       map(data => {
-        console.log(data);
-
         return {
           highlightArticles: data[0],
           featuredCategories: data[1],
