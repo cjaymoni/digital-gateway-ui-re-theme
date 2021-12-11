@@ -1,4 +1,3 @@
-import { noop } from '@angular-devkit/schematics';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,26 +5,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  BehaviorSubject,
-  debounceTime,
-  filter,
-  map,
-  of,
-  Subscription,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, debounceTime, filter, map, Subscription } from 'rxjs';
 import { Category } from 'src/app/models/category.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { articleActions } from 'src/app/store/actions/article.actions';
-import { categoryActions } from 'src/app/store/actions/category.actions';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 import { categorySelectors } from 'src/app/store/selectors/category.selectors';
-import {
-  selectQueryParams,
-  selectRouteParams,
-} from 'src/app/store/selectors/router.selectors';
+import { selectRouteParams } from 'src/app/store/selectors/router.selectors';
 
 @Component({
   selector: 'app-article-list',

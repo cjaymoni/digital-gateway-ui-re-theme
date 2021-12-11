@@ -1,15 +1,11 @@
-:host ::ng-deep {
-  .p-tieredmenu {
-    height: 100%;
-    width: 100%;
+.wrapper {
+  @media screen and (min-width: 900px) {
+    top: 90px;
   }
-}
 
-:host {
-  width: 100%;
-  min-height: 100%;
-}
-
-a:hover {
-  background-color: rgb(108, 108, 245);
+  .featured-category {
+    &:hover {
+      margin-left: 1rem;
+    }
+  }
 }
