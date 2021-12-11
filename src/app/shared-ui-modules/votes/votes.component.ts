@@ -76,7 +76,10 @@ export class VotesComponent implements OnInit {
   updateVotes(voteResponse: VoteResponse) {
     this.dislikeCount = voteResponse.downvotes;
     this.likeCount = voteResponse.upvotes;
-    if (voteResponse.user.voted) {
+    if (!voteResponse.user.voted) {
+      this.liked = false;
+      this.disliked = false;
+    } else {
       this.liked = voteResponse.user.type === VoteType.upvote;
       this.disliked = voteResponse.user.type === VoteType.downvote;
     }

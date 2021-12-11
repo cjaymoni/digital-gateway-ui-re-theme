@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { ImageModule } from 'primeng/image';
 import { ForumLoadingCardModule } from '../forum-loading-card/forum-loading-card.module';
+import { GalleriaModule } from 'primeng/galleria';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { ForumLoadingCardModule } from '../forum-loading-card/forum-loading-card
     AvatarModule,
     ImageModule,
     ForumLoadingCardModule,
+    GalleriaModule,
   ],
   declarations: [OpenedForumPostCardComponent],
   exports: [OpenedForumPostCardComponent],

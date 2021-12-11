@@ -3,6 +3,7 @@
     pButton
     type="button"
     icon="pi pi-thumbs-up"
+    [attr.liked]="liked"
     class="
       md:mr-2
       p-1
@@ -11,7 +12,6 @@
       animation-ease-in animation-duration-500
       p-button-rounded p-button-info p-button-text
     "
-    [ngClass]="liked ? 'bg-blue-900 text-white' : ''"
     pTooltip="Like"
     tooltipPosition="bottom"
     [label]="likeCount.toString()"
@@ -23,6 +23,7 @@
     pButton
     type="button"
     icon="pi pi-thumbs-down"
+    [attr.disliked]="disliked"
     class="
       p-1
       md:p-3
@@ -30,7 +31,6 @@
       animation-ease-in animation-duration-500
       p-button-rounded p-button-danger p-button-text
     "
-    [ngClass]="disliked ? 'bg-pink-800 text-white' : ''"
     pTooltip="Dislike"
     tooltipPosition="bottom"
     [disabled]="disableDislike"

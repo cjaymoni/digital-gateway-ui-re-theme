@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { of, switchMap, debounceTime } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { Forum } from 'src/app/models/forum.model';
@@ -15,7 +15,6 @@ export class ForumEffects {
   loadForums$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumActions.fetch),
-      debounceTime(500),
       switchMap(() =>
         this.forumService.getResources().pipe(
           map((forums: Forum[]) =>
@@ -35,7 +34,6 @@ export class ForumEffects {
   searchForums$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumActions.findAndSelectForum),
-      debounceTime(500),
       switchMap(({ searchParams }) =>
         this.forumService.searchForum(searchParams).pipe(
           map((forums: Forum[]) =>
@@ -55,7 +53,6 @@ export class ForumEffects {
   searchForumById$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumActions.findAndSelectForumById),
-      debounceTime(500),
       switchMap(({ id }) =>
         this.forumService.getOneResource(id).pipe(
           tap(forum => {
@@ -78,7 +75,6 @@ export class ForumEffects {
   searchAllForums$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumActions.searchForum),
-      debounceTime(500),
       switchMap(({ searchParams }) =>
         this.forumService.searchForum(searchParams).pipe(
           map((forums: Forum[]) =>

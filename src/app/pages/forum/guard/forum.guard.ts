@@ -33,10 +33,20 @@ export class ForumGuard implements CanActivate {
       .select(selectRouteNestedParams)
       .pipe(
         filter(d => Object.keys(d).length > 0),
-        tap(_ => this.store.dispatch(forumActions.clearAllSelected())),
+        // tap(_ => this.store.dispatch(forumActions.clearAllSelected())),
         take(1),
         tap((params: any) => {
-          if (params['post-slug']) {
+          if (params.slug) {
+            this.store.dispatch(
+              forumActions.findAndSelectForum({
+                searchParams: {
+                  slug: params.slug,
+                },
+              })
+            );
+          }
+
+          if (params['post-slug'] && params.slug) {
             this.store
               .select(
                 forumSelectors.selectedForumPostBySlug(params['post-slug'])
@@ -55,15 +65,7 @@ export class ForumGuard implements CanActivate {
               )
               .subscribe();
           }
-          if (params.slug) {
-            this.store.dispatch(
-              forumActions.findAndSelectForum({
-                searchParams: {
-                  slug: params.slug,
-                },
-              })
-            );
-          }
+
           if (params['comment-id']) {
             this.store
               .select(forumSelectors.selectedCommentById(params['comment-id']))

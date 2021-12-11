@@ -87,9 +87,8 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
         slug: slugify(article.title),
         created_by: 1,
       };
-      console.log(this.imageUploadComponent);
 
-      const images: any = (this.article.images || []).concat(
+      const images: any = (this.images.value || []).concat(
         this.imageUploadComponent?.getFilesToUpload() || []
       );
 

@@ -139,7 +139,7 @@ export enum PrimeNgSeverity {
   Info = 'info',
   Danger = 'danger',
   Success = 'success',
-  Warn = 'warn',
+  Warn = 'warning',
   Custom = 'custom',
   Error = 'error',
 }
@@ -157,7 +157,7 @@ export const PublishedStatusMapping: { [key: string]: string } = {
   [ArticlePublishedStatus.Published]: PrimeNgSeverity.Success,
   [ArticlePublishedStatus.Draft]: PrimeNgSeverity.Info,
   [ArticlePublishedStatus.Review]: PrimeNgSeverity.Danger,
-  [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Custom,
+  [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Success,
 };
 
 export const TOAST_TIME = 3000;

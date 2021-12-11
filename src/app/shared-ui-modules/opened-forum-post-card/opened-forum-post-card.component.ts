@@ -31,6 +31,21 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
 
   forumComments$ = this.store.select(forumSelectors.commentsOfSelectedForum);
 
+  responsiveOptions: any[] = [
+    {
+      breakpoint: '1024px',
+      numVisible: 5,
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 3,
+    },
+    {
+      breakpoint: '560px',
+      numVisible: 1,
+    },
+  ];
+
   VoteType = VoteType;
 
   trackById = trackById;
