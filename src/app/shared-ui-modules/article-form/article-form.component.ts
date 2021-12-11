@@ -34,8 +34,8 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   @ViewChild('contentBox', { static: true })
   contentInput: AppQuillComponent | null = null;
 
-  @ViewChild('imageUpload', { static: true })
-  imageUploadComponent: ImageUploadComponent | null = null;
+  @ViewChild('imageUpload', { static: false })
+  imageUploadComponent!: ImageUploadComponent;
 
   articleForm!: FormGroup;
 
@@ -88,20 +88,22 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
         created_by: 1,
       };
 
+      const images: any = (this.images.value || []).concat(
+        this.imageUploadComponent?.getFilesToUpload() || []
+      );
+
       if (this.createForm) {
         this.store.dispatch(
           articleActions.addArticle({
             article: toSend,
-            imageToUpload: this.imageUploadComponent?.getFilesToUpload(),
+            imageToUpload: images,
           })
         );
       } else {
         this.store.dispatch(
           articleActions.editArticle({
             article: { ...toSend, id: this.article.id },
-            imageToUpload: this.articleHasImage
-              ? this.article.images
-              : this.imageUploadComponent?.getFilesToUpload(),
+            imageToUpload: images,
           })
         );
       }
@@ -140,7 +142,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
           articleActions.editArticleSuccessful
         ),
         map(_ => {
-          this.navigator.goBack();
+          this.navigator.closeModal();
         })
       )
       .subscribe();

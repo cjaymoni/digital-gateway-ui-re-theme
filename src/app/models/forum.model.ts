@@ -1,27 +1,35 @@
+import { VoteType } from '../config/app-config';
 import { AppUploadedImage } from './article.model';
 import { Comment } from './comments.model';
 
 export interface Forum {
   id?: string | number | any;
-  name?: string;
+  name: string;
   coverImage?: AppUploadedImage[];
   moderators?: Moderator[] | any;
   tags?: any;
   posts?: ForumPost[] | any;
   description?: string;
+  slug?: string;
 }
 
 export interface ForumPost {
   id?: string | number | any;
-  title?: string;
+  title: string;
   content?: string;
   comment_count?: number;
   submitter?: Submitter[] | any;
-  upvote_count?: number;
-  downvote_count?: number;
-  score?: number;
+  upvotes?: number | any;
+  downvotes?: number | any;
+  score?: number | any;
   forums?: any;
-  comments?: Comment[];
+  comments?: Comment[] | any;
+  slug?: string;
+  images?: AppUploadedImage[];
+  user?: {
+    voted: boolean;
+    type: VoteType;
+  };
 }
 
 export interface Moderator {

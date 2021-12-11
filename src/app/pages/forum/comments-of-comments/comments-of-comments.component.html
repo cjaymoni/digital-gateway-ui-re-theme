@@ -1,0 +1,29 @@
+<div
+  class="transition-all transition-duration-200 transition-ease-in"
+  [ngClass]="
+    (subComments$ | async)?.length
+      ? ' p-2 border-1 border-indigo-700 border-dashed border-round'
+      : ''
+  "
+>
+  <ng-container *ngIf="comment$ | async">
+    <app-comment-card
+      [showCommentButton]="false"
+      [comment]="(comment$ | async)!"
+    ></app-comment-card>
+    <p-divider align="center">
+      <span class="p-tag bg-green-800">
+        {{ (subComments$ | async)?.length }} Replie(s)</span
+      >
+    </p-divider>
+    <ng-container
+      *ngFor="let comment of subComments$ | async; trackBy: trackById"
+    >
+      <app-comment-card
+        [comment]="comment"
+        [loadSubCommentsOnClick]="true"
+      ></app-comment-card>
+      <br />
+    </ng-container>
+  </ng-container>
+</div>

@@ -4,11 +4,13 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
-import { Forum } from 'src/app/models/forum.model';
-import { Store } from '@ngrx/store';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumActions } from '../../store/actions/forum.actions';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
+import { take } from 'rxjs';
+import { ForumPost } from 'src/app/models/forum.model';
 
 @Component({
   selector: 'app-forum-post-card',
@@ -17,24 +19,31 @@ import { DomSanitizer } from '@angular/platform-browser';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForumPostCardComponent implements OnInit {
-  @Input() forumPost: any;
-  showCommentForm: boolean = false;
+  @Input() forumPost!: ForumPost;
+
+  @Input() avatar: any;
 
   constructor(
-    private store: Store,
     private navigator: NavigatorService,
-    public domSanitizer: DomSanitizer
+    public domSanitizer: DomSanitizer,
+    private store: Store
   ) {}
+
+  selectedForum$ = this.store.select(forumSelectors.selectedForum);
 
   ngOnInit(): void {}
 
-  openForum() {
-    this.navigator.forum.goToViewDetailsPage(this.forumPost?.name as string);
+  openForumPost() {
+    this.selectedForum$.pipe(take(1)).subscribe(selectedForum => {
+      console.log(selectedForum.slug, this.forumPost?.slug);
+
+      this.navigator.forum.goToReadForumPost(
+        selectedForum.slug as string,
+        this.forumPost?.slug || ''
+      );
+    });
   }
 
   dislikeForum() {}
   likeForum() {}
-  show() {
-    this.showCommentForm = !this.showCommentForm;
-  }
 }

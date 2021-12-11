@@ -24,9 +24,9 @@ export class ResourceService {
     return this.http.post(`${url}`, toStore).pipe(map(data => data as object));
   }
 
-  updateResource(toStore: any, id: any, url = this.endpoint) {
+  updateResource(toStore: any, id: any, url = this.endpoint, override = false) {
     return this.http
-      .patch(`${url + id}/`, toStore)
+      .patch(`${override ? url : url + id}/`, toStore)
       .pipe(map(data => data as object));
   }
 

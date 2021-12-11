@@ -16,22 +16,39 @@
           <ng-container
             *ngFor="let tag of (article$ | async).tags; let last = last"
           >
-            <p-tag [value]="tag.name" class="mr-1"></p-tag>
+            <p-tag [value]="tag.name" severity="info" class="mr-1"></p-tag>
           </ng-container>
         </div>
         <div class="flex m-1 align-items-center">
-          <button type="text" pButton label="Share" icon="pi pi-send" (click)="op.toggle($event)"></button>
-
+          <button
+            type="text"
+            pButton
+            label="Share"
+            icon="pi pi-send"
+            (click)="op.toggle($event)"
+          ></button>
         </div>
         <p-overlayPanel #op [showCloseIcon]="true">
           <ng-template pTemplate>
             <share-buttons
-             [show]="8"
-             [include]="['facebook','twitter','linkedin', 'whatsapp','pinterest','reddit','tumblr','telegram','messenger','sms','email','print','copy']"
+              [show]="8"
+              [include]="[
+                'facebook',
+                'twitter',
+                'linkedin',
+                'whatsapp',
+                'pinterest',
+                'reddit',
+                'telegram',
+                'messenger',
+                'sms',
+                'email',
+                'print',
+                'copy'
+              ]"
             ></share-buttons>
           </ng-template>
         </p-overlayPanel>
-
       </div>
       <div class="col-12 md:col-6">
         <app-article-image
@@ -50,5 +67,5 @@
   </div>
 </article>
 <ng-template #loading>
-  <p-skeleton></p-skeleton>
+  <p-skeleton size="20rem" shape="rectangle"></p-skeleton>
 </ng-template>

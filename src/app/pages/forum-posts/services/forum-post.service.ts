@@ -18,37 +18,19 @@ export class ForumPostsService extends ResourceService {
       const element = searchParams[key];
     }
     return this.getResources(this.endpoint, undefined, searchParams).pipe(
-      map(data => data as ForumPost[])
+      map((data: any) => data.results as ForumPost[])
     );
   }
 
-  addForumPost(forum: ForumPost) {
-    const formData = this.getFormDataFromForumPostObject(forum);
+  addForumPost(forum: ForumPost, images?: File[]) {
+    const formData = this.getFormDataFromObject(forum, images);
     return this.storeResource(formData).pipe(map(data => data as ForumPost));
   }
 
-  editForumPost(forum: ForumPost) {
-    const formData = this.getFormDataFromForumPostObject(forum);
+  editForumPost(forum: ForumPost, images?: File[]) {
+    const formData = this.getFormDataFromObject(forum, images);
     return this.updateResourcePut(formData, forum.id).pipe(
       map(data => data as ForumPost)
     );
-  }
-
-  private getFormDataFromForumPostObject(forumPost: ForumPost) {
-    const formData = new FormData();
-
-    for (const key in forumPost) {
-      const data = (forumPost as any)[key];
-
-      if (Array.isArray(data)) {
-        if (data.length > 0) {
-          data.forEach(v => formData.append(key, v));
-        }
-      } else {
-        formData.append(key, data);
-      }
-    }
-
-    return formData;
   }
 }

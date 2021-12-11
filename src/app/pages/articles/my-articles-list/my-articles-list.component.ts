@@ -8,7 +8,10 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { PublishedStatusMapping } from 'src/app/config/app-config';
+import {
+  PublishedStatusMapping,
+  RouterOutlets,
+} from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
@@ -53,14 +56,22 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
   }
 
   viewArticle(article: Article) {
-    this.navigator.article.goToViewPage(article.id, 'Preview Article');
+    this.navigator.article.goToViewPage(
+      article.id,
+      'Preview Article',
+      RouterOutlets.Modal
+    );
   }
 
   editArticle(article: Article) {
-    this.navigator.article.goToEditPage(article.id, 'Edit Article');
+    this.navigator.article.goToEditPage(
+      article.id,
+      'Edit Article',
+      RouterOutlets.Modal
+    );
   }
 
   goToAddArticlePage() {
-    this.navigator.article.goToAddPage();
+    this.navigator.article.goToAddPage(RouterOutlets.Modal);
   }
 }

@@ -6,6 +6,7 @@ export const initialState: Readonly<User> = {
   email: 'testuser@test.com',
   name: 'Owuraku User',
   username: 'Admin',
+  id: 1,
 };
 
 export const userAuthReducer = createReducer(

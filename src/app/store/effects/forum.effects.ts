@@ -8,6 +8,7 @@ import { Forum } from 'src/app/models/forum.model';
 import { ForumsService } from 'src/app/pages/forum/services/forums.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { forumActions } from '../actions/forum.actions';
+import { slugify } from '../../helpers/app.helper.functions';
 
 @Injectable()
 export class ForumEffects {
@@ -92,19 +93,21 @@ export class ForumEffects {
   addForums$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumActions.addForum),
-      switchMap(({ forum, imageToUpload }) =>
-        this.forumService.addForum(forum, imageToUpload).pipe(
-          map((savedForum: any) =>
-            forumActions.addForumSuccessful({
-              forum: savedForum,
+      switchMap(({ forum }) =>
+        this.forumService
+          .addForum({ ...forum, slug: slugify(forum.name) })
+          .pipe(
+            map((savedForum: any) =>
+              forumActions.addForumSuccessful({
+                forum: savedForum,
+              })
+            ),
+            tap(saved => this.showToast('Forum Saved Successfully')),
+            catchError(error => {
+              this.showError(error);
+              return of(forumActions.fetchError);
             })
-          ),
-          tap(saved => this.showToast('Forum Saved Successfully')),
-          catchError(error => {
-            this.showError(error);
-            return of(forumActions.fetchError);
-          })
-        )
+          )
       )
     )
   );
@@ -112,8 +115,8 @@ export class ForumEffects {
   editForums$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumActions.editForum),
-      switchMap(({ forum, imageToUpload }) =>
-        this.forumService.editForum(forum, imageToUpload).pipe(
+      switchMap(({ forum }) =>
+        this.forumService.editForum(forum).pipe(
           map((updatedForum: any) =>
             forumActions.editForumSuccessful({
               updatedForum: {
@@ -125,6 +128,117 @@ export class ForumEffects {
           tap(saved => this.showToast('Forum Edited Successfully')),
           catchError(error => {
             this.showError(error);
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  addComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.comments.addComment),
+      switchMap(({ comment }) =>
+        this.forumService.postComment(comment).pipe(
+          map((savedComment: any) =>
+            forumActions.comments.addCommentSuccessful({
+              comment: savedComment,
+            })
+          ),
+          tap(saved => this.showToast('Comment Added Successfully')),
+          catchError(error => {
+            this.alert.showToast(
+              'Error adding comment. Try again',
+              PrimeNgAlerts.ERROR
+            );
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  likeComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.comments.likeComment),
+      switchMap(({ id }) =>
+        this.forumService.upvoteComment(id).pipe(
+          map((_: any) =>
+            forumActions.comments.likeCommentSuccessful({
+              id,
+            })
+          ),
+          catchError(error => {
+            this.alert.showToast(
+              'Error occured. Try again',
+              PrimeNgAlerts.ERROR
+            );
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  dislikeComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.comments.dislikeComment),
+      switchMap(({ id }) =>
+        this.forumService.downvoteComment(id).pipe(
+          map((_: any) =>
+            forumActions.comments.dislikeCommentSuccessful({
+              id,
+            })
+          ),
+          catchError(error => {
+            this.alert.showToast(
+              'Error occurred. Try again',
+              PrimeNgAlerts.ERROR
+            );
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  likeForumPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.likePost),
+      switchMap(({ id }) =>
+        this.forumService.upvoteForumPost(id).pipe(
+          map((_: any) =>
+            forumActions.likePostSuccessful({
+              id,
+            })
+          ),
+          catchError(error => {
+            this.alert.showToast(
+              'Error occurred. Try again',
+              PrimeNgAlerts.ERROR
+            );
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  dislikeForumPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.dislikePost),
+      switchMap(({ id }) =>
+        this.forumService.downvoteForumPost(id).pipe(
+          map((_: any) =>
+            forumActions.dislikePostSuccessful({
+              id,
+            })
+          ),
+          catchError(error => {
+            this.alert.showToast(
+              'Error occurred. Try again',
+              PrimeNgAlerts.ERROR
+            );
             return of(forumActions.fetchError);
           })
         )

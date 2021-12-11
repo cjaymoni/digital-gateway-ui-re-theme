@@ -1,8 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { ForumEndpoint } from 'src/app/config/routes';
+import { VoteType } from 'src/app/config/app-config';
+import {
+  CommentsEndpoint,
+  ForumEndpoint,
+  ForumPostEndpoint,
+} from 'src/app/config/routes';
 import { AppUploadedImage } from 'src/app/models/article.model';
+import { Comment } from 'src/app/models/comments.model';
 import { Forum } from 'src/app/models/forum.model';
 import { ResourceService } from 'src/app/services/resources.service';
 
@@ -27,16 +33,69 @@ export class ForumsService extends ResourceService {
     return this.searchForum({ slug });
   }
 
-  addForum(forum: Forum, imageToUpload?: File) {
-    const formData = this.getFormDataFromForumObject(forum, imageToUpload);
-    return this.storeResource(formData).pipe(map(data => data as Forum));
+  addForum(forum: Forum) {
+    return this.storeResource(forum).pipe(map(data => data as Forum));
   }
 
-  editForum(forum: Forum, imageToUpload?: File) {
-    const formData = this.getFormDataFromForumObject(forum, imageToUpload);
-
-    return this.updateResourcePut(formData, forum.id).pipe(
+  editForum(forum: Forum) {
+    return this.updateResourcePut(forum, forum.id).pipe(
       map(data => data as Forum)
+    );
+  }
+
+  postComment(comment: Comment) {
+    return this.storeResource(comment, CommentsEndpoint).pipe(
+      map(comment => comment as Comment)
+    );
+  }
+
+  upvoteComment(id: any) {
+    return this.updateResource(
+      {
+        vote_type: VoteType.upvote,
+      },
+      null,
+      CommentsEndpoint + id + '/vote',
+      true
+    ).pipe(map(comment => comment as any));
+  }
+
+  downvoteComment(id: any) {
+    return this.updateResource(
+      {
+        vote_type: VoteType.downvote,
+      },
+      null,
+      CommentsEndpoint + id + '/vote',
+      true
+    ).pipe(map(comment => comment as any));
+  }
+
+  upvoteForumPost(id: any) {
+    return this.updateResource(
+      {
+        vote_type: VoteType.upvote,
+      },
+      null,
+      ForumPostEndpoint + id + '/vote',
+      true
+    ).pipe(map(comment => comment as any));
+  }
+
+  downvoteForumPost(id: any) {
+    return this.updateResource(
+      {
+        vote_type: VoteType.downvote,
+      },
+      null,
+      ForumPostEndpoint + id + '/vote',
+      true
+    ).pipe(map(comment => comment as any));
+  }
+
+  fetchComment(id: number) {
+    return this.getOneResource(id, CommentsEndpoint).pipe(
+      map(comment => comment as Comment)
     );
   }
 

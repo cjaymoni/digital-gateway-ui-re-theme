@@ -1,35 +1,29 @@
 <div
   class="
     forum-post-card
-    transition-all transition-delay-500
     shadow-4
     p-component p-3
     border-round
     fadeindown
-    animation-duration-1000
+    animation-duration-500
+    hover:bg-gray-100 hover:text-pink-600
   "
   *ngIf="forum"
+  (click)="openForum()"
 >
-  <div class="text-2xl font-bold">
+  <div class="text-1xl font-bold">
     {{ forum.name | uppercase }}
   </div>
-  <div>
-    {{ forum.description || '' | appEllipsis: 250 }}
-    <hr />
+
+  <hr />
+  <div class="font-italic text-purple-800 font-semibold">
+    {{ forum.posts?.length }} Topic(s)
+    <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
+      {{ tag.name }}
+    </span>
   </div>
-  <div class="flex justify-content-end">
-    <button
-      pButton
-      icon="pi pi-arrow-right"
-      class="
-        p-button-outlined p-button-danger
-        align-self-end
-        flex
-        align-items-center
-        justify-content-center
-      "
-      label="Go to Forum"
-      (click)="openForum()"
-    ></button>
-  </div>
+  <!-- <div class="flex justify-content-between">
+    <app-comments></app-comments>
+    <app-votes></app-votes>
+  </div> -->
 </div>

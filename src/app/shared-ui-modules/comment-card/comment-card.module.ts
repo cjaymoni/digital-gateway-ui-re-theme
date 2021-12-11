@@ -7,6 +7,8 @@ import { DirectivesModule } from '../../directives/directives.module';
 import { CommentsModule } from '../comments/comments.module';
 import { ButtonModule } from 'primeng/button';
 import { CommentFormModule } from '../comment-form/comment-form.module';
+import { DividerModule } from 'primeng/divider';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [CommentCardComponent],
@@ -18,6 +20,9 @@ import { CommentFormModule } from '../comment-form/comment-form.module';
     DirectivesModule,
     ButtonModule,
     CommentFormModule,
+    DividerModule,
+    AvatarModule,
+    DividerModule,
   ],
   exports: [CommentCardComponent],
 })

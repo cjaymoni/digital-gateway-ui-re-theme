@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
 import { LoggedInMenu } from 'src/app/config/app-config';
@@ -20,6 +21,11 @@ export class TopNavComponent implements OnInit {
     .pipe(filter(user => !!user));
 
   isHandheld$ = this.device.isHandheld$;
+
+  searchInputControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(4),
+  ]);
 
   constructor(
     private store: Store,
@@ -48,4 +54,6 @@ export class TopNavComponent implements OnInit {
   goToLoginPage() {
     this.navigator.auth.goToLogin('Login to continue');
   }
+
+  searchTerm() {}
 }

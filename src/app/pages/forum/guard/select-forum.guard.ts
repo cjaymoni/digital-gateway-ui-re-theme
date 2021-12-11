@@ -7,7 +7,6 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { SLUG_PREFIX } from 'src/app/config/app-config';
 import { forumActions } from '../../../store/actions/forum.actions';
 
 @Injectable({
@@ -28,13 +27,6 @@ export class SelectForumGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const forumId = route.url[0].path.split(':')[1];
-    this.store.dispatch(
-      forumActions.findAndSelectForumById({
-        id: forumId,
-      })
-    );
-
     return true;
   }
 }
