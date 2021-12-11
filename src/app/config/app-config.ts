@@ -241,7 +241,7 @@ export const LoggedInMenu: MenuItem[] = [
   {
     id: 'profile',
     label: 'Profile',
-    routerLink: [Pages.UserProfile],
+    routerLink: [Pages.Auth.signup],
     icon: 'pi pi-user',
   },
   {
