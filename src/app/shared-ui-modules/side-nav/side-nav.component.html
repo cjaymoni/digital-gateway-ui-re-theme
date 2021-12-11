@@ -1,8 +1,58 @@
-<div class="h-full">
-  <ng-container *ngIf="selectedMenu$ | async">
-    <p-tieredMenu
-      [model]="(subMenuItems$ | async) || []"
-      styleClass="border-noround border-none p-2"
-    ></p-tieredMenu>
-  </ng-container>
-</div>
+<ng-container *ngIf="featuredCategory$ | async">
+  <div
+    class="
+      wrapper
+      w-full
+      xl:sticky
+      align-self-center
+      flex flex-column
+      align-content-center
+      justify-content-center
+    "
+  >
+    <p-divider align="center" styleClass="p-divider-no-background">
+      <span class="p-tag p-tag-info">
+        <i class="pi pi-star mr-2"></i>
+        FEATURED CATEGORIES
+      </span>
+    </p-divider>
+    <div
+      *ngFor="let featured of featuredCategory$ | async"
+      class="
+        mt-1
+        border-2 border-white-alpha-20
+        w-full
+        h-auto
+        py-2
+        px-3
+        text-white
+        hover:text-gray-900 hover:bg-primary
+        cursor-pointer
+        featured-category
+        transition-duration-1000 transition-transform transition-ease-in-out
+      "
+      [routerLink]="['articles', 'search', featured.category.slug]"
+    >
+      {{ featured.category.name }}
+    </div>
+  </div>
+
+  <div
+    *ngIf="(featuredCategory$ | async)?.length! > 8 ?? false"
+    class="
+      hover-underline
+      cursor-pointer
+      text-white
+      hover:text-primary
+      text-lg text-right
+      mt-4
+      ml-3
+    "
+    (click)="viewMore()"
+  >
+    View more
+    <span>
+      <i class="pi pi-arrow-right"></i>
+    </span>
+  </div>
+</ng-container>

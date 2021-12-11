@@ -1,14 +1,14 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  HostListener,
+  Component,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription, tap } from 'rxjs';
-import { PrimeNgAlerts, RouterOutlets } from 'src/app/config/app-config';
+import { RouterOutlets } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 import { AppAlertService } from '../alerts/service/app-alert.service';
 import { ModalComponentsComponent } from '../modal-components/modal-components.component';
 
@@ -17,6 +17,7 @@ import { ModalComponentsComponent } from '../modal-components/modal-components.c
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ThemeSettingsStore],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
   RouterOutlets = RouterOutlets;
@@ -30,9 +31,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   breadcrumbs$ = this.navigator.breadCrumbs$;
 
   home = {
-    label: 'Home',
     routerLink: ['/'],
     title: 'Go To Home',
+    icon: 'pi pi-home',
   };
 
   constructor(
