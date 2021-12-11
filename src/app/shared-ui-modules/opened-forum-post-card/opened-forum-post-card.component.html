@@ -1,4 +1,4 @@
-<ng-container *ngIf="forumPost$ | async">
+<ng-container *ngIf="forumPost$ | async; else loading">
   <div class="p-3 w-full fadein animation-duration-500 p-component shadow-2">
     <div class="flex justify-content-between align-content-center">
       <div class="flex">
@@ -56,6 +56,14 @@
           [likeCount]="(forumPost$ | async)?.upvotes || 0"
           [type]="CommentType.ForumPost"
           [id]="(forumPost$ | async)?.id"
+          [liked]="
+            ((forumPost$ | async)?.user?.voted || false) &&
+            (forumPost$ | async)?.user?.type === VoteType.upvote
+          "
+          [disliked]="
+            ((forumPost$ | async)?.user?.voted || false) &&
+            (forumPost$ | async)?.user?.type === VoteType.downvote
+          "
         ></app-votes>
       </div>
 
@@ -86,3 +94,7 @@
     </div>
   </ng-container>
 </ng-container>
+
+<ng-template #loading>
+  <app-forum-loading-card></app-forum-loading-card>
+</ng-template>

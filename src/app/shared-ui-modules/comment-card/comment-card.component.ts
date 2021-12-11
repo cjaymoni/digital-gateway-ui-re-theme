@@ -16,7 +16,7 @@ import {
   takeUntil,
   tap,
 } from 'rxjs';
-import { CommentType, Pages } from 'src/app/config/app-config';
+import { CommentType, Pages, VoteType } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { Comment } from 'src/app/models/comments.model';
 import { DeviceService } from 'src/app/services/device.service';
@@ -46,6 +46,8 @@ export class CommentCardComponent implements OnInit, OnDestroy {
   CommentType = CommentType;
 
   isHandheld$ = this.device.isHandheld$;
+
+  VoteType = VoteType;
 
   constructor(
     private store: Store,

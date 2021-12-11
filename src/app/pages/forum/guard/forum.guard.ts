@@ -6,7 +6,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, map, Observable, take, tap } from 'rxjs';
+import { debounceTime, filter, map, Observable, take, tap } from 'rxjs';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 import { selectRouteNestedParams } from 'src/app/store/selectors/router.selectors';
 import { forumActions } from '../../../store/actions/forum.actions';
@@ -33,6 +33,7 @@ export class ForumGuard implements CanActivate {
       .select(selectRouteNestedParams)
       .pipe(
         filter(d => Object.keys(d).length > 0),
+        tap(_ => this.store.dispatch(forumActions.clearAllSelected())),
         take(1),
         tap((params: any) => {
           if (params['post-slug']) {
@@ -54,7 +55,6 @@ export class ForumGuard implements CanActivate {
               )
               .subscribe();
           }
-
           if (params.slug) {
             this.store.dispatch(
               forumActions.findAndSelectForum({
@@ -64,7 +64,6 @@ export class ForumGuard implements CanActivate {
               })
             );
           }
-
           if (params['comment-id']) {
             this.store
               .select(forumSelectors.selectedCommentById(params['comment-id']))

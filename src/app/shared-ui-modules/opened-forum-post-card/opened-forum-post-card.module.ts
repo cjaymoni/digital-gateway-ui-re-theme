@@ -8,6 +8,7 @@ import { CommentCardModule } from '../comment-card/comment-card.module';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { ImageModule } from 'primeng/image';
+import { ForumLoadingCardModule } from '../forum-loading-card/forum-loading-card.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ImageModule } from 'primeng/image';
     ButtonModule,
     AvatarModule,
     ImageModule,
+    ForumLoadingCardModule,
   ],
   declarations: [OpenedForumPostCardComponent],
   exports: [OpenedForumPostCardComponent],

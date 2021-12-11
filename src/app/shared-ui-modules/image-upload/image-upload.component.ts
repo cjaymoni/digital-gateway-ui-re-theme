@@ -15,7 +15,7 @@ export class ImageUploadComponent implements OnInit {
   @Input() multiple = true;
   @Input() filesToShow = [];
 
-  private filesToUpload: File[] = [];
+  private filesToUpload: File[] | any = [];
 
   constructor() {}
 

@@ -1,10 +1,6 @@
 .article-image {
   background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.background-cover {
-  background-size: cover !important;
+  background-size: contain;
 }
 
 .image-container:hover {

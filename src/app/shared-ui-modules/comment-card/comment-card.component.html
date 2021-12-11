@@ -58,6 +58,14 @@
         (dislikeClickEvent)="dislikeComment()"
         [type]="CommentType.Comment"
         [id]="comment.id"
+        [liked]="
+          (comment.user?.voted || false) &&
+          comment.user?.type === VoteType.upvote
+        "
+        [disliked]="
+          (comment.user?.voted || false) &&
+          comment.user?.type === VoteType.downvote
+        "
       ></app-votes>
     </div>
   </div>

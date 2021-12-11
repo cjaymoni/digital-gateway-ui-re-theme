@@ -126,6 +126,12 @@ export const forumReducer = createReducer(
     return forumEntityAdapter.removeOne(id, state);
   }),
   on(forumActions.clearAllSelected, state => {
-    return { ...state, selectedForumToEdit: null, selectedForum: null };
+    return {
+      ...state,
+      selectedForumToEdit: null,
+      selectedForum: null,
+      selectedForumPost: null,
+      postsOfSelectedForum: [],
+    };
   })
 );

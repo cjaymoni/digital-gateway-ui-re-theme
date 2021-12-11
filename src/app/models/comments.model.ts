@@ -1,3 +1,5 @@
+import { VoteType } from '../config/app-config';
+
 export interface Comment {
   id?: string | number | any;
   text: string;
@@ -9,6 +11,10 @@ export interface Comment {
   score?: number;
   slug?: string;
   subcomments?: any[];
+  user?: {
+    voted: boolean;
+    type: VoteType;
+  };
 }
 
 export interface SubComment {
@@ -20,6 +26,10 @@ export interface SubComment {
   upvotes: number;
   downvotes: number;
   score: number;
+  user?: {
+    voted: boolean;
+    type: VoteType;
+  };
 }
 export interface ParentComment {
   id?: string | number | any;
@@ -30,6 +40,10 @@ export interface ParentComment {
   upvotes: number;
   downvotes: number;
   score: number;
+  user?: {
+    voted: boolean;
+    type: VoteType;
+  };
 }
 
 export interface Author {

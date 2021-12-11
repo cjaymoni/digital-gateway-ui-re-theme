@@ -9,7 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, Subscription, take, tap } from 'rxjs';
-import { CommentType, trackById } from 'src/app/config/app-config';
+import { CommentType, trackById, VoteType } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
@@ -27,7 +27,11 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
 
   forumPost$ = this.store.select(forumSelectors.selectedForumPost);
 
+  loading$ = this.store.select(forumSelectors.loading);
+
   forumComments$ = this.store.select(forumSelectors.commentsOfSelectedForum);
+
+  VoteType = VoteType;
 
   trackById = trackById;
 

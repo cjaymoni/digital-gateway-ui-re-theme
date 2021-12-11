@@ -54,7 +54,7 @@ $text-shadow: 2px 2px 6px black;
 .article-title {
   // text-shadow: $text-shadow;
   text-overflow: ellipsis;
-  width: calc(99%);
+  width: calc(100%);
 
   &:hover {
     text-decoration: underline;

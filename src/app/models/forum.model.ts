@@ -1,3 +1,4 @@
+import { VoteType } from '../config/app-config';
 import { AppUploadedImage } from './article.model';
 import { Comment } from './comments.model';
 
@@ -25,6 +26,10 @@ export interface ForumPost {
   comments?: Comment[] | any;
   slug?: string;
   images?: AppUploadedImage[];
+  user?: {
+    voted: boolean;
+    type: VoteType;
+  };
 }
 
 export interface Moderator {

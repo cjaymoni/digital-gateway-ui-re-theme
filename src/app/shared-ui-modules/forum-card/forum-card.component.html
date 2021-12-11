@@ -18,6 +18,9 @@
   <hr />
   <div class="font-italic text-purple-800 font-semibold">
     {{ forum.posts?.length }} Topic(s)
+    <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
+      {{ tag.name }}
+    </span>
   </div>
   <!-- <div class="flex justify-content-between">
     <app-comments></app-comments>
