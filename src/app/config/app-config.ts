@@ -9,6 +9,7 @@ export const DEFAULT_PAGE_SIZE = 100;
 export enum RouterOutlets {
   Main = 'main',
   Right = 'right-panel',
+  Modal = 'modal',
 }
 
 export enum FeatureNamesForStore {
@@ -31,6 +32,7 @@ export interface IPageItems {
   main: string;
   myList: string;
   viewDetails: string;
+  viewPostDetails: string;
   add: string;
   edit: string;
   view: string;
@@ -43,8 +45,9 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     myList: 'my-articles',
     viewDetails: ':slug',
     add: 'post-article',
-    edit: 'edit-article:id',
-    view: 'view-article:id',
+    edit: 'edit-article/:article-id',
+    view: 'view-article/:article-id',
+
     matcher: {
       view: (url: UrlSegment[]) => {
         return urlMatcherForEditAndView(url, 'article');
@@ -56,11 +59,14 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   },
   Forum: {
     main: 'forum',
-    edit: 'edit-forum:id',
-    view: 'view-forum:id',
+    edit: 'edit-forum/:forum-id',
+    view: 'view-forum/:forum-id',
     viewDetails: ':slug',
+    viewPostDetails: ':slug/:id',
+    viewPost: ':slug/post/:post-slug',
     myList: 'my-forums',
     add: 'post-forum',
+    viewSubComments: 'comments/:comment-id',
     matcher: {
       view: (url: UrlSegment[]) => {
         return urlMatcherForEditAndView(url, 'forum');
@@ -72,8 +78,8 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   },
   ForumPost: {
     main: 'forum-post',
-    edit: 'edit-forum-post:id',
-    view: 'view-forum-post:id',
+    edit: 'edit-forum-post/:forum-post-id',
+    view: 'view-forum-post/:forum-post-id',
     viewDetails: ':slug',
     add: 'post-forum',
     myList: 'my-forum-post',
@@ -94,8 +100,8 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   MarketPlace: {
     main: 'market-place',
     add: 'post-ad',
-    edit: 'edit-ad:id',
-    view: 'view-ad:id',
+    edit: 'edit-ad/:id',
+    view: 'view-ad/:id',
     viewDetails: 'ad-details/:id',
     myList: 'my-market-place',
     matcher: {
@@ -133,7 +139,7 @@ export enum PrimeNgSeverity {
   Info = 'info',
   Danger = 'danger',
   Success = 'success',
-  Warn = 'warn',
+  Warn = 'warning',
   Custom = 'custom',
   Error = 'error',
 }
@@ -151,7 +157,7 @@ export const PublishedStatusMapping: { [key: string]: string } = {
   [ArticlePublishedStatus.Published]: PrimeNgSeverity.Success,
   [ArticlePublishedStatus.Draft]: PrimeNgSeverity.Info,
   [ArticlePublishedStatus.Review]: PrimeNgSeverity.Danger,
-  [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Custom,
+  [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Success,
 };
 
 export const TOAST_TIME = 3000;
@@ -182,7 +188,6 @@ export const MainMenu: MenuItem[] = [
   {
     id: INFO_HUB_ID,
     label: 'Information Hub',
-    // routerLink: [Pages.Articles.main],
     icon: 'pi pi-folder-open',
     items: [],
   },
@@ -190,19 +195,17 @@ export const MainMenu: MenuItem[] = [
     id: 'forum',
     label: 'Forums',
     icon: 'pi pi-discord',
-
-    // routerLink: [Pages.Forum.main],
     items: [
       {
         id: 'view-forums',
-        label: 'View Recent Forums',
-        routerLinkActiveOptions: [],
+        label: 'View Forums',
+        icon: 'pi pi-eye',
         routerLink: [Pages.Forum.main],
       },
       {
         id: 'create-forum',
-        label: 'Create A Post',
-        routerLinkActiveOptions: [],
+        label: 'Create A Forum',
+        icon: 'pi pi-plus',
         routerLink: [Pages.Forum.main, Pages.Forum.add],
       },
     ],
@@ -211,19 +214,17 @@ export const MainMenu: MenuItem[] = [
     id: 'market-place',
     label: 'Market Place',
     icon: 'pi pi-shopping-bag',
-
-    // routerLink: [Pages.MarketPlace.main],
     items: [
       {
         id: 'view-add',
         label: 'View Product Ads',
-        routerLinkActiveOptions: [],
+        icon: 'pi pi-eye',
         routerLink: [Pages.MarketPlace.main],
       },
       {
         id: 'create-add',
         label: 'Create An Ad',
-        routerLinkActiveOptions: [],
+        icon: 'pi pi-plus',
         routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
       },
     ],
@@ -234,7 +235,6 @@ export const LoggedInMenu: MenuItem[] = [
   {
     id: 'profile',
     label: 'Profile',
-    // routerLink: [Pages.Articles.main],
     icon: 'pi pi-user',
   },
   {
@@ -258,7 +258,6 @@ export const LoggedInMenu: MenuItem[] = [
   {
     id: 'site-settings',
     label: 'Site Settings',
-    // routerLink: [Pages.Articles.main],
     icon: 'pi pi-cog',
   },
   {
@@ -270,7 +269,28 @@ export const LoggedInMenu: MenuItem[] = [
   {
     id: 'logout',
     label: 'Logout',
-    // routerLink: [Pages.Articles.main],
     icon: 'pi pi-power-off',
   },
 ];
+
+export enum Context {
+  Article = Pages.Articles.main,
+  Forum = Pages.Forum.main,
+  ForumPost = Pages.ForumPost.main,
+  MarketPlace = Pages.MarketPlace.main,
+  // Auth = Pages.Auth.
+}
+
+export enum VoteType {
+  downvote = 'D',
+  upvote = 'U',
+}
+
+export enum CommentType {
+  ForumPost,
+  Comment,
+}
+
+export const trackById = (index: number, comment: any): number => {
+  return comment.id;
+};

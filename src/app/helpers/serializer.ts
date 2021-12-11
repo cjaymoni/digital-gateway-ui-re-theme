@@ -69,7 +69,7 @@ export function serialize(obj: any, cfg?: any, fd?: FormData, pre = '') {
   } else if (isArray(obj)) {
     if (obj.length) {
       obj.forEach((value: any, index: any) => {
-        let key = pre + '[' + (cfg.indices ? index : '') + ']';
+        let key = pre;
 
         if (cfg.noFilesWithArrayNotation && isFile(value)) {
           key = pre;

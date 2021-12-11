@@ -1,7 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { MenuItem } from 'primeng/api';
-import { MenuItemFromBackend } from 'src/app/models/menu-item.model';
-import { MenuState } from '../reducers/menu-items.reducers';
+import { Category } from 'src/app/models/category.model';
 
 class MenuItemActions {
   readonly type = '[Menu Item Actions]';
@@ -10,7 +8,7 @@ class MenuItemActions {
 
   fetchSuccessful = createAction(
     `${this.type} Fetch Successful`,
-    props<{ menuItems: MenuItem[] | any[] }>()
+    props<{ categories: Category[] | any[] }>()
   );
 
   selectMenuItem = createAction(

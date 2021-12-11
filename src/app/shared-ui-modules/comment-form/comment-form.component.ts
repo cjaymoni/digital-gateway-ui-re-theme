@@ -1,16 +1,47 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { DeviceService } from 'src/app/services/device.service';
 
 @Component({
   selector: 'app-comment-form',
   templateUrl: './comment-form.component.html',
   styleUrls: ['./comment-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentFormComponent implements OnInit {
+  @Output() commentAddEvent = new EventEmitter<any>();
+  @Output() cancelEvent = new EventEmitter<any>();
 
-  constructor() { }
+  commentFormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(4),
+  ]);
 
-  ngOnInit() {
+  isHandheld$ = this.device.isHandheld$;
+
+  constructor(private device: DeviceService) {}
+
+  ngOnInit() {}
+
+  addComment() {
+    if (this.commentFormControl.valid)
+      this.commentAddEvent.emit(this.commentFormControl.value);
   }
 
+  cancel() {
+    this.cancelEvent.emit();
+  }
+
+  onClickedOutside(e: any) {
+    console.log('e :>> ', e);
+  }
 }

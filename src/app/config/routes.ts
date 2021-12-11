@@ -13,3 +13,4 @@ export const FeaturedCategoriesEndpoint =
 export const HighlightArticlesEndpoint = environment.API_URL + 'articleblocks/';
 
 export const EventsEndpoint = environment.API_URL + 'eventsblocks/';
+export const CommentsEndpoint = environment.API_URL + 'comments/';

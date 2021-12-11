@@ -6,7 +6,9 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { filter, Observable, take, tap } from 'rxjs';
+import { forumActions } from 'src/app/store/actions/forum.actions';
+import { selectRouteNestedParam } from 'src/app/store/selectors/router.selectors';
 import { forumPostActions } from '../../../store/actions/forum-post.action';
 
 @Injectable({
@@ -17,7 +19,7 @@ export class ForumPostGuard implements CanActivate {
    *
    */
   constructor(private store: Store) {
-    this.store.dispatch(forumPostActions.fetch());
+    this.store.dispatch(forumActions.fetch());
   }
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -27,6 +29,20 @@ export class ForumPostGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    this.store
+      .select(selectRouteNestedParam('forum-post-id'))
+      .pipe(
+        filter(d => !!d),
+        take(1),
+        tap(forumPostId => {
+          this.store.dispatch(
+            forumPostActions.findAndSelectForumPostById({
+              id: forumPostId,
+            })
+          );
+        })
+      )
+      .subscribe();
     return true;
   }
 }

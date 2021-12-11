@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ForumRoutesModule } from './forum-routes.module';
 import { ForumDetailsModule } from '../../shared-ui-modules/forum-details/forum-details.module';
 import { ForumFormModule } from 'src/app/shared-ui-modules/forum-form/forum-form.module';
+import { CommentsOfCommentsModule } from './comments-of-comments/comments-of-comments.module';
 
 @NgModule({
   declarations: [],
@@ -17,6 +18,7 @@ import { ForumFormModule } from 'src/app/shared-ui-modules/forum-form/forum-form
     HttpClientModule,
     ForumDetailsModule,
     ForumFormModule,
+    CommentsOfCommentsModule,
   ],
 })
 export class ForumModule {}

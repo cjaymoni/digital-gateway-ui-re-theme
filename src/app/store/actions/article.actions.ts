@@ -65,7 +65,7 @@ class ArticleActions {
 
   addArticle = createAction(
     `${this.type} Add Article`,
-    props<{ article: Article; imageToUpload?: File[] }>()
+    props<{ article: Article; imageToUpload?: File[] | any[] }>()
   );
 
   addArticleSuccessful = createAction(
@@ -77,7 +77,7 @@ class ArticleActions {
     `${this.type} Edit Article`,
     props<{
       article: Article;
-      imageToUpload: File | AppUploadedImage[] | any;
+      imageToUpload?: File[] | any[];
     }>()
   );
 

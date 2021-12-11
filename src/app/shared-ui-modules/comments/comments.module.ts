@@ -4,12 +4,8 @@ import { CommentsComponent } from './comments.component';
 import { ButtonModule } from 'primeng/button';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ButtonModule
-
-  ],
+  imports: [CommonModule, ButtonModule],
   declarations: [CommentsComponent],
-  exports:[CommentsComponent]
+  exports: [CommentsComponent],
 })
-export class CommentsModule { }
+export class CommentsModule {}

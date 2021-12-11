@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpenedForumCardComponent } from './opened-forum-card.component';
-import { SkeletonModule } from 'primeng/skeleton';
+import { NgModule } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { ForumPostCardModule } from '../forum-post-card/forum-post-card.module';
 import { AppPipesModule } from '../../pipes/app-pipes.module';
+import { ForumLoadingCardModule } from '../forum-loading-card/forum-loading-card.module';
+import { ForumPostCardModule } from '../forum-post-card/forum-post-card.module';
+import { OpenedForumCardComponent } from './opened-forum-card.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    SkeletonModule,
+    ForumLoadingCardModule,
     ButtonModule,
     ForumPostCardModule,
     AppPipesModule,

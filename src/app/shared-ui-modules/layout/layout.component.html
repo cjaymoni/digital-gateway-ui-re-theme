@@ -33,12 +33,23 @@
         grid
         justify-content-center
         h-full
+        p-0
         pt-5
-        px-3
+        px-1
+        md:px-3
       "
     >
-      <!-- routed content -->
-      <div class="col-12 min-h-screen">
+      <div class="col-12 min-h-full md:min-h-screen p-0">
+        <div class="flex">
+          <div class="mr-3 hidden lg:flex">
+            <app-back-button styleClass="h-2rem"></app-back-button>
+          </div>
+          <p-breadcrumb
+            styleClass="p-0 border-noround border-none m-0 border-bottom-1 border-gray-800 pb-2 mb-3"
+            [home]="home"
+            [model]="(breadcrumbs$ | async) ?? []"
+          ></p-breadcrumb>
+        </div>
         <router-outlet></router-outlet>
       </div>
 
@@ -66,4 +77,8 @@
   <app-right-overlay-panel>
     <router-outlet name="right-panel"></router-outlet>
   </app-right-overlay-panel>
+
+  <ng-container *ngIf="modalActive$ | async">
+    <app-modal-components></app-modal-components>
+  </ng-container>
 </div>

@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { RouterOutlets } from 'src/app/config/app-config';
 import { ProductAd } from 'src/app/models/product-ad.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { productAdActions } from 'src/app/store/actions/product-ad.actions';
@@ -59,7 +60,11 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
         productAd,
       })
     );
-    this.navigator.marketAd.goToEditPage(productAd.product.id, 'Edit Product');
+    this.navigator.marketAd.goToEditPage(
+      productAd.product.id,
+      'Edit Product',
+      RouterOutlets.Modal
+    );
   }
 
   expireMarketAd(productAd: ProductAd) {}
