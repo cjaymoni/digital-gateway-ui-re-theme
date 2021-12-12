@@ -50,6 +50,11 @@ const routes: Routes = [
         m => m.UserProfileModule
       ),
   },
+  {
+    path: Pages.SignUp,
+    loadChildren: () =>
+      import('./pages/signup/signup.module').then(m => m.SignupModule),
+  },
 ];
 
 @NgModule({

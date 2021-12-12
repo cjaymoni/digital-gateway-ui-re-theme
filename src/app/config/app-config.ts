@@ -118,6 +118,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',
   UserProfile: 'user-profile',
+  SignUp: 'sign-up',
 };
 
 export const urlMatcherForEditAndView = (
@@ -241,7 +242,7 @@ export const LoggedInMenu: MenuItem[] = [
   {
     id: 'profile',
     label: 'Profile',
-    routerLink: [Pages.Auth.signup],
+    routerLink: [Pages.SignUp],
     icon: 'pi pi-user',
   },
   {

@@ -9,4 +9,4 @@ export const ProductTypeEndpoint = environment.API_URL + 'product-types/';
 export const ForumEndpoint = environment.API_URL + 'forums/';
 export const ForumPostEndpoint = environment.API_URL + 'forum-posts/';
 export const CommentsEndpoint = environment.API_URL + 'comments/';
-export const AuthEndpoint = environment.API_URL + 'auth/';
+export const AuthEndpoint = environment.API_URL + 'user/';

@@ -4,11 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 
-const rightPanelRoutes: Routes = [
+const routes: Routes = [
   {
-    path: Pages.Auth.signup,
+    path: '',
     component: SignupFormComponent,
-    outlet: RouterOutlets.Right,
   },
 ];
 // const routes: Routes = [
@@ -20,11 +19,11 @@ const rightPanelRoutes: Routes = [
 // ];
 
 @NgModule({
-  imports: [RouterModule.forChild([])],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class SignupRoutesModule {
   constructor(private navigator: NavigatorService) {
-    this.navigator.addRightPanelRoutes(rightPanelRoutes);
+    this.navigator.addRightPanelRoutes(routes);
   }
 }

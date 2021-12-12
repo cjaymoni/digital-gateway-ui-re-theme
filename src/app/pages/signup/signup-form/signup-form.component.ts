@@ -35,6 +35,9 @@ export class SignupFormComponent implements OnInit {
         last_name: formValues.lname,
         email: formValues.email,
         password: formValues.password,
+        profile: {
+          profile_type: 2,
+        },
       };
       this.signupService.signup(newUser).subscribe((data: any) => {
         this.appAlertService.showToast(
