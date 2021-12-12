@@ -1,0 +1,73 @@
+<ng-container>
+  <form [formGroup]="signupForm">
+    <div class="fluid formgrid grid">
+      <div class="flex flex-column md:flex-row col-12">
+        <div class="field col-12 md:col-6">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input
+              type="text"
+              pInputText
+              placeholder="First Name"
+              formControlName="fname"
+              class="inputfield w-full"
+            />
+          </div>
+        </div>
+        <div class="field col-12 md:col-6">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input
+              type="text"
+              pInputText
+              placeholder="Last Name"
+              formControlName="lname"
+              class="inputfield w-full"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="field col-12">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+          <input
+            type="text"
+            pInputText
+            placeholder="Email"
+            formControlName="email"
+            class="inputfield w-full"
+          />
+        </div>
+      </div>
+      <div class="field col-12">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+          <input
+            type="text"
+            pInputText
+            placeholder="Create Pasword"
+            formControlName="password"
+            class="inputfield w-full"
+          />
+        </div>
+      </div>
+      <div class="text-sm font-italic p-2">
+        Already have an account?
+        <a href="/login">LogIn</a>
+      </div>
+
+      <div class="field col-12 ml-auto flex justify-content-end">
+        <button
+          pButton
+          pRipple
+          class="align-self-center"
+          type="button"
+          label="Sign Up"
+          [disabled]="signupForm.invalid"
+          (click)="onSignupSubmit()"
+        ></button>
+      </div>
+    </div>
+  </form>
+</ng-container>

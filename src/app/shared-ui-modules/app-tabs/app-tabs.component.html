@@ -1,0 +1,11 @@
+<ng-container>
+  <p-tabView>
+    <p-tabPanel
+      *ngFor="let tabItem of tabItems; let i = index"
+      [header]="tabItem.header"
+      [selected]="i == 0"
+    >
+      <ng-container *ngComponentOutlet="tabItem.content"></ng-container>
+    </p-tabPanel>
+  </p-tabView>
+</ng-container>
