@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Upload } from 'src/app/models/uploads.model';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-resource-card',
@@ -14,6 +15,11 @@ export class ResourceCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  downloadFile(){
+    const file = this.resource?.resource;
+    window.open(file);
   }
 
 }

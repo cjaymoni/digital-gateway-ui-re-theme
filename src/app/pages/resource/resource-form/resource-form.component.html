@@ -15,6 +15,20 @@
         />
       </div>
 
+      <!-- Description -->
+      <div class="field col-8 col-offset-2">
+        <label for="title">Description</label>
+        <textarea
+          type="text"
+          class="inputfield w-full h-auto"
+          formControlName="description"
+          pInputTextarea
+          [autoResize]="true"
+          [rows]="6"
+          placeholder="Enter a description"
+        ></textarea>
+      </div>
+
       <!-- File -->
       <div class="field col-8 col-offset-2">
         <p-fileUpload

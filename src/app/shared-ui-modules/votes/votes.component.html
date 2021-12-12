@@ -1,27 +1,40 @@
 <div class="flex justify-content-between align-items-center">
   <button
     pButton
-    pRipple
     type="button"
     icon="pi pi-thumbs-up"
-    class="p-button-rounded p-button-outlined text-green-700 mr-2"
+    [attr.liked]="liked"
+    class="
+      md:mr-2
+      p-1
+      md:p-3
+      scalein
+      animation-ease-in animation-duration-500
+      p-button-rounded p-button-info p-button-text
+    "
     pTooltip="Like"
     tooltipPosition="bottom"
-    tooltipStyleClass="text-green-700"
+    [label]="likeCount.toString()"
     [disabled]="disableLike"
     proceedIfLoggedIn
     (onProceed)="like()"
   ></button>
   <button
     pButton
-    pRipple
     type="button"
     icon="pi pi-thumbs-down"
-    class="p-button-rounded p-button-outlined p-button-danger"
+    [attr.disliked]="disliked"
+    class="
+      p-1
+      md:p-3
+      scalein
+      animation-ease-in animation-duration-500
+      p-button-rounded p-button-danger p-button-text
+    "
     pTooltip="Dislike"
     tooltipPosition="bottom"
-    tooltipStyleClass="text-red-500"
     [disabled]="disableDislike"
+    [label]="dislikeCount.toString()"
     proceedIfLoggedIn
     (onProceed)="dislike()"
   ></button>

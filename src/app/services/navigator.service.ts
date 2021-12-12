@@ -1,8 +1,14 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Router, Routes } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  NavigationEnd,
+  Router,
+  Routes,
+} from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, filter, map } from 'rxjs';
+import { MenuItem } from 'primeng/api';
+import { BehaviorSubject, filter, map, Observable, take, tap } from 'rxjs';
 import {
   IPageItems,
   Pages,
@@ -19,11 +25,55 @@ export class NavigatorService {
     private router: Router,
     private store: Store,
     private location: Location
-  ) {}
+  ) {
+    this.router.events
+      .pipe(
+        // Filter the NavigationEnd events as the breadcrumb is updated only when the route reaches its end
+        filter(event => event instanceof NavigationEnd)
+      )
+      .subscribe(event => {
+        // Construct the breadcrumb hierarchy
+        const root = this.router.routerState.snapshot.root;
+        const breadcrumbs: MenuItem[] = [];
+        this.addBreadcrumb([], breadcrumbs, root);
+        // Emit the new hierarchy
+
+        const unique = breadcrumbs.reduce(
+          (a, b) =>
+            a.find(({ routerLink }) => routerLink === b.routerLink)
+              ? a
+              : a.concat(b as any),
+          []
+        );
+
+        this.breadCrumbs$.next(unique);
+      });
+  }
+
+  readonly breadCrumbs$ = new BehaviorSubject<MenuItem[]>([]);
+
+  panelCloseEvent$ = new Observable();
+
+  private panelTitle$ = new BehaviorSubject('');
+
+  private modalTitle$ = new BehaviorSubject('');
+
+  currentContext$ = this.store.select(selectUrl).pipe(
+    filter(d => !!d),
+    map(url => {
+      const context = url.split('/')[1];
+      return context;
+    })
+  );
 
   panelActive$ = this.store.select(selectUrl).pipe(
     filter(currentRoute => !!currentRoute),
     map(cr => cr.includes(RouterOutlets.Right))
+  );
+
+  modalActive$ = this.store.select(selectUrl).pipe(
+    filter(currentRoute => !!currentRoute),
+    map(cr => cr.includes(RouterOutlets.Modal))
   );
 
   setPanelTitle(title: string) {
@@ -34,18 +84,72 @@ export class NavigatorService {
     return this.panelTitle$.asObservable();
   }
 
-  hidePanel() {
-    this.router.navigate([
-      '',
-      {
-        outlets: {
-          [RouterOutlets.Right]: null,
-        },
-      },
-    ]);
+  setModalTitle(title: string) {
+    this.modalTitle$.next(title);
   }
 
-  private panelTitle$ = new BehaviorSubject('');
+  getModalTitle() {
+    return this.modalTitle$.asObservable();
+  }
+
+  hidePanel() {
+    this.currentContext$
+      .pipe(
+        take(1),
+        tap(context => {
+          this.router.navigate([
+            context,
+            {
+              outlets: {
+                [RouterOutlets.Right]: null,
+              },
+            },
+          ]);
+        })
+      )
+      .subscribe();
+  }
+
+  closeModal() {
+    this.currentContext$
+      .pipe(
+        take(1),
+        tap(context => {
+          this.router.navigate([
+            context,
+            {
+              outlets: {
+                [RouterOutlets.Modal]: null,
+              },
+            },
+          ]);
+        })
+      )
+      .subscribe();
+  }
+
+  private addBreadcrumb(
+    parentUrl: string[],
+    breadcrumbs: MenuItem[],
+    route?: ActivatedRouteSnapshot
+  ) {
+    if (route) {
+      // Construct the route URL
+      const routeUrl = parentUrl.concat(route.url.map(url => url.path));
+
+      // Add an element for the current route part
+      if (route.data['breadcrumb']) {
+        const breadcrumb = {
+          label: route.data['breadcrumb'],
+          routerLink: '/' + routeUrl.join('/'),
+        };
+        breadcrumbs.push(breadcrumb);
+      }
+
+      // Add another element for the next route part
+      this.addBreadcrumb(routeUrl, breadcrumbs, route.firstChild!);
+    }
+  }
 
   goBack() {
     this.location.back();
@@ -59,41 +163,49 @@ export class NavigatorService {
     this.router.navigate(route);
   }
 
-  noReuse() {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-  }
-
-  article = new ArticleRoutes(this.router, this.panelTitle$);
-  forum = new ForumRoutes(this.router, this.panelTitle$);
-  forumPost = new ForumPostRoutes(this.router, this.panelTitle$);
-  marketAd = new MarketAdRoutes(this.router, this.panelTitle$);
-  auth = new AuthRoutes(this.router, this.panelTitle$);
+  article = new ArticleRoutes(this.router, this.panelTitle$, this.modalTitle$);
+  forum = new ForumRoutes(this.router, this.panelTitle$, this.modalTitle$);
+  forumPost = new ForumPostRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
+  marketAd = new MarketAdRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
+  auth = new AuthRoutes(this.router, this.panelTitle$, this.modalTitle$);
+  resource = new ResourceRoutes(this.router, this.panelTitle$, this.modalTitle$);
 }
 
 class AppRoutesConfig {
   constructor(
     protected page: IPageItems,
     protected router: Router,
-    protected panelTitleSubject$: BehaviorSubject<string>
+    protected panelTitleSubject$: BehaviorSubject<string>,
+    protected modalTitleSubject$: BehaviorSubject<string>
   ) {}
 
-  openPanel(navigation: string | string[] | any, title = '') {
+  openPanel(navigation: string[], title = '') {
     this.panelTitleSubject$.next(title);
     this.router.navigate([
+      navigation[0], //main
       {
         outlets: {
-          [RouterOutlets.Right]: navigation,
+          [RouterOutlets.Right]: navigation.slice(1),
         },
       },
     ]);
   }
 
-  hidePanel() {
+  openModal(navigation: string[], title = '') {
+    this.modalTitleSubject$.next(title);
     this.router.navigate([
-      '',
+      navigation[0], //main
       {
         outlets: {
-          [RouterOutlets.Right]: null,
+          [RouterOutlets.Modal]: navigation.slice(1),
         },
       },
     ]);
@@ -103,16 +215,40 @@ class AppRoutesConfig {
     this.router.navigate([this.page.main]);
   }
 
-  goToAddPage() {
-    this.router.navigate([this.page.main, this.page.add]);
+  goToAddPage(route = RouterOutlets.Main) {
+    const nav = [this.page.main, this.page.add];
+    route === RouterOutlets.Right
+      ? this.openPanel(nav, 'CREATE NEW')
+      : route === RouterOutlets.Modal
+      ? this.openModal(nav, 'CREATE NEW')
+      : this.router.navigate(nav);
   }
 
-  goToEditPage(id: string, title = 'UPDATE') {
-    this.openPanel([this.page.edit.replace('id', id)], title);
+  goToEditPage(id: string, title = 'UPDATE', route = RouterOutlets.Right) {
+    const nav = this.page.edit.split('/');
+    nav[1] = id; //replace id after split
+    route === RouterOutlets.Right
+      ? this.openPanel([this.page.main, ...nav], title)
+      : this.openModal([this.page.main, ...nav], title);
   }
 
-  goToViewPage(id: string, title = 'PREVIEW') {
-    this.openPanel([this.page.view.replace('id', id)], title);
+  closePanel() {
+    this.router.navigate([
+      this.page.main,
+      {
+        outlets: {
+          [RouterOutlets.Right]: null,
+        },
+      },
+    ]);
+  }
+
+  goToViewPage(id: string, title = 'PREVIEW', route = RouterOutlets.Right) {
+    const nav = this.page.view.split('/');
+    nav[1] = id; //replace id after split
+    route === RouterOutlets.Right
+      ? this.openPanel([this.page.main, ...nav], title)
+      : this.openModal([this.page.main, ...nav], title);
   }
 
   goToViewDetailsPage(slug: string) {
@@ -128,8 +264,12 @@ class AppRoutesConfig {
 }
 
 class ArticleRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages['Articles'], router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages['Articles'], router, subject, modalsubject);
   }
 
   // goToReadArticlePage(articleSlug: string) {
@@ -138,17 +278,49 @@ class ArticleRoutes extends AppRoutesConfig {
 }
 
 class ForumRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages['Forum'], router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages['Forum'], router, subject, modalsubject);
   }
-  // goToReadForumPage(forumSlug: string) {
-  //   this.router.navigate([this.page, `${SLUG_PREFIX}-${forumSlug}`]);
-  // }
+  goToReadForumPost(forumSlug: string, forumPostSlug: string) {
+    const nav = [
+      // this.page.viewPostDetails.replace('forum-room', forumRoom),
+      ...(this.page as any).viewPost
+        .replace(':slug', forumSlug)
+        .replace(':post', forumPostSlug)
+        .split('/'),
+    ];
+    this.router.navigate([
+      this.page.main,
+      // this.page.viewPostDetails.replace('forum-room', forumRoom),
+      ...nav,
+    ]);
+  }
+
+  loadComments(id: any) {
+    this.panelTitleSubject$.next('COMMENTS');
+    this.router.navigate([
+      this.page.main, //main
+      {
+        outlets: {
+          [RouterOutlets.Right]: ['comments', id],
+        },
+        skipLocationChange: true,
+      },
+    ]);
+  }
 }
 
 class ForumPostRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages['ForumPost'], router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages['ForumPost'], router, subject, modalsubject);
   }
   goToReadForumPostPage(forumPostSlug: string) {
     this.router.navigate([this.page, `${SLUG_PREFIX}-${forumPostSlug}`]);
@@ -156,8 +328,12 @@ class ForumPostRoutes extends AppRoutesConfig {
 }
 
 class AuthRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages['Auth'], router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages['Auth'], router, subject, modalsubject);
   }
 
   goToSignUp() {
@@ -170,14 +346,29 @@ class AuthRoutes extends AppRoutesConfig {
 }
 
 class MarketAdRoutes extends AppRoutesConfig {
-  constructor(router: Router, subject: BehaviorSubject<string>) {
-    super(Pages.MarketPlace, router, subject);
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.MarketPlace, router, subject, modalsubject);
   }
 
-  // override goToViewDetailsPage(id: any) {
-  //   this.router.navigate([
-  //     this.page.main,
-  //     ...this.page.viewDetails.replace(':id', id).split('/'),
-  //   ]);
-  // }
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
+  }
+}
+
+class ResourceRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.Resources, router, subject, modalsubject);
+  }
+
 }

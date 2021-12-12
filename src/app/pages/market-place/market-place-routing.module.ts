@@ -8,20 +8,7 @@ import { MarketPostFormComponent } from './market-post-form/market-post-form.com
 import { MyMarketPostsComponent } from './my-market-posts/my-market-posts.component';
 import { MarketListDetailsComponent } from './market-list-details/market-list-details.component';
 
-const rightPanelRoutes: Routes = [
-  {
-    path: Pages.MarketPlace.matcher.view,
-    component: MarketListDetailsComponent,
-    outlet: RouterOutlets.Right,
-    canActivate: [MarketPlaceGuard],
-  },
-  {
-    path: Pages.MarketPlace.matcher.edit,
-    component: MarketPostFormComponent,
-    outlet: RouterOutlets.Right,
-    canActivate: [MarketPlaceGuard],
-  },
-];
+const rightPanelRoutes: Routes = [];
 
 const routes: Routes = [
   {
@@ -32,6 +19,18 @@ const routes: Routes = [
   {
     path: Pages.MarketPlace.add,
     component: MarketPostFormComponent,
+    canActivate: [MarketPlaceGuard],
+  },
+  {
+    path: Pages.MarketPlace.view,
+    component: MarketListDetailsComponent,
+    outlet: RouterOutlets.Right,
+    canActivate: [MarketPlaceGuard],
+  },
+  {
+    path: Pages.MarketPlace.edit,
+    component: MarketPostFormComponent,
+    outlet: RouterOutlets.Modal,
     canActivate: [MarketPlaceGuard],
   },
   {

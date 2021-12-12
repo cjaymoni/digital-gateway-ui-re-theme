@@ -1,13 +1,22 @@
 <p-sidebar
   [(visible)]="show"
   [blockScroll]="true"
+  [dismissible]="false"
   styleClass="p-sidebar-lg w-full lg:w-5"
   position="right"
   (onHide)="hidePanel()"
   [fullScreen]="(device.isHandheld$ | async) || false"
 >
   <div class="flex col-12 justify-content-between sticky top-0 z-1 bg-white">
-    <div class="p-2 col-10">
+    <button
+      pButton
+      pRipple
+      type="button"
+      icon="pi pi-arrow-left"
+      class="p-button-outlined p-button-danger"
+      (click)="goBack()"
+    ></button>
+    <div class="p-2 col-8">
       <div class="text-xl font-bold text-center uppercase white-space-normal">
         {{ title$ | async }}
       </div>

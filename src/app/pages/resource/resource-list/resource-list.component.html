@@ -3,9 +3,9 @@
   [title]="'Resources'"
   [itemTemplate]="resourceCardTemplate"
   [items]="resourceList$|async"
-  itemClass="col-12 sm:col-6 xl:col-4"
+  itemClass="col-12 sm:col-4 xl:col-3"
 ></app-listing-page>
-<!-- {{resourceList|json}} -->
+
 <ng-template #resourceCardTemplate  let-resource>
   <app-resource-card [resource]="resource"></app-resource-card>
 </ng-template>

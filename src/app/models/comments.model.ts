@@ -1,12 +1,20 @@
+import { VoteType } from '../config/app-config';
+
 export interface Comment {
   id?: string | number | any;
   text: string;
-  author: Author[];
-  parent: ParentComment[];
+  author: Author | any;
+  parent?: ParentComment[];
   post: number | any;
-  upvote_count: number;
-  downvote_count: number;
-  score: number;
+  upvotes?: number | any;
+  downvotes?: number | any;
+  score?: number;
+  slug?: string;
+  subcomments?: any[];
+  user?: {
+    voted: boolean;
+    type: VoteType;
+  };
 }
 
 export interface SubComment {
@@ -15,9 +23,13 @@ export interface SubComment {
   author: Author[];
   parent: ParentComment[];
   post: number | any;
-  upvote_count: number;
-  downvote_count: number;
+  upvotes: number;
+  downvotes: number;
   score: number;
+  user?: {
+    voted: boolean;
+    type: VoteType;
+  };
 }
 export interface ParentComment {
   id?: string | number | any;
@@ -25,9 +37,13 @@ export interface ParentComment {
   author: Author[];
   parent: null;
   post: number | any;
-  upvote_count: number;
-  downvote_count: number;
+  upvotes: number;
+  downvotes: number;
   score: number;
+  user?: {
+    voted: boolean;
+    type: VoteType;
+  };
 }
 
 export interface Author {

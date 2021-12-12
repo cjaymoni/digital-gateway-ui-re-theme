@@ -1,10 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import 'src/styles/quill-editor';
 @import '~ngx-sharebuttons/themes/default';
 
 :root {
   --menu-background: #27272a;
+  font-size: 14px;
 }
 
 body {
@@ -13,11 +13,7 @@ body {
 
 .div-with-background-image {
   background-repeat: no-repeat;
-  background-size: contain;
-
-  &:hover {
-    background-size: cover;
-  }
+  background-size: cover;
 
   background-color: bisque;
   height: 10rem;
@@ -32,5 +28,42 @@ body {
 .p-message-no-icon {
   .p-inline-message-icon::before {
     content: '';
+  }
+}
+
+.hover-underline {
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.menubackground {
+  background-color: var(--menu-background);
+}
+
+.nobackground-color {
+  background-color: unset !important;
+}
+
+.p-divider-no-background {
+  .p-divider-content {
+    background-color: unset !important;
+  }
+}
+
+.no-dialog-header {
+  .p-dialog-header {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .p-dialog-content {
+    padding: 8px !important;
+    padding-top: 0 !important;
+  }
+
+  .p-dialog {
+    max-height: 100% !important;
   }
 }

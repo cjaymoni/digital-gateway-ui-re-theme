@@ -43,11 +43,11 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
 
   adTypes = [
     {
-      name: 'Bid',
+      name: 'bid',
       value: 'bid',
     },
     {
-      name: 'Offer',
+      name: 'offer',
       value: 'offer',
     },
   ];
@@ -117,23 +117,22 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       productAdFromForm.product.product_type = this.productType.value?.id;
       productAdFromForm.product.id = this.productAd?.product?.id;
       productAdFromForm.ad_type = this.productAdForm.value.ad_type.value;
+      const images = (
+        this.imageUploadComponent?.getFilesToUpload() || []
+      ).concat(this.images.value || []);
 
       if (this.createForm) {
         this.store.dispatch(
           productAdActions.addProductAd({
             productAd: { ...productAdFromForm, author: 1 },
-            imagesToUpload: (
-              this.imageUploadComponent?.getFilesToUpload() || []
-            ).concat(this.images.value || []),
+            imagesToUpload: images,
           })
         );
       } else {
         this.store.dispatch(
           productAdActions.editProductAd({
             productAd: { ...productAdFromForm, author: 1 },
-            imagesToUpload: (
-              this.imageUploadComponent?.getFilesToUpload() || []
-            ).concat(this.images.value || []),
+            imagesToUpload: images,
           })
         );
       }
@@ -150,7 +149,14 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       .pipe(
         filter(data => !!data),
         tap((productAd: ProductAd) => {
-          this.productAdForm.patchValue(productAd);
+          this.productAdForm.patchValue({
+            ...productAd,
+            ad_type: { name: productAd.ad_type, value: productAd.ad_type },
+          });
+          this.productAdForm
+            .get('product.product_type')
+            ?.patchValue(productAd.product.product_type?.[0]);
+
           this.productAd = productAd;
           this.createForm = false;
           this.navigator.setPanelTitle('Edit Product');

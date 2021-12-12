@@ -1,6 +1,6 @@
 <app-listing-page
   [loading]="loadingForums$ | async"
-  title="FORUMS"
+  [title]="'FORUMS'"
   [itemTemplate]="forumCardTemplate"
   [items]="forums$ | async"
   itemClass="col-12"

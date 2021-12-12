@@ -1,7 +1,8 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
 import { AppUploadedImage } from 'src/app/models/article.model';
-import { Forum } from 'src/app/models/forum.model';
+import { Forum, ForumPost } from 'src/app/models/forum.model';
+import { CommentActions } from './comments.action';
 
 class ForumActions {
   readonly type = '[Forum  Actions]';
@@ -24,6 +25,13 @@ class ForumActions {
     `${this.type} Select Forum`,
     props<{
       forum: Forum;
+    }>()
+  );
+
+  selectForumPost = createAction(
+    `${this.type} Select Forum Post`,
+    props<{
+      forumPost: ForumPost;
     }>()
   );
 
@@ -59,10 +67,7 @@ class ForumActions {
 
   searchForumSuccess = createAction(`${this.type} Search Forum Success`);
 
-  addForum = createAction(
-    `${this.type} Add Forum`,
-    props<{ forum: Forum; imageToUpload?: File }>()
-  );
+  addForum = createAction(`${this.type} Add Forum`, props<{ forum: Forum }>());
 
   addForumSuccessful = createAction(
     `${this.type} Add Forum Post Successful`,
@@ -73,7 +78,6 @@ class ForumActions {
     `${this.type} Edit Forum Post`,
     props<{
       forum: Forum;
-      imageToUpload: File | AppUploadedImage[] | any;
     }>()
   );
 
@@ -93,5 +97,35 @@ class ForumActions {
   );
 
   clearAllSelected = createAction(`${this.type} Clear All Selected Forum`);
+
+  likePost = createAction(
+    `${this.type} Like Forum Post`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  likePostSuccessful = createAction(
+    `${this.type} Like Forum Post Successful`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  dislikePost = createAction(
+    `${this.type} Dislike Forum Post`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  dislikePostSuccessful = createAction(
+    `${this.type} Dislike Forum Post Successful`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  comments = new CommentActions();
 }
 export const forumActions = new ForumActions();

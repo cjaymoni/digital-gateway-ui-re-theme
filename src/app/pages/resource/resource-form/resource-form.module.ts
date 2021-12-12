@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ResourceFormComponent } from './resource-form.component';
 
 @NgModule({
@@ -13,6 +14,7 @@ import { ResourceFormComponent } from './resource-form.component';
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
+    InputTextareaModule,
     FileUploadModule,
   ],
   declarations: [ResourceFormComponent]

@@ -65,7 +65,7 @@ class ForumPostActions {
 
   addForumPost = createAction(
     `${this.type} Add ForumPost`,
-    props<{ forumPost: ForumPost }>()
+    props<{ forumPost: ForumPost; imageToUpload: File[] | any[] }>()
   );
 
   addForumPostSuccessful = createAction(
@@ -77,6 +77,7 @@ class ForumPostActions {
     `${this.type} Edit Forum Post`,
     props<{
       forumPost: ForumPost;
+      imageToUpload: File[] | any[];
     }>()
   );
 

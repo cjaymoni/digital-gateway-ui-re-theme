@@ -4,11 +4,14 @@
   styleClass="shadow-6 min-h-full p-2 w-full fadein animation-duration-500 justify-content-between align-items-center"
 >
   <ng-template pTemplate="header">
-      <img alt="Card" src="assets/img/file.png">
+    <img alt="Card" src="assets/img/file.png" class="w-5rem h-5rem">
   </ng-template>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-    </p>
+  <p>{{ resource.description }}</p>
   <ng-template pTemplate="footer">
-    <p-button label="Download" icon="pi pi-download"></p-button>
+    <p-button
+      label="Download"
+      icon="pi pi-download"
+      (click)="downloadFile()"
+    ></p-button>
   </ng-template>
 </p-card>

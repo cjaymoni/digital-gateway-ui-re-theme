@@ -6,39 +6,79 @@
     <app-top-nav></app-top-nav>
   </nav>
   <div class="col-12 grid pt-0 pb-0 justify-content-center">
-    <div class="hidden col-2 lg:flex p-0 leftside">
+    <!-- left sidebar -->
+    <div
+      class="
+        hidden
+        col-3
+        xl:col-2
+        lg:block
+        p-2
+        leftside
+        xl:sticky xl:top-0
+        pt-5
+      "
+    >
       <app-side-nav></app-side-nav>
+      <div class="col-12 xl:hidden pt-5">
+        <app-right-nav-card></app-right-nav-card>
+      </div>
     </div>
-
+    <!-- middle content -->
     <div
       class="
         col-12
-        md:col-10
+        lg:col-9
         xl:col-8
         grid
         justify-content-center
         h-full
+        p-0
         pt-5
-        px-3
+        px-1
+        md:px-3
       "
     >
-      <div class="col-12 min-h-full md:min-h-screen">
+      <div class="col-12 min-h-screen">
+        <div class="flex">
+          <div class="mr-3 hidden lg:flex">
+            <app-back-button styleClass="h-2rem"></app-back-button>
+          </div>
+          <p-breadcrumb
+            styleClass="p-0 border-noround border-none m-0 border-bottom-1 border-gray-800 pb-2 mb-3"
+            [home]="home"
+            [model]="(breadcrumbs$ | async) ?? []"
+          ></p-breadcrumb>
+        </div>
         <router-outlet></router-outlet>
       </div>
-      <div class="rightcontent col-12 md:hidden">
+
+      <!-- left bar loaded below -->
+      <div class="leftside col-12 lg:hidden pt-5">
+        <app-side-nav></app-side-nav>
+      </div>
+
+      <!-- right bar loaded below -->
+      <div class="rightcontent col-12 lg:hidden pt-5">
         <app-right-nav-card></app-right-nav-card>
       </div>
     </div>
 
+    <!-- right side bar -->
     <div class="hidden xl:flex xl:col-2 h-full pt-5">
       <app-right-nav-card></app-right-nav-card>
     </div>
   </div>
+  <!-- footer -->
   <footer class="col-12 footer p-0">
     <app-footer></app-footer>
   </footer>
-
+  <!-- right panel -->
   <app-right-overlay-panel>
     <router-outlet name="right-panel"></router-outlet>
   </app-right-overlay-panel>
+
+  <ng-container *ngIf="modalActive$ | async">
+    <app-modal-components></app-modal-components>
+  </ng-container>
 </div>

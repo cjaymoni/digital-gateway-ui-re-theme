@@ -8,6 +8,7 @@ import { ForumPost } from 'src/app/models/forum.model';
 import { ForumPostsService } from 'src/app/pages/forum-posts/services/forum-post.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { forumPostActions } from '../actions/forum-post.action';
+import { slugify } from '../../helpers/app.helper.functions';
 
 @Injectable()
 export class ForumPostEffects {
@@ -95,19 +96,24 @@ export class ForumPostEffects {
   addForumPosts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumPostActions.addForumPost),
-      switchMap(({ forumPost }) =>
-        this.forumPostService.addForumPost(forumPost).pipe(
-          map((savedForumPost: any) =>
-            forumPostActions.addForumPostSuccessful({
-              forumPost: savedForumPost,
+      switchMap(({ forumPost, imageToUpload }) =>
+        this.forumPostService
+          .addForumPost(
+            { ...forumPost, slug: slugify(forumPost.title) },
+            imageToUpload
+          )
+          .pipe(
+            map((savedForumPost: any) =>
+              forumPostActions.addForumPostSuccessful({
+                forumPost: savedForumPost,
+              })
+            ),
+            tap(saved => this.showToast('Forum Post Saved Successfully')),
+            catchError(error => {
+              this.showError(error);
+              return of(forumPostActions.fetchError);
             })
-          ),
-          tap(saved => this.showToast('Forum Post Saved Successfully')),
-          catchError(error => {
-            this.showError(error);
-            return of(forumPostActions.fetchError);
-          })
-        )
+          )
       )
     )
   );
@@ -115,8 +121,8 @@ export class ForumPostEffects {
   editForumPosts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(forumPostActions.editForumPost),
-      switchMap(({ forumPost }) =>
-        this.forumPostService.editForumPost(forumPost).pipe(
+      switchMap(({ forumPost, imageToUpload }) =>
+        this.forumPostService.editForumPost(forumPost, imageToUpload).pipe(
           map((updatedForumPost: any) =>
             forumPostActions.editForumPostSuccessful({
               updatedForumPost: {

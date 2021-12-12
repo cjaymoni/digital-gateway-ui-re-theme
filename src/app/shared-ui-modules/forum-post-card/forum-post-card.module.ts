@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
 import { CommentFormModule } from '../comment-form/comment-form.module';
 import { CommentCardModule } from '../comment-card/comment-card.module';
-
+import { AvatarModule } from 'primeng/avatar';
 @NgModule({
   declarations: [ForumPostCardComponent],
   imports: [
@@ -20,6 +20,7 @@ import { CommentCardModule } from '../comment-card/comment-card.module';
     AppPipesModule,
     CommentFormModule,
     CommentCardModule,
+    AvatarModule,
   ],
   exports: [ForumPostCardComponent],
 })

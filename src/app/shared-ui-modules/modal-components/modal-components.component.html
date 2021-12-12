@@ -1,0 +1,21 @@
+<div class="w-full h-full">
+  <div
+    class="flex col-12 justify-content-between sticky top-0 z-1 bg-white p-2"
+  >
+    <div class="p-2 col-10">
+      <div class="text-xl font-bold text-center uppercase white-space-normal">
+        {{ modalTitle$ | async }}
+      </div>
+    </div>
+
+    <button
+      pButton
+      pRipple
+      type="button"
+      icon="pi pi-times"
+      class="p-button-text p-button-secondary"
+      (click)="close()"
+    ></button>
+  </div>
+  <router-outlet name="modal"></router-outlet>
+</div>

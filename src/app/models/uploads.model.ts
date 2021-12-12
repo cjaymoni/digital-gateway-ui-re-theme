@@ -11,6 +11,6 @@ export interface Upload {
   author_name?: string;
   institution?: string;
   author_email?: string;
-  resource?: File;
+  resource?: string;
   submitter: any;
 }
