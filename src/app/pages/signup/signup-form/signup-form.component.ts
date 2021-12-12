@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { SignupService } from '../services/signup.service';
 
@@ -15,7 +16,8 @@ export class SignupFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private signupService: SignupService,
-    private appAlertService: AppAlertService
+    private appAlertService: AppAlertService,
+    private navigator: NavigatorService
   ) {}
 
   ngOnInit() {
@@ -26,6 +28,8 @@ export class SignupFormComponent implements OnInit {
 
       password: ['', [Validators.required]],
     });
+
+    this.navigator.setPanelTitle('SIGN UP');
   }
   onSignupSubmit() {
     if (this.signupForm.valid) {
@@ -48,5 +52,9 @@ export class SignupFormComponent implements OnInit {
         );
       });
     }
+  }
+
+  goToLogin() {
+    this.navigator.auth.goToLogin();
   }
 }

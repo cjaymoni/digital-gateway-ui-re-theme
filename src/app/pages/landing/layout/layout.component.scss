@@ -1,3 +1,11 @@
 .article-title {
   bottom: 10px;
 }
+
+:host ::ng-deep {
+  app-article-card {
+    .article-card {
+      box-shadow: unset !important;
+    }
+  }
+}

@@ -2,10 +2,14 @@
   .p-card-content {
     display: none;
   }
+  .p-card-footer {
+    padding-top: 2px;
+  }
   .p-card-title {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    margin-bottom: 0px;
 
     @supports (-webkit-line-clamp: 2) {
       text-overflow: ellipsis;

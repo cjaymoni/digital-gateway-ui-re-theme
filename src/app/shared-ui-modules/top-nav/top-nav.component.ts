@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { LoggedInMenu } from 'src/app/config/app-config';
+import { LoggedInMenu, SignUpMenu } from 'src/app/config/app-config';
 import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { menuItemActions } from 'src/app/store/actions/menu-items.actions';
@@ -18,7 +18,7 @@ import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
 export class TopNavComponent implements OnInit {
   loggedInUser$ = this.store
     .select(userAuthSelectors.loggedInUser)
-    .pipe(filter(user => !!user));
+    .pipe(filter(user => !!user.id));
 
   isHandheld$ = this.device.isHandheld$;
 
@@ -37,6 +37,8 @@ export class TopNavComponent implements OnInit {
 
   loggedInMenu = LoggedInMenu;
 
+  signUpMenu = SignUpMenu;
+
   ngOnInit(): void {}
 
   selectMenu(id: number, link?: [string]) {
@@ -52,7 +54,7 @@ export class TopNavComponent implements OnInit {
   }
 
   goToLoginPage() {
-    this.navigator.auth.goToLogin('Login to continue');
+    this.navigator.auth.goToLogin();
   }
 
   searchTerm() {}

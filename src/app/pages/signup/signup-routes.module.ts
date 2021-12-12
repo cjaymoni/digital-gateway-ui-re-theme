@@ -8,18 +8,12 @@ const routes: Routes = [
   {
     path: '',
     component: SignupFormComponent,
+    outlet: RouterOutlets.Right,
   },
 ];
-// const routes: Routes = [
-//   {
-//     path: Pages.Auth.signup,
-//     component: SignupFormComponent,
-//     outlet: RouterOutlets.Right,
-//   },
-// ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([])],
   exports: [RouterModule],
 })
 export class SignupRoutesModule {

@@ -81,7 +81,7 @@
     <input
       type="text"
       pInputText
-      class="w-15rem sm:w-18 md:w-20 lg:w-30rem xl:w-35rem mr-3"
+      class="w-15rem sm:w-17 md:w-20 xl:w-35rem mr-3"
       placeholder="What are you looking for? (Enter at least 4 characters)"
       [formControl]="searchInputControl"
     />
@@ -109,9 +109,14 @@
 
 <ng-template #login>
   <button
-    class="p-button-outlined p-button-rounded p-button-primary mr-1"
-    label="Login"
-    (click)="goToLoginPage()"
+    class="p-button-text p-button-rounded p-button-info mr-1"
+    icon="pi pi-user"
+    label="Login/Signup"
     pButton
+    (click)="goToLoginPage()"
   ></button>
+  <!-- (click)="signup.toggle($event)" -->
+  <!-- <p-menu #signup [popup]="true" [model]="signUpMenu"></p-menu> -->
 </ng-template>
+
+<ng-template #signup> </ng-template>
