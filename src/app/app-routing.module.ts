@@ -58,6 +58,13 @@ const routes: Routes = [
     data: { breadcrumb: 'Theme Settings' },
   },
   {
+    path: Pages.Resources.main,
+    loadChildren: () =>
+      import('./pages/resource/resource.module').then(
+        m => m.ResourceModule
+      ),
+  },
+  {
     path: Pages.UserProfile,
     loadChildren: () =>
       import('./pages/user-profile/user-profile.module').then(

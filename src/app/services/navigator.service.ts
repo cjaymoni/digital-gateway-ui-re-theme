@@ -176,6 +176,7 @@ export class NavigatorService {
     this.modalTitle$
   );
   auth = new AuthRoutes(this.router, this.panelTitle$, this.modalTitle$);
+  resource = new ResourceRoutes(this.router, this.panelTitle$, this.modalTitle$);
 }
 
 class AppRoutesConfig {
@@ -359,4 +360,15 @@ class MarketAdRoutes extends AppRoutesConfig {
       ...this.page.viewDetails.replace(':id', id).split('/'),
     ]);
   }
+}
+
+class ResourceRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.Resources, router, subject, modalsubject);
+  }
+
 }

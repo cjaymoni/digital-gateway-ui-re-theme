@@ -114,6 +114,11 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     },
   },
 
+  Resources: {
+    main: 'resources',
+    add: 'post-resource',
+  },
+
   //content management
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',
@@ -228,6 +233,25 @@ export const MainMenu: MenuItem[] = [
         label: 'Create An Ad',
         icon: 'pi pi-plus',
         routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
+      },
+    ],
+  },
+  {
+    id: 'resource',
+    label: 'Resource',
+    icon: 'pi pi-file-o',
+    items: [
+      {
+        id: 'view-resources',
+        label: 'View Resource',
+        icon: 'pi pi-eye',
+        routerLink: [Pages.Resources.main],
+      },
+      {
+        id: 'create-resource',
+        label: 'Add Resource',
+        icon: 'pi pi-plus',
+        routerLink: [Pages.Resources.main, Pages.Resources.add],
       },
     ],
   },
