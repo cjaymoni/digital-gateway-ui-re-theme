@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { GenericErrorMessage, PrimeNgAlerts } from 'src/app/config/app-config';
+import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { Tag } from 'src/app/models/tag.model';
 import { TagService } from 'src/app/services/tag.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';

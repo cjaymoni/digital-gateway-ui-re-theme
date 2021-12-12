@@ -1,5 +1,6 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { Menu } from 'primeng/menu';
 import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
@@ -94,7 +95,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   },
   Auth: {
     login: 'login',
-    signup: 'signup',
+    signup: 'sign-up',
   },
 
   MarketPlace: {
@@ -124,6 +125,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   SiteSettings: 'site-settings',
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
+  Login: 'login',
 };
 
 export const urlMatcherForEditAndView = (
@@ -298,6 +300,21 @@ export const LoggedInMenu: MenuItem[] = [
     id: 'logout',
     label: 'Logout',
     icon: 'pi pi-power-off',
+  },
+];
+
+export const SignUpMenu: MenuItem[] = [
+  {
+    id: 'sign-up',
+    label: 'Sign Up',
+    routerLink: [Pages.SignUp],
+    icon: 'pi pi-user',
+  },
+  {
+    id: 'profile',
+    label: 'Login',
+    routerLink: [Pages.Login],
+    icon: 'pi pi-user',
   },
 ];
 

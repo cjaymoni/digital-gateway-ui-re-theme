@@ -140,6 +140,6 @@ export class ForumPostFormComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.navigator.goBack();
+    this.navigator.forum.go();
   }
 }

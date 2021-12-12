@@ -13,6 +13,7 @@ export interface ProductAd {
   author: User;
   product: Product;
   ad_type: string;
+  slug?: string;
 }
 
 export interface ProductType {
@@ -20,6 +21,7 @@ export interface ProductType {
   description: string;
   parent: string | null;
   id?: number;
+  slug?: string;
 }
 
 export interface Product {
@@ -31,4 +33,5 @@ export interface Product {
   product_type: ProductType[];
   tags: Tag[];
   images: AppUploadedImage[];
+  slug?: string;
 }
