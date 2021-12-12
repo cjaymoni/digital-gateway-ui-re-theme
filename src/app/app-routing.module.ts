@@ -52,10 +52,34 @@ const routes: Routes = [
   {
     path: Pages.SiteSettings,
     loadChildren: () =>
-      import('./pages/content-management/content-management.module').then(
-        m => m.ContentManagementModule
+      import('./pages/app-settings/app-settings.module').then(
+        m => m.AppSettingsModule
       ),
     data: { breadcrumb: 'Theme Settings' },
+  },
+  {
+    path: Pages.UserProfile,
+    loadChildren: () =>
+      import('./pages/user-profile/user-profile.module').then(
+        m => m.UserProfileModule
+      ),
+  },
+  {
+    path: Pages.SignUp,
+    loadChildren: () =>
+      import('./pages/signup/signup.module').then(m => m.SignupModule),
+  },
+  {
+    path: Pages.UserProfile,
+    loadChildren: () =>
+      import('./pages/user-profile/user-profile.module').then(
+        m => m.UserProfileModule
+      ),
+  },
+  {
+    path: Pages.SignUp,
+    loadChildren: () =>
+      import('./pages/signup/signup.module').then(m => m.SignupModule),
   },
 ];
 
