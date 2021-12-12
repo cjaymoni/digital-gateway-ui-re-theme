@@ -108,6 +108,11 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     },
   },
 
+  Resources: {
+    main: 'resources',
+    add: 'post-resource',
+  },
+
   //content management
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',

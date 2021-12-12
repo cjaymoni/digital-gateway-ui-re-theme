@@ -1,0 +1,48 @@
+  <div class="text-lg md:text-2xl m-0 font-bold mb-2 flex justify-content-center">
+    Add Document
+  </div>
+
+  <ng-container [formGroup]="resourceForm">
+    <div class="fluid formgrid grid pt-5">
+      <!-- Title -->
+      <div class="field col-8 col-offset-2">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="title"
+        />
+      </div>
+
+      <!-- File -->
+      <div class="field col-8 col-offset-2">
+        <p-fileUpload
+          name="upload"
+          [multiple]="false"
+          accept=".doc,.docx,.pdf,.odt"
+          styleClass="w-full"
+          [previewWidth]="80"
+          [showUploadButton]="false"
+          [showCancelButton]="false"
+          chooseLabel="Select file to upload"
+          (onSelect)="handleSelect($event)"
+        ></p-fileUpload>
+        <p>Accepted File Types >> .doc, .docx, .pdf, .odt</p>
+      </div>
+
+      <div class="col-6 col-offset-3">
+        <button
+          pButton
+          pRipple
+          class="w-full"
+          type="button"
+          icon="pi pi-upload"
+          label="Upload"
+          [disabled]="resourceForm.invalid"
+          (click)="UploadResource()"
+        ></button>
+      </div>
+    </div>
+  </ng-container>
+

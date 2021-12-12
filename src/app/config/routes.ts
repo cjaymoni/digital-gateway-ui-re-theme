@@ -8,3 +8,4 @@ export const DistrictEndpoint = environment.API_URL + 'districts/';
 export const ProductTypeEndpoint = environment.API_URL + 'product-types/';
 export const ForumEndpoint = environment.API_URL + 'forums/';
 export const ForumPostEndpoint = environment.API_URL + 'forum-posts/';
+export const ResourceEndpoint = environment.API_URL + 'uploads/';

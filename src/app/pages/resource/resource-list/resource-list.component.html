@@ -1,0 +1,15 @@
+<app-listing-page
+  [loading]="false"
+  [title]="'Resources'"
+  [itemTemplate]="resourceCardTemplate"
+  [items]="resourceList$|async"
+  itemClass="col-12 sm:col-6 xl:col-4"
+></app-listing-page>
+<!-- {{resourceList|json}} -->
+<ng-template #resourceCardTemplate  let-resource>
+  <app-resource-card [resource]="resource"></app-resource-card>
+</ng-template>
+
+<!-- <div class="col-12 sm:col-6 xl:col-4">
+  <app-resource-card [resourceList]="resourceList"></app-resource-card>
+</div> -->

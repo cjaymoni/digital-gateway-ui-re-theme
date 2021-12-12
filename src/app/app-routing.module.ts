@@ -43,6 +43,13 @@ const routes: Routes = [
         m => m.ContentManagementModule
       ),
   },
+  {
+    path: Pages.Resources.main,
+    loadChildren: () =>
+      import('./pages/resource/resource.module').then(
+        m => m.ResourceModule
+      ),
+  },
 ];
 
 @NgModule({
