@@ -69,6 +69,18 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/signup/signup.module').then(m => m.SignupModule),
   },
+  {
+    path: Pages.UserProfile,
+    loadChildren: () =>
+      import('./pages/user-profile/user-profile.module').then(
+        m => m.UserProfileModule
+      ),
+  },
+  {
+    path: Pages.SignUp,
+    loadChildren: () =>
+      import('./pages/signup/signup.module').then(m => m.SignupModule),
+  },
 ];
 
 @NgModule({
