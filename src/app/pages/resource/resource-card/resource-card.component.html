@@ -1,17 +1,33 @@
-<p-card
-  *ngIf="resource"
-  [header]="resource.name"
-  styleClass="shadow-6 min-h-full p-2 w-full fadein animation-duration-500 justify-content-between align-items-center"
+<div
+  class="
+    shadow-6
+    h-10rem
+    p-2
+    w-full
+    fadein
+    animation-duration-500
+    justify-content-between
+    align-items-center
+    flex flex-column
+  "
 >
-  <ng-template pTemplate="header">
-    <img alt="Card" src="assets/img/file.png" class="w-5rem h-5rem">
-  </ng-template>
-  <p>{{ resource.description }}</p>
-  <ng-template pTemplate="footer">
-    <p-button
-      label="Download"
-      icon="pi pi-download"
-      (click)="downloadFile()"
-    ></p-button>
-  </ng-template>
-</p-card>
+  <div
+    class="
+      flex
+      justify-content-between
+      align-items-center
+      text-blue-900 text-2xl
+    "
+  >
+    <i class="pi pi-file"></i>
+    <div>{{ resource.name }}</div>
+  </div>
+
+  <div class="text p-1">{{ resource.description }}</div>
+  <p-button
+    styleClass="p-button-success p-button-outlined p-button-rounded"
+    icon="pi pi-download"
+    (click)="downloadFile()"
+    pTooltip="Download File"
+  ></p-button>
+</div>
