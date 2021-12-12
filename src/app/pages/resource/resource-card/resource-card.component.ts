@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Upload } from 'src/app/models/uploads.model';
-import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-resource-card',
