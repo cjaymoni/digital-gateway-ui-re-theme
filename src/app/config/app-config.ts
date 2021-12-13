@@ -295,6 +295,12 @@ export const LoggedInMenu: MenuItem[] = [
     icon: 'pi pi-cog',
   },
   {
+    id: 'login',
+    label: 'Login',
+    routerLink: [Pages.Auth.login],
+    icon: 'pi pi-user',
+  },
+  {
     id: 'logout',
     label: 'Logout',
     icon: 'pi pi-power-off',
@@ -322,3 +328,7 @@ export enum CommentType {
 export const trackById = (index: number, comment: any): number => {
   return comment.id;
 };
+
+
+export const APP_TOKEN = 'app_token';
+export const APP_USER_TOKEN = 'app_user_access_token';

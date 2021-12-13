@@ -84,9 +84,9 @@ const routes: Routes = [
       ),
   },
   {
-    path: Pages.SignUp,
+    path: Pages.Auth.login,
     loadChildren: () =>
-      import('./pages/signup/signup.module').then(m => m.SignupModule),
+      import('./pages/login/login.module').then(m => m.LoginModule),
   },
 ];
 

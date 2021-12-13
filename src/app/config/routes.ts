@@ -16,3 +16,4 @@ export const HighlightArticlesEndpoint = environment.API_URL + 'articleblocks/';
 export const EventsEndpoint = environment.API_URL + 'eventsblocks/';
 export const CommentsEndpoint = environment.API_URL + 'comments/';
 export const AuthEndpoint = environment.API_URL + 'user/';
+export const LoginEndpoint = environment.API_URL + 'login/';
