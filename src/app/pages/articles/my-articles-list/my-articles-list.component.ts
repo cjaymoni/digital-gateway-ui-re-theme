@@ -19,6 +19,7 @@ import { MenuItem } from 'primeng/api';
 import { ArticleService } from '../services/articles.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
+import { articleActions } from 'src/app/store/actions/article.actions';
 
 @Component({
   selector: 'app-my-articles-list',
@@ -27,7 +28,7 @@ import { PrimeNgAlerts } from 'src/app/config/app-config';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyArticlesListComponent implements OnInit, AfterViewInit {
-  myArticles$ = this.store.select(articleSelectors.all);
+  myArticles$ = this.store.select(articleSelectors.myArticles);
 
   @ViewChild('statusTemplate') statusTemplate: TemplateRef<any> | undefined =
     undefined;
@@ -47,7 +48,9 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
     private title: Title,
     private articleService: ArticleService,
     private appAlertService: AppAlertService
-  ) {}
+  ) {
+    this.store.dispatch(articleActions.fetchMyArticles());
+  }
 
   ngAfterViewInit(): void {
     this.columns = [

@@ -30,6 +30,27 @@ export class ArticleEffects {
     )
   );
 
+  loadMyArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(articleActions.fetchMyArticles),
+      switchMap(() =>
+        this.articleService
+          .getResources(undefined, undefined, { moderate: true })
+          .pipe(
+            map((articles: Article[]) =>
+              articleActions.fetchMyArticlesSuccessful({
+                articles,
+              })
+            ),
+            catchError(error => {
+              this.showError(error);
+              return of(articleActions.fetchError);
+            })
+          )
+      )
+    )
+  );
+
   searchArticles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(articleActions.findAndSelectArticle),

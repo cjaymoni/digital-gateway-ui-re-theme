@@ -24,7 +24,7 @@
         "
         routerLink="/"
       >
-        MSME GATEWAY
+        &nbsp;&nbsp;MSME GATEWAY
       </div>
 
       <div class="lg:hidden flex justify-content-between align-items-center">
@@ -97,13 +97,17 @@
 
 <ng-template #userLoginMenu>
   <button
-    *ngIf="loggedInUser$ | async; else login"
+    *ngIf="isLoggedIn$ | async; else login"
     class="p-button-outlined p-button-rounded p-button-primary mr-1"
     icon="pi pi-user"
     pButton
     (click)="loginMenu.toggle($event)"
   ></button>
-  <p-menu #loginMenu [popup]="true" [model]="loggedInMenu"></p-menu>
+  <p-menu
+    #loginMenu
+    [popup]="true"
+    [model]="(loggedInMenu | async) ?? []"
+  ></p-menu>
 </ng-template>
 <!-- (click)="goToLoginPage()" -->
 
@@ -111,7 +115,7 @@
   <button
     class="p-button-text p-button-rounded p-button-info mr-1"
     icon="pi pi-user"
-    label="Login/Signup"
+    label="Login"
     pButton
     (click)="goToLoginPage()"
   ></button>

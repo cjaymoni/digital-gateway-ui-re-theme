@@ -40,7 +40,10 @@ const routes: Routes = [
     path: Pages.Articles.myList,
     component: MyArticlesListComponent,
     canActivate: [RoleGuard, ArticleGuard],
-    data: { breadcrumb: 'List', roles: [Roles.Admin, Roles.Editor] },
+    data: {
+      breadcrumb: 'List',
+      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+    },
   },
 
   {
@@ -48,7 +51,10 @@ const routes: Routes = [
     component: ArticleFormComponent,
     outlet: RouterOutlets.Modal,
     canActivate: [RoleGuard, ArticleGuard],
-    data: { breadcrumb: 'Add', roles: [Roles.Admin, Roles.Editor] },
+    data: {
+      breadcrumb: 'Add',
+      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+    },
   },
   {
     path: Pages.Articles.viewDetails,

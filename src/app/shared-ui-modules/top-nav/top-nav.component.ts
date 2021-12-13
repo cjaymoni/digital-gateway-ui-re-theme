@@ -1,8 +1,13 @@
-import { ChangeDetectionStrategy, Inject, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
-import { filter } from 'rxjs';
+import { map } from 'rxjs';
 import { LoggedInMenu, SignUpMenu } from 'src/app/config/app-config';
 import { LOGIN_SERVICE } from 'src/app/config/injectables';
 import { IAuthService } from 'src/app/models/auth-service';
@@ -19,9 +24,9 @@ import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopNavComponent implements OnInit {
-  loggedInUser$ = this.store
-    .select(userAuthSelectors.loggedInUser)
-    .pipe(filter(user => !!user));
+  loggedInUser$ = this.store.select(userAuthSelectors.loggedInUser);
+
+  isLoggedIn$ = this.store.select(userAuthSelectors.isLoggedIn);
 
   isHandheld$ = this.device.isHandheld$;
 
@@ -34,18 +39,26 @@ export class TopNavComponent implements OnInit {
     private store: Store,
     private device: DeviceService,
     private navigator: NavigatorService,
-    @Inject(LOGIN_SERVICE) public loginService: IAuthService,
+    @Inject(LOGIN_SERVICE) public loginService: IAuthService
   ) {}
 
   items$ = this.store.select(menuItemSelectors.menuItems);
 
-  loggedInMenu = LoggedInMenu;
+  // loggedInMenu = LoggedInMenu;
 
   signUpMenu = SignUpMenu;
 
-  ngOnInit(): void {
-    this.loggedInMenu = [...LoggedInMenu, ...this.logoutMenu()]
-  }
+  loggedInMenu = this.loggedInUser$.pipe(
+    map(user => {
+      if (user) {
+        return [...LoggedInMenu(user.role), ...this.logoutMenu()];
+      } else {
+        return [];
+      }
+    })
+  );
+
+  ngOnInit(): void {}
 
   selectMenu(id: number, link?: [string]) {
     this.store.dispatch(
@@ -64,10 +77,10 @@ export class TopNavComponent implements OnInit {
   }
 
   logout = () => {
-    this.loginService.logout().subscribe();
-  }
+    this.loginService.logout().subscribe(_ => this.navigator.goToRoute(['/']));
+  };
 
-  logoutMenu(): MenuItem[]{
+  logoutMenu(): MenuItem[] {
     return [
       {
         id: 'logout',
@@ -75,7 +88,7 @@ export class TopNavComponent implements OnInit {
         command: this.logout,
         icon: 'pi pi-power-off',
       },
-    ]
+    ];
   }
 
   searchTerm() {}

@@ -7,6 +7,10 @@ export const MOBILE_WIDTH_BREAKPOINT = 600;
 export const TABLET_WIDTH_BREAKPOINT = 960;
 export const DEFAULT_PAGE_SIZE = 100;
 
+export const APP_TOKEN = 'app_token';
+export const APP_USER_TOKEN = 'app_user_access_token';
+export const APP_REFRESH_TOKEN = 'app_refresh_token';
+
 export enum RouterOutlets {
   Main = 'main',
   Right = 'right-panel',
@@ -194,6 +198,99 @@ export const GenericErrorMessage =
   'Sorry, an error occurred. Rest assured, it will be fixed';
 
 export const INFO_HUB_ID = 'info-hub';
+
+export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
+  return [
+    {
+      id: 'profile',
+      label: 'Profile',
+      routerLink: [Pages.UserProfile],
+      icon: 'pi pi-user',
+    },
+    {
+      id: 'my-articles',
+      label: 'Article Moderation',
+      routerLink: [Pages.Articles.main, Pages.Articles.myList],
+      icon: 'pi pi-list',
+      visible:
+        userRole === Roles.Admin ||
+        userRole === Roles.Editor ||
+        userRole === Roles.Contributor,
+    },
+    {
+      id: 'my-forum-post',
+      label: 'My Forum Posts',
+      routerLink: [Pages.ForumPost.main, Pages.ForumPost.myList],
+      icon: 'pi pi-list',
+    },
+    {
+      id: 'my-market-ad',
+      label: 'My Market Ads',
+      routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.myList],
+      icon: 'pi pi-shopping-bag',
+    },
+    {
+      id: 'site-settings',
+      label: 'Site Settings',
+      routerLink: [Pages.SiteSettings],
+      icon: 'pi pi-cog',
+      visible: userRole === Roles.Admin,
+    },
+    {
+      id: 'content-settings',
+      label: 'Content Management',
+      routerLink: [Pages.ContentManagement],
+      icon: 'pi pi-cog',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
+  ];
+};
+
+export const SignUpMenu: MenuItem[] = [
+  {
+    id: 'sign-up',
+    label: 'Sign Up',
+    routerLink: [Pages.SignUp],
+    icon: 'pi pi-user',
+  },
+  {
+    id: 'profile',
+    label: 'Login',
+    routerLink: [Pages.Login],
+    icon: 'pi pi-user',
+  },
+];
+
+export enum Context {
+  Article = Pages.Articles.main,
+  Forum = Pages.Forum.main,
+  ForumPost = Pages.ForumPost.main,
+  MarketPlace = Pages.MarketPlace.main,
+  // Auth = Pages.Auth.
+}
+
+export enum VoteType {
+  downvote = 'D',
+  upvote = 'U',
+}
+
+export enum CommentType {
+  ForumPost,
+  Comment,
+}
+
+export const trackById = (index: number, comment: any): number => {
+  return comment.id;
+};
+
+export enum Roles {
+  Contributor = 'contributor',
+  Moderator = 'moderator',
+  Admin = 'admin',
+  Editor = 'editor',
+  ServiceProvider = 'service_provider',
+}
+
 export const MainMenu: MenuItem[] = [
   {
     id: INFO_HUB_ID,
@@ -255,95 +352,16 @@ export const MainMenu: MenuItem[] = [
         label: 'Add Resource',
         icon: 'pi pi-plus',
         routerLink: [Pages.Resources.main, Pages.Resources.add],
+        visible: (() => {
+          const user = JSON.parse(localStorage.getItem(APP_USER_TOKEN) || '{}');
+          const userRole = user.role;
+          return (
+            userRole === Roles.Admin ||
+            userRole === Roles.Editor ||
+            userRole === Roles.ServiceProvider
+          );
+        })(),
       },
     ],
   },
 ];
-
-export const LoggedInMenu: MenuItem[] = [
-  {
-    id: 'profile',
-    label: 'Profile',
-    routerLink: [Pages.UserProfile],
-    icon: 'pi pi-user',
-  },
-  {
-    id: 'my-articles',
-    label: 'My Articles',
-    routerLink: [Pages.Articles.main, Pages.Articles.myList],
-    icon: 'pi pi-list',
-  },
-  {
-    id: 'my-forum-post',
-    label: 'My Forum Posts',
-    routerLink: [Pages.ForumPost.main, Pages.ForumPost.myList],
-    icon: 'pi pi-list',
-  },
-  {
-    id: 'my-market-ad',
-    label: 'My Market Ads',
-    routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.myList],
-    icon: 'pi pi-shopping-bag',
-  },
-  {
-    id: 'site-settings',
-    label: 'Site Settings',
-    routerLink: [Pages.SiteSettings],
-    icon: 'pi pi-cog',
-  },
-  {
-    id: 'content-settings',
-    label: 'Content Management',
-    routerLink: [Pages.ContentManagement],
-    icon: 'pi pi-cog',
-  },
-];
-
-export const SignUpMenu: MenuItem[] = [
-  {
-    id: 'sign-up',
-    label: 'Sign Up',
-    routerLink: [Pages.SignUp],
-    icon: 'pi pi-user',
-  },
-  {
-    id: 'profile',
-    label: 'Login',
-    routerLink: [Pages.Login],
-    icon: 'pi pi-user',
-  },
-];
-
-export enum Context {
-  Article = Pages.Articles.main,
-  Forum = Pages.Forum.main,
-  ForumPost = Pages.ForumPost.main,
-  MarketPlace = Pages.MarketPlace.main,
-  // Auth = Pages.Auth.
-}
-
-export enum VoteType {
-  downvote = 'D',
-  upvote = 'U',
-}
-
-export enum CommentType {
-  ForumPost,
-  Comment,
-}
-
-export const trackById = (index: number, comment: any): number => {
-  return comment.id;
-};
-
-export enum Roles {
-  Contributor,
-  Moderator,
-  Admin,
-  Editor,
-  ServiceProvider,
-}
-
-export const APP_TOKEN = 'app_token';
-export const APP_USER_TOKEN = 'app_user_access_token';
-export const APP_REFRESH_TOKEN = 'app_refresh_token';

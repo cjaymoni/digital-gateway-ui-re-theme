@@ -10,6 +10,7 @@ export interface ArticleState extends EntityState<Article> {
   loading: boolean;
   selectedArticleToEdit: Article | null;
   searchResults: Article[];
+  myArticles: Article[];
 }
 
 export const articleEntityAdapter: EntityAdapter<Article> =
@@ -23,6 +24,7 @@ export const initialState: ArticleState = articleEntityAdapter.getInitialState({
   loading: false,
   selectedArticleToEdit: null,
   searchResults: [],
+  myArticles: [],
 });
 
 export const articleReducer = createReducer(
@@ -35,6 +37,9 @@ export const articleReducer = createReducer(
   }),
   on(articleActions.fetchSearchSuccessful, (state, { articles }) => {
     return { ...state, loading: false, searchResults: articles };
+  }),
+  on(articleActions.fetchMyArticlesSuccessful, (state, { articles }) => {
+    return { ...state, loading: false, myArticles: articles };
   }),
   on(articleActions.searchArticle, state => {
     return { ...state, loading: true };

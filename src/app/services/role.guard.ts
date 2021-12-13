@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
+import { Roles } from '../config/app-config';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
 import { userAuthSelectors } from '../store/selectors/user-auth.selectors';
 import { NavigatorService } from './navigator.service';
@@ -31,12 +32,12 @@ export class RoleGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const neededRoles: string[] = route.data['roles'];
+    const neededRoles: Roles[] = route.data['roles'];
 
     return this.store.select(userAuthSelectors.loggedInUser).pipe(
       map(user => {
         if (user) {
-          const role = (user as any).role;
+          const role = user?.role;
 
           if (neededRoles.includes(role)) {
             return true;
@@ -51,7 +52,5 @@ export class RoleGuard implements CanActivate {
         return false;
       })
     );
-
-    // this.store.select()
   }
 }
