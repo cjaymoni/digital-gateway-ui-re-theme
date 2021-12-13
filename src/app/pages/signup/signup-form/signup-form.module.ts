@@ -4,6 +4,7 @@ import { SignupFormComponent } from './signup-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { PasswordModule } from 'primeng/password';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
     ReactiveFormsModule,
     InputTextModule,
     ButtonModule,
+    PasswordModule,
   ],
   declarations: [SignupFormComponent],
   exports: [SignupFormComponent],
