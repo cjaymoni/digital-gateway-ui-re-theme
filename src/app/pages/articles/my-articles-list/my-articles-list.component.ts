@@ -15,6 +15,10 @@ import {
 import { Article } from 'src/app/models/article.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
+import { MenuItem } from 'primeng/api';
+import { ArticleService } from '../services/articles.service';
+import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
+import { PrimeNgAlerts } from 'src/app/config/app-config';
 
 @Component({
   selector: 'app-my-articles-list',
@@ -32,13 +36,17 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
     undefined;
 
   columns: any[] = [];
-
+  statusList!: MenuItem[];
+  selectedArticle: any;
+  selectedStatus!: string;
   PublishedStatusMapping = PublishedStatusMapping;
 
   constructor(
     private store: Store,
     private navigator: NavigatorService,
-    private title: Title
+    private title: Title,
+    private articleService: ArticleService,
+    private appAlertService: AppAlertService
   ) {}
 
   ngAfterViewInit(): void {
@@ -53,6 +61,42 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.title.setTitle('My Articles');
+
+    this.statusList = [
+      {
+        id: 'Review',
+        label: 'Review',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editStatus();
+        },
+      },
+
+      {
+        id: 'Ready',
+        label: 'Ready',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editStatus();
+        },
+      },
+      {
+        id: 'Published',
+        label: 'Published',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editStatus();
+        },
+      },
+      {
+        id: 'Archived',
+        label: 'Archived',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editStatus();
+        },
+      },
+    ];
   }
 
   viewArticle(article: Article) {
@@ -73,5 +117,21 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
 
   goToAddArticlePage() {
     this.navigator.article.goToAddPage(RouterOutlets.Modal);
+  }
+
+  editStatus() {
+    const formData = {
+      status: this.selectedStatus,
+    };
+    const articleId = this.selectedArticle.id;
+    // console.log(status, this.selectedArticle.id);
+    this.articleService
+      .editArticleStatus(`${articleId}`, formData)
+      .subscribe((data: any) => {
+        this.appAlertService.showToast(
+          `${data.title} status updated successfully`,
+          PrimeNgAlerts.UNOBSTRUSIVE
+        );
+      });
   }
 }
