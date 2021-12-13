@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Inject, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { MenuItem } from 'primeng/api';
 import { filter } from 'rxjs';
 import { LoggedInMenu, SignUpMenu } from 'src/app/config/app-config';
+import { LOGIN_SERVICE } from 'src/app/config/injectables';
+import { IAuthService } from 'src/app/models/auth-service';
 import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { menuItemActions } from 'src/app/store/actions/menu-items.actions';
@@ -18,7 +21,7 @@ import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
 export class TopNavComponent implements OnInit {
   loggedInUser$ = this.store
     .select(userAuthSelectors.loggedInUser)
-    .pipe(filter(user => !!user.id));
+    .pipe(filter(user => !!user));
 
   isHandheld$ = this.device.isHandheld$;
 
@@ -30,7 +33,8 @@ export class TopNavComponent implements OnInit {
   constructor(
     private store: Store,
     private device: DeviceService,
-    private navigator: NavigatorService
+    private navigator: NavigatorService,
+    @Inject(LOGIN_SERVICE) public loginService: IAuthService,
   ) {}
 
   items$ = this.store.select(menuItemSelectors.menuItems);
@@ -39,7 +43,9 @@ export class TopNavComponent implements OnInit {
 
   signUpMenu = SignUpMenu;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loggedInMenu = [...LoggedInMenu, ...this.logoutMenu()]
+  }
 
   selectMenu(id: number, link?: [string]) {
     this.store.dispatch(
@@ -55,6 +61,21 @@ export class TopNavComponent implements OnInit {
 
   goToLoginPage() {
     this.navigator.auth.goToLogin();
+  }
+
+  logout = () => {
+    this.loginService.logout().subscribe();
+  }
+
+  logoutMenu(): MenuItem[]{
+    return [
+      {
+        id: 'logout',
+        label: 'Logout',
+        command: this.logout,
+        icon: 'pi pi-power-off',
+      },
+    ]
   }
 
   searchTerm() {}
