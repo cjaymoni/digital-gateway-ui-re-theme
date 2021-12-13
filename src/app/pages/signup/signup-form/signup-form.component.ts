@@ -1,5 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
@@ -39,17 +44,13 @@ export class SignupFormComponent implements OnInit {
         last_name: formValues.lname,
         email: formValues.email,
         password: formValues.password,
-        profile: {
-          profile_type: 2,
-        },
       };
       this.signupService.signup(newUser).subscribe((data: any) => {
         this.appAlertService.showToast(
-          `${
-            data.user.first_name + ' ' + data.user.last_name
-          } account created successfully`,
+          `${data.user.email} account created successfully`,
           PrimeNgAlerts.UNOBSTRUSIVE
         );
+        this.navigator.auth.goToLogin();
       });
     }
   }
