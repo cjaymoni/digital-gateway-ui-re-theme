@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Pages } from './config/app-config';
+import { Pages, RouterOutlets } from './config/app-config';
+import { SignupFormComponent } from './pages/signup/signup-form/signup-form.component';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./pages/landing/landing.module').then(
-        m => m.LandingModule
-      ),
+      import('./pages/landing/landing.module').then(m => m.LandingModule),
   },
   {
     path: Pages.Articles.main,
@@ -26,6 +25,9 @@ const routes: Routes = [
       import('./pages/market-place/market-place.module').then(
         m => m.MarketPlaceModule
       ),
+    data: {
+      breadcrumb: 'Market Place',
+    },
   },
   {
     path: Pages.Forum.main,
@@ -70,23 +72,14 @@ const routes: Routes = [
       import('./pages/user-profile/user-profile.module').then(
         m => m.UserProfileModule
       ),
+    data: {
+      breadcrumb: 'User Profile',
+    },
   },
   {
     path: Pages.SignUp,
-    loadChildren: () =>
-      import('./pages/signup/signup.module').then(m => m.SignupModule),
-  },
-  {
-    path: Pages.UserProfile,
-    loadChildren: () =>
-      import('./pages/user-profile/user-profile.module').then(
-        m => m.UserProfileModule
-      ),
-  },
-  {
-    path: Pages.Auth.login,
-    loadChildren: () =>
-      import('./pages/login/login.module').then(m => m.LoginModule),
+    component: SignupFormComponent,
+    outlet: RouterOutlets.Right,
   },
 ];
 

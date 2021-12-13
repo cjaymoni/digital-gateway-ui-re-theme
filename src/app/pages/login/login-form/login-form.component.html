@@ -5,19 +5,42 @@
       <div class="field col-12">
         <div class="p-inputgroup">
           <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-          <input type="text" pInputText placeholder="Username" formControlName="email" class="inputfield w-full">
+          <input
+            type="text"
+            pInputText
+            placeholder="Email"
+            formControlName="email"
+            class="inputfield w-full"
+          />
         </div>
       </div>
 
       <!-- password -->
-      <div class="field col-12">
+      <div class="field col-12 static">
         <div class="p-inputgroup">
           <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-          <input type="text" pInputText placeholder="Pasword" formControlName="password" class="inputfield w-full">
+          <p-password
+            [toggleMask]="true"
+            type="password"
+            placeholder="Pasword"
+            formControlName="password"
+            inputStyleClass="w-12 relative"
+            styleClass="w-12"
+            autocomplete="on"
+          ></p-password>
         </div>
       </div>
 
-      <div class="field col-12 ml-auto">
+      <div
+        class="
+          field
+          col-12
+          ml-auto
+          flex
+          justify-content-between
+          align-items-center
+        "
+      >
         <button
           pButton
           pRipple
@@ -27,6 +50,21 @@
           [disabled]="loginForm.invalid"
           (click)="onLoginSubmit()"
         ></button>
+        <div>
+          Don't have an account?
+          <span
+            class="
+              ml-1
+              cursor-pointer
+              text-lg
+              font-bold
+              text-blue-700
+              hover-underline
+            "
+            (click)="goToSignup(); $event.stopPropagation()"
+            >Sign up</span
+          >
+        </div>
       </div>
     </div>
   </form>

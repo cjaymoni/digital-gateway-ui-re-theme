@@ -9,6 +9,7 @@ import { DividerModule } from 'primeng/divider';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ImageUploadModule } from 'src/app/shared-ui-modules/image-upload/image-upload.module';
+import { ProfileTypeAutocompleteModule } from '../../shared-ui-modules/profile-type-autocomplete/profile-type-autocomplete.module';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { ImageUploadModule } from 'src/app/shared-ui-modules/image-upload/image-
     InputTextareaModule,
     InputMaskModule,
     ImageUploadModule,
+    ProfileTypeAutocompleteModule,
   ],
   declarations: [UserProfileComponent],
   exports: [UserProfileComponent],

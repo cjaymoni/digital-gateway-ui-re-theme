@@ -12,10 +12,9 @@ import { Pages, PrimeNgAlerts } from 'src/app/config/app-config';
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent implements OnInit {
-
   loginForm!: FormGroup;
 
   constructor(
@@ -30,6 +29,7 @@ export class LoginFormComponent implements OnInit {
       email: ['', [Validators.required, Validators.minLength(5), Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]]
     });
+    this.navigator.setPanelTitle('WELCOME BACK. PLEASE LOGIN');
   }
 
   onLoginSubmit(){
@@ -43,7 +43,7 @@ export class LoginFormComponent implements OnInit {
           // console.log(success);
           if (success){
             this.alert.showToast("Log in successful", PrimeNgAlerts.SUCCESS);
-            // return this.navigator.goToRoute(Pages.UserProfile);
+            return this.navigator.goBack();
           }else {
             this.loginForm.setErrors({invalid: true});
             this.alert.showToast("Invalid login", PrimeNgAlerts.ERROR)
@@ -53,4 +53,7 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
+  goToSignup() {
+    this.navigator.auth.goToSignUp();
+  }
 }

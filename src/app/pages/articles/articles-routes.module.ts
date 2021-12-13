@@ -27,6 +27,7 @@ const routes: Routes = [
     canActivate: [ArticleGuard],
     data: { breadcrumb: 'Edit' },
   },
+
   {
     path: 'search/:category',
     component: ArticleListComponent,

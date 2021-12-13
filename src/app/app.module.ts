@@ -13,6 +13,8 @@ import { appStoreEffects } from './store/app.effects';
 import { appReducersMap } from './store/app.reducers';
 import { TestComponentModule } from './test/test-component/test-component.module';
 import { LoginModule } from './pages/login/login.module';
+import { SignupFormModule } from './pages/signup/signup-form/signup-form.module';
+import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +26,8 @@ import { LoginModule } from './pages/login/login.module';
     HttpClientModule,
     TestComponentModule,
     LoginModule,
+    SignupFormModule,
+    NgxYoutubePlayerModule.forRoot(),
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot(appStoreEffects),

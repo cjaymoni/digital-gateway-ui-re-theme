@@ -61,7 +61,10 @@ export class NavigatorService {
   currentContext$ = this.store.select(selectUrl).pipe(
     filter(d => !!d),
     map(url => {
-      const context = url.split('/')[1];
+      let context = url.split('/')[1];
+
+      if (url.includes('sign') || url.includes('login')) context = '';
+
       return context;
     })
   );
@@ -152,7 +155,11 @@ export class NavigatorService {
   }
 
   goBack() {
-    this.location.back();
+    if (this.router.navigated) {
+      this.location.back();
+    } else {
+      this.goToRoute(['/']);
+    }
   }
 
   addRightPanelRoutes(routesToAdd: Routes) {
@@ -338,10 +345,27 @@ class AuthRoutes extends AppRoutesConfig {
 
   goToSignUp() {
     this.openPanel(Pages['Auth'].signup, 'Signup to create an account');
+    this.panelTitleSubject$.next('Please create an account');
+    this.router.navigate([
+      '', //main
+      {
+        outlets: {
+          [RouterOutlets.Right]: Pages.Auth.signup,
+        },
+      },
+    ]);
   }
 
   goToLogin(title = 'Welcome back. Please Login') {
-    this.openPanel(Pages['Auth'].login, title);
+    this.panelTitleSubject$.next(title);
+    this.router.navigate([
+      '', //main
+      {
+        outlets: {
+          [RouterOutlets.Right]: Pages.Auth.login,
+        },
+      },
+    ]);
   }
 }
 

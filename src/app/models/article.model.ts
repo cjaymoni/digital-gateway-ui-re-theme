@@ -20,11 +20,11 @@ export interface Article {
 }
 
 export enum ArticlePublishedStatus {
-  Published = 'published',
-  Draft = 'draft',
-  Review = 'review',
-  Ready = 'ready',
-  Archived = 'archived',
+  Published = 'Published',
+  Draft = 'Draft',
+  Review = 'Review',
+  Ready = 'Ready',
+  Archived = 'Archived',
 }
 
 export interface AppUploadedImage {

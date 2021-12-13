@@ -1,25 +1,24 @@
+import { userAuthActions } from './../../../store/actions/user-auth.actions';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
-import { LoginEndpoint } from 'src/app/config/routes';
-import { APP_TOKEN, APP_USER_TOKEN } from 'src/app/config/app-config';
+import { APP_TOKEN, APP_USER_TOKEN, APP_REFRESH_TOKEN } from 'src/app/config/app-config';
 import { IAuthService } from 'src/app/models/auth-service';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService implements IAuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private store: Store) {
+    // this.setUpUser()
+  }
 
   setUpUser(){
-  }
-  redirect: string =  "/user-profile";
+    this.loggedInUser?this.store.dispatch(userAuthActions.loginSuccessful({user: this.loggedInUser})): null;
 
-  userCan(permission: string[]): boolean {
-    return this.loggedInUser && this.loggedInUser.permission.length >0 &&
-    this.loggedInUser.permission.some((p:any) => permission.includes(p));
   }
 
   token!: string;
@@ -34,10 +33,12 @@ export class LoginService implements IAuthService {
     return this.http.post(`${environment.API_URL}login`, data).pipe(
       map((response:any) => {
         response= response;
-        localStorage.setItem(APP_TOKEN, response.token);
-        localStorage.setItem(APP_USER_TOKEN, response.user);
+        localStorage.setItem(APP_TOKEN, response.access);
+        localStorage.setItem(APP_REFRESH_TOKEN, response.refresh);
+        localStorage.setItem(APP_USER_TOKEN, JSON.stringify(response.user));
 
         if(response.user){
+          this.store.dispatch(userAuthActions.loginSuccessful({user: response.user}));
           return true;
         }
         else {
@@ -48,10 +49,12 @@ export class LoginService implements IAuthService {
   }
 
   logout(): Observable<boolean> {
-    return this.http.post(`${environment.API_URL}logout`,{}).pipe(
+    return this.http.post(`${environment.API_URL}logout`,{refresh: localStorage.getItem(APP_REFRESH_TOKEN)}).pipe(
       map(_ => {
         localStorage.removeItem(APP_TOKEN);
         localStorage.removeItem(APP_USER_TOKEN);
+        localStorage.removeItem(APP_REFRESH_TOKEN);
+        this.store.dispatch(userAuthActions.logoutSuccessful());
         return true;
       })
     )

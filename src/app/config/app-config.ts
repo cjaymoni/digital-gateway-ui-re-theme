@@ -1,5 +1,6 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { Menu } from 'primeng/menu';
 import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
@@ -24,6 +25,7 @@ export enum FeatureNamesForStore {
   ProductType = 'productType',
   Forum = 'forum',
   ForumPost = 'forumPost',
+  ProfileType = 'profileType',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -94,7 +96,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   },
   Auth: {
     login: 'login',
-    signup: 'signup',
+    signup: 'sign-up',
   },
 
   MarketPlace: {
@@ -124,6 +126,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   SiteSettings: 'site-settings',
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
+  Login: 'login',
 };
 
 export const urlMatcherForEditAndView = (
@@ -160,10 +163,10 @@ export const enum PrimeNgAlerts {
 }
 
 export const PublishedStatusMapping: { [key: string]: string } = {
-  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Warn,
+  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Danger,
   [ArticlePublishedStatus.Published]: PrimeNgSeverity.Success,
   [ArticlePublishedStatus.Draft]: PrimeNgSeverity.Info,
-  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Danger,
+  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Info,
   [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Success,
 };
 
@@ -294,16 +297,20 @@ export const LoggedInMenu: MenuItem[] = [
     routerLink: [Pages.ContentManagement],
     icon: 'pi pi-cog',
   },
+];
+
+export const SignUpMenu: MenuItem[] = [
   {
-    id: 'login',
-    label: 'Login',
-    routerLink: [Pages.Auth.login],
+    id: 'sign-up',
+    label: 'Sign Up',
+    routerLink: [Pages.SignUp],
     icon: 'pi pi-user',
   },
   {
-    id: 'logout',
-    label: 'Logout',
-    icon: 'pi pi-power-off',
+    id: 'profile',
+    label: 'Login',
+    routerLink: [Pages.Login],
+    icon: 'pi pi-user',
   },
 ];
 
@@ -332,3 +339,4 @@ export const trackById = (index: number, comment: any): number => {
 
 export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
+export const APP_REFRESH_TOKEN = 'app_refresh_token';

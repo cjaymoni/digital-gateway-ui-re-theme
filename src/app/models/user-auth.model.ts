@@ -2,7 +2,7 @@ export interface User {
   id?: number;
   email: string;
   name?: string;
-  username: string;
+  role: string;
 }
 
 export interface UserToken {

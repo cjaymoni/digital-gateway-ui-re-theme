@@ -4,27 +4,20 @@ import { Router, RouterModule, Routes, UrlSegment } from '@angular/router';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
-// const rightPanelRoutes: Routes = [
-//   {
-//     path: 'login',
-//     component: LoginFormComponent,
-//     outlet: RouterOutlets.Right,
-//   },
-// ];
-
-const routes: Routes = [
+const rightPanelRoutes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginFormComponent,
+    outlet: RouterOutlets.Right,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild([])],
   exports: [RouterModule],
 })
 export class LoginRoutesModule {
   constructor(private navigator: NavigatorService) {
-    this.navigator.addRightPanelRoutes(routes);
+    this.navigator.addRightPanelRoutes(rightPanelRoutes);
   }
 }
