@@ -15,6 +15,8 @@ import { TestComponentModule } from './test/test-component/test-component.module
 import { LoginModule } from './pages/login/login.module';
 import { SignupFormModule } from './pages/signup/signup-form/signup-form.module';
 import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginTokenInterceptor } from './interceptors/login-token.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +44,13 @@ import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
       },
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoginTokenInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

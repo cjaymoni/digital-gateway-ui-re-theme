@@ -340,3 +340,4 @@ export const trackById = (index: number, comment: any): number => {
 export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
 export const APP_REFRESH_TOKEN = 'app_refresh_token';
+export const LOGIN_PATH = 'login';
