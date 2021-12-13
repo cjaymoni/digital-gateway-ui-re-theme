@@ -30,7 +30,7 @@ export class LayoutComponent implements OnInit {
   ];
 
   sliderContent = [];
-  multimedia = [{}, {}, {}];
+  multimedia = ['nzJ8LitiIG8', '5VXH0dLsOII', 'rEtAqNT3kEo', 'PUUpJMdvKKw'];
 
   productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);

@@ -1,6 +1,6 @@
 <p-carousel
   [value]="(articles$ | async) || []"
-  styleClass="h-auto lg:h-20rem"
+  styleClass="h-auto lg:h-20rem w-full"
   [numVisible]="1"
   [numScroll]="1"
   [circular]="true"
@@ -14,7 +14,7 @@
           <img
             [src]="article.images?.[0]?.image"
             [alt]="article.title"
-            class="w-auto h-auto lg:h-15rem"
+            class="w-full h-auto lg:h-15rem"
           />
           <div
             class="
@@ -40,12 +40,32 @@
     </div>
   </ng-template>
 </p-carousel>
+
+<div *ngIf="articles$ | async">
+  <div class="text-lg">Featured Articles</div>
+  <p-carousel
+    [value]="(articles$ | async) || []"
+    styleClass="custom-carousel"
+    [numVisible]="3"
+    [numScroll]="3"
+    [circular]="true"
+    [autoplayInterval]="3000"
+    [responsiveOptions]="responsiveOptions"
+  >
+    <ng-template pTemplate="item" let-article>
+      <div class="px-2 py-2">
+        <app-article-card [article]="article"></app-article-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
+
 <div>
-  <h5 class="text-lg">Forum</h5>
+  <div class="text-lg">Forum</div>
   <app-forum-card [forum]="forum$ | async"></app-forum-card>
 </div>
 <div>
-  <h5 class="text-lg">Marketing Info</h5>
+  <div class="text-lg">Marketing Info</div>
   <p-carousel
     [value]="(productAds$ | async) || []"
     styleClass="custom-carousel py-2"
@@ -63,7 +83,7 @@
   </p-carousel>
 </div>
 <div>
-  <h5 class="text-lg">Multimedia</h5>
+  <div class="text-lg">Multimedia</div>
   <p-carousel
     [value]="multimedia"
     styleClass="custom-carousel"
@@ -73,31 +93,14 @@
     [autoplayInterval]="4000"
     [responsiveOptions]="responsiveOptions"
   >
-    <ng-template pTemplate="item" let-multimedia>
-      <div class="px-2 py-2">
-        <app-multimedia [multimediaContent]="multimedia"></app-multimedia>
+    <ng-template pTemplate="item" let-video>
+      <div class="px-2 py-2 h-15rem">
+        <app-multimedia [videoId]="video"></app-multimedia>
       </div>
     </ng-template>
   </p-carousel>
 </div>
-<div *ngIf="articles$ | async">
-  <h5 class="text-lg">Featured Articles</h5>
-  <p-carousel
-    [value]="(articles$ | async) || []"
-    styleClass="custom-carousel"
-    [numVisible]="3"
-    [numScroll]="3"
-    [circular]="true"
-    [autoplayInterval]="3000"
-    [responsiveOptions]="responsiveOptions"
-  >
-    <ng-template pTemplate="item" let-article>
-      <div class="px-2 py-2">
-        <app-article-card [article]="article"></app-article-card>
-      </div>
-    </ng-template>
-  </p-carousel>
-</div>
+
 <div>
   <p-card header="Partners" class="">
     <div class="grid">

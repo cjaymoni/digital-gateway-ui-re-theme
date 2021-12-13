@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { LoginFormComponent } from './login-form.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ResourceFormComponent } from './resource-form.component';
 
 @NgModule({
   imports: [
@@ -13,9 +14,9 @@ import { LoginFormComponent } from './login-form.component';
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    PasswordModule,
+    InputTextareaModule,
+    FileUploadModule,
   ],
-  exports: [LoginFormComponent],
-  declarations: [LoginFormComponent],
+  declarations: [ResourceFormComponent]
 })
-export class LoginFormModule {}
+export class ResourceFormModule { }

@@ -1,5 +1,6 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { Menu } from 'primeng/menu';
 import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
@@ -95,7 +96,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   },
   Auth: {
     login: 'login',
-    signup: 'signup',
+    signup: 'sign-up',
   },
 
   MarketPlace: {
@@ -115,11 +116,17 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     },
   },
 
+  Resources: {
+    main: 'resources',
+    add: 'post-resource',
+  },
+
   //content management
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
+  Login: 'login',
 };
 
 export const urlMatcherForEditAndView = (
@@ -232,6 +239,25 @@ export const MainMenu: MenuItem[] = [
       },
     ],
   },
+  {
+    id: 'resource',
+    label: 'Resource',
+    icon: 'pi pi-file-o',
+    items: [
+      {
+        id: 'view-resources',
+        label: 'View Resource',
+        icon: 'pi pi-eye',
+        routerLink: [Pages.Resources.main],
+      },
+      {
+        id: 'create-resource',
+        label: 'Add Resource',
+        icon: 'pi pi-plus',
+        routerLink: [Pages.Resources.main, Pages.Resources.add],
+      },
+    ],
+  },
 ];
 
 export const LoggedInMenu: MenuItem[] = [
@@ -275,6 +301,21 @@ export const LoggedInMenu: MenuItem[] = [
     id: 'logout',
     label: 'Logout',
     icon: 'pi pi-power-off',
+  },
+];
+
+export const SignUpMenu: MenuItem[] = [
+  {
+    id: 'sign-up',
+    label: 'Sign Up',
+    routerLink: [Pages.SignUp],
+    icon: 'pi pi-user',
+  },
+  {
+    id: 'profile',
+    label: 'Login',
+    routerLink: [Pages.Login],
+    icon: 'pi pi-user',
   },
 ];
 

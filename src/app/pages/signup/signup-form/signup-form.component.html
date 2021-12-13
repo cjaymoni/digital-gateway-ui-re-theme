@@ -1,6 +1,6 @@
 <ng-container>
   <form [formGroup]="signupForm">
-    <div class="fluid formgrid grid">
+    <div class="fluid formgrid grid mt-5">
       <div class="flex flex-column md:flex-row col-12">
         <div class="field col-12 md:col-6">
           <div class="p-inputgroup">
@@ -52,12 +52,30 @@
           />
         </div>
       </div>
-      <div class="text-sm font-italic p-2">
-        Already have an account?
-        <a href="/login">LogIn</a>
+
+      <div class="field col-12">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+          <input
+            type="text"
+            pInputText
+            placeholder="Confirm Pasword"
+            formControlName="password"
+            class="inputfield w-full"
+          />
+        </div>
       </div>
 
-      <div class="field col-12 ml-auto flex justify-content-end">
+      <div
+        class="
+          field
+          col-12
+          ml-auto
+          flex
+          align-items-center
+          justify-content-between
+        "
+      >
         <button
           pButton
           pRipple
@@ -67,6 +85,22 @@
           [disabled]="signupForm.invalid"
           (click)="onSignupSubmit()"
         ></button>
+
+        <div>
+          Already have an account?
+          <span
+            class="
+              ml-1
+              cursor-pointer
+              text-lg
+              font-bold
+              text-blue-700
+              hover-underline
+            "
+            (click)="goToLogin(); $event.stopPropagation()"
+            >Login</span
+          >
+        </div>
       </div>
     </div>
   </form>

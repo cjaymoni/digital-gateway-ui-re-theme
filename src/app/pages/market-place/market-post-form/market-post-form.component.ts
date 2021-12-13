@@ -14,6 +14,7 @@ import {
 import { Store } from '@ngrx/store';
 import { filter, Subscription, take, tap } from 'rxjs';
 import { TagType } from 'src/app/config/app-config';
+import { slugify } from 'src/app/helpers/app.helper.functions';
 import { AppUploadedImage } from 'src/app/models/article.model';
 import { ProductAd } from 'src/app/models/product-ad.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -39,7 +40,7 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
 
   productAd!: ProductAd;
 
-  adTagType = TagType.ad;
+  adTagType = TagType.product;
 
   adTypes = [
     {
@@ -116,6 +117,12 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       productAdFromForm.product.tags = this.tags.value?.map((t: any) => t.id);
       productAdFromForm.product.product_type = this.productType.value?.id;
       productAdFromForm.product.id = this.productAd?.product?.id;
+      productAdFromForm.product.slug = slugify(
+        productAdFromForm.product.name + productAdFromForm.product.description
+      );
+      productAdFromForm.slug = slugify(
+        productAdFromForm.cellphone + productAdFromForm.gh_post
+      );
       productAdFromForm.ad_type = this.productAdForm.value.ad_type.value;
       const images = (
         this.imageUploadComponent?.getFilesToUpload() || []
