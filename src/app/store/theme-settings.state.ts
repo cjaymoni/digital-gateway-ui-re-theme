@@ -44,8 +44,6 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
     private store: Store
   ) {
     super(initialHomepageState);
-    console.log('state set');
-
     this.getHomepageData();
   }
 
@@ -55,9 +53,6 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
     this.select(state => state.featuredCategories);
   readonly highlightArticles$: Observable<ThemeSettings['highlightArticles']> =
     this.select(state => state.highlightArticles);
-  // readonly selectedEvents$: Observable<Movie[]> = this.select(
-  //   state => state.movies
-  // );
 
   readonly featuredCategoryArray$ = this.select(
     this.categories$.pipe(map(cat => cat as Category[])),

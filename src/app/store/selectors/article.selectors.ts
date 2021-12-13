@@ -27,6 +27,11 @@ class ArticleSelectors extends DefaultAdapterSelectors {
     this.state,
     (state: ArticleState) => state.searchResults
   );
+
+  myArticles = createSelector(
+    this.state,
+    (state: ArticleState) => state.myArticles
+  );
 }
 
 export const articleSelectors = new ArticleSelectors();
