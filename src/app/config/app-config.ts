@@ -297,11 +297,6 @@ export const LoggedInMenu: MenuItem[] = [
     routerLink: [Pages.ContentManagement],
     icon: 'pi pi-cog',
   },
-  {
-    id: 'logout',
-    label: 'Logout',
-    icon: 'pi pi-power-off',
-  },
 ];
 
 export const SignUpMenu: MenuItem[] = [
@@ -348,3 +343,7 @@ export enum Roles {
   Editor,
   ServiceProvider,
 }
+
+export const APP_TOKEN = 'app_token';
+export const APP_USER_TOKEN = 'app_user_access_token';
+export const APP_REFRESH_TOKEN = 'app_refresh_token';
