@@ -8,10 +8,16 @@ const routes: Routes = [
   {
     path: '',
     component: ResourceListComponent,
+    data: {
+      breadcrumb: 'Resources List',
+    },
   },
   {
     path: Pages.Resources.add,
     component: ResourceFormComponent,
+    data: {
+      breadcrumb: 'Add Resource',
+    },
   },
 ];
 

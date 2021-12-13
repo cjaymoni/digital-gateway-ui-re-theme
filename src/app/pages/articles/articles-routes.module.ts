@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Pages, RouterOutlets } from 'src/app/config/app-config';
+import { Pages, Roles, RouterOutlets } from 'src/app/config/app-config';
+import { RoleGuard } from 'src/app/services/role.guard';
 import { ArticleDetailsComponent } from 'src/app/shared-ui-modules/article-details/article-details.component';
 import { ArticleFormComponent } from 'src/app/shared-ui-modules/article-form/article-form.component';
 import { ArticleListComponent } from './article-list/article-list.component';
@@ -17,15 +18,15 @@ const routes: Routes = [
     path: Pages.Articles.view,
     component: ArticleDetailsComponent,
     outlet: RouterOutlets.Modal,
-    canActivate: [ArticleGuard],
-    data: { breadcrumb: 'Preview' },
+    canActivate: [RoleGuard, ArticleGuard],
+    data: { breadcrumb: 'Preview', roles: [Roles.Admin, Roles.Editor] },
   },
   {
     path: Pages.Articles.edit,
     component: ArticleFormComponent,
     outlet: RouterOutlets.Modal,
-    canActivate: [ArticleGuard],
-    data: { breadcrumb: 'Edit' },
+    canActivate: [RoleGuard, ArticleGuard],
+    data: { breadcrumb: 'Edit', roles: [Roles.Admin, Roles.Editor] },
   },
 
   {
@@ -38,16 +39,16 @@ const routes: Routes = [
   {
     path: Pages.Articles.myList,
     component: MyArticlesListComponent,
-    canActivate: [ArticleGuard],
-    data: { breadcrumb: 'List' },
+    canActivate: [RoleGuard, ArticleGuard],
+    data: { breadcrumb: 'List', roles: [Roles.Admin, Roles.Editor] },
   },
 
   {
     path: Pages.Articles.add,
     component: ArticleFormComponent,
     outlet: RouterOutlets.Modal,
-    canActivate: [ArticleGuard],
-    data: { breadcrumb: 'Add' },
+    canActivate: [RoleGuard, ArticleGuard],
+    data: { breadcrumb: 'Add', roles: [Roles.Admin, Roles.Editor] },
   },
   {
     path: Pages.Articles.viewDetails,

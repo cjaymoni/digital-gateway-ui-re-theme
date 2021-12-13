@@ -340,3 +340,11 @@ export enum CommentType {
 export const trackById = (index: number, comment: any): number => {
   return comment.id;
 };
+
+export enum Roles {
+  Contributor,
+  Moderator,
+  Admin,
+  Editor,
+  ServiceProvider,
+}
