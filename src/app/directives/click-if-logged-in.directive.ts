@@ -24,7 +24,7 @@ export class AppProceedIfLoggedDirective {
       this.loggedInUser$
         .pipe(
           tap(user => {
-            if (user?.id) {
+            if (user) {
               return this.onProceed.emit();
             } else {
               this.alert.showToast(

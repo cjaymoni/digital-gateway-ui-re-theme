@@ -1,8 +1,10 @@
+import { Roles } from '../config/app-config';
+
 export interface User {
   id?: number;
   email: string;
   name?: string;
-  username: string;
+  role: Roles;
 }
 
 export interface UserToken {

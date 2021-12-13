@@ -42,7 +42,7 @@
 </p-carousel>
 
 <div *ngIf="articles$ | async">
-  <div class="text-lg">Featured Articles</div>
+  <div class="text-2xl mt-3 font-bold">Featured Articles</div>
   <p-carousel
     [value]="(articles$ | async) || []"
     styleClass="custom-carousel"
@@ -61,11 +61,11 @@
 </div>
 
 <div>
-  <div class="text-lg">Forum</div>
+  <div class="text-2xl mt-3 font-bold">Forum</div>
   <app-forum-card [forum]="forum$ | async"></app-forum-card>
 </div>
 <div>
-  <div class="text-lg">Marketing Info</div>
+  <div class="text-2xl mt-3 font-bold">Marketing Info</div>
   <p-carousel
     [value]="(productAds$ | async) || []"
     styleClass="custom-carousel py-2"
@@ -83,7 +83,35 @@
   </p-carousel>
 </div>
 <div>
-  <div class="text-lg">Multimedia</div>
+  <div>
+    <p-card header="About Us">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non massa
+      vitae metus imperdiet ultrices. Fusce sed laoreet nunc. Maecenas tempor
+      mollis turpis pellentesque egestas. Pellentesque habitant morbi tristique
+      senectus et netus et malesuada fames ac turpis egestas. In viverra magna
+      nec enim rhoncus, vitae auctor dolor hendrerit. Pellentesque habitant
+      morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+      Nam mattis neque eget tortor vulputate, in finibus risus dictum. In
+      suscipit fringilla sem eget aliquet. Nam vitae consectetur neque. Proin
+      laoreet eros eget nisl finibus ornare. Sed et blandit leo. In luctus
+      accumsan enim, a facilisis enim venenatis vestibulum. Maecenas rutrum
+      pellentesque ex et sodales. Nunc sit amet dignissim augue, id mollis
+      turpis. Pellentesque imperdiet, justo quis viverra lacinia, odio sapien
+      efficitur nunc, vitae cursus neque turpis ut neque. Nulla iaculis tellus
+      nisi, nec ullamcorper libero consequat facilisis. Pellentesque elementum
+      lorem est, at convallis justo pellentesque et. Vivamus sed aliquam dolor,
+      quis tempus leo. Donec sit amet purus a metus pretium convallis at quis
+      quam. Fusce eget sem ac tellus suscipit rutrum vitae porttitor purus. Orci
+      varius natoque penatibus et magnis dis parturient montes, nascetur
+      ridiculus mus. Nam venenatis, nisi in vehicula consectetur, neque odio
+      tincidunt enim, sed suscipit dui ante sit amet odio. Cras et nulla ac
+      lorem bibendum faucibus. Suspendisse ligula augue, facilisis eu magna in,
+      sollicitudin ornare diam. Donec placerat aliquam quam, eu fringilla justo
+      accumsan a.
+    </p-card>
+  </div>
+
+  <div class="text-2xl mt-3 font-bold">Multimedia</div>
   <p-carousel
     [value]="multimedia"
     styleClass="custom-carousel"

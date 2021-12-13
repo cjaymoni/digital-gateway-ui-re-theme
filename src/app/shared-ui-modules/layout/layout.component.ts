@@ -60,7 +60,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
               dismissableMask: false,
             });
           } else {
-            this.modalRef?.close();
+            this.modalRef?.destroy();
           }
         })
       )
