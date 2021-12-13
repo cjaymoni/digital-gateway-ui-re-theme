@@ -1,18 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  Pages,
-  Roles,
-  RouterOutlets,
-  SLUG_PREFIX,
-} from 'src/app/config/app-config';
+import { Pages, RouterOutlets } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { MarketPlaceGuard } from './guard/market-place.guard';
+import { MarketListDetailsComponent } from './market-list-details/market-list-details.component';
 import { MarketPlaceListComponent } from './market-place-list/market-place-list.component';
 import { MarketPostFormComponent } from './market-post-form/market-post-form.component';
 import { MyMarketPostsComponent } from './my-market-posts/my-market-posts.component';
-import { MarketListDetailsComponent } from './market-list-details/market-list-details.component';
-import { RoleGuard } from 'src/app/services/role.guard';
 
 const rightPanelRoutes: Routes = [];
 
