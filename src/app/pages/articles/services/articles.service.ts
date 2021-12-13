@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { map, tap } from 'rxjs';
 import { ArticlesEndpoint } from 'src/app/config/routes';
 import { Article, AppUploadedImage } from 'src/app/models/article.model';
 import { ResourceService } from 'src/app/services/resources.service';
+import { articleActions } from 'src/app/store/actions/article.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService extends ResourceService {
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private store: Store) {
     super(http, ArticlesEndpoint);
   }
 
@@ -41,7 +43,14 @@ export class ArticleService extends ResourceService {
 
   editArticleStatus(formData: any, articleId: any) {
     return this.updateResource(articleId, formData).pipe(
-      map(data => data as Article)
+      map(data => data as Article),
+      tap(article =>
+        this.store.dispatch(
+          articleActions.editArticleSuccessful({
+            updatedArticle: { id: article.id, changes: article },
+          })
+        )
+      )
     );
   }
   private getFormDataFromArticleObject(

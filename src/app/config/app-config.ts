@@ -156,10 +156,10 @@ export const enum PrimeNgAlerts {
 }
 
 export const PublishedStatusMapping: { [key: string]: string } = {
-  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Warn,
+  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Danger,
   [ArticlePublishedStatus.Published]: PrimeNgSeverity.Success,
   [ArticlePublishedStatus.Draft]: PrimeNgSeverity.Info,
-  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Danger,
+  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Info,
   [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Success,
 };
 
