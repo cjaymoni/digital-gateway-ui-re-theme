@@ -19,7 +19,7 @@
 <ng-template #actions let-article>
   <div class="flex justify-content-between">
     <button
-      class="p-button p-button-rounded p-button-danger mr-3"
+      class="p-button p-button-rounded p-button-danger mr-1"
       pButton
       tooltipPosition="bottom"
       pTooltip="View Article"
@@ -28,15 +28,25 @@
     ></button>
 
     <button
-      class="p-button p-button-info p-button-rounded mr-auto"
+      class="p-button p-button-info p-button-rounded mr-1"
       pButton
       pTooltip="Edit Article"
       tooltipPosition="bottom"
       icon="pi pi-pencil"
       (click)="editArticle(article)"
     ></button>
+
+    <button
+      class="p-button p-button-help p-button-rounded mr-auto"
+      pButton
+      pTooltip="Edit Status"
+      tooltipPosition="bottom"
+      icon="pi pi-paperclip"
+      (click)="selectedArticle = article; statusMenu.toggle($event)"
+    ></button>
   </div>
 </ng-template>
+<p-menu #statusMenu [popup]="true" [model]="statusList"></p-menu>
 
 <ng-template #statusTemplate let-status>
   <p-message

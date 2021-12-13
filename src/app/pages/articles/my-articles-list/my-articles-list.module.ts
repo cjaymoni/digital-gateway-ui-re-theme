@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { MessageModule } from 'primeng/message';
 import { TagModule } from 'primeng/tag';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
   declarations: [MyArticlesListComponent],
@@ -16,6 +17,7 @@ import { TagModule } from 'primeng/tag';
     TooltipModule,
     MessageModule,
     TagModule,
+    MenuModule,
   ],
   exports: [MyArticlesListComponent],
 })

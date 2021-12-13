@@ -39,6 +39,11 @@ export class ArticleService extends ResourceService {
     );
   }
 
+  editArticleStatus(formData: any, articleId: any) {
+    return this.updateResource(articleId, formData).pipe(
+      map(data => data as Article)
+    );
+  }
   private getFormDataFromArticleObject(
     article: Article,
     imageToUpload?: File | AppUploadedImage[] | any

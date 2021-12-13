@@ -24,6 +24,7 @@ export enum FeatureNamesForStore {
   ProductType = 'productType',
   Forum = 'forum',
   ForumPost = 'forumPost',
+  ProfileType = 'profileType',
 }
 
 export const SLUG_PREFIX = 'read';
