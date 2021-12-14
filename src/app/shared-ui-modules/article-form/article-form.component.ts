@@ -164,6 +164,6 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.navigator.article.goToListPage();
+    this.navigator.closeModal();
   }
 }

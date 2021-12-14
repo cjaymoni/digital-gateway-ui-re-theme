@@ -6,21 +6,47 @@
     <p-galleria
       [value]="(product$ | async).product.images"
       [responsiveOptions]="responsiveOptions"
+      [autoPlay]="true"
+      [circular]="true"
+      [(visible)]="displayImage"
+      [(activeIndex)]="activeIndex"
+      [fullScreen]="true"
+      [showThumbnails]="false"
+      [showItemNavigators]="true"
     >
       <ng-template pTemplate="item" let-item>
-        <p-image
-          [src]="item.image"
-          [alt]="item.title"
-          class="h-17rem"
-          [preview]="true"
-        ></p-image>
+        <img [src]="item.image" [alt]="item.title" class="h-17rem" />
+        <!-- [preview]="true" -->
+        <!-- </img> -->
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
-        <div class="grid grid-nogutter justify-content-center">
-          <img [src]="item.image" class="w-10rem h-10rem" />
+        <div class="grid grid-nogutter">
+          <img [src]="item.image" class="w-5rem h-5rem" />
         </div>
       </ng-template>
     </p-galleria>
+    <div
+      *ngIf="(product$ | async).product.images"
+      class="grid w-30rem justify-content-center align-items-center"
+    >
+      <div
+        *ngFor="let img of (product$ | async).product.images; let index = index"
+        class="col-3"
+      >
+        <img
+          [src]="img.image"
+          [alt]="img.name"
+          class="
+            cursor-pointer
+            w-5rem
+            h-5rem
+            thumbnail
+            transition-all transition-duration-300 transition-ease-in-out
+          "
+          (click)="imageClick(index)"
+        />
+      </div>
+    </div>
   </div>
   <div class="flex text-lg shadow-1 p-4">
     <div class="flex-auto flex align-items-center justify-content-center">

@@ -1,5 +1,7 @@
+import { ChangeDetectionStrategy } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { filter, map, take } from 'rxjs';
 import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
 
 @Component({
@@ -11,6 +13,11 @@ import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors
 export class MarketListDetailsComponent implements OnInit {
   @Input() product$ = this.store.select(productAdSelectors.selectedProductAd);
 
+  productImages!: any[];
+
+  displayImage = false;
+  activeIndex = 0;
+
   responsiveOptions = [
     {
       breakpoint: '1024px',
@@ -19,8 +26,8 @@ export class MarketListDetailsComponent implements OnInit {
     },
     {
       breakpoint: '768px',
-      numVisible: 2,
-      numScroll: 2,
+      numVisible: 3,
+      numScroll: 3,
     },
     {
       breakpoint: '560px',
@@ -32,4 +39,9 @@ export class MarketListDetailsComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit() {}
+
+  imageClick(index: number) {
+    this.activeIndex = index;
+    this.displayImage = true;
+  }
 }

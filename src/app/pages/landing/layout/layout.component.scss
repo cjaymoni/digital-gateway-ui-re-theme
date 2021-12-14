@@ -1,11 +1,19 @@
 .article-title {
-  bottom: 10px;
+  bottom: 25px;
 }
 
 :host ::ng-deep {
   app-article-card {
     .article-card {
       box-shadow: unset !important;
+      width: 100%;
     }
+  }
+
+  .event-slider:hover {
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    box-sizing: border-box;
+    padding: 0 !important;
   }
 }

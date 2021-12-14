@@ -54,11 +54,11 @@
       </ng-container>
       <ng-container *ngIf="!articleHasImage">
         <label for="imageUpload">Image Upload</label>
-        <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
+        <app-image-upload [multiple]="false"></app-image-upload>
       </ng-container>
     </div>
 
-    <div class="field col-12 mb-8">
+    <div class="field col-12">
       <label for="content">Body</label>
       <app-content-box
         #contentBox

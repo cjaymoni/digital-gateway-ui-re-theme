@@ -44,10 +44,11 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {}
 
-  goToAddPostPage() {}
+  goToAddPostPage() {
+    this.navigator.marketAd.goToAddPage();
+  }
 
   viewMarketAd(productAd: ProductAd) {
-    this.selectProductAd(productAd);
     this.navigator.marketAd.goToViewPage(
       productAd.product.id,
       'Preview Product Ad'
@@ -55,11 +56,6 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
   }
 
   editMarketAd(productAd: ProductAd) {
-    this.store.dispatch(
-      productAdActions.selectProductAdToEdit({
-        productAd,
-      })
-    );
     this.navigator.marketAd.goToEditPage(
       productAd.product.id,
       'Edit Product',
@@ -68,12 +64,4 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
   }
 
   expireMarketAd(productAd: ProductAd) {}
-
-  private selectProductAd(productAd: ProductAd) {
-    this.store.dispatch(
-      productAdActions.selectProductAd({
-        productAd,
-      })
-    );
-  }
 }

@@ -26,7 +26,10 @@ const routes: Routes = [
     component: ArticleFormComponent,
     outlet: RouterOutlets.Modal,
     canActivate: [RoleGuard, ArticleGuard],
-    data: { breadcrumb: 'Edit', roles: [Roles.Admin, Roles.Editor] },
+    data: {
+      breadcrumb: 'Edit',
+      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+    },
   },
 
   {

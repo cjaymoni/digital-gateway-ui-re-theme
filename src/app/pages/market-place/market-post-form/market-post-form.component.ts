@@ -11,6 +11,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { filter, Subscription, take, tap } from 'rxjs';
 import { TagType } from 'src/app/config/app-config';
@@ -56,7 +57,8 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private navigator: NavigatorService,
-    private store: Store
+    private store: Store,
+    private action$: Actions
   ) {}
 
   ngOnDestroy(): void {
@@ -84,6 +86,7 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
     });
 
     this.subscription = this.getProductAdToEditSubscription();
+    this.subscription.add(this.addOrEditSubscription());
   }
   get tags() {
     return this.productAdForm.get('product.tags') as FormControl;
@@ -127,6 +130,7 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       const images = (
         this.imageUploadComponent?.getFilesToUpload() || []
       ).concat(this.images.value || []);
+      productAdFromForm.district = this.district.value?.id;
 
       if (this.createForm) {
         this.store.dispatch(
@@ -166,7 +170,21 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
 
           this.productAd = productAd;
           this.createForm = false;
-          this.navigator.setPanelTitle('Edit Product');
+          this.navigator.setPanelTitle('Update Product');
+        })
+      )
+      .subscribe();
+  }
+
+  private addOrEditSubscription() {
+    return this.action$
+      .pipe(
+        ofType(
+          productAdActions.editProductAdSuccessful,
+          productAdActions.addProductAdSuccessful
+        ),
+        tap(_ => {
+          this.navigator.closeModal();
         })
       )
       .subscribe();

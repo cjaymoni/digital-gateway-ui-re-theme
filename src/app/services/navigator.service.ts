@@ -8,6 +8,8 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Sidebar } from 'primeng/sidebar';
 import { BehaviorSubject, filter, map, Observable, take, tap } from 'rxjs';
 import {
   IPageItems,
@@ -58,6 +60,10 @@ export class NavigatorService {
 
   private modalTitle$ = new BehaviorSubject('');
 
+  private modalRef!: DynamicDialogRef;
+
+  private sidebarRef!: Sidebar;
+
   currentContext$ = this.store.select(selectUrl).pipe(
     filter(d => !!d),
     map(url => {
@@ -85,6 +91,22 @@ export class NavigatorService {
 
   getPanelTitle() {
     return this.panelTitle$.asObservable();
+  }
+
+  setModalRef(modalRef: DynamicDialogRef) {
+    this.modalRef = modalRef;
+  }
+
+  getModalRef() {
+    return this.modalRef;
+  }
+
+  setSidebarRef(sidebar: Sidebar) {
+    this.sidebarRef = sidebar;
+  }
+
+  getSidebarRef() {
+    return this.sidebarRef;
   }
 
   setModalTitle(title: string) {
@@ -126,6 +148,8 @@ export class NavigatorService {
               },
             },
           ]);
+
+          this.modalRef?.destroy();
         })
       )
       .subscribe();
@@ -183,7 +207,11 @@ export class NavigatorService {
     this.modalTitle$
   );
   auth = new AuthRoutes(this.router, this.panelTitle$, this.modalTitle$);
-  resource = new ResourceRoutes(this.router, this.panelTitle$, this.modalTitle$);
+  resource = new ResourceRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
 }
 
 class AppRoutesConfig {
@@ -394,5 +422,4 @@ class ResourceRoutes extends AppRoutesConfig {
   ) {
     super(Pages.Resources, router, subject, modalsubject);
   }
-
 }

@@ -1,8 +1,8 @@
 .article-title-text {
-  color: white;
+  color: var(--text-color);
 
-  @media screen and (min-width: 1200px) {
-    color: var(--text-color);
+  @media screen and (max-width: 1200px) and (min-width: 700px) {
+    color: white !important;
   }
 
   &:hover {

@@ -98,7 +98,7 @@
 <ng-template #userLoginMenu>
   <button
     *ngIf="isLoggedIn$ | async; else login"
-    class="p-button-outlined p-button-rounded p-button-primary mr-1"
+    class="p-button-outlined p-button-rounded p-button-primary mr-1 relative"
     icon="pi pi-user"
     pButton
     (click)="loginMenu.toggle($event)"
@@ -107,6 +107,7 @@
     #loginMenu
     [popup]="true"
     [model]="(loggedInMenu | async) ?? []"
+    styleClass="loginMenu"
   ></p-menu>
 </ng-template>
 <!-- (click)="goToLoginPage()" -->
