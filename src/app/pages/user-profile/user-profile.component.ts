@@ -3,6 +3,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -10,8 +11,16 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { UserProfile } from 'src/app/models/user-auth.model';
+import { Store } from '@ngrx/store';
+import { User, UserProfile } from 'src/app/models/user-auth.model';
 import { ImageUploadComponent } from 'src/app/shared-ui-modules/image-upload/image-upload.component';
+import { userProfileSelectors } from 'src/app/store/selectors/user-profile.selectors';
+import { userAuthSelectors } from '../../store/selectors/user-auth.selectors';
+import { filter, map, Subscription, tap } from 'rxjs';
+import { userProfileActions } from 'src/app/store/actions/user-profile.actions';
+import { UserProfileService } from './services/user-profile.service';
+import { PrimeNgAlerts } from 'src/app/config/app-config';
+import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,7 +28,9 @@ import { ImageUploadComponent } from 'src/app/shared-ui-modules/image-upload/ima
   styleUrls: ['./user-profile.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
+  selectedUser$ = this.store.select(userProfileSelectors.selectedUserProfile);
+
   @ViewChild('imageUpload', { static: true })
   imageUploadComponent: ImageUploadComponent | null = null;
 
@@ -27,12 +38,25 @@ export class UserProfileComponent implements OnInit {
 
   profile!: UserProfile;
 
-  constructor(private fb: FormBuilder) {}
+  user!: any;
 
+  subscription!: Subscription;
+
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private alert: AppAlertService,
+    private userProfileService: UserProfileService
+  ) {}
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.store.dispatch(userProfileActions.clearAllSelected());
+  }
   ngOnInit() {
     this.profileForm = this.fb.group({
-      name: ['', [Validators.required]],
-      email: ['', Validators.required],
+      email: [''],
+      name: [''],
       website: [''],
       facebook: [''],
       youtube: [''],
@@ -40,13 +64,16 @@ export class UserProfileComponent implements OnInit {
       bio: [''],
       address: [''],
       ghana_post: [''],
-      webdistrictsite: [''],
+      district: [''],
       avatar: [],
     });
+
+    this.subscription = this.getUserProfileToEditSubscription();
+    this.getloggedInUser();
   }
 
   get profileHasImage() {
-    return this.avatarImage.value?.[0]?.avatarImage;
+    return this.avatarImage.value?.[0]?.avatar;
   }
 
   get avatarImage() {
@@ -56,5 +83,61 @@ export class UserProfileComponent implements OnInit {
     this.avatarImage.setValue([]);
   }
 
-  onEditProfile() {}
+  private getUserProfileToEditSubscription() {
+    return this.store
+      .select(userProfileSelectors.selectedUserProfileToEdit)
+      .pipe(
+        filter(data => !!data),
+        tap((userProfile: UserProfile) => {
+          this.profile = userProfile;
+          this.profileForm.patchValue({
+            ...userProfile,
+            email: this.user.email,
+          });
+        })
+      )
+      .subscribe();
+  }
+
+  getloggedInUser() {
+    return this.store
+      .select(userAuthSelectors.loggedInUser)
+      .pipe(
+        filter(data => !!data),
+        tap(user => {
+          this.user = user;
+        })
+      )
+      .subscribe();
+  }
+
+  onEditProfile() {
+    const profileToSend = this.profileForm.value;
+    const toSend = {
+      email: profileToSend.email,
+      profile: {
+        name: profileToSend.name,
+        website: profileToSend.website,
+        twitter: profileToSend.twitter,
+        facebook: profileToSend.facebook,
+        youtube: profileToSend.youtube,
+        bio: profileToSend.bio,
+        address: profileToSend.address,
+        ghana_post: profileToSend.ghana_post,
+        district: profileToSend.district,
+      },
+    };
+
+    const images: any = (this.avatarImage.value || []).concat(
+      this.imageUploadComponent?.getFilesToUpload() || []
+    );
+    this.userProfileService
+      .editProfile({ ...toSend, id: this.user.id }, images)
+      .subscribe((d: any) => {
+        this.alert.showToast(
+          `Profile updated successfully`,
+          PrimeNgAlerts.INFO
+        );
+      });
+  }
 }

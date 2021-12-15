@@ -17,3 +17,4 @@ export const EventsEndpoint = environment.API_URL + 'eventsblocks/';
 export const CommentsEndpoint = environment.API_URL + 'comments/';
 export const SignUpEndpoint = environment.API_URL + 'register/';
 export const ProfileTypeEndpoint = environment.API_URL + 'profile-types/';
+export const UserProfileEndpoint = environment.API_URL + 'profile/';
