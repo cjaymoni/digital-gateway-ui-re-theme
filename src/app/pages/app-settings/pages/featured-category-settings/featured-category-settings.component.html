@@ -3,19 +3,22 @@
 </div>
 
 <p-pickList
-  [source]="(categories$ | async) || []"
-  [target]="targetProducts"
+  [source]="(unselectedCategories$ | async) || []"
+  [target]="selectedArray"
   sourceHeader="Available Categories"
   targetHeader="Selected Categories"
   [dragdrop]="true"
   [responsive]="true"
+  [showTargetFilter]="false"
   filterBy="name"
   sourceFilterPlaceholder="Search by name"
   targetFilterPlaceholder="Search by name"
+  listStyleClass="min-h-full h-15rem"
 >
-  <ng-template let-product pTemplate="item">
+  <ng-template let-product pTemplate="item" let-index="index">
     <div>
       <i class="pi pi-bookmark mr-2"></i>
+      <!-- <span class="mr-2">{{ index + 1 }}</span> -->
       <span class="product-category">{{ product.name }}</span>
     </div>
   </ng-template>

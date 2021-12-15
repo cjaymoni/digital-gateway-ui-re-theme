@@ -4,7 +4,6 @@
     [pTooltip]="article.title"
     tooltipPosition="top"
     class="
-      shadow-7
       p-0
       w-full
       scalein
@@ -13,12 +12,14 @@
       relative
       article-card
       overflow-hidden
-      h-10rem
+      h-auto
+      md:h-15rem
     "
   >
     <app-article-image
       [images]="article.images || []"
       [title]="article.title?.substr(0, 1) | uppercase"
+      [preview]="false"
     ></app-article-image>
     <div class="tint h-full w-full absolute z-0"></div>
 

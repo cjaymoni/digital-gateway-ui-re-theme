@@ -2,20 +2,21 @@
   <p-button icon="pi pi-save" label="Save"></p-button>
 </div>
 <p-pickList
-  [source]="(categories$ | async) || []"
-  [target]="targetProducts"
+  [source]="(filteredArticles$ | async) || []"
+  [target]="selectedArticles"
   sourceHeader="Available Highlight Categories"
   targetHeader="Selected Highlight Categories"
   [dragdrop]="true"
   [responsive]="true"
-  filterBy="name"
-  sourceFilterPlaceholder="Search by name"
-  targetFilterPlaceholder="Search by name"
+  filterBy="title"
+  sourceFilterPlaceholder="Search by title"
+  targetFilterPlaceholder="Search by title"
+  (onSourceFilter)="searchArticle($event)"
 >
-  <ng-template let-product pTemplate="item">
+  <ng-template let-article pTemplate="item">
     <div>
-      <i class="pi pi-bookmark mr-2"></i>
-      <span class="product-category">{{ product.name }}</span>
+      <i class="pi pi-book mr-2"></i>
+      <span class="product-category">{{ article.title }}</span>
     </div>
   </ng-template>
 </p-pickList>

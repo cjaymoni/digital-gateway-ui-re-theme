@@ -2,7 +2,7 @@
   color: var(--text-color);
 
   @media screen and (max-width: 1200px) and (min-width: 700px) {
-    color: white !important;
+    color: var(--dark-blue-500) !important;
   }
 
   &:hover {
