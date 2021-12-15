@@ -115,29 +115,26 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const profileToSend = this.profileForm.value;
     const toSend = {
       email: profileToSend.email,
-      profile: {
-        name: profileToSend.name,
-        website: profileToSend.website,
-        twitter: profileToSend.twitter,
-        facebook: profileToSend.facebook,
-        youtube: profileToSend.youtube,
-        bio: profileToSend.bio,
-        address: profileToSend.address,
-        ghana_post: profileToSend.ghana_post,
-        district: profileToSend.district,
-      },
+
+      name: profileToSend.name,
+      website: profileToSend.website,
+      twitter: profileToSend.twitter,
+      facebook: profileToSend.facebook,
+      youtube: profileToSend.youtube,
+      bio: profileToSend.bio,
+      address: profileToSend.address,
+      ghana_post: profileToSend.ghana_post,
+      district: profileToSend.district,
     };
 
     const images: any = (this.avatarImage.value || []).concat(
       this.imageUploadComponent?.getFilesToUpload() || []
     );
-    this.userProfileService
-      .editProfile({ ...toSend, id: this.user.id }, images)
-      .subscribe((d: any) => {
-        this.alert.showToast(
-          `Profile updated successfully`,
-          PrimeNgAlerts.INFO
-        );
-      });
+    this.store.dispatch(
+      userProfileActions.editUserProfile({
+        userProfile: { ...toSend, id: this.user.id },
+        imageToUpload: images,
+      })
+    );
   }
 }

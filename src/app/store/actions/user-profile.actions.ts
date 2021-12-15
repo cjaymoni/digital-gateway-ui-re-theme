@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
 
-import { UserProfile } from '../../models/user-auth.model';
+import { UserProfile, Avatar } from '../../models/user-auth.model';
 
 class UserProfileActions {
   readonly type = '[User Profile Actions]';
@@ -34,6 +35,18 @@ class UserProfileActions {
     props<{
       error: any;
     }>()
+  );
+  editUserProfile = createAction(
+    `${this.type} Edit User Profile`,
+    props<{
+      userProfile: UserProfile;
+      imageToUpload?: File[] | Avatar[];
+    }>()
+  );
+
+  editUserProfileSuccessful = createAction(
+    `${this.type} Edit User Profile Successful`,
+    props<{ updatedUserProfile: Update<UserProfile> }>()
   );
 
   clearAllSelected = createAction(`${this.type} Clear Selected UserProfile`);

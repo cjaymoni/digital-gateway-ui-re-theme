@@ -32,6 +32,12 @@ export const userProfileReducer = createReducer(
   on(userProfileActions.selectUserProfileToEdit, (state, { userProfile }) => {
     return { ...state, selectedUserProfileToEdit: userProfile };
   }),
+  on(
+    userProfileActions.editUserProfileSuccessful,
+    (state, { updatedUserProfile }) => {
+      return userProfileEntityAdapter.updateOne(updatedUserProfile, state);
+    }
+  ),
   on(userProfileActions.clearAllSelected, state => {
     return {
       ...state,

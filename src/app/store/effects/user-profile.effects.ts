@@ -34,7 +34,28 @@ export class UserProfileEffects {
       )
     )
   );
-
+  editUserProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(userProfileActions.editUserProfile),
+      switchMap(({ userProfile, imageToUpload }) =>
+        this.authService.editProfile(userProfile, imageToUpload).pipe(
+          map((updatedUserProfile: any) =>
+            userProfileActions.editUserProfileSuccessful({
+              updatedUserProfile: {
+                changes: updatedUserProfile,
+                id: updatedUserProfile.id,
+              },
+            })
+          ),
+          tap(saved => this.showToast('User Profile Edited Successfully')),
+          catchError(error => {
+            this.showError(error);
+            return of(userProfileActions.fetchError);
+          })
+        )
+      )
+    )
+  );
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }
