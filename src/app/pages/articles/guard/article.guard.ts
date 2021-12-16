@@ -28,6 +28,7 @@ export class ArticleGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    this.store.dispatch(articleActions.clearAllSelected());
     const shouldFetchArticle = route.data['fetch'];
     this.store
       .select(selectRouteNestedParam('article-id'))

@@ -11,7 +11,7 @@
   <p-image
     [src]="images?.[0]?.image ?? ''"
     imageClass="object-fit-cover md:h-full article-image w-full"
-    styleClass="h-auto"
+    [styleClass]="imageClass"
     [preview]="preview"
   ></p-image>
 

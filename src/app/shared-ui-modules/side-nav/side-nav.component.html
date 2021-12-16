@@ -8,6 +8,7 @@
       flex flex-column
       align-content-center
       justify-content-center
+      overflow-x-hidden
     "
   >
     <!-- <p-divider align="center" styleClass="p-divider-no-background">
@@ -30,9 +31,10 @@
           py-2
           px-3
           text-darkblue
+          hover:text-pink-500
           cursor-pointer
           featured-category
-          transition-duration-1000 transition-transform transition-ease-in-out
+          transition-duration-200 transition-all transition-ease-in-out
         "
         [routerLink]="['articles', 'search', featured.category.slug]"
       >
@@ -40,6 +42,7 @@
       </div>
     </ng-container>
     <button
+      *ngIf="(featuredCategory$ | async)?.length! > 8 ?? false"
       pButton
       class="cursor-pointer mt-6 max-w-max ml-3 p-button-secondary"
       (click)="viewMore()"
@@ -47,6 +50,4 @@
       View more
     </button>
   </div>
-
-  <!-- *ngIf="(featuredCategory$ | async)?.length! > 8 ?? false" -->
 </ng-container>

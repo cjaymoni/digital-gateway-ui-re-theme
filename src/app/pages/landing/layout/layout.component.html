@@ -1,11 +1,11 @@
 <div class="p-3">
   <p-carousel
+    #eventSlider
     [value]="(articles$ | async) || []"
-    [numVisible]="1"
-    [numScroll]="1"
-    [circular]="true"
-    [autoplayInterval]="10000"
     [showNavigators]="false"
+    [numScroll]="1"
+    [numVisible]="1"
+    [circular]="true"
   >
     <ng-template let-article pTemplate="item">
       <div
@@ -17,7 +17,8 @@
         "
         (click)="goToArticle(article)"
       >
-        <div class="mb-0 md:mb-3 col-12 relative">
+        <!-- (pointerLeave)="pointerLeave($event)" -->
+        <div class="mb-0 md:mb-3 col-12 relative event-slider">
           <img
             [src]="article.images?.[0]?.image"
             [alt]="article.title"
@@ -50,17 +51,21 @@
   <div *ngIf="articles$ | async">
     <div class="text-2xl font-bold my-3">Featured Articles</div>
     <p-carousel
+      #articleSlider
       [value]="(articles$ | async) || []"
       styleClass="custom-carousel"
       [numVisible]="3"
       [numScroll]="3"
       [circular]="true"
-      [autoplayInterval]="5000"
       [responsiveOptions]="responsiveOptions"
     >
+      <!-- [responsiveOptions]="responsiveOptions" -->
       <ng-template pTemplate="item" let-article>
         <div class="col p-2">
-          <app-article-card [article]="article"></app-article-card>
+          <app-article-card
+            cardClass="md:h-10rem"
+            [article]="article"
+          ></app-article-card>
         </div>
       </ng-template>
     </p-carousel>
@@ -73,12 +78,11 @@
   <div>
     <div class="text-2xl font-bold my-3">Marketing Info</div>
     <p-carousel
+      #marketSlider
       [value]="(productAds$ | async) || []"
       styleClass="custom-carousel py-2"
       [numVisible]="3"
       [numScroll]="1"
-      [circular]="true"
-      [autoplayInterval]="2000"
       [responsiveOptions]="responsiveOptions"
     >
       <ng-template pTemplate="item" let-productAd>
@@ -118,12 +122,12 @@
 
     <div class="text-2xl font-bold my-3">Multimedia</div>
     <p-carousel
+      #multimediaSlider
       [value]="multimedia"
       styleClass="custom-carousel"
       [numVisible]="4"
       [numScroll]="4"
       [circular]="true"
-      [autoplayInterval]="4000"
       [responsiveOptions]="responsiveOptions"
     >
       <ng-template pTemplate="item" let-video>
