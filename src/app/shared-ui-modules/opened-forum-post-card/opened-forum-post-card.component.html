@@ -11,14 +11,9 @@
         </div>
       </div>
     </div>
-    <div
-      class="mt-2"
-      [innerHTML]="
-        domSanitizer.bypassSecurityTrustHtml(
-          (forumPost$ | async)?.content || ''
-        )
-      "
-    ></div>
+    <div class="mt-2">
+      {{ (forumPost$ | async)?.content || '' }}
+    </div>
     <ng-container *ngIf="(forumPost$ | async)?.images?.length! > 0">
       <div class="justify-content-center align-items-center flex">
         <p-galleria
@@ -28,20 +23,25 @@
           [numVisible]="5"
           [circular]="true"
           [autoPlay]="true"
+          [transitionInterval]="2000"
           [showItemNavigators]="true"
+          [showIndicators]="true"
+          [showThumbnailNavigators]="false"
+          [showThumbnails]="false"
         >
           <ng-template pTemplate="item" let-item>
-            <img [src]="item.image" class="h-15rem" />
-          </ng-template>
-          <ng-template pTemplate="thumbnail" let-item>
-            <div class="grid justify-content-center">
-              <img
-                [src]="item.image"
-                style="display: block"
-                width="100px"
-                height="auto"
-              />
-            </div>
+            <img
+              [src]="item.image"
+              class="
+                mt-2
+                h-20rem
+                w-auto
+                object-fit-cover
+                border-gray-300 border-1
+                p-2
+                border-round
+              "
+            />
           </ng-template>
         </p-galleria>
       </div>
@@ -58,7 +58,8 @@
           "
           icon="pi pi-reply"
           label="Reply"
-          (click)="displayCommentForm()"
+          proceedIfLoggedIn
+          (onProceed)="displayCommentForm()"
         ></button>
       </div>
       <div>

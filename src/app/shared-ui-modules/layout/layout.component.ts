@@ -55,7 +55,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
                 closable: false,
                 closeOnEscape: false,
                 styleClass:
-                  'w-screen md:w-9 h-screen md:h-7 px-4 pb-4 no-dialog-header bg-white',
+                  'w-screen md:w-9 h-screen md:h-auto px-4 pb-4 no-dialog-header bg-white',
                 modal: true,
                 showHeader: false,
                 dismissableMask: false,
