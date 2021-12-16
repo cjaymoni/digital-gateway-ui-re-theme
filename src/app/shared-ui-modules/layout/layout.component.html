@@ -1,7 +1,7 @@
 <app-alert></app-alert>
 <app-toasts></app-toasts>
 <app-dialog></app-dialog>
-<div class="grid h-full">
+<div class="grid h-full block md:flex">
   <nav class="topbar w-full sticky top-0 z-5 darkblue-500">
     <app-top-nav></app-top-nav>
   </nav>
@@ -54,12 +54,12 @@
       </div>
 
       <!-- left bar loaded below -->
-      <div class="leftside col-12 lg:hidden pt-5">
+      <div class="col-12 lg:hidden pt-5 justify-content-center">
         <app-side-nav></app-side-nav>
       </div>
 
       <!-- right bar loaded below -->
-      <div class="rightcontent col-12 lg:hidden pt-5">
+      <div class="rightcontent col-12 lg:hidden pt-5 justify-content-center">
         <app-right-nav-card></app-right-nav-card>
       </div>
     </div>

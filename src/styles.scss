@@ -100,3 +100,9 @@ body {
 .text-darkblue {
   color: var(--darkblue-500) !important;
 }
+
+.md-m-unset {
+  @media screen and (min-width: 1024px) {
+    margin: revert !important;
+  }
+}
