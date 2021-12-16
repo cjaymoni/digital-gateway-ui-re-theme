@@ -1,16 +1,14 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
   Input,
+  OnInit,
 } from '@angular/core';
-import { NavigatorService } from 'src/app/services/navigator.service';
-import { forumActions } from '../../store/actions/forum.actions';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 import { take } from 'rxjs';
 import { ForumPost } from 'src/app/models/forum.model';
+import { NavigatorService } from 'src/app/services/navigator.service';
+import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 
 @Component({
   selector: 'app-forum-post-card',
@@ -23,11 +21,7 @@ export class ForumPostCardComponent implements OnInit {
 
   @Input() avatar: any;
 
-  constructor(
-    private navigator: NavigatorService,
-    public domSanitizer: DomSanitizer,
-    private store: Store
-  ) {}
+  constructor(private navigator: NavigatorService, private store: Store) {}
 
   selectedForum$ = this.store.select(forumSelectors.selectedForum);
 

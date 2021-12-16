@@ -1,6 +1,8 @@
 :host .article-content ::ng-deep {
   * {
     max-width: 100%;
+    line-height: 24px;
+    font-size: 16px;
   }
   pre {
     white-space: unset;

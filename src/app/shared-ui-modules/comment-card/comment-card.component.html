@@ -40,7 +40,8 @@
         "
         icon="pi pi-reply"
         label="Reply"
-        (click)="show()"
+        proceedIfLoggedIn
+        (onProceed)="show()"
       ></button>
     </div>
     <div>

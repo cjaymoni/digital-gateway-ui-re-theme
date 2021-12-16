@@ -22,7 +22,7 @@
       <button
         pButton
         icon="pi pi-plus"
-        class="col p-button-outlined p-button-danger flex align-items-center"
+        class="col p-button-outlined p-button-secondary flex align-items-center"
         label="Add Forum Post"
         (click)="goToAddForumPost()"
       ></button>
@@ -31,12 +31,11 @@
   <ng-container *ngIf="forumPosts$ | async">
     <div
       class="
-        text-lg text-center text-primary
+        text-center text-darkblue
         font-semibold
         my-2
         p-component
         border-none
-        font-italic
         mb-1
       "
     >

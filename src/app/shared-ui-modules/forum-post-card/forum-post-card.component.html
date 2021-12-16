@@ -15,7 +15,7 @@
   <div class="flex justify-content-between align-content-center">
     <div class="flex">
       <p-avatar
-        [image]="avatar"
+        [image]="forumPost.submitter.image"
         styleClass="mr-2"
         size="large"
         shape="circle"
@@ -24,7 +24,6 @@
         {{ forumPost.title | uppercase }}
         <div class="text-sm">
           {{ forumPost.submitter.username }}
-          | Date
         </div>
       </div>
     </div>
@@ -36,24 +35,7 @@
     </div>
   </div>
 
-  <div
-    class=""
-    [innerHTML]="
-      domSanitizer.bypassSecurityTrustHtml(
-        forumPost.content || '' | appEllipsis: 100
-      )
-    "
-  ></div>
-
-  <!-- <hr /> -->
-  <!-- <div class="flex justify-content-between align-items-center">
-    <div>
-      <app-comments
-        [commentCount]="forumPost.comment_count || 0"
-      ></app-comments>
-    </div>
-    <div>
-      <app-votes></app-votes>
-    </div>
-  </div> -->
+  <div>
+    {{ forumPost.content || '' | appEllipsis: 150 }}
+  </div>
 </div>

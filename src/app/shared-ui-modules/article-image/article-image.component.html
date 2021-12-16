@@ -10,9 +10,11 @@
 <ng-template #articleImage>
   <p-image
     [src]="images?.[0]?.image ?? ''"
-    imageClass="h-10rem md:h-full article-image w-full"
+    imageClass="object-fit-cover md:h-full article-image w-full"
+    [styleClass]="imageClass"
     [preview]="preview"
   ></p-image>
+
   <em *ngIf="preview" class="text-xs block text-cyan-600"
     >Click on image to view</em
   >

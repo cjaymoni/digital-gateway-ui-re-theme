@@ -384,13 +384,15 @@ class AuthRoutes extends AppRoutesConfig {
     ]);
   }
 
-  goToLogin(title = 'Welcome back. Please Login') {
-    this.panelTitleSubject$.next(title);
+  goToLogin(route = RouterOutlets.Right, title = 'Welcome back. Please Login') {
+    route === RouterOutlets.Right
+      ? this.panelTitleSubject$.next(title)
+      : this.modalTitleSubject$.next(title);
     this.router.navigate([
       '', //main
       {
         outlets: {
-          [RouterOutlets.Right]: Pages.Auth.login,
+          [route]: Pages.Auth.login,
         },
       },
     ]);

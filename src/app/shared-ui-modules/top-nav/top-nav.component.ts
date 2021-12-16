@@ -44,8 +44,6 @@ export class TopNavComponent implements OnInit {
 
   items$ = this.store.select(menuItemSelectors.menuItems);
 
-  // loggedInMenu = LoggedInMenu;
-
   signUpMenu = SignUpMenu;
 
   loggedInMenu = this.loggedInUser$.pipe(

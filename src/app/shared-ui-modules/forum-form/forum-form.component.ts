@@ -91,8 +91,7 @@ export class ForumFormComponent implements OnInit, OnDestroy {
       const toSend = {
         name: forum.name,
         description: forum.description,
-        tags: (forum.tags as Tag[]).map(tag => tag.id),
-        tag: 1,
+        tags: (forum.tags || [])?.map((tag: Tag) => tag.id),
         created_by: 1,
         moderators: [1],
       };
