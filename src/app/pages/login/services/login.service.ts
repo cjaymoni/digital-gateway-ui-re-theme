@@ -11,6 +11,7 @@ import {
 } from 'src/app/config/app-config';
 import { IAuthService } from 'src/app/models/auth-service';
 import { Store } from '@ngrx/store';
+import { forumActions } from 'src/app/store/actions/forum.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +48,7 @@ export class LoginService implements IAuthService {
           this.store.dispatch(
             userAuthActions.loginSuccessful({ user: response.user })
           );
+          this.store.dispatch(forumActions.fetch());
           return true;
         } else {
           return false;
@@ -66,6 +68,7 @@ export class LoginService implements IAuthService {
           localStorage.removeItem(APP_USER_TOKEN);
           localStorage.removeItem(APP_REFRESH_TOKEN);
           this.store.dispatch(userAuthActions.logoutSuccessful());
+          this.store.dispatch(forumActions.fetch());
           return true;
         })
       );

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 import { AppPipesModule } from '../../pipes/app-pipes.module';
 import { ForumLoadingCardModule } from '../forum-loading-card/forum-loading-card.module';
 import { ForumPostCardModule } from '../forum-post-card/forum-post-card.module';
@@ -13,6 +14,7 @@ import { OpenedForumCardComponent } from './opened-forum-card.component';
     ButtonModule,
     ForumPostCardModule,
     AppPipesModule,
+    DirectivesModule,
   ],
 
   declarations: [OpenedForumCardComponent],

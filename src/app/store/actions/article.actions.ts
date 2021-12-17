@@ -44,6 +44,13 @@ class ArticleActions {
     }>()
   );
 
+  searchArticlesByCategory = createAction(
+    `${this.type} Search Article By Category`,
+    props<{
+      categoryId: number;
+    }>()
+  );
+
   findAndSelectArticle = createAction(
     `${this.type} Find And Select Article`,
     props<{

@@ -4,10 +4,6 @@
   @media screen and (max-width: 1200px) and (min-width: 700px) {
     color: var(--darkblue-500) !important;
   }
-
-  &:hover {
-    text-align: center;
-  }
 }
 
 :host ::ng-deep {

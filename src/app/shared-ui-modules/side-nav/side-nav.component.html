@@ -37,6 +37,7 @@
           transition-duration-200 transition-all transition-ease-in-out
         "
         [routerLink]="['articles', 'search', featured.category.slug]"
+        [routerLinkActive]="'text-pink-500 active'"
       >
         {{ featured.category.name }}
       </div>
