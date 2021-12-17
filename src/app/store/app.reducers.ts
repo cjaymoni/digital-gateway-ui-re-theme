@@ -12,6 +12,7 @@ import { profileTypeReducer } from './reducers/profile-types.reducers';
 import { tagReducer } from './reducers/tag.reducers';
 import { userAuthReducer } from './reducers/user-auth.reducers';
 import { userProfileReducer } from './reducers/user-profile.reducers';
+import { userListReducer } from './reducers/users-list.reducers';
 
 export const appReducersMap = {
   [FeatureNamesForStore.User]: userAuthReducer,
@@ -27,4 +28,5 @@ export const appReducersMap = {
   [FeatureNamesForStore.ForumPost]: forumPostReducer,
   [FeatureNamesForStore.ProfileType]: profileTypeReducer,
   [FeatureNamesForStore.UserProfile]: userProfileReducer,
+  [FeatureNamesForStore.UsersList]: userListReducer,
 };

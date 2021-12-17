@@ -1,7 +1,7 @@
 import { Roles } from '../config/app-config';
 
 export interface User {
-  id?: number;
+  id?: string | number | any;
   email: string;
   name?: string;
   role: Roles;

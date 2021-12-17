@@ -1,0 +1,40 @@
+<div class="text-center flex justify-content-between">
+  <div>USERS MANAGEMENT</div>
+  <button
+    pButton
+    class="align-self-end p-btn p-btn-lg"
+    icon="pi pi-plus"
+    label="Add New User"
+    (click)="goToAddUserPage()"
+  ></button>
+</div>
+
+<app-table
+  [data]="(usersList$ | async) || []"
+  [columnsDefinition]="columns"
+  [actionTemplate]="actions"
+  [showAction]="true"
+></app-table>
+
+<ng-template #actions let-user>
+  <div class="flex justify-content-between">
+    <button
+      class="p-button p-button-rounded p-button-danger mr-3"
+      pButton
+      tooltipPosition="bottom"
+      pTooltip="View user"
+      (click)="viewUser(user)"
+      icon="pi pi-eye"
+    ></button>
+
+    <button
+      class="p-button p-button-info p-button-rounded mr-auto"
+      pButton
+      pTooltip="Edit User Role"
+      tooltipPosition="bottom"
+      icon="pi pi-pencil"
+      (click)="selectedUser = user; rolesMenu.toggle($event)"
+    ></button>
+  </div>
+</ng-template>
+<p-menu #rolesMenu [popup]="true" [model]="rolesList"></p-menu>

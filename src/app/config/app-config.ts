@@ -31,6 +31,7 @@ export enum FeatureNamesForStore {
   ForumPost = 'forumPost',
   ProfileType = 'profileType',
   UserProfile = 'userProfile',
+  UsersList = 'usersList',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -132,6 +133,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
   Login: 'login',
+  UserManagement: 'user-management',
 };
 
 export const urlMatcherForEditAndView = (
@@ -236,6 +238,12 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       routerLink: [Pages.SiteSettings],
       icon: 'pi pi-cog',
       visible: userRole === Roles.Admin,
+    },
+    {
+      id: 'user-management',
+      label: 'User Management',
+      routerLink: [Pages.UserManagement],
+      icon: 'pi pi-users',
     },
     {
       id: 'content-settings',

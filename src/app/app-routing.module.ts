@@ -62,9 +62,7 @@ const routes: Routes = [
   {
     path: Pages.Resources.main,
     loadChildren: () =>
-      import('./pages/resource/resource.module').then(
-        m => m.ResourceModule
-      ),
+      import('./pages/resource/resource.module').then(m => m.ResourceModule),
   },
   {
     path: Pages.UserProfile,
@@ -80,6 +78,16 @@ const routes: Routes = [
     path: Pages.SignUp,
     component: SignupFormComponent,
     outlet: RouterOutlets.Right,
+  },
+  {
+    path: Pages.UserManagement,
+    loadChildren: () =>
+      import('./pages/users-management/users-management.module').then(
+        m => m.UsersManagementModule
+      ),
+    data: {
+      breadcrumb: 'Users Management',
+    },
   },
 ];
 
