@@ -1,6 +1,5 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { Menu } from 'primeng/menu';
 import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
@@ -10,6 +9,7 @@ export const DEFAULT_PAGE_SIZE = 100;
 export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
 export const APP_REFRESH_TOKEN = 'app_refresh_token';
+export const LOGIN_PATH = 'login';
 
 export enum RouterOutlets {
   Main = 'main',

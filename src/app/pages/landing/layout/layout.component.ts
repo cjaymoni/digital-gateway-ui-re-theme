@@ -1,28 +1,51 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { Article } from 'src/app/models/article.model';
+import { Carousel } from 'primeng/carousel';
+import { debounceTime, fromEvent, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('eventSlider')
+  eventSlider!: Carousel;
+
+  @ViewChild('articleSlider')
+  articleSlider!: Carousel;
+
+  @ViewChild('marketSlider')
+  marketSlider!: Carousel;
+
+  @ViewChild('multimediaSlider')
+  multimediaSlider!: Carousel;
+
+  subscription!: Subscription;
+
   responsiveOptions = [
     {
       breakpoint: '2000px',
       numVisible: 3,
-      numScroll: 3,
+      numScroll: 1,
     },
     {
       breakpoint: '768px',
       numVisible: 2,
-      numScroll: 2,
+      numScroll: 1,
     },
     {
       breakpoint: '560px',
@@ -38,10 +61,91 @@ export class LayoutComponent implements OnInit {
   forum$ = this.store.select(forumSelectors.getById(1));
 
   constructor(private store: Store, private navigator: NavigatorService) {}
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+  ngAfterViewInit(): void {
+    this.startCarouselAutoplay(this.eventSlider, 10000);
+    this.startCarouselAutoplay(this.marketSlider, 4000);
+    this.startCarouselAutoplay(this.articleSlider, 5000);
+    this.startCarouselAutoplay(this.multimediaSlider, 8000);
+
+    // event
+    this.subscription = this.getCarouselMouseEnterSubscription(
+      this.eventSlider
+    );
+
+    // articles
+    this.subscription.add(
+      this.getCarouselMouseEnterSubscription(this.articleSlider)
+    );
+
+    this.subscription.add(
+      this.getCarouselMouseLeaveSubscription(this.articleSlider, 5000)
+    );
+
+    this.subscription.add(
+      this.getCarouselMouseLeaveSubscription(this.eventSlider, 10000)
+    );
+
+    // market
+    this.subscription.add(
+      this.getCarouselMouseEnterSubscription(this.marketSlider)
+    );
+
+    this.subscription.add(
+      this.getCarouselMouseLeaveSubscription(this.marketSlider, 4000)
+    );
+
+    // multi media
+    this.subscription.add(
+      this.getCarouselMouseEnterSubscription(this.multimediaSlider)
+    );
+
+    this.subscription.add(
+      this.getCarouselMouseLeaveSubscription(this.multimediaSlider, 8000)
+    );
+  }
 
   ngOnInit() {}
 
   goToArticle(article: Article) {
     this.navigator.article.goToViewDetailsPage(article.slug);
+  }
+
+  startCarouselAutoplay(carouselRef: Carousel, interval = 3000) {
+    carouselRef.allowAutoplay = true;
+    carouselRef.autoplayInterval = interval;
+    carouselRef.startAutoplay();
+    carouselRef.cd.detectChanges();
+    console.log(carouselRef, 'start');
+  }
+
+  stopCarouselAutoplay(carouselRef: Carousel) {
+    carouselRef.allowAutoplay = false;
+    carouselRef.autoplayInterval = 0;
+    carouselRef.stopAutoplay();
+    carouselRef.cd.detectChanges();
+    console.log(carouselRef, 'stop');
+  }
+
+  getCarouselMouseEnterSubscription(carouselRef: Carousel) {
+    return fromEvent(carouselRef.el.nativeElement, 'mouseenter')
+      .pipe(
+        debounceTime(100) // 2 seconds
+      )
+      .subscribe(() => {
+        this.stopCarouselAutoplay(carouselRef);
+      });
+  }
+
+  getCarouselMouseLeaveSubscription(carouselRef: Carousel, interval: number) {
+    return fromEvent(this.eventSlider.el.nativeElement, 'mouseleave')
+      .pipe(
+        debounceTime(800) // 2 seconds
+      )
+      .subscribe(() => {
+        this.startCarouselAutoplay(carouselRef, interval);
+      });
   }
 }

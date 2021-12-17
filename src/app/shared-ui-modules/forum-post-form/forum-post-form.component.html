@@ -24,17 +24,20 @@
     </div>
 
     <div class="field col-12">
-      <app-image-upload [multiple]="true" #imageUpload></app-image-upload>
-    </div>
-
-    <div class="field col-12 mb-8">
       <label for="content">Body</label>
-      <app-content-box
-        #contentBox
-        [required]="true"
-        [contentFormControl]="content"
-        classNames="h-auto"
-      ></app-content-box>
+
+      <textarea
+        id="description"
+        class="inputfield w-full"
+        formControlName="content"
+        pInputTextarea
+        [autoResize]="true"
+        [rows]="5"
+        placeholder="Forum Description"
+      ></textarea>
+    </div>
+    <div class="field col-12">
+      <app-image-upload [multiple]="true" #imageUpload></app-image-upload>
     </div>
     <div class="col-12 ml-auto flex justify-content-end mt-2">
       <button

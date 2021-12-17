@@ -1,10 +1,13 @@
 import { Directive, ElementRef, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
-import { PrimeNgAlerts } from '../config/app-config';
+import { tap, withLatestFrom } from 'rxjs';
+import { PrimeNgAlerts, RouterOutlets } from '../config/app-config';
 import { NavigatorService } from '../services/navigator.service';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
-import { userAuth } from '../store/selectors/user-auth.selectors';
+import {
+  userAuth,
+  userAuthSelectors,
+} from '../store/selectors/user-auth.selectors';
 
 @Directive({
   selector: '[proceedIfLoggedIn]',
@@ -12,7 +15,7 @@ import { userAuth } from '../store/selectors/user-auth.selectors';
 export class AppProceedIfLoggedDirective {
   @Output() onProceed = new EventEmitter();
 
-  loggedInUser$ = this.store.select(userAuth);
+  loggedInUser$ = this.store.select(userAuthSelectors.loggedInUser);
 
   constructor(
     private element: ElementRef,
@@ -23,7 +26,8 @@ export class AppProceedIfLoggedDirective {
     this.element.nativeElement.onclick = (event: MouseEvent) => {
       this.loggedInUser$
         .pipe(
-          tap(user => {
+          withLatestFrom(this.navigator.panelActive$),
+          tap(([user, panelActive]) => {
             if (user) {
               return this.onProceed.emit();
             } else {
@@ -31,7 +35,10 @@ export class AppProceedIfLoggedDirective {
                 'You need to log in to perform this action',
                 PrimeNgAlerts.INFO
               );
-              return this.navigator.auth.goToLogin();
+              const modal = panelActive
+                ? RouterOutlets.Modal
+                : RouterOutlets.Right;
+              this.navigator.auth.goToLogin(modal);
             }
           })
         )

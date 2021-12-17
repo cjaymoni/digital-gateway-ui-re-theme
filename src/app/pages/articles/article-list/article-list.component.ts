@@ -48,7 +48,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
               .pipe(
                 filter((cat: Category) => !!cat),
                 map(category => {
-                  this.title$.next(`${category.name.toUpperCase()} ARTICLES`);
+                  this.title$.next(`${category.name.toUpperCase()}`);
                   this.store.dispatch(
                     articleActions.searchArticle({
                       searchParams: {
