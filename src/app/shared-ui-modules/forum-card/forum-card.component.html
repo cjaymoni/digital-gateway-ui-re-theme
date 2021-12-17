@@ -11,12 +11,12 @@
   *ngIf="forum"
   (click)="openForum()"
 >
-  <div class="text-3xl font-bold text-pink-500">
+  <div class="text-lg xl:text-2xl font-bold text-darkblue">
     {{ forum.name | uppercase }}
   </div>
 
-  <div class="font-italic text-purple-800 font-semibold text-sm">
-    {{ forum.posts?.length }} Topic(s)
+  <div class="font-italic text-purple-800 font-semibold text-xs">
+    {{ forum.posts?.length ?? 0 }} Topic(s)
     <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
       {{ tag.name }}
     </span>

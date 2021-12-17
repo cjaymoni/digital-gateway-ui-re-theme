@@ -50,10 +50,8 @@ export class ArticleListComponent implements OnInit, OnDestroy {
                 map(category => {
                   this.title$.next(`${category.name.toUpperCase()}`);
                   this.store.dispatch(
-                    articleActions.searchArticle({
-                      searchParams: {
-                        category: category.id,
-                      },
+                    articleActions.searchArticlesByCategory({
+                      categoryId: category.id || 0,
                     })
                   );
                   this.articles$ = this.articlesSearch$;

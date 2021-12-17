@@ -65,6 +65,20 @@ class ForumActions {
     }>()
   );
 
+  selectForumPostById = createAction(
+    `${this.type} Find Forum Post By Id`,
+    props<{
+      id: string | number;
+    }>()
+  );
+
+  selectForumPostByIdSuccess = createAction(
+    `${this.type} Select Forum By Id`,
+    props<{
+      forumPost: ForumPost;
+    }>()
+  );
+
   searchForumSuccess = createAction(`${this.type} Search Forum Success`);
 
   addForum = createAction(`${this.type} Add Forum`, props<{ forum: Forum }>());
@@ -125,6 +139,8 @@ class ForumActions {
       id: number;
     }>()
   );
+
+  noop = createAction(`${this.type} No Operation`);
 
   comments = new CommentActions();
 }

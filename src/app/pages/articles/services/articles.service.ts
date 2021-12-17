@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map, tap } from 'rxjs';
-import { ArticlesEndpoint } from 'src/app/config/routes';
+import { ArticlesEndpoint, CategoryEndpoint } from 'src/app/config/routes';
 import { Article, AppUploadedImage } from 'src/app/models/article.model';
 import { ResourceService } from 'src/app/services/resources.service';
 import { articleActions } from 'src/app/store/actions/article.actions';
@@ -22,6 +22,12 @@ export class ArticleService extends ResourceService {
     return this.getResources(this.endpoint, undefined, searchParams).pipe(
       map(data => data as Article[])
     );
+  }
+
+  searchArticleByCategory(categoryId: number) {
+    return this.http
+      .get(`${CategoryEndpoint}${categoryId}/articles`)
+      .pipe(map(data => data as Article[]));
   }
 
   findArticleUsingSlug(slug: string) {

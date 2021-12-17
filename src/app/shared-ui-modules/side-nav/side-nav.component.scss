@@ -7,5 +7,19 @@
     &:hover {
       margin-left: 1rem;
     }
+    &:focus {
+      outline: none !important;
+    }
+  }
+}
+
+.active::after {
+  content: '>>>';
+}
+
+.wrapper {
+  @media screen and (max-width: 1024px) and (min-width: 100px) {
+    background-color: var(--darkblue-50) !important;
+    padding: 4px;
   }
 }
