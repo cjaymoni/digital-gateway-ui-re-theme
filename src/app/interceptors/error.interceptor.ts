@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
-import { NavigatorService } from '../services/navigator.service';
+import { Injectable } from '@angular/core';
+import { catchError, EMPTY, Observable } from 'rxjs';
 import {
   APP_TOKEN,
   APP_USER_TOKEN,
   PrimeNgAlerts,
 } from 'src/app/config/app-config';
+import { NavigatorService } from '../services/navigator.service';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
 
 @Injectable()
@@ -36,6 +36,7 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
               // if (Object.prototype.hasOwnProperty.call(validationError, key)) {
               // errorMessages += `\n${key.replace(/_/g, ' ').toUpperCase()} : `;
               const messageArray: string[] = validationError[key];
+              errorMessages += key + ' => ';
               messageArray.forEach(m => {
                 errorMessages += `\n${m}`;
               });
@@ -73,7 +74,8 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
             PrimeNgAlerts.ERROR
           );
         }
-        return throwError(event.error);
+
+        return EMPTY;
       })
     );
   }
