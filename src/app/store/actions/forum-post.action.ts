@@ -51,12 +51,21 @@ class ForumPostActions {
       searchParams: { [key: string]: any };
     }>()
   );
+
+  findAndSelectForumPostById = createAction(
+    `${this.type} Find And Select Forum Post By Id`,
+    props<{
+      id: string | number;
+    }>()
+  );
+
   searchForumPostSuccess = createAction(
     `${this.type} Search Forum Post Success`
   );
+
   addForumPost = createAction(
     `${this.type} Add ForumPost`,
-    props<{ forumPost: ForumPost }>()
+    props<{ forumPost: ForumPost; imageToUpload: File[] | any[] }>()
   );
 
   addForumPostSuccessful = createAction(
@@ -68,6 +77,7 @@ class ForumPostActions {
     `${this.type} Edit Forum Post`,
     props<{
       forumPost: ForumPost;
+      imageToUpload: File[] | any[];
     }>()
   );
 

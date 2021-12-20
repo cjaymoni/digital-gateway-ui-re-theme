@@ -1,15 +1,35 @@
 :host ::ng-deep {
+  .p-menubar-start {
+    margin-right: 3%;
+  }
+
   p-menubarsub {
-    margin-left: 15%;
+    ul {
+      top: 54px;
+      border-radius: var(--border-radius);
+    }
   }
 
   @media screen and (max-width: 960px) {
     .p-menubar .p-menubar-button {
-      margin-left: auto;
-      margin-right: 0;
+      position: absolute;
+      right: 20px;
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+      border: 1px solid white;
     }
     .p-menubar .p-menubar-end {
       display: none;
+    }
+
+    .p-menubar-start {
+      width: 85%;
+    }
+  }
+
+  p-menu {
+    .loginMenu {
+      top: 62px !important;
     }
   }
 }

@@ -1,0 +1,56 @@
+<p-sidebar
+  *ngIf="isHandheld$ | async; else formTemplate"
+  [blockScroll]="true"
+  [visible]="true"
+  position="bottom"
+  styleClass="p-sidebar-md lg:hidden"
+  (onHide)="cancel()"
+  appendTo="body"
+>
+  <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
+</p-sidebar>
+
+<ng-template #formTemplate>
+  <div
+    class="flex flex-column md:flex-row justify-content-center"
+    (clickOutside)="cancel()"
+    [delayClickOutsideInit]="true"
+  >
+    <!-- buttons-->
+    <div
+      class="
+        flex flex-row
+        md:flex-column
+        flex-order-1
+        md:flex-order-0
+        justify-content-center
+      "
+    >
+      <button
+        pButton
+        class="p-button-rounded p-button-success mr-2"
+        icon="pi pi-send"
+        [disabled]="commentFormControl.invalid"
+        (click)="addComment()"
+      ></button>
+      <button
+        pButton
+        class="p-button-rounded p-button-danger"
+        icon="pi pi-times"
+        (click)="cancel()"
+      ></button>
+    </div>
+    <!-- text area -->
+    <textarea
+      pInputTextarea
+      name="comment"
+      id="comment"
+      class="w-full mb-2 h-full"
+      placeholder="Enter comment here"
+      [formControl]="commentFormControl"
+      [autoResize]="true"
+      [rows]="5"
+      autofocus
+    ></textarea>
+  </div>
+</ng-template>

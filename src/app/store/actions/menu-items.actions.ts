@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { MenuItemFromBackend } from 'src/app/models/menu-item.model';
+import { Category } from 'src/app/models/category.model';
 
 class MenuItemActions {
   readonly type = '[Menu Item Actions]';
@@ -8,7 +8,7 @@ class MenuItemActions {
 
   fetchSuccessful = createAction(
     `${this.type} Fetch Successful`,
-    props<{ menuItems: MenuItemFromBackend }>()
+    props<{ categories: Category[] | any[] }>()
   );
 
   selectMenuItem = createAction(

@@ -1,33 +1,95 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Pages } from './config/app-config';
+import { Pages, RouterOutlets } from './config/app-config';
+import { SearchResultsComponent } from './pages/search-results/search-results.component';
+import { SignupFormComponent } from './pages/signup/signup-form/signup-form.component';
 
 const routes: Routes = [
   {
-    path: Pages.Articles,
+    path: '',
+    loadChildren: () =>
+      import('./pages/landing/landing.module').then(m => m.LandingModule),
+  },
+  {
+    path: Pages.Articles.main,
     loadChildren: () =>
       import('./pages/articles/articles.module').then(
         module => module.ArticlesModule
       ),
+    data: {
+      breadcrumb: 'Articles',
+    },
   },
   {
-    path: 'market-place',
+    path: Pages.MarketPlace.main,
     loadChildren: () =>
       import('./pages/market-place/market-place.module').then(
         m => m.MarketPlaceModule
       ),
+    data: {
+      breadcrumb: 'Market Place',
+    },
   },
   {
-    path: 'forum',
+    path: Pages.Forum.main,
     loadChildren: () =>
       import('./pages/forum/forum.module').then(m => m.ForumModule),
+    data: { breadcrumb: 'Forums' },
+  },
+  {
+    path: Pages.ForumPost.main,
+    loadChildren: () =>
+      import('./pages/forum-posts/forum-post.module').then(
+        m => m.ForumPostModule
+      ),
+    data: { breadcrumb: 'Forum Post' },
+  },
+  {
+    path: Pages.ContentManagement,
+    loadChildren: () =>
+      import('./pages/content-management/content-management.module').then(
+        m => m.ContentManagementModule
+      ),
+    data: { breadcrumb: 'Content Management' },
+  },
+  {
+    path: Pages.SiteSettings,
+    loadChildren: () =>
+      import('./pages/app-settings/app-settings.module').then(
+        m => m.AppSettingsModule
+      ),
+    data: { breadcrumb: 'Theme Settings' },
+  },
+  {
+    path: Pages.Resources.main,
+    loadChildren: () =>
+      import('./pages/resource/resource.module').then(m => m.ResourceModule),
+  },
+  {
+    path: Pages.UserProfile,
+    loadChildren: () =>
+      import('./pages/user-profile/user-profile.module').then(
+        m => m.UserProfileModule
+      ),
+    data: {
+      breadcrumb: 'User Profile',
+    },
+  },
+  {
+    path: Pages.SignUp,
+    component: SignupFormComponent,
+    outlet: RouterOutlets.Right,
+  },
+  {
+    path: 'search/:query',
+    component: SearchResultsComponent,
   },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      scrollPositionRestoration: 'top',
+      scrollPositionRestoration: 'enabled',
     }),
   ],
   exports: [RouterModule],

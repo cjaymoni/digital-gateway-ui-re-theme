@@ -11,9 +11,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { filter, Subscription, take, tap } from 'rxjs';
 import { TagType } from 'src/app/config/app-config';
+import { slugify } from 'src/app/helpers/app.helper.functions';
 import { AppUploadedImage } from 'src/app/models/article.model';
 import { ProductAd } from 'src/app/models/product-ad.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -39,15 +41,15 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
 
   productAd!: ProductAd;
 
-  adTagType = TagType.ad;
+  adTagType = TagType.product;
 
   adTypes = [
     {
-      name: 'Bid',
+      name: 'bid',
       value: 'bid',
     },
     {
-      name: 'Offer',
+      name: 'offer',
       value: 'offer',
     },
   ];
@@ -55,7 +57,8 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private navigator: NavigatorService,
-    private store: Store
+    private store: Store,
+    private action$: Actions
   ) {}
 
   ngOnDestroy(): void {
@@ -83,6 +86,7 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
     });
 
     this.subscription = this.getProductAdToEditSubscription();
+    this.subscription.add(this.addOrEditSubscription());
   }
   get tags() {
     return this.productAdForm.get('product.tags') as FormControl;
@@ -100,6 +104,10 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
     return this.productAdForm.get('product.product_type') as FormControl;
   }
 
+  get district() {
+    return this.productAdForm.get('district') as FormControl;
+  }
+
   removeImage(index: number) {
     const images = [...this.images.value] as AppUploadedImage[];
     images.splice(index, 1);
@@ -112,24 +120,30 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       productAdFromForm.product.tags = this.tags.value?.map((t: any) => t.id);
       productAdFromForm.product.product_type = this.productType.value?.id;
       productAdFromForm.product.id = this.productAd?.product?.id;
+      productAdFromForm.product.slug = slugify(
+        productAdFromForm.product.name + productAdFromForm.product.description
+      );
+      productAdFromForm.slug = slugify(
+        productAdFromForm.cellphone + productAdFromForm.gh_post
+      );
       productAdFromForm.ad_type = this.productAdForm.value.ad_type.value;
+      const images = (
+        this.imageUploadComponent?.getFilesToUpload() || []
+      ).concat(this.images.value || []);
+      productAdFromForm.district = this.district.value?.id;
 
       if (this.createForm) {
         this.store.dispatch(
           productAdActions.addProductAd({
             productAd: { ...productAdFromForm, author: 1 },
-            imagesToUpload: (
-              this.imageUploadComponent?.getFilesToUpload() || []
-            ).concat(this.images.value || []),
+            imagesToUpload: images,
           })
         );
       } else {
         this.store.dispatch(
           productAdActions.editProductAd({
             productAd: { ...productAdFromForm, author: 1 },
-            imagesToUpload: (
-              this.imageUploadComponent?.getFilesToUpload() || []
-            ).concat(this.images.value || []),
+            imagesToUpload: images,
           })
         );
       }
@@ -146,10 +160,31 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       .pipe(
         filter(data => !!data),
         tap((productAd: ProductAd) => {
-          this.productAdForm.patchValue(productAd);
+          this.productAdForm.patchValue({
+            ...productAd,
+            ad_type: { name: productAd.ad_type, value: productAd.ad_type },
+          });
+          this.productAdForm
+            .get('product.product_type')
+            ?.patchValue(productAd.product.product_type?.[0]);
+
           this.productAd = productAd;
           this.createForm = false;
-          this.navigator.setPanelTitle('Edit Product');
+          this.navigator.setPanelTitle('Update Product');
+        })
+      )
+      .subscribe();
+  }
+
+  private addOrEditSubscription() {
+    return this.action$
+      .pipe(
+        ofType(
+          productAdActions.editProductAdSuccessful,
+          productAdActions.addProductAdSuccessful
+        ),
+        tap(_ => {
+          this.navigator.closeModal();
         })
       )
       .subscribe();

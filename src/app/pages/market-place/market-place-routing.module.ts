@@ -1,26 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
+import { Pages, RouterOutlets } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { RoleGuard } from 'src/app/services/role.guard';
 import { MarketPlaceGuard } from './guard/market-place.guard';
+import { MarketListDetailsComponent } from './market-list-details/market-list-details.component';
 import { MarketPlaceListComponent } from './market-place-list/market-place-list.component';
 import { MarketPostFormComponent } from './market-post-form/market-post-form.component';
 import { MyMarketPostsComponent } from './my-market-posts/my-market-posts.component';
 
-const rightPanelRoutes: Routes = [
-  {
-    path: 'view',
-    component: MarketPlaceListComponent,
-    outlet: RouterOutlets.Right,
-    canActivate: [MarketPlaceGuard],
-  },
-  {
-    path: 'edit/:id',
-    component: MarketPostFormComponent,
-    outlet: RouterOutlets.Right,
-    canActivate: [MarketPlaceGuard],
-  },
-];
+const rightPanelRoutes: Routes = [];
 
 const routes: Routes = [
   {
@@ -29,13 +18,46 @@ const routes: Routes = [
     canActivate: [MarketPlaceGuard],
   },
   {
-    path: 'add',
+    path: Pages.MarketPlace.add,
     component: MarketPostFormComponent,
-    canActivate: [MarketPlaceGuard],
+    canActivate: [MarketPlaceGuard, RoleGuard],
+    data: {
+      breadcrumb: 'Add Advert',
+    },
   },
   {
-    path: 'my-market-place-items',
+    path: Pages.MarketPlace.view,
+    component: MarketListDetailsComponent,
+    outlet: RouterOutlets.Right,
+    canActivate: [MarketPlaceGuard],
+    data: {
+      breadcrumb: 'View Advert',
+    },
+  },
+  {
+    path: Pages.MarketPlace.edit,
+    component: MarketPostFormComponent,
+    outlet: RouterOutlets.Modal,
+    canActivate: [MarketPlaceGuard, RoleGuard],
+    data: {
+      breadcrumb: 'Edit Advert',
+    },
+  },
+  {
+    path: Pages.MarketPlace.myList,
     component: MyMarketPostsComponent,
+    canActivate: [MarketPlaceGuard, RoleGuard],
+    data: {
+      breadcrumb: 'Advert List',
+    },
+  },
+  {
+    path: Pages.MarketPlace.viewDetails,
+    component: MarketListDetailsComponent,
+    canActivate: [MarketPlaceGuard],
+    data: {
+      breadcrumb: 'View Advert Details',
+    },
   },
 ];
 

@@ -1,0 +1,28 @@
+<div
+  class="
+    forum-post-card
+    shadow-4
+    p-component p-3
+    border-round
+    fadeindown
+    animation-duration-500
+    hover:bg-gray-100
+  "
+  *ngIf="forum"
+  (click)="openForum()"
+>
+  <div class="text-lg xl:text-2xl font-bold text-darkblue">
+    {{ forum.name | uppercase }}
+  </div>
+
+  <div class="font-italic text-purple-800 font-semibold text-xs">
+    {{ forum.posts?.length ?? 0 }} Topic(s)
+    <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
+      {{ tag.name }}
+    </span>
+  </div>
+  <!-- <div class="flex justify-content-between">
+    <app-comments></app-comments>
+    <app-votes></app-votes>
+  </div> -->
+</div>

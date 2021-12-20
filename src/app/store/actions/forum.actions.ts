@@ -1,7 +1,8 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
 import { AppUploadedImage } from 'src/app/models/article.model';
-import { Forum } from 'src/app/models/forum.model';
+import { Forum, ForumPost } from 'src/app/models/forum.model';
+import { CommentActions } from './comments.action';
 
 class ForumActions {
   readonly type = '[Forum  Actions]';
@@ -27,6 +28,13 @@ class ForumActions {
     }>()
   );
 
+  selectForumPost = createAction(
+    `${this.type} Select Forum Post`,
+    props<{
+      forumPost: ForumPost;
+    }>()
+  );
+
   selectForumToEdit = createAction(
     `${this.type} Select Forum Post To Edit`,
     props<{
@@ -49,11 +57,31 @@ class ForumActions {
       searchParams: { [key: string]: any };
     }>()
   );
-  searchForumSuccess = createAction(`${this.type} Search Forum Success`);
-  addForum = createAction(
-    `${this.type} Add Forum`,
-    props<{ forum: Forum; imageToUpload?: File }>()
+
+  findAndSelectForumById = createAction(
+    `${this.type} Find And Select Forum By Id`,
+    props<{
+      id: string | number;
+    }>()
   );
+
+  selectForumPostById = createAction(
+    `${this.type} Find Forum Post By Id`,
+    props<{
+      id: string | number;
+    }>()
+  );
+
+  selectForumPostByIdSuccess = createAction(
+    `${this.type} Select Forum By Id`,
+    props<{
+      forumPost: ForumPost;
+    }>()
+  );
+
+  searchForumSuccess = createAction(`${this.type} Search Forum Success`);
+
+  addForum = createAction(`${this.type} Add Forum`, props<{ forum: Forum }>());
 
   addForumSuccessful = createAction(
     `${this.type} Add Forum Post Successful`,
@@ -64,7 +92,6 @@ class ForumActions {
     `${this.type} Edit Forum Post`,
     props<{
       forum: Forum;
-      imageToUpload: File | AppUploadedImage[] | any;
     }>()
   );
 
@@ -84,5 +111,37 @@ class ForumActions {
   );
 
   clearAllSelected = createAction(`${this.type} Clear All Selected Forum`);
+
+  likePost = createAction(
+    `${this.type} Like Forum Post`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  likePostSuccessful = createAction(
+    `${this.type} Like Forum Post Successful`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  dislikePost = createAction(
+    `${this.type} Dislike Forum Post`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  dislikePostSuccessful = createAction(
+    `${this.type} Dislike Forum Post Successful`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  noop = createAction(`${this.type} No Operation`);
+
+  comments = new CommentActions();
 }
 export const forumActions = new ForumActions();

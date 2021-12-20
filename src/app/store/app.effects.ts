@@ -6,6 +6,8 @@ import { ProductTypeEffects } from './effects/product-type.effects';
 import { TagEffects } from './effects/tag.effects';
 import { ForumEffects } from './effects/forum.effects';
 import { ForumPostEffects } from './effects/forum-post.effects';
+import { MenuItemEffects } from './effects/menu-items.effect';
+import { ProfileTypeEffects } from './effects/profile-type.effects';
 
 export const appStoreEffects = [
   ArticleEffects,
@@ -16,4 +18,6 @@ export const appStoreEffects = [
   ProductTypeEffects,
   ForumEffects,
   ForumPostEffects,
+  MenuItemEffects,
+  ProfileTypeEffects,
 ];

@@ -1,0 +1,26 @@
+<div class="flex justify-content-end mr-7 mb-2">
+  <button
+    pButton
+    icon="pi pi-save"
+    label="Save"
+    class="p-button-secondary p-button"
+  ></button>
+</div>
+<p-pickList
+  [source]="(categories$ | async) || []"
+  [target]="targetProducts"
+  sourceHeader="Available Events Categories"
+  targetHeader="Selected Events Categories"
+  [dragdrop]="true"
+  [responsive]="true"
+  filterBy="name"
+  sourceFilterPlaceholder="Search by name"
+  targetFilterPlaceholder="Search by name"
+>
+  <ng-template let-product pTemplate="item">
+    <div>
+      <i class="pi pi-bookmark mr-2"></i>
+      <span class="product-category">{{ product.name }}</span>
+    </div>
+  </ng-template>
+</p-pickList>

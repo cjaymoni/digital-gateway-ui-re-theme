@@ -1,6 +1,6 @@
 <app-listing-page
   [loading]="loadingArticles$ | async"
-  [title]="'ARTICLES'"
+  [title]="(title$ | async) ?? 'ARTICLES'"
   [itemTemplate]="articleCardTemplate"
   [items]="articles$ | async"
 ></app-listing-page>

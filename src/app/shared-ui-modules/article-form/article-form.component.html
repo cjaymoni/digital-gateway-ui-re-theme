@@ -26,7 +26,9 @@
       <ng-container *ngIf="!createForm && articleHasImage">
         <div class="mb-1">
           <div class="flex justify-content-evenly align-items-center">
-            <div class="font-bold">Current Image</div>
+            <div class="font-bold">
+              Current Image (Remove to upload a new one)
+            </div>
             <button
               pButton
               pTooltip="Remove current image"
@@ -50,11 +52,13 @@
           </div>
         </div>
       </ng-container>
-      <label for="imageUpload">Image Upload</label>
-      <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
+      <ng-container *ngIf="!articleHasImage">
+        <label for="imageUpload">Image Upload</label>
+        <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
+      </ng-container>
     </div>
 
-    <div class="field col-12 mb-8">
+    <div class="field col-12">
       <label for="content">Body</label>
       <app-content-box
         #contentBox
@@ -71,7 +75,7 @@
         class="mr-1"
         type="button"
         icon="pi pi-save"
-        [label]="(createForm ? 'Add' : 'Edit') + ' Article'"
+        [label]="(createForm ? 'Add' : 'Update') + ' Article'"
         [disabled]="articleForm.invalid"
         (click)="onAddOrUpdateArticle()"
       ></button>

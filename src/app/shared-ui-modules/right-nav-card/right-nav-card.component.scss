@@ -1,10 +1,13 @@
-:host ::ng-deep {
-  .header-bar {
-    height: 5px;
-    background-color: #212529;
+.article-title-text {
+  color: var(--text-color);
+
+  @media screen and (max-width: 1200px) and (min-width: 700px) {
+    color: var(--darkblue-500) !important;
   }
-  .divider {
-    background-color: #212529;
-    height: 1px;
+}
+
+:host ::ng-deep {
+  .p-divider.p-divider-vertical:before {
+    border-color: var(--darkblue-500) !important;
   }
 }

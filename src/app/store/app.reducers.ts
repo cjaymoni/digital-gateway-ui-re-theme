@@ -8,6 +8,7 @@ import { forumReducer } from './reducers/forum.reducer';
 import { menuItemReducer } from './reducers/menu-items.reducers';
 import { productAdReducer } from './reducers/product-ad.reducers';
 import { productTypeReducer } from './reducers/product-types.reducers';
+import { profileTypeReducer } from './reducers/profile-types.reducers';
 import { tagReducer } from './reducers/tag.reducers';
 import { userAuthReducer } from './reducers/user-auth.reducers';
 
@@ -23,4 +24,5 @@ export const appReducersMap = {
   [FeatureNamesForStore.ProductType]: productTypeReducer,
   [FeatureNamesForStore.Forum]: forumReducer,
   [FeatureNamesForStore.ForumPost]: forumPostReducer,
+  [FeatureNamesForStore.ProfileType]: profileTypeReducer,
 };

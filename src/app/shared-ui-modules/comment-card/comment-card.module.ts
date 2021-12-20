@@ -5,6 +5,10 @@ import { VotesModule } from '../votes/votes.module';
 import { AppPipesModule } from '../../pipes/app-pipes.module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { CommentsModule } from '../comments/comments.module';
+import { ButtonModule } from 'primeng/button';
+import { CommentFormModule } from '../comment-form/comment-form.module';
+import { DividerModule } from 'primeng/divider';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [CommentCardComponent],
@@ -13,8 +17,13 @@ import { CommentsModule } from '../comments/comments.module';
     VotesModule,
     CommentsModule,
     AppPipesModule,
-    DirectivesModule
+    DirectivesModule,
+    ButtonModule,
+    CommentFormModule,
+    DividerModule,
+    AvatarModule,
+    DividerModule,
   ],
-  exports :[CommentCardComponent]
+  exports: [CommentCardComponent],
 })
-export class CommentCardModule { }
+export class CommentCardModule {}

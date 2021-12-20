@@ -1,18 +1,38 @@
-<p-card>
-  <ng-template pTemplate="header">
-    <div class="header-bar"></div>
-    <div class="flex flex-row justify-content-between m-2">
-      {{ cardHeader }}
-      <i class="pi pi-image"></i>
+<div class="flex h-full wrapper bg-white">
+  <p-divider
+    type="solid"
+    layout="vertical"
+    styleClass="hidden xl:flex p-0 mr-6 border-darkblue"
+  ></p-divider>
+  <div *ngIf="highlightArticles$ | async" class="flex flex-column">
+    <div class="p-tag p-tag-info max-w-max mb-3">
+      <i class="pi pi-star mr-2"></i>
+      HIGHLIGHTS
     </div>
-  </ng-template>
-  <div
-    class="h-6rem div-with-background-image"
-    [style.backgroundImage]="backgroundImage"
-  ></div>
-  <p-divider styleClass="divider"></p-divider>
-  <div class="align-content-center">
-    <a [href]="cardLink">{{ linkTitle }}</a>
+    <div class="grid">
+      <ng-container *ngFor="let highlight of highlightArticles$ | async">
+        <div class="mb-6 col-6 md:col-4 lg:col-12">
+          <app-article-image
+            [images]="highlight.article.images"
+            [title]="highlight.article.title"
+            [preview]="false"
+          ></app-article-image>
+          <div
+            class="
+              article-title-text
+              cursor-pointer
+              hover-underline
+              xl:bg-white
+              transition-all transition-linear transition-duration-200
+              hover:font-bold hover:text-primary
+              capitalize
+            "
+            (click)="readArticle(highlight.article.slug)"
+          >
+            {{ highlight.article.title }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
   </div>
-  <div class="mt-2">{{ author }} | {{ cardDate }} | {{ cardTag }}</div>
-</p-card>
+</div>

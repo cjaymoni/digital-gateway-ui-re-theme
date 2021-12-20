@@ -1,31 +1,57 @@
-<div class="formgrid grid">
-  <div class="field col-12">
-    <label for="title">Title</label>
-    <input pInputText id="title" type="text" class="inputfield w-full" />
-  </div>
+<ng-container [formGroup]="forumForm">
+  <div class="formgrid grid">
+    <div class="field col-12">
+      <label for="title">Title</label>
+      <input
+        pInputText
+        id="title"
+        type="text"
+        class="inputfield w-full"
+        formControlName="name"
+        placeholder="Forum Title"
+      />
+    </div>
 
-  <div class="field col-12">
-    <label for="title">Tag</label>
-    <app-auto-complete class="w-full"></app-auto-complete>
-  </div>
+    <div class="field col-12">
+      <label for="title">Tag</label>
+      <app-tag-autocomplete
+        [tagType]="forumTagType"
+        [selectedTags]="tags"
+      ></app-tag-autocomplete>
+    </div>
 
-  <div class="field col-12">
-    <label for="title">Category</label>
-    <app-auto-complete></app-auto-complete>
-  </div>
+    <div class="field col-12">
+      <label for="description">Description</label>
 
-  <div class="field col-12 mb-8">
-    <label for="post">Forum Post</label>
-    <app-content-box></app-content-box>
-  </div>
+      <textarea
+        id="description"
+        class="inputfield w-full"
+        formControlName="description"
+        pInputTextarea
+        placeholder="Forum Description"
+      ></textarea>
+    </div>
 
-  <div class="field col-12">
-    <button
-      pButton
-      pRipple
-      class="align-self-center"
-      type="button"
-      label="Add Forum Post"
-    ></button>
+    <div class="col-12 ml-auto flex justify-content-end mt-2">
+      <button
+        pButton
+        pRipple
+        class="mr-1"
+        type="button"
+        icon="pi pi-save"
+        [label]="(createForm ? 'Add' : 'Update') + ' Forum'"
+        [disabled]="forumForm.invalid"
+        (click)="onAddOrUpdateForum()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        class="p-button-danger mr-1"
+        icon="pi pi-times"
+        type="button"
+        label="Cancel"
+        (click)="goBack()"
+      ></button>
+    </div>
   </div>
-</div>
+</ng-container>

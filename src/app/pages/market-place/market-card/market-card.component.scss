@@ -2,10 +2,14 @@
   .p-card-content {
     display: none;
   }
+  .p-card-footer {
+    padding-top: 2px;
+  }
   .p-card-title {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    margin-bottom: 0px;
 
     @supports (-webkit-line-clamp: 2) {
       text-overflow: ellipsis;
@@ -17,13 +21,7 @@
     }
   }
 
-  .article-card {
-    min-height: 380px;
-    cursor: pointer;
+  .ad-card {
+    min-height: 200px !important;
   }
-}
-
-.article-category {
-  position: absolute;
-  width: fit-content;
 }

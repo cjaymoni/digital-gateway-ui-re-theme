@@ -4,6 +4,9 @@
     pRipple
     type="button"
     icon="pi pi-comment"
+    [disabled]="!commentCount"
     class="p-button-rounded p-button-text p-button-secondary"
+    [label]="commentCount < 100 ? commentCount.toString() : '99+'"
+    (click)="commentsClicked()"
   ></button>
 </div>

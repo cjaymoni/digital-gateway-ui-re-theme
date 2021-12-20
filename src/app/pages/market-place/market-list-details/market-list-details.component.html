@@ -1,0 +1,77 @@
+<ng-container *ngIf="product$ | async; else loading">
+  <div class="text-center flex justify-content-center flex-column">
+    <div class="text-lg md:text-2xl m-0 font-bold mb-2">
+      {{ (product$ | async).product.name | uppercase }}
+    </div>
+    <p-galleria
+      [value]="(product$ | async).product.images"
+      [responsiveOptions]="responsiveOptions"
+      [autoPlay]="true"
+      [circular]="true"
+      [(visible)]="displayImage"
+      [(activeIndex)]="activeIndex"
+      [fullScreen]="true"
+      [showThumbnails]="false"
+      [showItemNavigators]="true"
+    >
+      <ng-template pTemplate="item" let-item>
+        <img [src]="item.image" [alt]="item.title" class="h-17rem" />
+        <!-- [preview]="true" -->
+        <!-- </img> -->
+      </ng-template>
+      <ng-template pTemplate="thumbnail" let-item>
+        <div class="grid grid-nogutter">
+          <img [src]="item.image" class="w-7rem h-7rem" />
+        </div>
+      </ng-template>
+    </p-galleria>
+    <div
+      *ngIf="(product$ | async).product.images"
+      class="grid col-12 justify-content-center align-items-center"
+    >
+      <div
+        *ngFor="let img of (product$ | async).product.images; let index = index"
+        class="col-2"
+      >
+        <img
+          [src]="img.image"
+          [alt]="img.name"
+          class="
+            cursor-pointer
+            w-full
+            h-auto
+            object-fit-cover
+            thumbnail
+            transition-all transition-duration-300 transition-ease-in-out
+          "
+          (click)="imageClick(index)"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="flex text-lg shadow-1 p-4">
+    <div class="flex-auto flex align-items-center justify-content-center">
+      PRICE : {{ (product$ | async).product.price }}
+    </div>
+    <div class="flex-auto flex align-items-center justify-content-center">
+      TYPE : {{ (product$ | async).ad_type | uppercase }}
+    </div>
+    <div class="flex-auto flex align-items-center justify-content-center">
+      CONTACT : {{ (product$ | async).cellphone | uppercase }}
+    </div>
+  </div>
+  <div class="flex ml-3 py-4">
+    <p><i class="pi pi-map-marker"></i> {{ (product$ | async).location }}</p>
+  </div>
+  <div>
+    <div class="text-lg shadow-1 p-4">
+      <div class="mb-3">Description:</div>
+      <div class="text-left">
+        {{ (product$ | async).product.description }}
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <p-skeleton></p-skeleton>
+</ng-template>

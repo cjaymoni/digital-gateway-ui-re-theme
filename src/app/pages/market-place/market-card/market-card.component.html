@@ -1,21 +1,28 @@
 <p-card
   *ngIf="productAd"
   [header]="productAd.product.name"
-  styleClass="shadow-6 article-card p-2 w-full fadein animation-duration-500 justify-content-between"
+  (click)="openMarketAd(); $event.stopPropagation()"
+  styleClass="cursor-pointer hover:bg-gray-100 min-h-full p-2 w-full fadein animation-duration-500 justify-content-between align-items-center"
 >
   <ng-template pTemplate="header">
     <!-- static image -->
     <div
-      class="div-with-image-background"
+      class="div-with-background-image"
       [style.backgroundImage]="backgroundImage"
     ></div>
   </ng-template>
 
   <ng-template pTemplate="footer">
     <!-- <div class="flex justify-content-center align-self-end"> -->
-    <div class="font-bold">Price: {{ productAd.product.price }} GHS</div>
-    <div>Contact: {{ productAd.cellphone }}</div>
-    <p><i class="pi pi-map-marker"></i> {{ productAd.location }}</p>
+    <div class="flex justify-content-between align-items-center">
+      <div class="font-bold">Price: {{ productAd.product.price }} GHS</div>
+      <p-message
+        [severity]="productAd.ad_type === 'offer' ? 'info' : 'warn'"
+        [text]="productAd.ad_type | uppercase"
+        styleClass="p-2 p-message-no-icon"
+      ></p-message>
+    </div>
+    <div><i class="pi pi-map-marker"></i> {{ productAd.location }}</div>
     <!-- </div> -->
   </ng-template>
 </p-card>

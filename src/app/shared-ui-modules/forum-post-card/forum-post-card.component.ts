@@ -1,13 +1,14 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
   Input,
+  OnInit,
 } from '@angular/core';
-import { Forum } from 'src/app/models/forum.model';
 import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
+import { ForumPost } from 'src/app/models/forum.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { forumActions } from '../../store/actions/forum.actions';
+import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 
 @Component({
   selector: 'app-forum-post-card',
@@ -16,9 +17,27 @@ import { forumActions } from '../../store/actions/forum.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForumPostCardComponent implements OnInit {
-  @Input() forum: Forum | null = null;
+  @Input() forumPost!: ForumPost;
 
-  constructor(private store: Store, private navigator: NavigatorService) {}
+  @Input() avatar: any;
+
+  constructor(private navigator: NavigatorService, private store: Store) {}
+
+  selectedForum$ = this.store.select(forumSelectors.selectedForum);
 
   ngOnInit(): void {}
+
+  openForumPost() {
+    this.selectedForum$.pipe(take(1)).subscribe(selectedForum => {
+      console.log(selectedForum.slug, this.forumPost?.slug);
+
+      this.navigator.forum.goToReadForumPost(
+        selectedForum.slug as string,
+        this.forumPost?.slug || ''
+      );
+    });
+  }
+
+  dislikeForum() {}
+  likeForum() {}
 }

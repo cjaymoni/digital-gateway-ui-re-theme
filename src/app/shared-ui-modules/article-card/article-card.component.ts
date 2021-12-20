@@ -17,18 +17,13 @@ import { articleActions } from 'src/app/store/actions/article.actions';
 })
 export class ArticleCardComponent implements OnInit {
   @Input() article: Article | null = null;
+  @Input() cardClass = 'md:h-15rem';
 
   constructor(private store: Store, private navigator: NavigatorService) {}
 
   ngOnInit(): void {}
 
   openArticle() {
-    this.store.dispatch(
-      articleActions.selectArticle({
-        article: this.article as Article,
-      })
-    );
-
-    this.navigator.article.goToReadArticlePage(this.article?.slug as string);
+    this.navigator.article.goToViewDetailsPage(this.article?.slug as string);
   }
 }

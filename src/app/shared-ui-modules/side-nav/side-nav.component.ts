@@ -1,8 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { MenuItem } from 'primeng/api';
-import { map } from 'rxjs';
-import { menuItemSelectors } from 'src/app/store/selectors/menu-items.selectors';
+import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
   selector: 'app-side-nav',
@@ -11,13 +8,15 @@ import { menuItemSelectors } from 'src/app/store/selectors/menu-items.selectors'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNavComponent implements OnInit {
-  constructor(private store: Store) {}
+  constructor(private themeSetting: ThemeSettingsStore) {}
 
-  subMenuItems$ = this.store
-    .select(menuItemSelectors.subMenuItems)
-    .pipe(map(items => items as MenuItem[]));
+  showAll = false;
 
-  selectedMenu$ = this.store.select(menuItemSelectors.selectedMenu);
+  featuredCategory$ = this.themeSetting.featuredCategoryArray$;
 
   ngOnInit(): void {}
+
+  viewMore() {
+    this.showAll = !this.showAll;
+  }
 }

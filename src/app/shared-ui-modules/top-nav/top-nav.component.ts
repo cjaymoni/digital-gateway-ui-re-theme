@@ -1,8 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
-import { filter, map, switchMap } from 'rxjs';
-import { Pages } from 'src/app/config/app-config';
+import { map } from 'rxjs';
+import { LoggedInMenu, SignUpMenu } from 'src/app/config/app-config';
+import { LOGIN_SERVICE } from 'src/app/config/injectables';
+import { IAuthService } from 'src/app/models/auth-service';
 import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { menuItemActions } from 'src/app/store/actions/menu-items.actions';
@@ -16,36 +24,36 @@ import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopNavComponent implements OnInit {
-  loggedInUser$ = this.store
-    .select(userAuthSelectors.loggedInUser)
-    .pipe(filter(user => !!user));
+  loggedInUser$ = this.store.select(userAuthSelectors.loggedInUser);
+
+  isLoggedIn$ = this.store.select(userAuthSelectors.isLoggedIn);
 
   isHandheld$ = this.device.isHandheld$;
+
+  searchInputControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(4),
+  ]);
 
   constructor(
     private store: Store,
     private device: DeviceService,
-    private navigator: NavigatorService
+    private navigator: NavigatorService,
+    @Inject(LOGIN_SERVICE) public loginService: IAuthService
   ) {}
 
-  items$ = this.device.isHandheld$.pipe(
-    switchMap(isHandheld =>
-      isHandheld
-        ? this.store
-            .select(menuItemSelectors.menuItems)
-            .pipe(map(menu => menu as MenuItem[]))
-        : this.store.select(menuItemSelectors.topMenuItems).pipe(
-            map(topMenuItems =>
-              topMenuItems.map(item => {
-                item.command = event => {
-                  this.selectMenu(event.item.id, item.routerLink);
-                };
-                item.routerLink = (item as any)?.link;
-                return item;
-              })
-            )
-          )
-    )
+  items$ = this.store.select(menuItemSelectors.menuItems);
+
+  signUpMenu = SignUpMenu;
+
+  loggedInMenu = this.loggedInUser$.pipe(
+    map(user => {
+      if (user) {
+        return [...LoggedInMenu(user.role), ...this.logoutMenu()];
+      } else {
+        return [];
+      }
+    })
   );
 
   ngOnInit(): void {}
@@ -63,6 +71,28 @@ export class TopNavComponent implements OnInit {
   }
 
   goToLoginPage() {
-    this.navigator.openPanel(Pages.Login);
+    this.navigator.auth.goToLogin();
+  }
+
+  logout = () => {
+    this.loginService.logout().subscribe(_ => this.navigator.goToRoute(['/']));
+  };
+
+  logoutMenu(): MenuItem[] {
+    return [
+      {
+        id: 'logout',
+        label: 'Logout',
+        command: this.logout,
+        icon: 'pi pi-power-off',
+      },
+    ];
+  }
+
+  searchTerm() {
+    if (this.searchInputControl.valid) {
+      this.navigator.goToRoute(['search', this.searchInputControl.value]);
+      this.searchInputControl.setValue('');
+    }
   }
 }

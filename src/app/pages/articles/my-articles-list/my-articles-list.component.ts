@@ -8,12 +8,18 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
-import { Pages, PublishedStatusMapping } from 'src/app/config/app-config';
+import {
+  PublishedStatusMapping,
+  RouterOutlets,
+} from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { articleActions } from 'src/app/store/actions/article.actions';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
+import { MenuItem } from 'primeng/api';
+import { ArticleService } from '../services/articles.service';
+import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
+import { PrimeNgAlerts } from 'src/app/config/app-config';
+import { articleActions } from 'src/app/store/actions/article.actions';
 
 @Component({
   selector: 'app-my-articles-list',
@@ -22,7 +28,7 @@ import { articleSelectors } from 'src/app/store/selectors/article.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyArticlesListComponent implements OnInit, AfterViewInit {
-  myArticles$ = this.store.select(articleSelectors.all);
+  myArticles$ = this.store.select(articleSelectors.myArticles);
 
   @ViewChild('statusTemplate') statusTemplate: TemplateRef<any> | undefined =
     undefined;
@@ -31,14 +37,20 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
     undefined;
 
   columns: any[] = [];
-
+  statusList!: MenuItem[];
+  selectedArticle: any;
+  selectedStatus!: string;
   PublishedStatusMapping = PublishedStatusMapping;
 
   constructor(
     private store: Store,
     private navigator: NavigatorService,
-    private title: Title
-  ) {}
+    private title: Title,
+    private articleService: ArticleService,
+    private appAlertService: AppAlertService
+  ) {
+    this.store.dispatch(articleActions.fetchMyArticles());
+  }
 
   ngAfterViewInit(): void {
     this.columns = [
@@ -52,31 +64,77 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.title.setTitle('My Articles');
+
+    this.statusList = [
+      {
+        id: 'Review',
+        label: 'Review',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editStatus();
+        },
+      },
+
+      {
+        id: 'Ready',
+        label: 'Ready',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editStatus();
+        },
+      },
+      {
+        id: 'Published',
+        label: 'Published',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editStatus();
+        },
+      },
+      {
+        id: 'Archived',
+        label: 'Archived',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editStatus();
+        },
+      },
+    ];
   }
 
   viewArticle(article: Article) {
-    this.selectArticle(article);
-    this.navigator.openPanel(Pages.view, 'Preview Article');
+    this.navigator.article.goToViewPage(
+      article.id,
+      'Preview Article',
+      RouterOutlets.Modal
+    );
   }
 
   editArticle(article: Article) {
-    this.store.dispatch(
-      articleActions.selectArticleToEdit({
-        article,
-      })
+    this.navigator.article.goToEditPage(
+      article.id,
+      'Edit Article',
+      RouterOutlets.Modal
     );
-    this.navigator.openPanel(Pages.edit, 'Edit Article');
   }
 
   goToAddArticlePage() {
-    this.navigator.article.goToAddPage();
+    this.navigator.article.goToAddPage(RouterOutlets.Modal);
   }
 
-  private selectArticle(article: Article) {
-    this.store.dispatch(
-      articleActions.selectArticle({
-        article,
-      })
-    );
+  editStatus() {
+    const formData = {
+      status: this.selectedStatus,
+    };
+    const articleId = this.selectedArticle.id;
+    // console.log(status, this.selectedArticle.id);
+    this.articleService
+      .editArticleStatus(`${articleId}`, formData)
+      .subscribe((data: any) => {
+        this.appAlertService.showToast(
+          `${data.title} status updated successfully`,
+          PrimeNgAlerts.UNOBSTRUSIVE
+        );
+      });
   }
 }

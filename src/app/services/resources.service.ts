@@ -7,7 +7,7 @@ export class ResourceService {
   constructor(protected http: HttpClient, protected endpoint: string) {}
 
   getOneResource(id: any, url: string = this.endpoint) {
-    return this.http.get(`${url + id}/`);
+    return this.http.get(`${url + id}/`).pipe(map(data => data as any));
   }
 
   getResources(
@@ -24,9 +24,9 @@ export class ResourceService {
     return this.http.post(`${url}`, toStore).pipe(map(data => data as object));
   }
 
-  updateResource(toStore: any, id: any, url = this.endpoint) {
+  updateResource(toStore: any, id: any, url = this.endpoint, override = false) {
     return this.http
-      .patch(`${url + id}/`, toStore)
+      .patch(`${override ? url : url + id}/`, toStore)
       .pipe(map(data => data as object));
   }
 
@@ -65,28 +65,24 @@ export class ResourceService {
 
           const oldImage = Boolean(imgToUpload.id);
 
-          formData.append(
-            `${propertyNameToAppend}images[${index}]image`,
-            oldImage ? imgToUpload.image : imgToUpload
-          );
-          formData.append(
-            `${propertyNameToAppend}images[${index}]title`,
-            oldImage ? imgToUpload.title : imgToUpload.name
-          );
+          if (oldImage) {
+            formData.append(
+              `${propertyNameToAppend}images[${index}]id`,
+              imgToUpload.id
+            );
+          } else {
+            formData.append(
+              `${propertyNameToAppend}images[${index}]title`,
+              imgToUpload.name
+            );
+
+            formData.append(
+              `${propertyNameToAppend}images[${index}]image`,
+              imgToUpload
+            );
+          }
         });
-        // array means image didnt change so use same value
       }
-      // else {
-      //   formData.append(
-      //     propertyNameToAppend + 'images[0]image',
-      //     imageToUpload,
-      //     imageToUpload.name
-      //   );
-      //   formData.append(
-      //     propertyNameToAppend + 'images[0]title',
-      //     imageToUpload.name
-      //   );
-      // }
     } else {
       formData.append(propertyNameToAppend + 'images', '');
     }

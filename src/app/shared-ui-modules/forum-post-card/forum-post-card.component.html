@@ -1,27 +1,41 @@
-<p-card
-  *ngIf="forum"
-  styleClass="shadow-6  p-2 w-full scalein animation-duration-500 justify-content-between"
+<div
+  class="
+    forum-post-card
+    shadow-5
+    p-component p-3
+    border-round
+    fadeindown
+    animation-duration-1000
+    hover:text-pink-700 hover:bg-gray-100
+    transition-all transition-duration-500 transition-ease-out
+  "
+  (click)="openForumPost()"
+  *ngIf="forumPost"
 >
-  <ng-template pTemplate="header">
-    <div class="p-card-title">
-      {{ forum.name }}
+  <div class="flex justify-content-between align-content-center">
+    <div class="flex">
+      <p-avatar
+        [image]="forumPost.submitter.image"
+        styleClass="mr-2"
+        size="large"
+        shape="circle"
+      ></p-avatar>
+      <div class="text-lg font-bold mt-1">
+        {{ forumPost.title | uppercase }}
+        <div class="text-sm">
+          {{ forumPost.submitter.username }}
+        </div>
+      </div>
     </div>
-    <div class="p-card-subtitle">Author Name | Date</div>
-  </ng-template>
-  <div></div>
-  <ng-template pTemplate="footer">
-    <div class="flex justify-content-between align-items-center">
-      <app-comments></app-comments>
-      <app-votes></app-votes>
-      <button
-        pButton
-        class="
-          p-button-outlined p-button-danger
-          justify-content-center
-          align-self-end
-        "
-        label="Read More"
-      ></button>
+
+    <div class="align-content-end">
+      <app-comments
+        [commentCount]="forumPost.comment_count || 0"
+      ></app-comments>
     </div>
-  </ng-template>
-</p-card>
+  </div>
+
+  <div>
+    {{ forumPost.content || '' | appEllipsis: 150 }}
+  </div>
+</div>

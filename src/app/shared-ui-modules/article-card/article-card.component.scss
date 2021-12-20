@@ -1,4 +1,4 @@
-$text-shadow: 1px 1px 4px var(--surface-900);
+$text-shadow: 2px 2px 6px black;
 
 :host {
   .article-card {
@@ -33,7 +33,7 @@ $text-shadow: 1px 1px 4px var(--surface-900);
       ::ng-deep {
         app-article-image {
           .article-image {
-            transform: scale(1.2);
+            transform: scale(1.5);
             transition-property: all;
             transition-duration: 500ms;
           }
@@ -52,9 +52,14 @@ $text-shadow: 1px 1px 4px var(--surface-900);
 }
 
 .article-title {
-  text-shadow: $text-shadow;
+  // text-shadow: $text-shadow;
   text-overflow: ellipsis;
-  width: calc(99%);
+  width: calc(100%);
+
+  &:hover {
+    text-decoration: underline;
+    font-size: larger;
+  }
 
   @supports (-webkit-line-clamp: 2) {
     text-overflow: ellipsis;
@@ -63,6 +68,12 @@ $text-shadow: 1px 1px 4px var(--surface-900);
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+  @media screen and (max-width: 960px) {
+    @supports (-webkit-line-clamp: 2) {
+      -webkit-line-clamp: unset;
+      -webkit-box-orient: unset;
+    }
   }
 }
 

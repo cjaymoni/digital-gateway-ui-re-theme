@@ -12,17 +12,20 @@ export interface ProductAd {
   email: string;
   author: User;
   product: Product;
+  ad_type: string;
+  slug?: string;
 }
 
 export interface ProductType {
   name: string;
   description: string;
-  parent: string;
+  parent: string | null;
   id?: number;
+  slug?: string;
 }
 
 export interface Product {
-  id?: number;
+  id?: string | number | any;
   name: string;
   description: string;
   price: string;
@@ -30,4 +33,5 @@ export interface Product {
   product_type: ProductType[];
   tags: Tag[];
   images: AppUploadedImage[];
+  slug?: string;
 }

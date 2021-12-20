@@ -1,1 +1,13 @@
-
+:host ::ng-deep {
+  p-password {
+    div:first-child {
+      position: relative;
+    }
+    i.pi-eye {
+      position: absolute;
+      margin-top: -0.5rem;
+      right: 0.75rem;
+      top: 50%;
+    }
+  }
+}

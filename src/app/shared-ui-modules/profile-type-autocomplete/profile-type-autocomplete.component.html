@@ -1,0 +1,9 @@
+<app-auto-complete
+  [control]="selectedProfileType"
+  [suggestions]="(profileTypes$ | async) || []"
+  (searchEvent)="searchProfileType($event.query)"
+  [multiple]="false"
+  [forceSelection]="true"
+  [dropdown]="true"
+  placeholder="Type a profile type"
+></app-auto-complete>

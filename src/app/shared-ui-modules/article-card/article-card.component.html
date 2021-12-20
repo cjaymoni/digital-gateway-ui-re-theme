@@ -1,49 +1,64 @@
-<div
-  *ngIf="article"
-  (click)="openArticle()"
-  [pTooltip]="article.title"
-  tooltipPosition="bottom"
-  class="
-    shadow-7
-    p-0
-    w-full
-    scalein
-    animation-duration-500
-    justify-content-between
-    relative
-    article-card
-    overflow-hidden
-    h-12rem
-  "
->
-  <app-article-image
-    [images]="article.images || []"
-    [title]="article.title?.substr(0, 1) | uppercase"
-    [coverBackground]="true"
-  ></app-article-image>
-  <div class="tint h-full w-full absolute z-0"></div>
-
-  <!-- <div class="absolute p-4 text-white font-bold bottom-0"> -->
-  <div class="bg-gray-500 absolute top-0 text-white w-max shadow-2 z-1 p-1">
-    {{ article.category?.name }}
-  </div>
+<ng-container *ngIf="article">
   <div
-    class="text-white w-max text-sm font-italic z-1 p-1 absolute article-date"
-  >
-    {{ article.updated_on | date: 'longDate' }}
-  </div>
-  <div
+    (click)="openArticle(); $event.stopPropagation()"
     class="
-      absolute
-      bottom-0
-      text-white text-2xl
+      p-0
+      w-full
+      scalein
+      animation-duration-500
+      justify-content-between
+      relative
+      article-card
+      overflow-hidden
+      h-auto
+    "
+    [ngClass]="cardClass"
+  >
+    <app-article-image
+      [images]="article.images || []"
+      [title]="article.title?.substr(0, 1) | uppercase"
+      [preview]="false"
+    ></app-article-image>
+    <div class="tint h-full w-full absolute z-0"></div>
+
+    <!-- <div class="absolute p-4 text-white font-bold bottom-0"> -->
+    <div
+      class="
+        bg-gray-900
+        absolute
+        top-0
+        text-white
+        w-max
+        shadow-2
+        z-1
+        p-1
+        capitalize
+      "
+    >
+      {{ article.category?.name }}
+    </div>
+    <div
+      class="text-white w-max text-sm font-italic z-1 p-1 absolute article-date"
+    >
+      {{ article.updated_on | date: 'longDate' }}
+    </div>
+  </div>
+  <div
+    [pTooltip]="article.title"
+    tooltipPosition="top"
+    class="
+      text-lg
       z-1
       article-title
       overflow-hidden
       text-center
       p-1
+      hover:text-pink-600
+      cursor-pointer
+      capitalize
     "
+    (click)="openArticle(); $event.stopPropagation()"
   >
     {{ article.title }}
   </div>
-</div>
+</ng-container>

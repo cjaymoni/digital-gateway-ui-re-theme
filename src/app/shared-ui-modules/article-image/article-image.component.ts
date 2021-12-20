@@ -16,6 +16,8 @@ export class ArticleImageComponent implements OnInit {
   @Input() images: AppUploadedImage[] = [];
   @Input() letter: string = '';
   @Input() coverBackground = false;
+  @Input() preview = true;
+  @Input() imageClass = 'h-auto';
 
   constructor() {}
 

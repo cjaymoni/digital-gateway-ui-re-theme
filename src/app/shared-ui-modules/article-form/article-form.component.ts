@@ -34,8 +34,8 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   @ViewChild('contentBox', { static: true })
   contentInput: AppQuillComponent | null = null;
 
-  @ViewChild('imageUpload', { static: true })
-  imageUploadComponent: ImageUploadComponent | null = null;
+  @ViewChild('imageUpload', { static: false })
+  imageUploadComponent!: ImageUploadComponent;
 
   articleForm!: FormGroup;
 
@@ -82,26 +82,28 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
       const toSend = {
         title: article.title,
         content: article.content,
-        category: [article.category.id],
-        tags: (article.tags as Tag[]).map(tag => tag.id),
+        category: article.category.id,
+        tags: ((article.tags as Tag[]) || [])?.map(tag => tag.id),
         slug: slugify(article.title),
         created_by: 1,
       };
+
+      const images: any = (this.images.value || []).concat(
+        this.imageUploadComponent?.getFilesToUpload() || []
+      );
 
       if (this.createForm) {
         this.store.dispatch(
           articleActions.addArticle({
             article: toSend,
-            imageToUpload: this.imageUploadComponent?.getFilesToUpload()?.[0],
+            imageToUpload: images,
           })
         );
       } else {
         this.store.dispatch(
           articleActions.editArticle({
             article: { ...toSend, id: this.article.id },
-            imageToUpload: this.articleHasImage
-              ? this.article.images
-              : this.imageUploadComponent?.getFilesToUpload(),
+            imageToUpload: images,
           })
         );
       }
@@ -140,7 +142,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
           articleActions.editArticleSuccessful
         ),
         map(_ => {
-          this.navigator.hidePanel();
+          this.navigator.closeModal();
         })
       )
       .subscribe();
@@ -155,12 +157,13 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
           this.createForm = false;
           this.article = article;
           this.articleForm.patchValue(article);
+          this.navigator.setPanelTitle('Update Article');
         })
       )
       .subscribe();
   }
 
   goBack() {
-    this.navigator.goBack();
+    this.navigator.closeModal();
   }
 }

@@ -1,17 +1,21 @@
 <ng-container *ngIf="!images.length; else articleImage">
-  <div
-    class="flex justify-content-center align-content-center h-full bg-gray-400"
-  >
-    <div class="text-white text-700">
-      {{ letter | uppercase }}
-    </div>
-  </div>
+  <p-avatar
+    [label]="letter"
+    size="xlarge"
+    styleClass="h-10rem w-full md:h-full"
+    icon="pi pi-book"
+  ></p-avatar>
 </ng-container>
 
 <ng-template #articleImage>
-  <div
-    class="h-full article-image"
-    [ngClass]="coverBackground ? 'background-cover' : ''"
-    [style.backgroundImage]="imageUrl"
-  ></div>
+  <p-image
+    [src]="images?.[0]?.image ?? ''"
+    imageClass="object-fit-cover md:h-full article-image w-full"
+    [styleClass]="imageClass"
+    [preview]="preview"
+  ></p-image>
+
+  <em *ngIf="preview" class="text-xs block text-cyan-600"
+    >Click on image to view</em
+  >
 </ng-template>
