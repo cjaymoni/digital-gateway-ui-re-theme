@@ -22,7 +22,10 @@
       *ngFor="let featured of featuredCategory$ | async; let index = index"
     >
       <div
-        *ngIf="index < 8"
+        *ngIf="
+          index <
+          (this.showAll ? (featuredCategory$ | async)?.length || 100 : 8)
+        "
         class="
           mt-3
           border-none border-solid border-bottom-2
@@ -44,10 +47,11 @@
     <button
       *ngIf="(featuredCategory$ | async)?.length! > 8 ?? false"
       pButton
-      class="cursor-pointer mt-6 max-w-max ml-3 p-button-secondary"
+      class="cursor-pointer mt-4 w-max p-3 ml-3 p-button-secondary mb-2"
       (click)="viewMore()"
+      [icon]="showAll ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"
     >
-      View more
+      View {{ showAll ? 'less ' : 'more ' }} &nbsp;&nbsp;
     </button>
   </div>
 </ng-container>
