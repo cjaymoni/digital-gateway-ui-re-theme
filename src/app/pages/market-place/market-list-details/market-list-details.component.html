@@ -51,25 +51,77 @@
   </div>
   <div class="flex text-lg shadow-1 p-4">
     <div class="flex-auto flex align-items-center justify-content-center">
-      PRICE : {{ (product$ | async).product.price }}
+      <div class="font-bold">Type :</div>
+      <p-message
+        [severity]="(product$ | async).ad_type === 'offer' ? 'info' : 'warn'"
+        [text]="(product$ | async).ad_type | uppercase"
+        styleClass="p-message-no-icon"
+      ></p-message>
     </div>
+
     <div class="flex-auto flex align-items-center justify-content-center">
-      TYPE : {{ (product$ | async).ad_type | uppercase }}
+      <i class="pi pi-tag mr-1 text-blue-500"></i>
+      <ng-container
+        *ngFor="let tag of (product$ | async).product.tags; let last = last"
+      >
+        <p-tag [value]="tag.name" severity="info" class="mr-1"></p-tag>
+      </ng-container>
     </div>
+
     <div class="flex-auto flex align-items-center justify-content-center">
-      CONTACT : {{ (product$ | async).cellphone | uppercase }}
+      <i class="pi pi-info-circle mr-1 text-pink-700"></i>
+      <ng-container
+        *ngFor="
+          let ptype of (product$ | async).product.product_type;
+          let last = last
+        "
+      >
+        <p-tag [value]="ptype.name" severity="danger" class="mr-1"></p-tag>
+      </ng-container>
     </div>
   </div>
-  <div class="flex ml-3 py-4">
-    <p><i class="pi pi-map-marker"></i> {{ (product$ | async).location }}</p>
-  </div>
-  <div>
-    <div class="text-lg shadow-1 p-4">
-      <div class="mb-3">Description:</div>
-      <div class="text-left">
-        {{ (product$ | async).product.description }}
-      </div>
+
+  <div class="flex text-lg shadow-1 p-4 mt-3">
+    <div class="flex-auto flex align-items-center justify-content-center">
+      <div class="font-bold">Price</div>
+      : {{ (product$ | async).product.price }}
     </div>
+    <div class="flex-auto flex align-items-center justify-content-center">
+      <div class="font-bold">Author</div>
+      : {{ (product$ | async).author.username }}
+    </div>
+    <div class="flex-auto flex align-items-center justify-content-center">
+      <div class="font-bold">Contact</div>
+      : {{ (product$ | async).cellphone | uppercase }}
+    </div>
+  </div>
+
+  <div class="flex text-lg shadow-1 p-4 mt-3">
+    <div class="flex-auto flex align-items-center justify-content-center">
+      <div class="font-bold">Location</div>
+      : {{ (product$ | async).location }}
+    </div>
+    <div class="flex-auto flex align-items-center justify-content-center">
+      <div class="font-bold">Ghana Post</div>
+      : {{ (product$ | async).gh_post }}
+    </div>
+    <div class="flex-auto flex align-items-center justify-content-center">
+      <div class="font-bold">District</div>
+      : {{ (product$ | async).district.name }}
+    </div>
+  </div>
+
+  <div class="text-lg shadow-1 p-4 mt-4">
+    <div class="mb-3 font-bold">Description</div>
+    <div class="text-left">
+      {{ (product$ | async).product.description }}
+    </div>
+  </div>
+
+  <div class="text-lg p-3 mt-5">
+    Related items
+
+    <hr />
   </div>
 </ng-container>
 <ng-template #loading>
