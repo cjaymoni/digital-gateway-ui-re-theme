@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Pages, RouterOutlets } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { RoleGuard } from 'src/app/services/role.guard';
 import { MarketPlaceGuard } from './guard/market-place.guard';
 import { MarketListDetailsComponent } from './market-list-details/market-list-details.component';
 import { MarketPlaceListComponent } from './market-place-list/market-place-list.component';
@@ -19,7 +20,7 @@ const routes: Routes = [
   {
     path: Pages.MarketPlace.add,
     component: MarketPostFormComponent,
-    canActivate: [MarketPlaceGuard],
+    canActivate: [MarketPlaceGuard, RoleGuard],
     data: {
       breadcrumb: 'Add Advert',
     },
@@ -37,7 +38,7 @@ const routes: Routes = [
     path: Pages.MarketPlace.edit,
     component: MarketPostFormComponent,
     outlet: RouterOutlets.Modal,
-    canActivate: [MarketPlaceGuard],
+    canActivate: [MarketPlaceGuard, RoleGuard],
     data: {
       breadcrumb: 'Edit Advert',
     },
@@ -45,6 +46,7 @@ const routes: Routes = [
   {
     path: Pages.MarketPlace.myList,
     component: MyMarketPostsComponent,
+    canActivate: [MarketPlaceGuard, RoleGuard],
     data: {
       breadcrumb: 'Advert List',
     },

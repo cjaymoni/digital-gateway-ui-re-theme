@@ -97,7 +97,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getCarouselMouseLeaveSubscription(this.marketSlider, 4000)
     );
 
-    // multi media
+    // multimedia
     this.subscription.add(
       this.getCarouselMouseEnterSubscription(this.multimediaSlider)
     );
@@ -118,7 +118,6 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     carouselRef.autoplayInterval = interval;
     carouselRef.startAutoplay();
     carouselRef.cd.detectChanges();
-    console.log(carouselRef, 'start');
   }
 
   stopCarouselAutoplay(carouselRef: Carousel) {
@@ -126,14 +125,11 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     carouselRef.autoplayInterval = 0;
     carouselRef.stopAutoplay();
     carouselRef.cd.detectChanges();
-    console.log(carouselRef, 'stop');
   }
 
   getCarouselMouseEnterSubscription(carouselRef: Carousel) {
     return fromEvent(carouselRef.el.nativeElement, 'mouseenter')
-      .pipe(
-        debounceTime(100) // 2 seconds
-      )
+      .pipe(debounceTime(100))
       .subscribe(() => {
         this.stopCarouselAutoplay(carouselRef);
       });
@@ -141,9 +137,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getCarouselMouseLeaveSubscription(carouselRef: Carousel, interval: number) {
     return fromEvent(this.eventSlider.el.nativeElement, 'mouseleave')
-      .pipe(
-        debounceTime(800) // 2 seconds
-      )
+      .pipe(debounceTime(500))
       .subscribe(() => {
         this.startCarouselAutoplay(carouselRef, interval);
       });

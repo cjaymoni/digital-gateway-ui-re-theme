@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { of, switchMap } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { of, switchMap, withLatestFrom } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  filter,
+  map,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
-import { Forum } from 'src/app/models/forum.model';
+import { Forum, ForumPost } from 'src/app/models/forum.model';
 import { ForumsService } from 'src/app/pages/forum/services/forums.service';
+import { ForumPostsService } from 'src/app/pages/forum-posts/services/forum-post.service';
+
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
-import { forumActions } from '../actions/forum.actions';
 import { slugify } from '../../helpers/app.helper.functions';
+import { forumActions } from '../actions/forum.actions';
+import { userAuthActions } from '../actions/user-auth.actions';
+import { forumSelectors } from '../selectors/forum.selectors';
 
 @Injectable()
 export class ForumEffects {
@@ -61,6 +72,25 @@ export class ForumEffects {
           map((forum: Forum) =>
             forumActions.selectForum({
               forum,
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(forumActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  searchForumPostById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.selectForumPostById),
+      switchMap(({ id }) =>
+        this.forumPostService.getOneResource(id).pipe(
+          map((forumPost: ForumPost) =>
+            forumActions.selectForumPost({
+              forumPost,
             })
           ),
           catchError(error => {
@@ -246,6 +276,36 @@ export class ForumEffects {
     )
   );
 
+  refreshData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(userAuthActions.loginSuccessful, userAuthActions.logoutSuccessful),
+      debounceTime(300),
+      withLatestFrom(
+        this.store.select(forumSelectors.selectedForum),
+        this.store.select(forumSelectors.selectedForumPost)
+      ),
+      tap(([_, forum, forumPost]) => {
+        if (forum) {
+          this.store.dispatch(
+            forumActions.findAndSelectForum({
+              searchParams: {
+                slug: forum.slug,
+              },
+            })
+          );
+          if (forumPost) {
+            this.store.dispatch(
+              forumActions.selectForumPostById({
+                id: forumPost.id,
+              })
+            );
+          }
+        }
+      }),
+      map(d => forumActions.noop())
+    )
+  );
+
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }
@@ -261,6 +321,7 @@ export class ForumEffects {
     private actions$: Actions,
     private forumService: ForumsService,
     private alert: AppAlertService,
-    private store: Store
+    private store: Store,
+    private forumPostService: ForumPostsService
   ) {}
 }

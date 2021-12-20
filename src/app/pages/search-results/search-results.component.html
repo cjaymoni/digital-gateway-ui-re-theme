@@ -1,0 +1,9 @@
+<div *ngIf="searching$ | async; else results">
+  <app-forum-loading-card></app-forum-loading-card>
+</div>
+
+<ng-template #results>
+  <div>
+    {{ searchResults$ | async | json }}
+  </div>
+</ng-template>
