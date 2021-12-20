@@ -23,3 +23,6 @@ export const ArticleBlockEndpoint = environment.API_URL + 'blocks/1/articles/';
 export const EventBlockEndpoint = environment.API_URL + 'blocks/3/articles/';
 export const CategoryBlockEndpoint =
   environment.API_URL + 'blocks/2/categories/';
+export const LogoutEndpoint = environment.API_URL + 'logout/';
+
+export const LoginEndpoint = environment.API_URL + 'logout/';
