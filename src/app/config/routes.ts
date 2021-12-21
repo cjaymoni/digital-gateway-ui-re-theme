@@ -25,4 +25,4 @@ export const CategoryBlockEndpoint =
   environment.API_URL + 'blocks/2/categories/';
 export const LogoutEndpoint = environment.API_URL + 'logout/';
 
-export const LoginEndpoint = environment.API_URL + 'logout/';
+export const LoginEndpoint = environment.API_URL + 'login/';
