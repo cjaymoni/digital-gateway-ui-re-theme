@@ -30,11 +30,14 @@ export interface ThemeSettings {
     is_pinned: false;
     display_order: number;
   }[];
+
+  forumMetrics: any[];
 }
 
 export const initialHomepageState: ThemeSettings = {
   highlightArticles: [],
   featuredCategories: [],
+  forumMetrics: [],
 };
 
 @Injectable()

@@ -2,11 +2,12 @@
   color: var(--text-color);
 
   @media screen and (max-width: 1200px) and (min-width: 700px) {
-    color: white !important;
+    color: var(--darkblue-500) !important;
   }
+}
 
-  &:hover {
-    padding: 4px;
-    font-weight: bolder;
+:host ::ng-deep {
+  .p-divider.p-divider-vertical:before {
+    border-color: var(--darkblue-500) !important;
   }
 }

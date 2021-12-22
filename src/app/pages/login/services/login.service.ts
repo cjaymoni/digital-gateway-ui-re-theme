@@ -11,6 +11,8 @@ import {
 } from 'src/app/config/app-config';
 import { IAuthService } from 'src/app/models/auth-service';
 import { Store } from '@ngrx/store';
+import { forumActions } from 'src/app/store/actions/forum.actions';
+import { LoginEndpoint, LogoutEndpoint } from 'src/app/config/routes';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +38,7 @@ export class LoginService implements IAuthService {
   }
 
   login(data: any): Observable<boolean> {
-    return this.http.post(`${environment.API_URL}login`, data).pipe(
+    return this.http.post(LoginEndpoint, data).pipe(
       map((response: any) => {
         response = response;
         localStorage.setItem(APP_TOKEN, response.access);
@@ -47,6 +49,7 @@ export class LoginService implements IAuthService {
           this.store.dispatch(
             userAuthActions.loginSuccessful({ user: response.user })
           );
+          this.store.dispatch(forumActions.fetch());
           return true;
         } else {
           return false;
@@ -57,7 +60,7 @@ export class LoginService implements IAuthService {
 
   logout(): Observable<boolean> {
     return this.http
-      .post(`${environment.API_URL}logout`, {
+      .post(LogoutEndpoint, {
         refresh: localStorage.getItem(APP_REFRESH_TOKEN),
       })
       .pipe(
@@ -66,6 +69,7 @@ export class LoginService implements IAuthService {
           localStorage.removeItem(APP_USER_TOKEN);
           localStorage.removeItem(APP_REFRESH_TOKEN);
           this.store.dispatch(userAuthActions.logoutSuccessful());
+          this.store.dispatch(forumActions.fetch());
           return true;
         })
       );

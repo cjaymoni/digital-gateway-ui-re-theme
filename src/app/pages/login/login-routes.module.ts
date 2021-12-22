@@ -10,6 +10,11 @@ const rightPanelRoutes: Routes = [
     component: LoginFormComponent,
     outlet: RouterOutlets.Right,
   },
+  {
+    path: 'login',
+    component: LoginFormComponent,
+    outlet: RouterOutlets.Modal,
+  },
 ];
 
 @NgModule({

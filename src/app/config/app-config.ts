@@ -1,6 +1,5 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { Menu } from 'primeng/menu';
 import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
@@ -10,6 +9,7 @@ export const DEFAULT_PAGE_SIZE = 100;
 export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
 export const APP_REFRESH_TOKEN = 'app_refresh_token';
+export const LOGIN_PATH = 'login';
 
 export enum RouterOutlets {
   Main = 'main',
@@ -292,6 +292,11 @@ export enum Roles {
   ServiceProvider = 'service_provider',
 }
 
+export const getUserRole = () => {
+  const user = JSON.parse(localStorage.getItem(APP_USER_TOKEN) || '{}');
+  return user.role;
+};
+
 export const MainMenu: MenuItem[] = [
   {
     id: INFO_HUB_ID,
@@ -353,9 +358,8 @@ export const MainMenu: MenuItem[] = [
         label: 'Add Resource',
         icon: 'pi pi-plus',
         routerLink: [Pages.Resources.main, Pages.Resources.add],
-        visible: (() => {
-          const user = JSON.parse(localStorage.getItem(APP_USER_TOKEN) || '{}');
-          const userRole = user.role;
+        disabled: (() => {
+          const userRole = getUserRole();
           return (
             userRole === Roles.Admin ||
             userRole === Roles.Editor ||
@@ -366,3 +370,5 @@ export const MainMenu: MenuItem[] = [
     ],
   },
 ];
+
+export const MAX_FEATURED_CATEGORIES = 8;

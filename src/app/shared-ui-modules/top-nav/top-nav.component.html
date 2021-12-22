@@ -1,6 +1,7 @@
 <p-menubar
   [model]="(items$ | async) || []"
-  styleClass="sticky z-1 border-none border-noround p-divider-no-background"
+  [autoDisplay]="true"
+  styleClass="sticky z-1 border-none border-noround p-divider-no-background bg-darkblue"
 >
   <ng-template pTemplate="start">
     <div
@@ -13,23 +14,25 @@
       <div
         class="
           flex
-          align-content-center
+          align-content-end
           justify-content-center
           text-lg
           font-bold
           fadein
+          text-white
           animation-duration-500 animation-ease-in-out
           cursor-pointer
           hover:font-italic hover:text-pink-600
+          align-self-center
         "
         routerLink="/"
       >
-        &nbsp;&nbsp;MSME GATEWAY
+        <div>&nbsp;&nbsp;MSME GATEWAY</div>
       </div>
 
-      <div class="lg:hidden flex justify-content-between align-items-center">
+      <div class="xl:hidden flex justify-content-between align-items-center">
         <button
-          class="p-button-outlined p-button-rounded p-button-primary mr-1"
+          class="p-button-outlined p-button-rounded p-button-secondary mr-1"
           icon="pi pi-search"
           pStyleClass=".searchButton"
           enterClass="hidden"
@@ -68,7 +71,7 @@
     fadeinup
     p-1
     searchButton
-    lg:hidden
+    xl:hidden
   "
 >
   <div>
@@ -81,16 +84,23 @@
     <input
       type="text"
       pInputText
-      class="w-15rem sm:w-17 md:w-20 xl:w-35rem mr-3"
-      placeholder="What are you looking for? (Enter at least 4 characters)"
+      class="w-22rem sm:w-22rem md:w-20rem xl:w-30rem mr-3"
+      placeholder="What are you looking for? (4 or more characters)"
       [formControl]="searchInputControl"
     />
     <button
       pButton
       icon="pi pi-search"
-      class="p-button-rounded p-button-success"
+      class="p-button-rounded p-button-secondary"
       [disabled]="searchInputControl.invalid"
       (click)="$event.stopPropagation(); searchTerm()"
+      pStyleClass=".searchButton"
+      enterClass="hidden"
+      enterActiveClass="flex"
+      enterToClass="flex"
+      leaveClass="flex"
+      leaveActiveClass="fadeoutup"
+      leaveToClass="hidden"
     ></button>
   </div>
 </ng-template>
@@ -98,7 +108,7 @@
 <ng-template #userLoginMenu>
   <button
     *ngIf="isLoggedIn$ | async; else login"
-    class="p-button-outlined p-button-rounded p-button-primary mr-1 relative"
+    class="p-button-outlined p-button-rounded p-button-secondary ml-3 relative"
     icon="pi pi-user"
     pButton
     (click)="loginMenu.toggle($event)"
@@ -123,5 +133,3 @@
   <!-- (click)="signup.toggle($event)" -->
   <!-- <p-menu #signup [popup]="true" [model]="signUpMenu"></p-menu> -->
 </ng-template>
-
-<ng-template #signup> </ng-template>

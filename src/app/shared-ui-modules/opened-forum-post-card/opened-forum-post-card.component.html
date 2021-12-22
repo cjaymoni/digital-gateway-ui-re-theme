@@ -2,23 +2,24 @@
   <div class="p-3 w-full fadein animation-duration-500 p-component shadow-2">
     <div class="flex justify-content-between align-content-center">
       <div class="flex">
-        <p-avatar styleClass="mr-2" size="large" shape="circle"></p-avatar>
+        <p-avatar
+          styleClass="mr-2"
+          size="large"
+          shape="circle"
+          [image]="(forumPost$ | async)?.submitter.avatar"
+        ></p-avatar>
         <div class="text-xl font-bold mt-1">
           {{ (forumPost$ | async)?.title | uppercase }}
-          <div class="text-sm">
-            {{ (forumPost$ | async)?.submitter.username }}
+          <div class="text-sm font-italic text-blue-800">
+            {{ (forumPost$ | async)?.submitter.username }} |
+            {{ (forumPost$ | async)?.created_on | date: 'longDate' }}
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="mt-2"
-      [innerHTML]="
-        domSanitizer.bypassSecurityTrustHtml(
-          (forumPost$ | async)?.content || ''
-        )
-      "
-    ></div>
+    <div class="mt-2">
+      {{ (forumPost$ | async)?.content || '' }}
+    </div>
     <ng-container *ngIf="(forumPost$ | async)?.images?.length! > 0">
       <div class="justify-content-center align-items-center flex">
         <p-galleria
@@ -28,20 +29,25 @@
           [numVisible]="5"
           [circular]="true"
           [autoPlay]="true"
+          [transitionInterval]="4000"
           [showItemNavigators]="true"
+          [showIndicators]="true"
+          [showThumbnailNavigators]="false"
+          [showThumbnails]="false"
         >
           <ng-template pTemplate="item" let-item>
-            <img [src]="item.image" class="h-15rem" />
-          </ng-template>
-          <ng-template pTemplate="thumbnail" let-item>
-            <div class="grid justify-content-center">
-              <img
-                [src]="item.image"
-                style="display: block"
-                width="100px"
-                height="auto"
-              />
-            </div>
+            <img
+              [src]="item.image"
+              class="
+                mt-2
+                h-20rem
+                w-auto
+                object-fit-cover
+                border-gray-300 border-1
+                p-2
+                border-round
+              "
+            />
           </ng-template>
         </p-galleria>
       </div>
@@ -58,7 +64,8 @@
           "
           icon="pi pi-reply"
           label="Reply"
-          (click)="displayCommentForm()"
+          proceedIfLoggedIn
+          (onProceed)="displayCommentForm()"
         ></button>
       </div>
       <div>

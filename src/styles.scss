@@ -9,6 +9,7 @@
 
 body {
   margin: 0;
+  font-family: Inter;
 }
 
 .div-with-background-image {
@@ -69,4 +70,70 @@ body {
 }
 .p-picklist .p-picklist-list {
   height: 100%;
+}
+
+.app-picklist {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.object-fit-contain {
+  object-fit: contain;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.bg-darkblue {
+  background-color: var(--darkblue-500) !important;
+}
+
+.bg-grey {
+  background-color: var(--grey-500) !important;
+}
+
+.bg-light-pink {
+  background-color: var(--light-pink-500) !important;
+}
+
+.text-darkblue {
+  color: var(--darkblue-500) !important;
+}
+
+.md-m-unset {
+  @media screen and (min-width: 1024px) {
+    margin: revert !important;
+  }
+}
+
+.gap-8 {
+  > :not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.gap-v-8 {
+  > :not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.gap-16 {
+  > :not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.gap-v-16 {
+  > :not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

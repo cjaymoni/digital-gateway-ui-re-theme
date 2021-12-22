@@ -34,19 +34,17 @@ export class ArticleEffects {
     this.actions$.pipe(
       ofType(articleActions.fetchMyArticles),
       switchMap(() =>
-        this.articleService
-          .getResources(undefined, undefined, { moderate: true })
-          .pipe(
-            map((articles: Article[]) =>
-              articleActions.fetchMyArticlesSuccessful({
-                articles,
-              })
-            ),
-            catchError(error => {
-              this.showError(error);
-              return of(articleActions.fetchError);
+        this.articleService.getArticlesToModerate(1, 2).pipe(
+          map((articles: Article[]) =>
+            articleActions.fetchMyArticlesSuccessful({
+              articles,
             })
-          )
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
+        )
       )
     )
   );
@@ -59,6 +57,25 @@ export class ArticleEffects {
           map((articles: Article[]) =>
             articleActions.selectArticle({
               article: articles?.[0],
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  searchArticlesByCategoryId$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(articleActions.searchArticlesByCategory),
+      switchMap(({ categoryId }) =>
+        this.articleService.searchArticleByCategory(categoryId).pipe(
+          map((articles: Article[]) =>
+            articleActions.fetchSearchSuccessful({
+              articles,
             })
           ),
           catchError(error => {

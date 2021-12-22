@@ -44,8 +44,6 @@ export class TopNavComponent implements OnInit {
 
   items$ = this.store.select(menuItemSelectors.menuItems);
 
-  // loggedInMenu = LoggedInMenu;
-
   signUpMenu = SignUpMenu;
 
   loggedInMenu = this.loggedInUser$.pipe(
@@ -91,5 +89,10 @@ export class TopNavComponent implements OnInit {
     ];
   }
 
-  searchTerm() {}
+  searchTerm() {
+    if (this.searchInputControl.valid) {
+      this.navigator.goToRoute(['search', this.searchInputControl.value]);
+      this.searchInputControl.setValue('');
+    }
+  }
 }

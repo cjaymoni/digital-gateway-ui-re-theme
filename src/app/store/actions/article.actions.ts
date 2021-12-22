@@ -44,6 +44,13 @@ class ArticleActions {
     }>()
   );
 
+  searchArticlesByCategory = createAction(
+    `${this.type} Search Article By Category`,
+    props<{
+      categoryId: number;
+    }>()
+  );
+
   findAndSelectArticle = createAction(
     `${this.type} Find And Select Article`,
     props<{
@@ -101,6 +108,16 @@ class ArticleActions {
   deleteArticleSuccessful = createAction(
     `${this.type} Delete Article Successful`,
     props<{ id: number }>()
+  );
+
+  changeSearchPage = createAction(
+    `${this.type} Change Search Page`,
+    props<{ searchPage: number }>()
+  );
+
+  changePage = createAction(
+    `${this.type} Change Page`,
+    props<{ page: number }>()
   );
 
   clearAllSelected = createAction(`${this.type} Clear All Selected Articles`);

@@ -27,7 +27,7 @@ export class OpenedForumCardComponent implements OnInit {
 
   @Input() forum$ = this.store.select(forumSelectors.selectedForum).pipe(
     filter(forum => !!forum),
-    tap(forum => this.title.setTitle(forum.name))
+    tap(forum => this.title.setTitle('Forum | ' + forum.name))
   );
   forumPosts$ = this.store
     .select(forumSelectors.postsOfSelectedForum)

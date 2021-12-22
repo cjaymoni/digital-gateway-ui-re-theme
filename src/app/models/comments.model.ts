@@ -10,6 +10,7 @@ export interface Comment {
   downvotes?: number | any;
   score?: number;
   slug?: string;
+  created_on?: string;
   subcomments?: any[];
   user?: {
     voted: boolean;

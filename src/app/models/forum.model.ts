@@ -26,6 +26,7 @@ export interface ForumPost {
   comments?: Comment[] | any;
   slug?: string;
   images?: AppUploadedImage[];
+  created_on?: string;
   user?: {
     voted: boolean;
     type: VoteType;

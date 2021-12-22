@@ -16,7 +16,7 @@ export class ListingPageComponent implements OnInit {
   @Input() loading = true;
   @Input() items: any[] | any = [];
   @Input() title = 'Listing';
-  @Input() itemClass = 'col-6 md:col-4 xl:col-3';
+  @Input() itemClass = 'col-6 md:col-4 mb-1';
   @Input() itemTemplate!: TemplateRef<any>;
 
   constructor() {}

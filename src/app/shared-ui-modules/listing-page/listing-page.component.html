@@ -1,6 +1,8 @@
-<h3 class="text-center">{{ title }}</h3>
+<div class="text-center text-2xl text-darkblue">{{ title }}</div>
 <ng-container *ngIf="loading; else loaded">
   <div class="grid">
+    <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
+    <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
     <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
     <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
     <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
@@ -10,7 +12,7 @@
 
 <ng-template #loaded>
   <ng-container *ngIf="items.length > 0; else noresults">
-    <div class="grid">
+    <div class="grid justify-content-start align-content-center m-0">
       <ng-container *ngFor="let item of items">
         <div [class]="itemClass">
           <ng-container

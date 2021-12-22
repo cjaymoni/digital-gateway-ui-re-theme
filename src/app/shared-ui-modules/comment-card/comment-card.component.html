@@ -16,11 +16,16 @@
   <div class="flex">
     <div class="flex flex-column md:flex-row">
       <div class="flex mr-2">
-        <p-avatar shape="circle"></p-avatar>
+        <p-avatar shape="circle" [image]="comment.author.avatar"></p-avatar>
       </div>
       <div class="flex text-xs flex-column text-gray-500">
         <div class="font-bold">{{ comment.author.username }}</div>
-        <div class="font-italic">Date</div>
+        <div class="font-italic">
+          {{ comment.created_on | date: 'mediumDate' }}
+        </div>
+        <div class="font-italic">
+          {{ comment.created_on | date: 'mediumTime' }}
+        </div>
       </div>
     </div>
     <p-divider styleClass="mx-2 md:mx-3 h-1rem" layout="vertical"></p-divider>
@@ -40,7 +45,8 @@
         "
         icon="pi pi-reply"
         label="Reply"
-        (click)="show()"
+        proceedIfLoggedIn
+        (onProceed)="show()"
       ></button>
     </div>
     <div>
