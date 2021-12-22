@@ -1,10 +1,36 @@
 <h3 class="text-center">User Profile</h3>
-<div class="flex justify-content-center">
-  <p-avatar icon="pi pi-user" size="xlarge" shape="circle"></p-avatar>
+<div class="flex flex-column justify-content-center align-items-center">
+  <p-image
+    [src]="getImageToUpload() ?? (selectedUser$ | async)?.avatar"
+    styleClass="border-circle w-17rem h-17rem align-self-center"
+    imageClass="border-circle w-15rem h-15rem z-1 border-gray-200 border-1 p-2"
+    [preview]="true"
+  ></p-image>
+
+  <div class="h-3rem align-self-center mt-3">
+    <div [ngClass]="getImageToUpload() ? 'hidden' : 'block'">
+      <app-image-upload
+        [mode]="imageUploadMode"
+        label="Change Avatar"
+        #imageUpload
+        [multiple]="false"
+        control
+      ></app-image-upload>
+    </div>
+    <button
+      pButton
+      icon="pi pi-times"
+      class="p-button-rounded p-button-danger"
+      label="Cancel"
+      pTooltip="Cancel"
+      (click)="onUploadCancel()"
+      [ngClass]="getImageToUpload() ? 'block' : 'hidden'"
+    ></button>
+  </div>
 </div>
 
 <div class="flex flex-column mt-3">
-  <div class="text-center">{{ (selectedUser$ | async).name }}</div>
+  <div class="text-center">{{ (selectedUser$ | async)?.name }}</div>
   <div class="text-center mt-3">{{ user?.email }}</div>
 </div>
 <p-divider></p-divider>
@@ -120,45 +146,13 @@
           placeholder="Twitter"
         />
       </div>
-      <div class="col-12">
-        <ng-container *ngIf="!profileHasImage">
-          <div class="mb-1">
-            <div class="flex justify-content-evenly align-items-center">
-              <div class="font-bold">Current Image</div>
-              <button
-                pButton
-                pTooltip="Remove current image"
-                class="p-button p-button-text p-button-rounded p-button-danger"
-                icon="pi pi-trash"
-                clickConfirmation
-                (onConfirm)="removeImage()"
-              ></button>
-            </div>
-            <div
-              class="
-                flex
-                justify-content-center
-                align-items-center
-                border-solid
-                p-1
-                border-200
-                mb-3
-              "
-            >
-              <img [src]="profile?.avatar?.[0]?.image" alt="" class="h-15rem" />
-            </div>
-          </div>
-        </ng-container>
-        <label for="imageUpload" class="mt-2">Upload Avatar</label>
-        <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
-      </div>
     </div>
   </ng-container>
   <div class="col-12 ml-auto flex justify-content-end">
     <button
       pButton
       pRipple
-      class="mr-1"
+      class="mr-1 p-button-secondary"
       type="button"
       icon="pi pi-save"
       label="Update Profile"
