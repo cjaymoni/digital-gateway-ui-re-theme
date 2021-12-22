@@ -34,19 +34,17 @@ export class ArticleEffects {
     this.actions$.pipe(
       ofType(articleActions.fetchMyArticles),
       switchMap(() =>
-        this.articleService
-          .getResources(undefined, undefined, { moderate: true })
-          .pipe(
-            map((articles: Article[]) =>
-              articleActions.fetchMyArticlesSuccessful({
-                articles,
-              })
-            ),
-            catchError(error => {
-              this.showError(error);
-              return of(articleActions.fetchError);
+        this.articleService.getArticlesToModerate(1, 2).pipe(
+          map((articles: Article[]) =>
+            articleActions.fetchMyArticlesSuccessful({
+              articles,
             })
-          )
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
+        )
       )
     )
   );

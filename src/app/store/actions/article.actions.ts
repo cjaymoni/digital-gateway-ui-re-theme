@@ -110,6 +110,16 @@ class ArticleActions {
     props<{ id: number }>()
   );
 
+  changeSearchPage = createAction(
+    `${this.type} Change Search Page`,
+    props<{ searchPage: number }>()
+  );
+
+  changePage = createAction(
+    `${this.type} Change Page`,
+    props<{ page: number }>()
+  );
+
   clearAllSelected = createAction(`${this.type} Clear All Selected Articles`);
 }
 export const articleActions = new ArticleActions();

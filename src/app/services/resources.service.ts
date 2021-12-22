@@ -12,11 +12,11 @@ export class ResourceService {
 
   getResources(
     url = this.endpoint,
-    pagination?: { page: string | any; pageSize: string | any },
+    pagination?: { page: string | any; page_size: string | any },
     otherParams?: { [key: string]: any }
   ): Observable<any[]> {
     return this.http
-      .get(`${url}`, { params: { ...otherParams } })
+      .get(`${url}`, { params: { ...otherParams, ...pagination } })
       .pipe(map((data: any) => data.results as any[]));
   }
 

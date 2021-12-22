@@ -11,6 +11,10 @@ export interface ArticleState extends EntityState<Article> {
   selectedArticleToEdit: Article | null;
   searchResults: Article[];
   myArticles: Article[];
+  searchPage: number;
+  searchCount: number;
+  page: number;
+  count: number;
 }
 
 export const articleEntityAdapter: EntityAdapter<Article> =
@@ -23,8 +27,12 @@ export const initialState: ArticleState = articleEntityAdapter.getInitialState({
   searchQuery: '',
   loading: false,
   selectedArticleToEdit: null,
+  searchPage: 1,
+  page: 1,
   searchResults: [],
   myArticles: [],
+  count: 0,
+  searchCount: 0,
 });
 
 export const articleReducer = createReducer(
@@ -61,6 +69,12 @@ export const articleReducer = createReducer(
   }),
   on(articleActions.deleteArticleSuccessful, (state, { id }) => {
     return articleEntityAdapter.removeOne(id, state);
+  }),
+  on(articleActions.changePage, (state, { page }) => {
+    return { ...state, page };
+  }),
+  on(articleActions.changeSearchPage, (state, { searchPage }) => {
+    return { ...state, searchPage };
   }),
   on(articleActions.clearAllSelected, state => {
     return { ...state, selectedArticleToEdit: null, selectedArticle: null };

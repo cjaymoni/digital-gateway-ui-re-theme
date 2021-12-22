@@ -5,6 +5,7 @@ import {
   Input,
   TemplateRef,
   AfterViewInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -55,7 +56,19 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   totalDataLength = 0;
 
   @Input()
-  searchFunction: (toSearch: string) => Observable<any[]> = () => of([]);
+  searchFunction: (toSearch: string) => Observable<any[]> = query => {
+    const filtered = this.data?.filter(d => {
+      console.log(d);
+
+      return (
+        d.name?.toLowerCase().includes(query) ||
+        d.title?.toLowerCase().includes(query)
+      );
+    });
+    console.log(filtered);
+
+    return of(filtered || []);
+  };
 
   @Input()
   searchPlaceholder = 'Enter value to search';
@@ -74,7 +87,7 @@ export class AppTableComponent implements OnInit, AfterViewInit {
     return {};
   };
 
-  constructor() {}
+  constructor(private cdref: ChangeDetectorRef) {}
 
   selectedData = [];
   searchFormControl = new FormControl('');
@@ -94,7 +107,7 @@ export class AppTableComponent implements OnInit, AfterViewInit {
           }),
           filter(d => d.trim() !== ''),
           switchMap(search => {
-            return this.searchFunction(search);
+            return this.searchFunction(search.toLocaleLowerCase());
           })
         )
         .subscribe(d => (this.dataToDisplay = d));
@@ -111,6 +124,7 @@ export class AppTableComponent implements OnInit, AfterViewInit {
     }
 
     this.selectedData = [];
+    this.cdref.detectChanges();
   }
 
   ngAfterViewInit(): void {}
