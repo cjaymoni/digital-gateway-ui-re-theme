@@ -65,9 +65,9 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
   ngAfterViewInit(): void {
-    this.startCarouselAutoplay(this.eventSlider, 10000);
-    this.startCarouselAutoplay(this.marketSlider, 4000);
-    this.startCarouselAutoplay(this.articleSlider, 5000);
+    this.startCarouselAutoplay(this.eventSlider, 15000);
+    this.startCarouselAutoplay(this.marketSlider, 7000);
+    this.startCarouselAutoplay(this.articleSlider, 8000);
     this.startCarouselAutoplay(this.multimediaSlider, 8000);
 
     // event
@@ -81,11 +81,11 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.articleSlider, 5000)
+      this.getCarouselMouseLeaveSubscription(this.articleSlider, 8000)
     );
 
     this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.eventSlider, 10000)
+      this.getCarouselMouseLeaveSubscription(this.eventSlider, 15000)
     );
 
     // market
@@ -94,10 +94,10 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.marketSlider, 4000)
+      this.getCarouselMouseLeaveSubscription(this.marketSlider, 7000)
     );
 
-    // multi media
+    // multimedia
     this.subscription.add(
       this.getCarouselMouseEnterSubscription(this.multimediaSlider)
     );
@@ -118,7 +118,6 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     carouselRef.autoplayInterval = interval;
     carouselRef.startAutoplay();
     carouselRef.cd.detectChanges();
-    console.log(carouselRef, 'start');
   }
 
   stopCarouselAutoplay(carouselRef: Carousel) {
@@ -126,14 +125,11 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     carouselRef.autoplayInterval = 0;
     carouselRef.stopAutoplay();
     carouselRef.cd.detectChanges();
-    console.log(carouselRef, 'stop');
   }
 
   getCarouselMouseEnterSubscription(carouselRef: Carousel) {
     return fromEvent(carouselRef.el.nativeElement, 'mouseenter')
-      .pipe(
-        debounceTime(100) // 2 seconds
-      )
+      .pipe(debounceTime(100))
       .subscribe(() => {
         this.stopCarouselAutoplay(carouselRef);
       });
@@ -141,9 +137,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getCarouselMouseLeaveSubscription(carouselRef: Carousel, interval: number) {
     return fromEvent(this.eventSlider.el.nativeElement, 'mouseleave')
-      .pipe(
-        debounceTime(800) // 2 seconds
-      )
+      .pipe(debounceTime(500))
       .subscribe(() => {
         this.startCarouselAutoplay(carouselRef, interval);
       });

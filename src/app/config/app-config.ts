@@ -298,6 +298,11 @@ export enum Roles {
   ServiceProvider = 'service_provider',
 }
 
+export const getUserRole = () => {
+  const user = JSON.parse(localStorage.getItem(APP_USER_TOKEN) || '{}');
+  return user.role;
+};
+
 export const MainMenu: MenuItem[] = [
   {
     id: INFO_HUB_ID,
@@ -359,9 +364,8 @@ export const MainMenu: MenuItem[] = [
         label: 'Add Resource',
         icon: 'pi pi-plus',
         routerLink: [Pages.Resources.main, Pages.Resources.add],
-        visible: (() => {
-          const user = JSON.parse(localStorage.getItem(APP_USER_TOKEN) || '{}');
-          const userRole = user.role;
+        disabled: (() => {
+          const userRole = getUserRole();
           return (
             userRole === Roles.Admin ||
             userRole === Roles.Editor ||
@@ -372,3 +376,5 @@ export const MainMenu: MenuItem[] = [
     ],
   },
 ];
+
+export const MAX_FEATURED_CATEGORIES = 8;

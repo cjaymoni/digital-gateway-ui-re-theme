@@ -21,25 +21,26 @@
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
         <div class="grid grid-nogutter">
-          <img [src]="item.image" class="w-5rem h-5rem" />
+          <img [src]="item.image" class="w-7rem h-7rem" />
         </div>
       </ng-template>
     </p-galleria>
     <div
       *ngIf="(product$ | async).product.images"
-      class="grid w-30rem justify-content-center align-items-center"
+      class="grid col-12 justify-content-center align-items-center"
     >
       <div
         *ngFor="let img of (product$ | async).product.images; let index = index"
-        class="col-3"
+        class="col-2"
       >
         <img
           [src]="img.image"
           [alt]="img.name"
           class="
             cursor-pointer
-            w-5rem
-            h-5rem
+            w-full
+            h-auto
+            object-fit-cover
             thumbnail
             transition-all transition-duration-300 transition-ease-in-out
           "

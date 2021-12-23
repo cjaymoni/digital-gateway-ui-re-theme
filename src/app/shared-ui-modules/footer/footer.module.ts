@@ -5,18 +5,17 @@ import { FooterContactUsComponent } from './components/footer-contact-us/footer-
 import { FooterQuickLinksComponent } from './components/footer-quick-links/footer-quick-links.component';
 import { FooterSocialsComponent } from './components/footer-socials/footer-socials.component';
 import { FooterPoweredByComponent } from './components/footer-powered-by/footer-powered-by.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule, RouterModule],
   declarations: [
     FooterComponent,
     FooterContactUsComponent,
     FooterQuickLinksComponent,
     FooterSocialsComponent,
-    FooterPoweredByComponent
+    FooterPoweredByComponent,
   ],
-  exports:[FooterComponent]
+  exports: [FooterComponent],
 })
-export class FooterModule { }
+export class FooterModule {}

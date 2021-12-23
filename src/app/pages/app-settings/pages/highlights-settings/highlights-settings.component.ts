@@ -1,14 +1,24 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, map, Observable, of, withLatestFrom } from 'rxjs';
-import { Category } from 'src/app/models/category.model';
+import {
+  BehaviorSubject,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  skip,
+  take,
+  tap,
+} from 'rxjs';
 import { ArticleService } from 'src/app/pages/articles/services/articles.service';
-import { categorySelectors } from 'src/app/store/selectors/category.selectors';
+import { BlockService } from 'src/app/services/blocks.service';
+import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
@@ -19,6 +29,8 @@ import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 })
 export class HighlightsSettingsComponent implements OnInit, OnDestroy {
   filteredArticles$ = new BehaviorSubject(new Array(0));
+
+  searchArticleInput = new FormControl('', [Validators.minLength(3)]);
 
   selectedArticles = new Array(0);
 
@@ -36,25 +48,50 @@ export class HighlightsSettingsComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     private themeStore: ThemeSettingsStore,
-    private articleService: ArticleService
+    private articleService: ArticleService,
+    private blockService: BlockService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.mergeCurrentlySelected$.add(
+      this.searchArticleInput.valueChanges
+        .pipe(
+          tap(_ => {}),
+          distinctUntilChanged(),
+          skip(2),
+          debounceTime(300)
+        )
+        .subscribe(query => {
+          if (query.trim() === '') {
+            this.filteredArticles$.next([]);
+            return;
+          } else {
+            this.searchArticle(query);
+          }
+        })
+    );
+  }
 
   ngOnDestroy(): void {
     this.mergeCurrentlySelected$.unsubscribe();
   }
 
-  searchArticle(event: any) {
-    // event.query
-    if (event.query.trim() === '') {
-      this.filteredArticles$.next([]);
-      return;
-    }
+  searchArticle(query: string) {
     this.articleService
       .searchArticle({
-        slug: event.query,
+        search: query,
       })
-      .subscribe(articles => this.filteredArticles$.next(articles));
+      .pipe(
+        take(1),
+        map((articles: any) => {
+          const newArray = [...articles];
+          this.filteredArticles$.next(newArray);
+        })
+      )
+      .subscribe();
+  }
+
+  saveChanges() {
+    this.blockService.saveHiglightedArticles(this.selectedArticles).subscribe();
   }
 }
