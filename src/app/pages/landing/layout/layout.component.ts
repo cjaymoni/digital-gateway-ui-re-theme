@@ -1,3 +1,4 @@
+import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 import {
   Component,
   OnInit,
@@ -59,8 +60,9 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);
   forum$ = this.store.select(forumSelectors.getById(1));
+  forumMetrics$ = this.themeStore.forumMetrics$;
 
-  constructor(private store: Store, private navigator: NavigatorService) {}
+  constructor(private store: Store, private navigator: NavigatorService, private themeStore: ThemeSettingsStore) {}
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
