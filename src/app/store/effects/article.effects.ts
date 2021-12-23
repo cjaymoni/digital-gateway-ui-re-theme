@@ -70,6 +70,25 @@ export class ArticleEffects {
     )
   );
 
+  searchArticlesByCategoryId$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(articleActions.searchArticlesByCategory),
+      switchMap(({ categoryId }) =>
+        this.articleService.searchArticleByCategory(categoryId).pipe(
+          map((articles: Article[]) =>
+            articleActions.fetchSearchSuccessful({
+              articles,
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(articleActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
   searchArticleById$ = createEffect(() =>
     this.actions$.pipe(
       ofType(articleActions.findAndSelectArticleById),

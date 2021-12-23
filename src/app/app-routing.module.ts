@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Pages, RouterOutlets } from './config/app-config';
+import { SearchResultsComponent } from './pages/search-results/search-results.component';
 import { SignupFormComponent } from './pages/signup/signup-form/signup-form.component';
 
 const routes: Routes = [
@@ -62,9 +63,7 @@ const routes: Routes = [
   {
     path: Pages.Resources.main,
     loadChildren: () =>
-      import('./pages/resource/resource.module').then(
-        m => m.ResourceModule
-      ),
+      import('./pages/resource/resource.module').then(m => m.ResourceModule),
   },
   {
     path: Pages.UserProfile,
@@ -80,6 +79,10 @@ const routes: Routes = [
     path: Pages.SignUp,
     component: SignupFormComponent,
     outlet: RouterOutlets.Right,
+  },
+  {
+    path: 'search/:query',
+    component: SearchResultsComponent,
   },
 ];
 

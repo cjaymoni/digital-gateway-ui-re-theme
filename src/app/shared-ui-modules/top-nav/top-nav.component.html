@@ -82,7 +82,7 @@
     <input
       type="text"
       pInputText
-      class="w-15rem sm:w-17 md:w-20 xl:w-35rem mr-3"
+      class="w-22rem sm:w-22rem md:w-20rem xl:w-30rem mr-3"
       placeholder="What are you looking for? (Enter at least 4 characters)"
       [formControl]="searchInputControl"
     />
@@ -92,6 +92,13 @@
       class="p-button-rounded p-button-secondary"
       [disabled]="searchInputControl.invalid"
       (click)="$event.stopPropagation(); searchTerm()"
+      pStyleClass=".searchButton"
+      enterClass="hidden"
+      enterActiveClass="flex"
+      enterToClass="flex"
+      leaveClass="flex"
+      leaveActiveClass="fadeoutup"
+      leaveToClass="hidden"
     ></button>
   </div>
 </ng-template>
