@@ -50,8 +50,8 @@
     </div>
   </div>
   <div class="flex text-lg shadow-1 p-4">
-    <div class="flex-auto flex align-items-center justify-content-center">
-      <div class="font-bold">Type :</div>
+    <div class="flex-auto flex">
+      <div class="font-bold text-left">Type :</div>
       <p-message
         [severity]="(product$ | async).ad_type === 'offer' ? 'info' : 'warn'"
         [text]="(product$ | async).ad_type | uppercase"
@@ -68,7 +68,7 @@
       </ng-container>
     </div>
 
-    <div class="flex-auto flex align-items-center justify-content-center">
+    <div class="flex-auto flex justify-content-end">
       <i class="pi pi-info-circle mr-1 text-pink-700"></i>
       <ng-container
         *ngFor="
@@ -82,38 +82,38 @@
   </div>
 
   <div class="flex text-lg shadow-1 p-4 mt-3">
-    <div class="flex-auto flex align-items-center justify-content-center">
-      <div class="font-bold">Price</div>
+    <div class="flex-auto flex">
+      <div class="font-bold text-left">Price</div>
       : {{ (product$ | async).product.price }}
     </div>
     <div class="flex-auto flex align-items-center justify-content-center">
-      <div class="font-bold">Author</div>
+      <div class="font-bold text-left">Author</div>
       : {{ (product$ | async).author.username }}
     </div>
-    <div class="flex-auto flex align-items-center justify-content-center">
+    <div class="flex-auto flex justify-content-end">
       <div class="font-bold">Contact</div>
       : {{ (product$ | async).cellphone | uppercase }}
     </div>
   </div>
 
   <div class="flex text-lg shadow-1 p-4 mt-3">
-    <div class="flex-auto flex align-items-center justify-content-center">
-      <div class="font-bold">Location</div>
+    <div class="flex-auto flex align-items-center">
+      <div class="font-bold text-left">Location</div>
       : {{ (product$ | async).location }}
     </div>
     <div class="flex-auto flex align-items-center justify-content-center">
-      <div class="font-bold">Ghana Post</div>
+      <div class="font-bold text-left">Ghana Post</div>
       : {{ (product$ | async).gh_post }}
     </div>
-    <div class="flex-auto flex align-items-center justify-content-center">
+    <div class="flex-auto flex align-items-center justify-content-end">
       <div class="font-bold">District</div>
       : {{ (product$ | async).district.name }}
     </div>
   </div>
 
   <div class="text-lg shadow-1 p-4 mt-4">
-    <div class="mb-3 font-bold">Description</div>
-    <div class="text-left">
+    <div class="mb-3 font-bold text-left">Description</div>
+    <div class="text-justify">
       {{ (product$ | async).product.description }}
     </div>
   </div>
