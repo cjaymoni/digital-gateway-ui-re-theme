@@ -30,6 +30,7 @@ export enum FeatureNamesForStore {
   Forum = 'forum',
   ForumPost = 'forumPost',
   ProfileType = 'profileType',
+  UserProfile = 'userProfile',
 }
 
 export const SLUG_PREFIX = 'read';
