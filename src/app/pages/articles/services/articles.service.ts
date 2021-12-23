@@ -26,11 +26,9 @@ export class ArticleService extends ResourceService {
     for (const key in searchParams) {
       const element = searchParams[key];
     }
-    return this.getResources(
-      this.endpoint + '?moderate=True&page_size=1',
-      undefined,
-      searchParams
-    ).pipe(map(data => data as Article[]));
+    return this.getResources(this.endpoint, undefined, searchParams).pipe(
+      map(data => data as Article[])
+    );
   }
 
   searchArticleByCategory(categoryId: number) {
@@ -56,10 +54,10 @@ export class ArticleService extends ResourceService {
       .pipe(map(data => data as Article));
   }
 
-  editArticleStatus(formData: any, articleId: any) {
+  editArticleStatus(articleId: any, formData: any) {
     return this.updateResource(
-      articleId,
       formData,
+      articleId,
       `${this.endpoint}${articleId}/?moderate=True`,
       true
     ).pipe(
@@ -75,10 +73,24 @@ export class ArticleService extends ResourceService {
   }
 
   getArticlesToModerate(page = 1, page_size = DEFAULT_PAGE_SIZE) {
-    return this.getResources(`${this.endpoint}?moderate=True`, {
-      page,
-      page_size,
-    }).pipe(map(data => data as Article[]));
+    return this.getResources(
+      `${this.endpoint}?moderate=True`,
+      {
+        page,
+        page_size,
+      },
+      undefined,
+      true
+    ).pipe(
+      tap((data: any) =>
+        this.store.dispatch(
+          articleActions.setSearchCount({
+            count: data.count,
+          })
+        )
+      ),
+      map(data => data.results as Article[])
+    );
   }
   private getFormDataFromArticleObject(
     article: Article,

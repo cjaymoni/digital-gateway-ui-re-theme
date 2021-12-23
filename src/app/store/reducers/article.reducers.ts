@@ -40,8 +40,11 @@ export const articleReducer = createReducer(
   on(articleActions.fetch, state => {
     return { ...state, loading: true };
   }),
-  on(articleActions.fetchSuccessful, (state, { articles }) => {
+  on(articleActions.fetchSuccessfulAdd, (state, { articles }) => {
     return articleEntityAdapter.setAll(articles, { ...state, loading: false });
+  }),
+  on(articleActions.fetchSuccessful, (state, { articles }) => {
+    return articleEntityAdapter.addMany(articles, { ...state, loading: false });
   }),
   on(articleActions.fetchSearchSuccessful, (state, { articles }) => {
     return { ...state, loading: false, searchResults: articles };
@@ -65,7 +68,14 @@ export const articleReducer = createReducer(
     return articleEntityAdapter.addOne(article, state);
   }),
   on(articleActions.editArticleSuccessful, (state, { updatedArticle }) => {
-    return articleEntityAdapter.updateOne(updatedArticle, state);
+    const stateCopy = { ...state };
+    const index = stateCopy.myArticles.findIndex(
+      a => a.id === updatedArticle.id
+    );
+    const myArticlesCopy = [...stateCopy.myArticles];
+    myArticlesCopy.splice(index, 1, updatedArticle.changes as any);
+    const edited = { ...stateCopy, myArticles: myArticlesCopy };
+    return articleEntityAdapter.updateOne(updatedArticle, edited);
   }),
   on(articleActions.deleteArticleSuccessful, (state, { id }) => {
     return articleEntityAdapter.removeOne(id, state);
@@ -75,6 +85,12 @@ export const articleReducer = createReducer(
   }),
   on(articleActions.changeSearchPage, (state, { searchPage }) => {
     return { ...state, searchPage };
+  }),
+  on(articleActions.setCount, (state, { count }) => {
+    return { ...state, count };
+  }),
+  on(articleActions.setSearchCount, (state, { count }) => {
+    return { ...state, searchCount: count };
   }),
   on(articleActions.clearAllSelected, state => {
     return { ...state, selectedArticleToEdit: null, selectedArticle: null };

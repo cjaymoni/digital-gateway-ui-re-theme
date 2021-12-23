@@ -10,9 +10,9 @@
 
 <p-pickList
   [source]="(filteredArticles$ | async) || []"
-  [target]="selectedArticles"
-  sourceHeader="Available Highlight Categories"
-  targetHeader="Selected Highlight Categories"
+  [target]="(selectedArticles$ | async) || []"
+  sourceHeader="Available Articles"
+  targetHeader="Selected Highlight"
   [dragdrop]="true"
   [responsive]="true"
   filterBy="title"

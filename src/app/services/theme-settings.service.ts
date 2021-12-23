@@ -31,6 +31,8 @@ export class ThemeSettingsService extends ResourceService {
           featuredCategories: data[1],
           events: data[2],
           forumMetrics: data[3],
+          featuredEvents: [],
+          featuredArticles: [],
         };
       }),
       catchError(e => of(initialHomepageState))

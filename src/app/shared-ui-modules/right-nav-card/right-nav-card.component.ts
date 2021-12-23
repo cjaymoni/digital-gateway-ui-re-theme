@@ -19,7 +19,7 @@ export class RightNavCard implements OnInit {
     private navigator: NavigatorService
   ) {}
 
-  highlightArticles$ = this.themeStore.highlightArticles$;
+  highlightArticles$ = this.themeStore.highlightArticlesArray$;
 
   ngOnInit() {}
 

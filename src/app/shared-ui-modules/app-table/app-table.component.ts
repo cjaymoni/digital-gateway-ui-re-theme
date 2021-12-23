@@ -6,6 +6,8 @@ import {
   TemplateRef,
   AfterViewInit,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -18,13 +20,14 @@ import { DEFAULT_PAGE_SIZE } from 'src/app/config/app-config';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppTableComponent implements OnInit, AfterViewInit {
+  DEFAULT_PAGE_SIZE = DEFAULT_PAGE_SIZE;
   @Input()
   data: any[] = [];
 
   dataToDisplay: any[] = [];
 
   @Input()
-  title: string = 'Data Table';
+  title: string = 'List of items';
 
   @Input()
   batchAction = false;
@@ -58,14 +61,11 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   @Input()
   searchFunction: (toSearch: string) => Observable<any[]> = query => {
     const filtered = this.data?.filter(d => {
-      console.log(d);
-
       return (
         d.name?.toLowerCase().includes(query) ||
         d.title?.toLowerCase().includes(query)
       );
     });
-    console.log(filtered);
 
     return of(filtered || []);
   };
@@ -86,6 +86,8 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   getRowStyle = (rd: any) => {
     return {};
   };
+
+  @Output() pageChangeEvent = new EventEmitter();
 
   constructor(private cdref: ChangeDetectorRef) {}
 
@@ -110,7 +112,10 @@ export class AppTableComponent implements OnInit, AfterViewInit {
             return this.searchFunction(search.toLocaleLowerCase());
           })
         )
-        .subscribe(d => (this.dataToDisplay = d));
+        .subscribe(d => {
+          this.dataToDisplay = [...d];
+          this.cdref.detectChanges();
+        });
     }
   }
 
@@ -133,11 +138,6 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   }
   getOptions() {
     const options = [50, 100, 200];
-
-    // const max = this.paginatorService.paginatorDetails.total;
-    // if (max > options[options.length - 1]) {
-    //   options.push(max);
-    // }
     return options;
   }
 
@@ -146,10 +146,9 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   }
 
   onPageChange(event: any) {
-    const start = event.page * event.rows;
-    const end = event.rows + start;
-    // this.dataToDisplay = this.data.slice(start, end);
+    this.pageChangeEvent.emit(event);
   }
+
   refreshData() {
     // this.refreshDataFunction();
   }

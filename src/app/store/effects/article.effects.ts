@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PrimeNgAlerts } from 'src/app/config/app-config';
+import { DEFAULT_PAGE_SIZE, PrimeNgAlerts } from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
 import { ArticleService } from 'src/app/pages/articles/services/articles.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
@@ -32,19 +32,21 @@ export class ArticleEffects {
 
   loadMyArticles$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(articleActions.fetchMyArticles),
-      switchMap(() =>
-        this.articleService.getArticlesToModerate(1, 2).pipe(
-          map((articles: Article[]) =>
-            articleActions.fetchMyArticlesSuccessful({
-              articles,
+      ofType(articleActions.changeSearchPage, articleActions.fetchMyArticles),
+      switchMap((d: any) =>
+        this.articleService
+          .getArticlesToModerate(d.searchPage || 1, DEFAULT_PAGE_SIZE)
+          .pipe(
+            map((articles: Article[]) =>
+              articleActions.fetchMyArticlesSuccessful({
+                articles,
+              })
+            ),
+            catchError(error => {
+              this.showError(error);
+              return of(articleActions.fetchError);
             })
-          ),
-          catchError(error => {
-            this.showError(error);
-            return of(articleActions.fetchError);
-          })
-        )
+          )
       )
     )
   );

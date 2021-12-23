@@ -77,6 +77,11 @@ class ArticleActions {
     props<{ articles: Article[] }>()
   );
 
+  fetchSuccessfulAdd = createAction(
+    `${this.type} Fetch Successful Add`,
+    props<{ articles: Article[] }>()
+  );
+
   addArticle = createAction(
     `${this.type} Add Article`,
     props<{ article: Article; imageToUpload?: File[] | any[] }>()
@@ -118,6 +123,13 @@ class ArticleActions {
   changePage = createAction(
     `${this.type} Change Page`,
     props<{ page: number }>()
+  );
+
+  setCount = createAction(`${this.type} Set Count`, props<{ count: number }>());
+
+  setSearchCount = createAction(
+    `${this.type} Set Search Count`,
+    props<{ count: number }>()
   );
 
   clearAllSelected = createAction(`${this.type} Clear All Selected Articles`);

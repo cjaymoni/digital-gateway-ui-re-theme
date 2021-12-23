@@ -11,9 +11,10 @@ export const ForumPostEndpoint = environment.API_URL + 'forum-posts/';
 export const ResourceEndpoint = environment.API_URL + 'uploads/';
 export const FeaturedCategoriesEndpoint =
   environment.API_URL + 'categoryblocks/';
-export const HighlightArticlesEndpoint = environment.API_URL + 'articleblocks/';
+export const HighlightArticlesEndpoint =
+  environment.API_URL + 'articleblocks/?block=1';
 
-export const EventsEndpoint = environment.API_URL + 'eventsblocks/';
+export const EventsEndpoint = environment.API_URL + 'articleblocks/?block=3';
 export const CommentsEndpoint = environment.API_URL + 'comments/';
 export const SignUpEndpoint = environment.API_URL + 'register/';
 export const ProfileTypeEndpoint = environment.API_URL + 'profile-types/';

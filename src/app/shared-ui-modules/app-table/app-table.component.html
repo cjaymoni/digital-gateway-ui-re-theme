@@ -1,19 +1,27 @@
 <ng-container *ngIf="columnsDefinition && data; else loading">
+  <p-paginator
+    [rows]="DEFAULT_PAGE_SIZE"
+    [totalRecords]="totalDataLength"
+    [pageLinkSize]="3"
+    [showCurrentPageReport]="true"
+    (onPageChange)="onPageChange($event)"
+  ></p-paginator>
   <div class="holder">
     <p-table
       #dt
       [columns]="columnsDefinition"
       [value]="dataToDisplay"
       [scrollable]="true"
-      scrollHeight="450px"
-      [virtualScroll]="true"
-      [virtualRowHeight]="40"
       [(selection)]="selectedData"
-      [rows]="100"
-      [paginator]="true"
+      [paginatorPosition]="'top'"
+      [rows]="DEFAULT_PAGE_SIZE"
+      [showCurrentPageReport]="true"
+      [paginator]="false"
+      scrollHeight="450px"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} records"
       [rowsPerPageOptions]="[]"
       dataKey="id"
+      [autoLayout]="true"
       styleClass="p-datatable-responsive-demo p-datatable-gridlines p-datatable-striped"
     >
       <ng-template pTemplate="caption" *ngIf="showCaption">
