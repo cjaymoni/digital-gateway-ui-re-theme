@@ -1,13 +1,13 @@
 <div class="p-3">
   <p-carousel
     #eventSlider
-    [value]="(articles$ | async) || []"
+    [value]="(featuredEvents$ | async) || []"
     [showNavigators]="false"
     [numScroll]="1"
     [numVisible]="1"
     [circular]="true"
   >
-    <ng-template let-article pTemplate="item">
+    <ng-template let-item pTemplate="item">
       <div
         class="
           p-1
@@ -15,13 +15,13 @@
           event-slider
           transition-duration-500 transition-all
         "
-        (click)="goToArticle(article)"
+        (click)="goToArticle(item.article)"
       >
         <!-- (pointerLeave)="pointerLeave($event)" -->
         <div class="mb-0 md:mb-3 col-12 relative event-slider">
           <img
-            [src]="article.images?.[0]?.image"
-            [alt]="article.title"
+            [src]="item.article.images?.[0]?.image"
+            [alt]="item.article.title"
             class="w-full h-10rem md:h-25rem object-fit-cover"
           />
           <div
@@ -41,7 +41,7 @@
               col
             "
           >
-            {{ article.title }}
+            {{ item.article.title }}
           </div>
         </div>
       </div>

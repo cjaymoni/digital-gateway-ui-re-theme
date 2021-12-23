@@ -93,7 +93,7 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
     this.select(state => state.highlightArticles);
 
   readonly featuredEvents$: Observable<ThemeSettings['highlightArticles']> =
-    this.select(state => state.highlightArticles);
+    this.select(state => state.featuredEvents);
 
   readonly highlightArticlesArray$ = this.select(
     this.highlightArticles$.pipe(map(d => d as any[])),
@@ -102,6 +102,15 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
       return _ha.sort((a, b) => a.display_order - b.display_order);
     }
   );
+
+  readonly featuredEventsArray$ = this.select(
+    this.featuredEvents$.pipe(map(d => d as any[])),
+    highlights => {
+      const _ha = [...highlights];
+      return _ha.sort((a, b) => a.display_order - b.display_order);
+    }
+  );
+
   readonly featuredCategoryArray$ = this.select(
     this.categories$.pipe(map(cat => cat as Category[])),
     this.featuredCatgories$.pipe(
@@ -124,6 +133,7 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
   readonly getHomepageData = this.effect(() => {
     return this.themeSettings.getHompageData().pipe(
       retry(3),
+      tap(d => console.log(d)),
       tap({
         next: homepageData => this.setState(homepageData),
         error: () => {
