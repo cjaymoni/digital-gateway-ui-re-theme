@@ -14,6 +14,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { Article } from 'src/app/models/article.model';
 import { Carousel } from 'primeng/carousel';
 import { debounceTime, fromEvent, Subscription, tap } from 'rxjs';
+import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
   selector: 'app-layout',
@@ -58,16 +59,22 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);
+  featuredEvents$ = this.themeStore.featuredEventsArray$;
+
   forum$ = this.store.select(forumSelectors.getById(1));
 
-  constructor(private store: Store, private navigator: NavigatorService) {}
+  constructor(
+    private store: Store,
+    private navigator: NavigatorService,
+    private themeStore: ThemeSettingsStore
+  ) {}
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
   ngAfterViewInit(): void {
-    this.startCarouselAutoplay(this.eventSlider, 10000);
-    this.startCarouselAutoplay(this.marketSlider, 4000);
-    this.startCarouselAutoplay(this.articleSlider, 5000);
+    this.startCarouselAutoplay(this.eventSlider, 15000);
+    this.startCarouselAutoplay(this.marketSlider, 7000);
+    this.startCarouselAutoplay(this.articleSlider, 8000);
     this.startCarouselAutoplay(this.multimediaSlider, 8000);
 
     // event
@@ -81,11 +88,11 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.articleSlider, 5000)
+      this.getCarouselMouseLeaveSubscription(this.articleSlider, 8000)
     );
 
     this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.eventSlider, 10000)
+      this.getCarouselMouseLeaveSubscription(this.eventSlider, 15000)
     );
 
     // market
@@ -94,7 +101,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.marketSlider, 4000)
+      this.getCarouselMouseLeaveSubscription(this.marketSlider, 7000)
     );
 
     // multimedia

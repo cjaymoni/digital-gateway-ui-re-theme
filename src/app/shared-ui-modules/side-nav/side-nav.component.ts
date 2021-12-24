@@ -10,9 +10,13 @@ import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 export class SideNavComponent implements OnInit {
   constructor(private themeSetting: ThemeSettingsStore) {}
 
+  showAll = false;
+
   featuredCategory$ = this.themeSetting.featuredCategoryArray$;
 
   ngOnInit(): void {}
 
-  viewMore() {}
+  viewMore() {
+    this.showAll = !this.showAll;
+  }
 }

@@ -4,7 +4,7 @@ import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
 export const TABLET_WIDTH_BREAKPOINT = 960;
-export const DEFAULT_PAGE_SIZE = 100;
+export const DEFAULT_PAGE_SIZE = 50;
 
 export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
@@ -30,6 +30,7 @@ export enum FeatureNamesForStore {
   Forum = 'forum',
   ForumPost = 'forumPost',
   ProfileType = 'profileType',
+  UserProfile = 'userProfile',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -153,7 +154,7 @@ export enum PrimeNgSeverity {
   Info = 'info',
   Danger = 'danger',
   Success = 'success',
-  Warn = 'warning',
+  Warn = 'warn',
   Custom = 'custom',
   Error = 'error',
 }
@@ -167,10 +168,10 @@ export const enum PrimeNgAlerts {
 }
 
 export const PublishedStatusMapping: { [key: string]: string } = {
-  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Danger,
+  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Error,
   [ArticlePublishedStatus.Published]: PrimeNgSeverity.Success,
   [ArticlePublishedStatus.Draft]: PrimeNgSeverity.Info,
-  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Info,
+  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Warn,
   [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Success,
 };
 
@@ -192,6 +193,13 @@ export enum TagType {
   article = 'article',
   product = 'product',
   ad = 'ad',
+}
+
+export enum SearchList {
+  ARTICLE = 'article',
+  ADS = 'ad',
+  FORUM = 'forum',
+  FORUM_POST = 'post'
 }
 
 export const GenericErrorMessage =

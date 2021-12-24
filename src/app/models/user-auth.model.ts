@@ -21,10 +21,10 @@ export interface UserProfile {
   email: string;
   bio?: string;
   address?: string;
-  profile_type: ProfileType[];
+  profile_type?: ProfileType[];
   ghana_post?: string;
   district?: string;
-  avatar?: Avatar[];
+  avatar?: string;
 }
 
 export interface Avatar {

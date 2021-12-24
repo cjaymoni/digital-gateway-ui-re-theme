@@ -4,10 +4,7 @@ import { tap, withLatestFrom } from 'rxjs';
 import { PrimeNgAlerts, RouterOutlets } from '../config/app-config';
 import { NavigatorService } from '../services/navigator.service';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
-import {
-  userAuth,
-  userAuthSelectors,
-} from '../store/selectors/user-auth.selectors';
+import { userAuthSelectors } from '../store/selectors/user-auth.selectors';
 
 @Directive({
   selector: '[proceedIfLoggedIn]',
@@ -35,10 +32,10 @@ export class AppProceedIfLoggedDirective {
                 'You need to log in to perform this action',
                 PrimeNgAlerts.INFO
               );
-              const modal = panelActive
+              const outlet = panelActive
                 ? RouterOutlets.Modal
                 : RouterOutlets.Right;
-              this.navigator.auth.goToLogin(modal);
+              this.navigator.auth.goToLogin(outlet);
             }
           })
         )

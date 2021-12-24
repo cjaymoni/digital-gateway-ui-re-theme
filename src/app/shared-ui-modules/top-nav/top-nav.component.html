@@ -1,5 +1,6 @@
 <p-menubar
   [model]="(items$ | async) || []"
+  [autoDisplay]="true"
   styleClass="sticky z-1 border-none border-noround p-divider-no-background bg-darkblue"
 >
   <ng-template pTemplate="start">
@@ -13,7 +14,7 @@
       <div
         class="
           flex
-          align-content-center
+          align-content-end
           justify-content-center
           text-lg
           font-bold
@@ -22,13 +23,14 @@
           animation-duration-500 animation-ease-in-out
           cursor-pointer
           hover:font-italic hover:text-pink-600
+          align-self-center
         "
         routerLink="/"
       >
-        &nbsp;&nbsp;MSME GATEWAY
+        <div>&nbsp;&nbsp;MSME GATEWAY</div>
       </div>
 
-      <div class="lg:hidden flex justify-content-between align-items-center">
+      <div class="xl:hidden flex justify-content-between align-items-center">
         <button
           class="p-button-outlined p-button-rounded p-button-secondary mr-1"
           icon="pi pi-search"
@@ -69,7 +71,7 @@
     fadeinup
     p-1
     searchButton
-    lg:hidden
+    xl:hidden
   "
 >
   <div>
@@ -83,8 +85,10 @@
       type="text"
       pInputText
       class="w-22rem sm:w-22rem md:w-20rem xl:w-30rem mr-3"
-      placeholder="What are you looking for? (Enter at least 4 characters)"
+      placeholder="What are you looking for? (4 or more characters)"
       [formControl]="searchInputControl"
+      enterPressed
+      (onEnterPressed)="searchTerm()"
     />
     <button
       pButton
@@ -131,5 +135,3 @@
   <!-- (click)="signup.toggle($event)" -->
   <!-- <p-menu #signup [popup]="true" [model]="signUpMenu"></p-menu> -->
 </ng-template>
-
-<ng-template #signup> </ng-template>
