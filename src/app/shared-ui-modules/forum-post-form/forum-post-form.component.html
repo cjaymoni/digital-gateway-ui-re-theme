@@ -46,7 +46,7 @@
         class="mr-1"
         type="button"
         icon="pi pi-save"
-        [label]="(createForm ? 'Add' : 'Edit') + ' Forum Post'"
+        [label]="(createForm ? 'Add' : 'Update') + ' Forum Post'"
         [disabled]="forumPostForm.invalid"
         (click)="onAddOrUpdateForumPost()"
       ></button>
