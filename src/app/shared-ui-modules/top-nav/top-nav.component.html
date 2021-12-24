@@ -87,6 +87,8 @@
       class="w-22rem sm:w-22rem md:w-20rem xl:w-30rem mr-3"
       placeholder="What are you looking for? (4 or more characters)"
       [formControl]="searchInputControl"
+      enterPressed
+      (onEnterPressed)="searchTerm()"
     />
     <button
       pButton
