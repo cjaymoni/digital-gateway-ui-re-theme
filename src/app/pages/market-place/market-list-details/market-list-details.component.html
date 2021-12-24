@@ -49,8 +49,10 @@
       </div>
     </div>
   </div>
-  <div class="flex text-lg shadow-1 p-4">
-    <div class="flex-auto flex">
+  <div
+    class="flex text-lg shadow-1 p-4 justify-content-between align-items-center"
+  >
+    <div class="flex align-items-center">
       <div class="font-bold text-left">Type :</div>
       <p-message
         [severity]="(product$ | async).ad_type === 'offer' ? 'info' : 'warn'"
@@ -59,8 +61,9 @@
       ></p-message>
     </div>
 
-    <div class="flex-auto flex align-items-center justify-content-center">
+    <div class="flex align-items-center justify-content-center">
       <i class="pi pi-tag mr-1 text-blue-500"></i>
+      <span class="font-bold text-left"> Tags :</span>
       <ng-container
         *ngFor="let tag of (product$ | async).product.tags; let last = last"
       >
@@ -68,8 +71,9 @@
       </ng-container>
     </div>
 
-    <div class="flex-auto flex justify-content-end">
+    <div class="flex justify-content-end align-items-center">
       <i class="pi pi-info-circle mr-1 text-pink-700"></i>
+      <span class="font-bold text-left"> Product Type:</span>
       <ng-container
         *ngFor="
           let ptype of (product$ | async).product.product_type;
@@ -118,11 +122,11 @@
     </div>
   </div>
 
-  <div class="text-lg p-3 mt-5">
+  <!-- <div class="text-lg p-3 mt-5">
     Related items
 
     <hr />
-  </div>
+  </div> -->
 </ng-container>
 <ng-template #loading>
   <p-skeleton></p-skeleton>
