@@ -1,0 +1,20 @@
+.product-item {
+  .product-item-content {
+    border-radius: 3px;
+    margin: 0.3rem;
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .product-image {
+    width: 100%;
+  }
+}
+:host ::ng-deep {
+  .thumbnail:hover {
+    transform: scale(1.1);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 2px;
+  }
+}

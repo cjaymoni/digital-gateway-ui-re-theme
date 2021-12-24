@@ -1,0 +1,78 @@
+<ng-container>
+  <form
+    [formGroup]="loginForm"
+    class="my-8"
+    enterPressed
+    (onEnterPressed)="onLoginSubmit()"
+  >
+    <div
+      class="fluid formgrid grid justify-content-between align-content-center"
+    >
+      <!-- username -->
+      <div class="field col-12">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <input
+            type="text"
+            pInputText
+            placeholder="Email"
+            formControlName="email"
+            class="inputfield w-full"
+          />
+        </div>
+      </div>
+
+      <!-- password -->
+      <div class="field col-12 static">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+          <p-password
+            [toggleMask]="true"
+            type="password"
+            placeholder="Pasword"
+            formControlName="password"
+            inputStyleClass="w-12 relative"
+            styleClass="w-12"
+            autocomplete="on"
+          ></p-password>
+        </div>
+      </div>
+
+      <div
+        class="
+          field
+          col-12
+          ml-auto
+          flex
+          justify-content-between
+          align-items-center
+        "
+      >
+        <button
+          pButton
+          pRipple
+          class="align-self-center"
+          type="button"
+          label="Sign In"
+          [disabled]="loginForm.invalid"
+          (click)="onLoginSubmit()"
+        ></button>
+        <div>
+          Don't have an account?
+          <span
+            class="
+              ml-1
+              cursor-pointer
+              text-lg
+              font-bold
+              text-blue-700
+              hover-underline
+            "
+            (click)="goToSignup(); $event.stopPropagation()"
+            >Sign up</span
+          >
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>

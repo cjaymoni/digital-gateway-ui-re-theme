@@ -1,0 +1,93 @@
+<ng-container [formGroup]="articleForm" ]>
+  <div class="fluid formgrid grid">
+    <div class="field col-12">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="title"
+      />
+    </div>
+    <!-- tag and category -->
+    <div class="flex flex-column md:flex-row col-12">
+      <div class="field col-12 md:col-6">
+        <label for="title">Tag</label>
+        <app-tag-autocomplete [selectedTags]="tags"></app-tag-autocomplete>
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="title">Category</label>
+        <app-category-autocomplete
+          [selectedCategory]="category"
+        ></app-category-autocomplete>
+      </div>
+    </div>
+    <div class="col-12">
+      <ng-container *ngIf="!createForm && articleHasImage">
+        <div class="mb-1">
+          <div class="flex justify-content-evenly align-items-center">
+            <div class="font-bold">
+              Current Image (Remove to upload a new one)
+            </div>
+            <button
+              pButton
+              pTooltip="Remove current image"
+              class="p-button p-button-text p-button-rounded p-button-danger"
+              icon="pi pi-trash"
+              clickConfirmation
+              (onConfirm)="removeImage()"
+            ></button>
+          </div>
+          <div
+            class="
+              flex
+              justify-content-center
+              align-items-center
+              border-solid
+              p-1
+              border-200
+            "
+          >
+            <img [src]="article?.images?.[0]?.image" alt="" class="h-15rem" />
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!articleHasImage">
+        <label for="imageUpload">Image Upload</label>
+        <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
+      </ng-container>
+    </div>
+
+    <div class="field col-12">
+      <label for="content">Body</label>
+      <app-content-box
+        #contentBox
+        [required]="true"
+        [contentFormControl]="content"
+        classNames="h-auto"
+      ></app-content-box>
+    </div>
+
+    <div class="col-12 ml-auto flex justify-content-end">
+      <button
+        pButton
+        pRipple
+        class="mr-1"
+        type="button"
+        icon="pi pi-save"
+        [label]="(createForm ? 'Add' : 'Update') + ' Article'"
+        [disabled]="articleForm.invalid"
+        (click)="onAddOrUpdateArticle()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        class="p-button-danger mr-1"
+        icon="pi pi-times"
+        type="button"
+        label="Cancel"
+        (click)="goBack()"
+      ></button>
+    </div>
+  </div>
+</ng-container>

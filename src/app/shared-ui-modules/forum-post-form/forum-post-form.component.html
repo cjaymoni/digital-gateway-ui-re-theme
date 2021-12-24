@@ -1,0 +1,64 @@
+<ng-container [formGroup]="forumPostForm">
+  <div class="formgrid grid">
+    <div *ngIf="selectedForum$ | async" class="text-blue-600 mb-3">
+      Add a post to Forum :
+      <span class="font-italic font-semibold uppercase">
+        {{ (selectedForum$ | async)?.name }}
+      </span>
+    </div>
+    <div class="field col-12">
+      <label for="title">Title</label>
+      <input
+        pInputText
+        id="title"
+        type="text"
+        class="inputfield w-full"
+        formControlName="title"
+        placeholder="Forum Post Title"
+      />
+    </div>
+
+    <div class="field col-12" *ngIf="!(selectedForum$ | async)">
+      <label for="title">Select Forum To Post To</label>
+      <app-forum-autocomplete [selectedForum]="forum"></app-forum-autocomplete>
+    </div>
+
+    <div class="field col-12">
+      <label for="content">Body</label>
+
+      <textarea
+        id="description"
+        class="inputfield w-full"
+        formControlName="content"
+        pInputTextarea
+        [autoResize]="true"
+        [rows]="5"
+        placeholder="Forum Description"
+      ></textarea>
+    </div>
+    <div class="field col-12">
+      <app-image-upload [multiple]="true" #imageUpload></app-image-upload>
+    </div>
+    <div class="col-12 ml-auto flex justify-content-end mt-2">
+      <button
+        pButton
+        pRipple
+        class="mr-1"
+        type="button"
+        icon="pi pi-save"
+        [label]="(createForm ? 'Add' : 'Update') + ' Forum Post'"
+        [disabled]="forumPostForm.invalid"
+        (click)="onAddOrUpdateForumPost()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        class="p-button-danger mr-1"
+        icon="pi pi-times"
+        type="button"
+        label="Cancel"
+        (click)="goBack()"
+      ></button>
+    </div>
+  </div>
+</ng-container>

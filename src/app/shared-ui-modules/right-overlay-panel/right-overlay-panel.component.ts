@@ -1,9 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { filter, map } from 'rxjs';
-import { RouterOutlets } from 'src/app/config/app-config';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { map, Subscription, tap } from 'rxjs';
+import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { selectCurrentRoute } from 'src/app/store/selectors/router.selectors';
 
 @Component({
   selector: 'app-right-overlay-panel',
@@ -11,17 +15,38 @@ import { selectCurrentRoute } from 'src/app/store/selectors/router.selectors';
   styleUrls: ['./right-overlay-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RightOverlayPanelComponent implements OnInit {
-  constructor(private store: Store, private navigator: NavigatorService) {}
+export class RightOverlayPanelComponent implements OnInit, OnDestroy {
+  constructor(
+    private navigator: NavigatorService,
+    public device: DeviceService,
+    private cdref: ChangeDetectorRef
+  ) {}
 
-  active$ = this.store.select(selectCurrentRoute).pipe(
-    filter(currentRoute => currentRoute && currentRoute.outlet),
-    map(cr => cr.outlet === RouterOutlets.Right)
-  );
+  show = false;
 
-  ngOnInit(): void {}
+  subscription!: Subscription;
+
+  title$ = this.navigator.getPanelTitle();
+
+  ngOnInit(): void {
+    this.subscription = this.navigator.panelActive$
+      .pipe(
+        map(active => (this.show = active)),
+        tap(_ => this.cdref.detectChanges())
+      )
+      .subscribe();
+  }
 
   hidePanel() {
+    // this.
     this.navigator.hidePanel();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
+  goBack() {
+    this.navigator.goBack();
   }
 }

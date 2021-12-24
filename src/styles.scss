@@ -1,32 +1,143 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'src/styles/quill-editor';
+@import '~ngx-sharebuttons/themes/default';
 
-@import 'primeng/resources/themes/bootstrap4-light-purple/theme.css';
-
-$maxHandheld: 960px;
-
-.custom-overlay {
-  height: calc(100%);
+:root {
+  --menu-background: #27272a;
+  font-size: 14px;
 }
 
-.right-panel {
-  width: 400px;
-  z-index: 5;
-  height: 99vh;
-  position: absolute;
-  right: 0;
-  top: 4px;
-  background-color: white;
+body {
+  margin: 0;
+  font-family: Inter;
+}
 
-  @media screen and (max-width: $maxHandheld) {
-    width: 100vw;
+.div-with-background-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-color: bisque;
+  height: 10rem;
+}
+
+.p-menuitem-link-active {
+  span {
+    color: red !important;
   }
 }
 
-.article-title {
-  cursor: pointer;
+.p-message-no-icon {
+  .p-inline-message-icon::before {
+    content: '';
+  }
+}
 
+.hover-underline {
   &:hover {
-    color: var(--primary-color);
-    text-decoration: underline;
+    text-decoration: underline !important;
   }
+}
+
+.menubackground {
+  background-color: var(--menu-background);
+}
+
+.nobackground-color {
+  background-color: unset !important;
+}
+
+.p-divider-no-background {
+  .p-divider-content {
+    background-color: unset !important;
+  }
+}
+
+.no-dialog-header {
+  .p-dialog-header {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .p-dialog-content {
+    padding: 8px !important;
+    padding-top: 0 !important;
+  }
+
+  .p-dialog {
+    max-height: 100% !important;
+  }
+}
+.p-picklist .p-picklist-list {
+  height: 100%;
+}
+
+.app-picklist {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.object-fit-contain {
+  object-fit: contain;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.bg-darkblue {
+  background-color: var(--darkblue-500) !important;
+}
+
+.bg-grey {
+  background-color: var(--grey-500) !important;
+}
+
+.bg-light-pink {
+  background-color: var(--light-pink-500) !important;
+}
+
+.text-darkblue {
+  color: var(--darkblue-500) !important;
+}
+
+.md-m-unset {
+  @media screen and (min-width: 1024px) {
+    margin: revert !important;
+  }
+}
+
+.gap-8 {
+  > :not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.gap-v-8 {
+  > :not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.gap-16 {
+  > :not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.gap-v-16 {
+  > :not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.z-10 {
+  z-index: 10 !important;
 }

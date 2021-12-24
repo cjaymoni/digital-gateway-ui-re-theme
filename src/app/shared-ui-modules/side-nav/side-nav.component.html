@@ -1,1 +1,58 @@
-<p-panelMenu [model]="items"></p-panelMenu>
+<ng-container *ngIf="featuredCategory$ | async">
+  <div
+    class="
+      wrapper
+      w-full
+      xl:sticky
+      align-self-center
+      flex flex-column
+      align-content-center
+      justify-content-center
+      overflow-x-hidden
+    "
+  >
+    <!-- <p-divider align="center" styleClass="p-divider-no-background">
+      <span class="p-tag p-tag-info">
+        <i class="pi pi-star mr-2"></i>
+      </span>
+    </p-divider> -->
+    <div class="p-tag p-tag-info w-max">FEATURED CATEGORIES</div>
+
+    <ng-container
+      *ngFor="let featured of featuredCategory$ | async; let index = index"
+    >
+      <div
+        *ngIf="
+          index <
+          (this.showAll ? (featuredCategory$ | async)?.length || 100 : 8)
+        "
+        class="
+          mt-3
+          border-none border-solid border-bottom-2
+          w-full
+          h-auto
+          py-2
+          px-3
+          text-darkblue
+          hover:text-pink-500
+          cursor-pointer
+          featured-category
+          transition-duration-200 transition-all transition-ease-in-out
+        "
+        [routerLink]="['articles', 'search', featured.category.slug]"
+        [routerLinkActive]="'text-pink-500 active'"
+      >
+        {{ featured.category.name }}
+      </div>
+    </ng-container>
+    <button
+      *ngIf="(featuredCategory$ | async)?.length! > 8 ?? false"
+      pButton
+      class="cursor-pointer mt-4 w-max p-3 ml-3 p-button-secondary mb-2"
+      (click)="viewMore()"
+      [icon]="showAll ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"
+    >
+      View {{ showAll ? 'less ' : 'more ' }} &nbsp;&nbsp;
+    </button>
+  </div>
+</ng-container>

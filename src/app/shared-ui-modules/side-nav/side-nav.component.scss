@@ -1,9 +1,25 @@
-:host ::ng-deep {
-  .p-panelmenu {
-    width: 100%;
+.wrapper {
+  @media screen and (min-width: 900px) {
+    top: 90px;
+  }
+
+  .featured-category {
+    &:hover {
+      margin-left: 1rem;
+    }
+    &:focus {
+      outline: none !important;
+    }
   }
 }
 
-:host {
-  width: 100%;
+.active::after {
+  content: '>>>';
+}
+
+.wrapper {
+  @media screen and (max-width: 1024px) and (min-width: 100px) {
+    background-color: var(--darkblue-50) !important;
+    padding: 4px;
+  }
 }

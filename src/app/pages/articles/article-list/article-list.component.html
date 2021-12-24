@@ -1,0 +1,10 @@
+<app-listing-page
+  [loading]="loadingArticles$ | async"
+  [title]="(title$ | async) ?? 'ARTICLES'"
+  [itemTemplate]="articleCardTemplate"
+  [items]="articles$ | async"
+></app-listing-page>
+
+<ng-template #articleCardTemplate let-article>
+  <app-article-card [article]="article"></app-article-card>
+</ng-template>

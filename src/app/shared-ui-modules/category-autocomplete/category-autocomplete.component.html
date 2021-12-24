@@ -1,0 +1,9 @@
+<app-auto-complete
+  [control]="selectedCategory"
+  [suggestions]="(categories$ | async) || []"
+  (searchEvent)="searchCategory($event.query)"
+  [multiple]="false"
+  [forceSelection]="true"
+  [dropdown]="true"
+  placeholder="Type a category name"
+></app-auto-complete>

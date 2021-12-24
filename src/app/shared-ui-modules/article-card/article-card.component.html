@@ -1,29 +1,64 @@
-<div class="p-card box shadow-4 p-3 flex flex-column">
+<ng-container *ngIf="article">
   <div
+    (click)="openArticle(); $event.stopPropagation()"
     class="
-      text-xl
-      font-bold
-      text-left
-      uppercase
-      white-space-normal
-      article-title
-      hover:underline
+      p-0
+      w-full
+      scalein
+      animation-duration-500
+      justify-content-between
+      relative
+      article-card
+      overflow-hidden
+      h-auto
     "
+    [ngClass]="cardClass"
   >
-    A very interesting topic
-  </div>
-  <div class="">Author Name | Date</div>
-  <div class="overflow-hidden text-overflow-ellipsis">
-    {{
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam rerum soluta enim consequuntur! Explicabo non aliquam dolor cum dolore? Minima rerum dolor voluptates sit accusamus possimus optio. Sequi, amet ratione. Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui temporibus dignissimos ea, dolore corrupti dolorem corporis voluptatem expedita obcaecati suscipit, earum accusantium quam nisi sapiente facilis quibusdam illum! Sequi, impedit! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex accusamus adipisci sint molestias veniam hic, voluptatum facere rerum sequi, corporis aliquam ea quibusdam repellat quasi. Debitis odio fugit cumque dolores'
-        | appEllipsis
-    }}
-    <hr />
-  </div>
-  <div class="flex justify-content-between align-items-center">
-    <div>
-      <app-votes></app-votes>
+    <app-article-image
+      [images]="article.images || []"
+      [title]="article.title?.substr(0, 1) | uppercase"
+      [preview]="false"
+    ></app-article-image>
+    <div class="tint h-full w-full absolute z-0"></div>
+
+    <!-- <div class="absolute p-4 text-white font-bold bottom-0"> -->
+    <div
+      class="
+        bg-gray-900
+        absolute
+        top-0
+        text-white
+        w-max
+        shadow-2
+        z-1
+        p-1
+        capitalize
+      "
+    >
+      {{ article.category?.name }}
     </div>
-    <div>Reply</div>
+    <div
+      class="text-white w-max text-sm font-italic z-1 p-1 absolute article-date"
+    >
+      {{ article.updated_on | date: 'longDate' }}
+    </div>
   </div>
-</div>
+  <div
+    [pTooltip]="article.title"
+    tooltipPosition="top"
+    class="
+      text-lg
+      z-1
+      article-title
+      overflow-hidden
+      text-center
+      p-1
+      hover:text-pink-600
+      cursor-pointer
+      capitalize
+    "
+    (click)="openArticle(); $event.stopPropagation()"
+  >
+    {{ article.title }}
+  </div>
+</ng-container>

@@ -1,0 +1,11 @@
+<app-listing-page
+  [loading]="loadingForums$ | async"
+  [title]="'FORUMS'"
+  [itemTemplate]="forumCardTemplate"
+  [items]="forums$ | async"
+  itemClass="col-12"
+></app-listing-page>
+
+<ng-template #forumCardTemplate let-forum>
+  <app-forum-card [forum]="forum"></app-forum-card>
+</ng-template>

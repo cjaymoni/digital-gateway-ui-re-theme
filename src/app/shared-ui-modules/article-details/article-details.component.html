@@ -1,0 +1,72 @@
+<article *ngIf="article$ | async; else loading">
+  <div class="container p-2">
+    <div class="col-12 flex flex-column md:flex-row">
+      <div class="col-12 flex flex-column md:col-7">
+        <div class="title font-bold text-3xl text-left">
+          {{ (article$ | async).title | uppercase }}
+        </div>
+        <div class="m-1 font-italic">
+          Published On: {{ (article$ | async).created_on | date: 'longDate' }}
+        </div>
+        <div class="m-1 font-italic">
+          Author: {{ (article$ | async).created_by?.username }}
+        </div>
+        <div class="flex m-1 align-items-center">
+          <i class="pi pi-tag mr-1 text-blue-500"></i>
+          <ng-container
+            *ngFor="let tag of (article$ | async).tags; let last = last"
+          >
+            <p-tag [value]="tag.name" severity="info" class="mr-1"></p-tag>
+          </ng-container>
+        </div>
+        <div class="flex m-1 align-items-center">
+          <button
+            type="text"
+            pButton
+            label="Share"
+            icon="pi pi-send"
+            class="p-button-secondary"
+            (click)="op.toggle($event)"
+          ></button>
+        </div>
+        <p-overlayPanel #op [showCloseIcon]="true">
+          <ng-template pTemplate>
+            <share-buttons
+              [show]="8"
+              [include]="[
+                'facebook',
+                'twitter',
+                'linkedin',
+                'whatsapp',
+                'pinterest',
+                'reddit',
+                'telegram',
+                'messenger',
+                'sms',
+                'email',
+                'print',
+                'copy'
+              ]"
+            ></share-buttons>
+          </ng-template>
+        </p-overlayPanel>
+      </div>
+      <div class="col-12 md:col-5">
+        <app-article-image
+          [images]="(article$ | async)?.images || []"
+        ></app-article-image>
+      </div>
+    </div>
+    <div class="overflow-hidden md:overflow-auto surface-overlay text-justify">
+      <div
+        class="col-12 w-full article-content"
+        [innerHTML]="
+          sanitizer.bypassSecurityTrustHtml((article$ | async)?.content)
+        "
+      ></div>
+    </div>
+  </div>
+</article>
+<ng-template #loading>
+  <p-skeleton size="20rem" shape="rectangle"></p-skeleton>
+</ng-template>

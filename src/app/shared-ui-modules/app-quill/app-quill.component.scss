@@ -1,0 +1,6 @@
+:host ::ng-deep {
+  .quill-editor:focus-within {
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 0 0.2rem var(--box-shadow);
+  }
+}

@@ -1,0 +1,85 @@
+<div
+  class="
+    box
+    w-full
+    shadow-1
+    md:shadow-4
+    p-2
+    md:p-3
+    flex flex-column
+    fadein
+    md:fadeinright
+    border-round
+    animation-duration-500
+  "
+>
+  <div class="flex">
+    <div class="flex flex-column md:flex-row">
+      <div class="flex mr-2">
+        <p-avatar shape="circle" [image]="comment.author.avatar"></p-avatar>
+      </div>
+      <div class="flex text-xs flex-column text-gray-500">
+        <div class="font-bold">{{ comment.author.username }}</div>
+        <div class="font-italic">
+          {{ comment.created_on | date: 'mediumDate' }}
+        </div>
+        <div class="font-italic">
+          {{ comment.created_on | date: 'mediumTime' }}
+        </div>
+      </div>
+    </div>
+    <p-divider styleClass="mx-2 md:mx-3 h-1rem" layout="vertical"></p-divider>
+    <div class="overflow-hidden text-overflow-ellipsis">
+      {{ comment.text }}
+    </div>
+  </div>
+
+  <div class="flex justify-content-between align-items-center">
+    <div>
+      <button
+        pButton
+        class="
+          p-button-danger p-button-text
+          justify-content-center
+          align-self-end
+        "
+        icon="pi pi-reply"
+        label="Reply"
+        proceedIfLoggedIn
+        (onProceed)="show()"
+      ></button>
+    </div>
+    <div>
+      <app-comments
+        *ngIf="showCommentButton"
+        [commentCount]="comment.subcomments?.length || 0"
+        (commentsClickedEvent)="loadSubcomments()"
+      ></app-comments>
+    </div>
+    <div>
+      <app-votes
+        [dislikeCount]="comment.downvotes || 0"
+        [likeCount]="comment.upvotes || 0"
+        (likeClickEvent)="likeComment()"
+        (dislikeClickEvent)="dislikeComment()"
+        [type]="CommentType.Comment"
+        [id]="comment.id"
+        [liked]="
+          (comment.user?.voted || false) &&
+          comment.user?.type === VoteType.upvote
+        "
+        [disliked]="
+          (comment.user?.voted || false) &&
+          comment.user?.type === VoteType.downvote
+        "
+      ></app-votes>
+    </div>
+  </div>
+
+  <div *ngIf="showCommentForm" class="mt-2">
+    <app-comment-form
+      (commentAddEvent)="addCommentToForumPost($event)"
+      (cancelEvent)="hideCommentForm()"
+    ></app-comment-form>
+  </div>
+</div>

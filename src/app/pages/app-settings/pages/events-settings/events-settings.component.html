@@ -1,0 +1,45 @@
+<div class="flex justify-content-end mr-7 mb-2">
+  <button
+    pButton
+    icon="pi pi-save"
+    label="Save"
+    class="p-button-secondary p-button"
+    (click)="saveChanges()"
+  ></button>
+</div>
+
+<p-pickList
+  [source]="(filteredArticles$ | async) || []"
+  [target]="(selectedArticles$ | async) || []"
+  sourceHeader="Available Articles"
+  targetHeader="Selected Highlight"
+  [dragdrop]="true"
+  [responsive]="true"
+  filterBy="title"
+  sourceFilterPlaceholder="Search by title"
+  targetFilterPlaceholder="Search by title"
+  (onSourceFilter)="searchArticle($event)"
+  [showSourceFilter]="false"
+>
+  <ng-template let-article pTemplate="item">
+    <div>
+      <i class="pi pi-book mr-2"></i>
+      <span class="product-category">{{ article.title }}</span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="sourceHeader">
+    <div class="font-bold mb-5">Available Highlight Categories</div>
+
+    <span class="p-input-icon-right w-full">
+      <i class="pi pi-search"></i>
+      <input
+        type="text"
+        class="w-full"
+        placeholder="Search article by title"
+        pInputText
+        [formControl]="searchArticleInput"
+      />
+    </span>
+  </ng-template>
+</p-pickList>

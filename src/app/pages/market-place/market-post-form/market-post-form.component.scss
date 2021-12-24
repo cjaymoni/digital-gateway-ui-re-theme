@@ -1,0 +1,21 @@
+.field {
+  justify-items: flex-end;
+  align-items: flex-end;
+}
+
+:host ::ng-deep {
+  .customSelectButton {
+    div:not(.p-highlight) {
+      span {
+        opacity: 0.4;
+      }
+    }
+    .p-button-label {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.remove-button {
+  top: -4px;
+}

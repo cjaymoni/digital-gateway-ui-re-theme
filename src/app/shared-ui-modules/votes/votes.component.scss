@@ -1,0 +1,9 @@
+button[disliked='true'] {
+  background-color: var(--pink-900) !important;
+  color: white !important;
+}
+
+button[liked='true'] {
+  background-color: var(--blue-900) !important;
+  color: white !important;
+}

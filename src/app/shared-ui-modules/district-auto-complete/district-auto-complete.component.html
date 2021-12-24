@@ -1,0 +1,9 @@
+<app-auto-complete
+  [control]="selectedDistrict"
+  [suggestions]="(distrcits$ | async) || []"
+  (searchEvent)="searchDistrict($event.query)"
+  [multiple]="false"
+  [forceSelection]="true"
+  [dropdown]="true"
+  placeholder="Type a district name"
+></app-auto-complete>

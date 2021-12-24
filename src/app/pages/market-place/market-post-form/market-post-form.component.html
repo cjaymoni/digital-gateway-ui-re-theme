@@ -1,0 +1,200 @@
+<ng-container [formGroup]="productAdForm">
+  <div class="fluid formgrid grid p-3">
+    <div class="flex flex-column md:flex-row w-full flex-wrap">
+      <div class="col-12 md:col-3 align-items-end justify-content-end">
+        <label for="adType">Select Ad Type</label>
+        <p-selectButton
+          [options]="adTypes"
+          formControlName="ad_type"
+          optionLabel="name"
+          styleClass="mt-2 customSelectButton"
+        ></p-selectButton>
+      </div>
+      <ng-container formGroupName="product">
+        <!-- the product details -->
+        <div class="field col-12 md:col-6">
+          <label for="name">Product Name</label>
+          <input
+            type="text"
+            pInputText
+            class="inputfield w-full"
+            formControlName="name"
+            placeholder="Enter product name"
+          />
+        </div>
+        <div class="field col-12 md:col-3">
+          <label for="price">Price</label>
+          <br />
+          <p-inputNumber
+            formControlName="price"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            inputId="horizontal"
+            spinnerMode="horizontal"
+            [step]="1"
+            [min]="1"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+            mode="currency"
+            currency="GHs"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+          >
+          </p-inputNumber>
+        </div>
+      </ng-container>
+    </div>
+    <ng-container formGroupName="product">
+      <div class="field col-12">
+        <label for="description">Description</label>
+        <textarea
+          type="text"
+          class="inputfield w-full h-auto"
+          formControlName="description"
+          pInputTextarea
+          [autoResize]="true"
+          [rows]="6"
+          placeholder="Enter a description"
+        ></textarea>
+      </div>
+      <div class="flex flex-column md:flex-row w-full">
+        <div class="field col-12 md:col-4">
+          <label for="brand">Brand</label>
+          <input
+            type="text"
+            pInputText
+            class="inputfield w-full"
+            formControlName="brand"
+            placeholder="Enter a brand name if applicable"
+          />
+        </div>
+        <div class="field col-12 md:col-4">
+          <label for="tags">Choose Tags</label>
+          <app-tag-autocomplete
+            [selectedTags]="tags"
+            [tagType]="adTagType"
+          ></app-tag-autocomplete>
+        </div>
+        <div class="field col-12 md:col-4">
+          <label for="product_type">Select Product Type</label>
+          <app-product-type-autocomplete
+            [selectedProductType]="productType"
+          ></app-product-type-autocomplete>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <ng-container *ngIf="!createForm && postHasImage">
+          <div class="mb-1">
+            <div class="font-bold">Current Images</div>
+            <div
+              class="
+                w-full
+                flex
+                justify-content-center
+                align-items-center
+                border-solid
+                p-1
+                border-200
+                overflow-x-auto
+              "
+            >
+              <div
+                *ngFor="
+                  let image of productAd.product.images;
+                  let index = index
+                "
+                class="h-10rem w-3 mr-2 relative"
+              >
+                <img
+                  [src]="image.image"
+                  class="w-full h-full border-round relative"
+                  alt=""
+                />
+                <button
+                  pButton
+                  pTooltip="Remove this image"
+                  tooltipPosition="top"
+                  class="
+                    p-button p-button-rounded p-button-danger
+                    left-50
+                    absolute
+                    remove-button
+                  "
+                  icon="pi pi-trash"
+                  clickConfirmation
+                  (onConfirm)="removeImage(index)"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <label for="imageUpload">Product Image Upload</label>
+        <app-image-upload #imageUpload [multiple]="true"></app-image-upload>
+      </div>
+    </ng-container>
+
+    <div class="flex flex-column md:flex-row w-full field mt-3">
+      <div class="field col-12 md:col-3">
+        <label for="gh_post">Ghana Post Address</label>
+        <p-inputMask
+          styleClass="w-full"
+          formControlName="gh_post"
+          mask="aa-999-9999"
+          placeholder="AA-001-1010"
+        ></p-inputMask>
+      </div>
+
+      <div class="field col">
+        <label for="location">Location</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="location"
+          placeholder="Where are you located?"
+        />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="district">District</label>
+        <app-district-auto-complete [selectedDistrict]="district">
+        </app-district-auto-complete>
+      </div>
+    </div>
+
+    <div class="field flex flex-column md:flex-row w-full">
+      <div class="field col-12 md:col-6">
+        <label for="cellphone">Phone Number</label>
+        <input
+          type="text"
+          pInputText
+          class="inputfield w-full"
+          formControlName="cellphone"
+          placeholder="Enter your phone number"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 ml-auto flex justify-content-end">
+    <button
+      pButton
+      pRipple
+      class="mr-1"
+      type="button"
+      icon="pi pi-save"
+      [label]="(createForm ? 'Add' : 'Update') + ' MarketPost'"
+      [disabled]="productAdForm.invalid"
+      (click)="onAddOrUpdateMarketPost()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      class="p-button-danger mr-1"
+      icon="pi pi-times"
+      type="button"
+      label="Cancel"
+      (click)="goBack()"
+    ></button>
+  </div>
+</ng-container>

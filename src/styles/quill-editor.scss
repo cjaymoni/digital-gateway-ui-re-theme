@@ -1,0 +1,5 @@
+.app-quill-editor {
+  &:focus-within {
+    border: 2px solid var(--primary-color);
+  }
+}

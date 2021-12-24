@@ -1,0 +1,10 @@
+<quill-editor
+  [formControl]="contentFormControl"
+  [placeholder]="placeholder"
+  [modules]="quillConfig"
+  (onSelectionChanged)="onSelectionChanged($event)"
+  (onContentChanged)="onContentChanged($event)"
+  [classes]="classNames + ' quill-editor'"
+  [required]="required"
+>
+</quill-editor>

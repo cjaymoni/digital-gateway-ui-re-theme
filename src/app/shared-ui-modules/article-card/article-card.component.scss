@@ -1,0 +1,88 @@
+$text-shadow: 2px 2px 6px black;
+
+:host {
+  .article-card {
+    max-height: 350px;
+    cursor: pointer;
+
+    &:hover {
+      .tint {
+        display: block;
+      }
+      .article-title {
+        text-decoration: underline;
+        transform: scale(1.05);
+        transition-property: all;
+        transition-duration: 2000ms;
+        text-overflow: unset;
+        white-space: unset;
+        overflow: show;
+        display: block;
+
+        @supports (-webkit-line-clamp: 2) {
+          -webkit-line-clamp: unset;
+          -webkit-box-orient: unset;
+        }
+
+        width: calc(99%);
+      }
+      .article-date {
+        display: block;
+      }
+
+      ::ng-deep {
+        app-article-image {
+          .article-image {
+            transform: scale(1.5);
+            transition-property: all;
+            transition-duration: 500ms;
+          }
+        }
+      }
+    }
+  }
+}
+
+.tint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.article-title {
+  // text-shadow: $text-shadow;
+  text-overflow: ellipsis;
+  width: calc(100%);
+
+  &:hover {
+    text-decoration: underline;
+    font-size: larger;
+  }
+
+  @supports (-webkit-line-clamp: 2) {
+    text-overflow: ellipsis;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  @media screen and (max-width: 960px) {
+    @supports (-webkit-line-clamp: 2) {
+      -webkit-line-clamp: unset;
+      -webkit-box-orient: unset;
+    }
+  }
+}
+
+.article-date {
+  top: 30px;
+  right: 0;
+  display: none;
+  @media screen and (max-width: 960px) {
+    display: block;
+    text-shadow: $text-shadow;
+  }
+}

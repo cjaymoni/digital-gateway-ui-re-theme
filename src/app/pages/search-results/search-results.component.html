@@ -1,0 +1,186 @@
+<div *ngIf="searching$ | async; else results">
+  <app-forum-loading-card></app-forum-loading-card>
+</div>
+
+<ng-template #results>
+  <ng-container
+    *ngIf="(searchResults$ | async)?.length === 0; else resultDisplay"
+  >
+    <div class="text-2xl text-center font-bold">
+      NO RESULTS FOUND. TRY ANOTHER SEARCH TERM
+    </div>
+  </ng-container>
+  <ng-template #resultDisplay>
+    <p-tabView #tabs>
+      <p-tabPanel
+        [header]="'All (' + (searchResults$ | async)?.length + ')'"
+        #tab
+      >
+        <div *ngFor="let searchresults of searchResults$ | async">
+          <div *ngIf="searchresults.source == 'article'">
+            <p-card
+              [header]="searchresults.title"
+              styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+              (click)="openArticle(searchresults.slug)"
+            >
+              <div class="text-900">
+                Published on:
+                {{ searchresults.created_on | date: 'longDate' }} by
+                {{ searchresults.created_by.username }}
+              </div>
+            </p-card>
+          </div>
+          <div *ngIf="searchresults.source == 'forum'">
+            <p-card
+              [header]="searchresults.name"
+              styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+              (click)="openForum(searchresults.slug)"
+            >
+              <div class="font-italic text-purple-800 font-semibold text-xs">
+                {{ searchresults.posts?.length ?? 0 }} Topic(s)
+                <span
+                  *ngFor="let tag of searchresults.tags"
+                  class="p-tag p-tag-warning mr-2"
+                >
+                  {{ tag.name }}
+                </span>
+              </div>
+            </p-card>
+          </div>
+          <div *ngIf="searchresults.source == 'post'">
+            <p-card
+              [header]="searchresults.title"
+              styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+              (click)="openForumPost(searchresults.slug)"
+            >
+              <div class="text-900">
+                {{ searchresults.content || '' | appEllipsis: 150 }}
+              </div>
+            </p-card>
+          </div>
+          <div *ngIf="searchresults.source == 'ad'">
+            <p-card
+              styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+              (click)="openMarketAd(searchresults.product.id)"
+            >
+              <div class="flex justify-content-start">
+                <div
+                  class="div-with-background-image w-12rem"
+                  [style.backgroundImage]="
+                    'url(' + searchresults.product.images[0].image + ')'
+                  "
+                ></div>
+                <div
+                  class="text-900 pl-3 flex flex-column justify-content-between"
+                >
+                  <div class="text-xl font-semibold">
+                    {{ searchresults.product.name }}
+                  </div>
+                  <div class="pt-2">
+                    {{ searchresults.product.description }}
+                  </div>
+                  <div>{{ searchresults.product.price }} GHS</div>
+                  <div>
+                    <i class="pi pi-map-marker"></i>
+                    {{ searchresults.location }}
+                  </div>
+                </div>
+              </div>
+            </p-card>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel
+        [header]="'Articles (' + (articleSearchResults$ | async)?.length + ')'"
+        [disabled]="(articleSearchResults$ | async)?.length ? false : true"
+      >
+        <div *ngFor="let searchresults of articleSearchResults$ | async">
+          <p-card
+            [header]="searchresults.title"
+            styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+            (click)="openArticle(searchresults.slug)"
+          >
+            <div class="text-900">
+              Published on: {{ searchresults.created_on | date: 'longDate' }} by
+              {{ searchresults.created_by.username }}
+            </div>
+          </p-card>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel
+        [header]="'Market Ads (' + (adsSearchResults$ | async)?.length + ')'"
+        [disabled]="(adsSearchResults$ | async)?.length ? false : true"
+      >
+        <div *ngFor="let searchresults of adsSearchResults$ | async">
+          <p-card
+            styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+            (click)="openMarketAd(searchresults.product.id)"
+          >
+            <div class="flex justify-content-start">
+              <div
+                class="div-with-background-image w-12rem"
+                [style.backgroundImage]="
+                  'url(' + searchresults.product.images[0].image + ')'
+                "
+              ></div>
+              <div
+                class="text-900 pl-3 flex flex-column justify-content-between"
+              >
+                <div class="text-xl font-semibold">
+                  {{ searchresults.product.name }}
+                </div>
+                <div class="pt-2">
+                  {{ searchresults.product.description }}
+                </div>
+                <div>{{ searchresults.product.price }} GHS</div>
+                <div>
+                  <i class="pi pi-map-marker"></i> {{ searchresults.location }}
+                </div>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel
+        [header]="'Forums (' + (forumSearchResults$ | async)?.length + ')'"
+        [disabled]="(forumSearchResults$ | async)?.length ? false : true"
+      >
+        <div *ngFor="let searchresults of forumSearchResults$ | async">
+          <p-card
+            [header]="searchresults.name"
+            styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+            (click)="openForum(searchresults.slug)"
+          >
+            <div class="font-italic text-purple-800 font-semibold text-xs">
+              {{ searchresults.posts?.length ?? 0 }} Topic(s)
+              <span
+                *ngFor="let tag of searchresults.tags"
+                class="p-tag p-tag-warning mr-2"
+              >
+                {{ tag.name }}
+              </span>
+            </div>
+          </p-card>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel
+        [header]="
+          'Forum Topics (' + (forumPostSearchResults$ | async)?.length + ')'
+        "
+        [disabled]="(forumPostSearchResults$ | async)?.length ? false : true"
+      >
+        <div *ngFor="let searchresults of forumPostSearchResults$ | async">
+          <p-card
+            [header]="searchresults.title"
+            styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+            (click)="openForumPost(searchresults.slug)"
+          >
+            <div class="text-900">
+              {{ searchresults.content || '' | appEllipsis: 150 }}
+            </div>
+          </p-card>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </ng-template>
+</ng-template>

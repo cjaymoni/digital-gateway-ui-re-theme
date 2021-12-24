@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SideNavComponent } from './side-nav.component';
-import { PanelMenuModule } from 'primeng/panelmenu';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   declarations: [SideNavComponent],
-  imports: [CommonModule, PanelMenuModule],
+  imports: [CommonModule, TieredMenuModule, ButtonModule, DividerModule],
   exports: [SideNavComponent],
 })
 export class SideNavModule {}
