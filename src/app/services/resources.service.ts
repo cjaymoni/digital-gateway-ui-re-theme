@@ -12,12 +12,15 @@ export class ResourceService {
 
   getResources(
     url = this.endpoint,
-    pagination?: { page: string | any; pageSize: string | any },
-    otherParams?: { [key: string]: any }
+    pagination?: { page: string | any; page_size: string | any },
+    otherParams?: { [key: string]: any },
+    withPagination = false
   ): Observable<any[]> {
     return this.http
-      .get(`${url}`, { params: { ...otherParams } })
-      .pipe(map((data: any) => data.results as any[]));
+      .get(`${url}`, { params: { ...otherParams, ...pagination } })
+      .pipe(
+        map((data: any) => (withPagination ? data : (data.results as any[])))
+      );
   }
 
   storeResource(toStore: any, url = this.endpoint) {
@@ -26,13 +29,13 @@ export class ResourceService {
 
   updateResource(toStore: any, id: any, url = this.endpoint, override = false) {
     return this.http
-      .patch(`${override ? url : url + id}/`, toStore)
+      .patch(`${override ? url : url + id}`, toStore)
       .pipe(map(data => data as object));
   }
 
   updateResourcePut(toStore: any, id: any, url = this.endpoint) {
     return this.http
-      .put(`${url + id}/`, toStore)
+      .put(`${url + id}`, toStore)
       .pipe(map(data => data as object));
   }
 

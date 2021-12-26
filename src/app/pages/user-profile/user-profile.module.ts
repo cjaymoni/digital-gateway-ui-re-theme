@@ -10,10 +10,15 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ImageUploadModule } from 'src/app/shared-ui-modules/image-upload/image-upload.module';
 import { ProfileTypeAutocompleteModule } from '../../shared-ui-modules/profile-type-autocomplete/profile-type-autocomplete.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImageModule } from 'primeng/image';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     UserProfileRoutesModule,
     InputTextModule,
     ButtonModule,
@@ -23,6 +28,8 @@ import { ProfileTypeAutocompleteModule } from '../../shared-ui-modules/profile-t
     InputMaskModule,
     ImageUploadModule,
     ProfileTypeAutocompleteModule,
+    ImageModule,
+    TooltipModule,
   ],
   declarations: [UserProfileComponent],
   exports: [UserProfileComponent],

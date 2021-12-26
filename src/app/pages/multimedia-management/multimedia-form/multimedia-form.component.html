@@ -1,0 +1,57 @@
+<ng-container [formGroup]="multimediaForm">
+  <div class="fluid formgrid grid p-3">
+    <div class="field col-12">
+      <label for="featured">Featured</label>
+      <p-selectButton
+        [options]="featuredTypes"
+        formControlName="featured"
+        optionLabel="name"
+      ></p-selectButton>
+    </div>
+
+    <div class="field col-12">
+      <label for="mediaType">Select Media Type</label>
+      <p-dropdown
+        [options]="mediaTypes"
+        placeholder="Choose Media Type"
+        optionLabel="name"
+        formControlName="media_type"
+        [showClear]="true"
+        styleClass="w-full"
+      ></p-dropdown>
+    </div>
+
+    <div class="field col-12">
+      <label for="mediaType"> Media URL</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="url"
+        placeholder="Enter a media url"
+      />
+    </div>
+  </div>
+
+  <div class="col-12 ml-auto flex justify-content-end">
+    <button
+      pButton
+      pRipple
+      class="mr-1"
+      type="button"
+      icon="pi pi-save"
+      [label]="(createForm ? 'Add' : 'Update') + ' MultiMedia'"
+      [disabled]="multimediaForm.invalid"
+      (click)="onAddOrUpdateMedia()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      class="p-button-danger mr-1"
+      icon="pi pi-times"
+      type="button"
+      label="Cancel"
+      (click)="goBack()"
+    ></button>
+  </div>
+</ng-container>

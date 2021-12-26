@@ -65,9 +65,9 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
   ngAfterViewInit(): void {
-    this.startCarouselAutoplay(this.eventSlider, 10000);
-    this.startCarouselAutoplay(this.marketSlider, 4000);
-    this.startCarouselAutoplay(this.articleSlider, 5000);
+    this.startCarouselAutoplay(this.eventSlider, 15000);
+    this.startCarouselAutoplay(this.marketSlider, 7000);
+    this.startCarouselAutoplay(this.articleSlider, 8000);
     this.startCarouselAutoplay(this.multimediaSlider, 8000);
 
     // event
@@ -81,11 +81,11 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.articleSlider, 5000)
+      this.getCarouselMouseLeaveSubscription(this.articleSlider, 8000)
     );
 
     this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.eventSlider, 10000)
+      this.getCarouselMouseLeaveSubscription(this.eventSlider, 15000)
     );
 
     // market
@@ -94,7 +94,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.marketSlider, 4000)
+      this.getCarouselMouseLeaveSubscription(this.marketSlider, 7000)
     );
 
     // multimedia

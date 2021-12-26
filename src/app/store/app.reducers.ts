@@ -6,11 +6,13 @@ import { districtReducer } from './reducers/district.reducer';
 import { forumPostReducer } from './reducers/forum-post.reducers';
 import { forumReducer } from './reducers/forum.reducer';
 import { menuItemReducer } from './reducers/menu-items.reducers';
+import { multiMediaReducer } from './reducers/multimedia.reducers';
 import { productAdReducer } from './reducers/product-ad.reducers';
 import { productTypeReducer } from './reducers/product-types.reducers';
 import { profileTypeReducer } from './reducers/profile-types.reducers';
 import { tagReducer } from './reducers/tag.reducers';
 import { userAuthReducer } from './reducers/user-auth.reducers';
+import { userProfileReducer } from './reducers/user-profile.reducers';
 
 export const appReducersMap = {
   [FeatureNamesForStore.User]: userAuthReducer,
@@ -25,4 +27,6 @@ export const appReducersMap = {
   [FeatureNamesForStore.Forum]: forumReducer,
   [FeatureNamesForStore.ForumPost]: forumPostReducer,
   [FeatureNamesForStore.ProfileType]: profileTypeReducer,
+  [FeatureNamesForStore.UserProfile]: userProfileReducer,
+  [FeatureNamesForStore.MultiMedia]: multiMediaReducer,
 };

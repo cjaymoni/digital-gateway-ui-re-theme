@@ -4,7 +4,7 @@ import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
 export const TABLET_WIDTH_BREAKPOINT = 960;
-export const DEFAULT_PAGE_SIZE = 100;
+export const DEFAULT_PAGE_SIZE = 50;
 
 export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
@@ -30,6 +30,8 @@ export enum FeatureNamesForStore {
   Forum = 'forum',
   ForumPost = 'forumPost',
   ProfileType = 'profileType',
+  UserProfile = 'userProfile',
+  MultiMedia = 'multiMedia',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -124,7 +126,20 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     main: 'resources',
     add: 'post-resource',
   },
-
+  MultimediaManagement: {
+    main: 'multimedia-management',
+    add: 'post-media',
+    edit: 'edit-media/:id',
+    view: 'view-media/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management', false);
+      },
+    },
+  },
   //content management
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',
@@ -153,7 +168,7 @@ export enum PrimeNgSeverity {
   Info = 'info',
   Danger = 'danger',
   Success = 'success',
-  Warn = 'warning',
+  Warn = 'warn',
   Custom = 'custom',
   Error = 'error',
 }
@@ -167,10 +182,10 @@ export const enum PrimeNgAlerts {
 }
 
 export const PublishedStatusMapping: { [key: string]: string } = {
-  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Danger,
+  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Error,
   [ArticlePublishedStatus.Published]: PrimeNgSeverity.Success,
   [ArticlePublishedStatus.Draft]: PrimeNgSeverity.Info,
-  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Info,
+  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Warn,
   [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Success,
 };
 
@@ -243,6 +258,13 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       icon: 'pi pi-cog',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
+    {
+      id: 'multimedia-management',
+      label: 'Multimedia Management',
+      routerLink: [Pages.MultimediaManagement.main],
+      icon: 'pi pi-video',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
   ];
 };
 
@@ -266,6 +288,7 @@ export enum Context {
   Forum = Pages.Forum.main,
   ForumPost = Pages.ForumPost.main,
   MarketPlace = Pages.MarketPlace.main,
+  MultimediaManagement = Pages.MultimediaManagement.main,
   // Auth = Pages.Auth.
 }
 

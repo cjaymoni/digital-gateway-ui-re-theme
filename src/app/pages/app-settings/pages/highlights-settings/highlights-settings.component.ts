@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -18,7 +19,6 @@ import {
 } from 'rxjs';
 import { ArticleService } from 'src/app/pages/articles/services/articles.service';
 import { BlockService } from 'src/app/services/blocks.service';
-import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
@@ -27,20 +27,22 @@ import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
   styleUrls: ['./highlights-settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HighlightsSettingsComponent implements OnInit, OnDestroy {
+export class HighlightsSettingsComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   filteredArticles$ = new BehaviorSubject(new Array(0));
 
   searchArticleInput = new FormControl('', [Validators.minLength(3)]);
 
-  selectedArticles = new Array(0);
+  selectedArticles$ = new BehaviorSubject(Array(0));
 
   mergeCurrentlySelected$ = this.themeStore.highlightArticles$
     .pipe(
       map(ha => {
-        const newArray = [...this.selectedArticles].concat(
+        const newArray = [...this.selectedArticles$.getValue()].concat(
           [...ha].map(h => h.article)
         );
-        this.selectedArticles = newArray;
+        this.selectedArticles$.next(newArray);
       })
     )
     .subscribe();
@@ -49,8 +51,13 @@ export class HighlightsSettingsComponent implements OnInit, OnDestroy {
     private store: Store,
     private themeStore: ThemeSettingsStore,
     private articleService: ArticleService,
-    private blockService: BlockService
+    private blockService: BlockService,
+    private cdref: ChangeDetectorRef
   ) {}
+
+  ngAfterViewInit(): void {
+    this.cdref.detectChanges();
+  }
 
   ngOnInit() {
     this.mergeCurrentlySelected$.add(
@@ -92,6 +99,8 @@ export class HighlightsSettingsComponent implements OnInit, OnDestroy {
   }
 
   saveChanges() {
-    this.blockService.saveHiglightedArticles(this.selectedArticles).subscribe();
+    this.blockService
+      .saveHiglightedArticles(this.selectedArticles$.getValue())
+      .subscribe();
   }
 }
