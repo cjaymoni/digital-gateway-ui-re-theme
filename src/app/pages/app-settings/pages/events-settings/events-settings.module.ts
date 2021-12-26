@@ -4,6 +4,7 @@ import { EventsSettingsComponent } from './events-settings.component';
 import { PickListModule } from 'primeng/picklist';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    InputTextModule,
   ],
   declarations: [EventsSettingsComponent],
   exports: [EventsSettingsComponent],

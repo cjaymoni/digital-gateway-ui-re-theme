@@ -39,6 +39,7 @@ export class EventsSettingsComponent implements OnInit {
           [...ha].map(h => h.article)
         );
         this.selectedArticles$.next(newArray);
+        console.log(newArray);
       })
     )
     .subscribe();
@@ -58,12 +59,7 @@ export class EventsSettingsComponent implements OnInit {
   ngOnInit() {
     this.mergeCurrentlySelected$.add(
       this.searchArticleInput.valueChanges
-        .pipe(
-          tap(_ => {}),
-          distinctUntilChanged(),
-          skip(2),
-          debounceTime(300)
-        )
+        .pipe(distinctUntilChanged(), skip(2), debounceTime(300))
         .subscribe((query: string) => {
           if (query.trim() === '') {
             this.filteredArticles$.next([]);
@@ -96,7 +92,7 @@ export class EventsSettingsComponent implements OnInit {
 
   saveChanges() {
     this.blockService
-      .saveHiglightedArticles(this.selectedArticles$.getValue())
+      .saveFeaturedEvents(this.selectedArticles$.getValue())
       .subscribe();
   }
 }

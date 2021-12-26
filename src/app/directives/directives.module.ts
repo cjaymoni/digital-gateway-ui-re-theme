@@ -4,6 +4,7 @@ import { AppClickableDirective } from './clickable.directive';
 import { AppClickConfirmDirective } from './click-confirm.directive';
 import { AppProceedIfLoggedDirective } from './click-if-logged-in.directive';
 import { AppAutofocusDirective } from './autofocus.directive';
+import { EnterPressedDirective } from './enter-pressed.directive';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { AppAutofocusDirective } from './autofocus.directive';
     AppClickConfirmDirective,
     AppProceedIfLoggedDirective,
     AppAutofocusDirective,
+    EnterPressedDirective,
   ],
   imports: [CommonModule],
   exports: [
@@ -18,6 +20,7 @@ import { AppAutofocusDirective } from './autofocus.directive';
     AppClickConfirmDirective,
     AppProceedIfLoggedDirective,
     AppAutofocusDirective,
+    EnterPressedDirective,
   ],
 })
 export class DirectivesModule {}

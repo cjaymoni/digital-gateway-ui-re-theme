@@ -29,7 +29,7 @@ export class ResourceService {
 
   updateResource(toStore: any, id: any, url = this.endpoint, override = false) {
     return this.http
-      .patch(`${override ? url : url + id}`, toStore)
+      .patch(`${override ? url : url + id + '/  '}`, toStore)
       .pipe(map(data => data as object));
   }
 

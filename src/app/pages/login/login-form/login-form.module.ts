@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { LoginFormComponent } from './login-form.component';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { LoginFormComponent } from './login-form.component';
     ButtonModule,
     InputTextModule,
     PasswordModule,
+    DirectivesModule,
   ],
   exports: [LoginFormComponent],
   declarations: [LoginFormComponent],

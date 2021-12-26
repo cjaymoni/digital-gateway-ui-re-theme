@@ -209,6 +209,13 @@ export enum TagType {
   ad = 'ad',
 }
 
+export enum SearchList {
+  ARTICLE = 'article',
+  ADS = 'ad',
+  FORUM = 'forum',
+  FORUM_POST = 'post',
+}
+
 export const GenericErrorMessage =
   'Sorry, an error occurred. Rest assured, it will be fixed';
 
