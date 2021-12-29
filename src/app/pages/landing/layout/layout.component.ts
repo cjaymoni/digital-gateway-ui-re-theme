@@ -1,4 +1,3 @@
-import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 import {
   Component,
   OnInit,
@@ -15,6 +14,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { Article } from 'src/app/models/article.model';
 import { Carousel } from 'primeng/carousel';
 import { debounceTime, fromEvent, Subscription, tap } from 'rxjs';
+import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
   selector: 'app-layout',
@@ -59,10 +59,16 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);
-  forum$ = this.store.select(forumSelectors.getById(1));
+  featuredEvents$ = this.themeStore.featuredEventsArray$;
+
+  // forum$ = this.store.select(forumSelectors.getById(1));
   forumMetrics$ = this.themeStore.forumMetrics$;
 
-  constructor(private store: Store, private navigator: NavigatorService, private themeStore: ThemeSettingsStore) {}
+  constructor(
+    private store: Store,
+    private navigator: NavigatorService,
+    private themeStore: ThemeSettingsStore
+  ) {}
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
