@@ -5,6 +5,7 @@ import {
   ArticleBlockEndpoint,
   CategoryBlockEndpoint,
   EventBlockEndpoint,
+  FeaturedArticlesBlockEndpoint,
 } from '../config/routes';
 import { Article } from '../models/article.model';
 import { Category } from '../models/category.model';
@@ -58,6 +59,20 @@ export class BlockService extends ResourceService {
 
     return this.http
       .put(CategoryBlockEndpoint, data)
+      .pipe(tap(_ => this.alert.showToast('Saved Successfully')));
+  }
+
+  saveFeaturedArticles(articles: Article[]) {
+    const data = articles.map((article, index) => {
+      return {
+        article: article.id,
+        is_pinned: true,
+        display_order: index + 1,
+      };
+    });
+
+    return this.http
+      .put(FeaturedArticlesBlockEndpoint, data)
       .pipe(tap(_ => this.alert.showToast('Saved Successfully')));
   }
 }

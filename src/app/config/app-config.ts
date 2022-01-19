@@ -31,6 +31,7 @@ export enum FeatureNamesForStore {
   ForumPost = 'forumPost',
   ProfileType = 'profileType',
   UserProfile = 'userProfile',
+  MultiMedia = 'multiMedia',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -125,7 +126,20 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     main: 'resources',
     add: 'post-resource',
   },
-
+  MultimediaManagement: {
+    main: 'multimedia-management',
+    add: 'post-media',
+    edit: 'edit-media/:id',
+    view: 'view-media/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management', false);
+      },
+    },
+  },
   //content management
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',
@@ -251,6 +265,13 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       icon: 'pi pi-cog',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
+    {
+      id: 'multimedia-management',
+      label: 'Multimedia Management',
+      routerLink: [Pages.MultimediaManagement.main],
+      icon: 'pi pi-video',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
   ];
 };
 
@@ -274,6 +295,7 @@ export enum Context {
   Forum = Pages.Forum.main,
   ForumPost = Pages.ForumPost.main,
   MarketPlace = Pages.MarketPlace.main,
+  MultimediaManagement = Pages.MultimediaManagement.main,
   // Auth = Pages.Auth.
 }
 

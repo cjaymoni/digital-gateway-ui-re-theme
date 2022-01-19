@@ -4,8 +4,8 @@ import { AppSettingsRoutesModule } from './app-settings-routing.module';
 import { SettingsViewModule } from './pages/settings-view/settings-view.module';
 import { EventsSettingsModule } from './pages/events-settings/events-settings.module';
 import { FeaturedCategorySettingsModule } from './pages/featured-category-settings/featured-category-settings.module';
-import { MarketAdsSettingsModule } from './pages/market-ads-settings/market-ads-settings.module';
 import { HighlightsSettingsModule } from './pages/highlights-settings/highlights-settings.module';
+import { FeaturedArticlesSettingsModule } from './pages/featured-articles-settings/featured-articles-settings.module';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { HighlightsSettingsModule } from './pages/highlights-settings/highlights
     SettingsViewModule,
     EventsSettingsModule,
     FeaturedCategorySettingsModule,
-    MarketAdsSettingsModule,
     HighlightsSettingsModule,
+    FeaturedArticlesSettingsModule,
   ],
 })
 export class AppSettingsModule {}
