@@ -199,7 +199,7 @@ export enum SearchList {
   ARTICLE = 'article',
   ADS = 'ad',
   FORUM = 'forum',
-  FORUM_POST = 'post'
+  FORUM_POST = 'post',
 }
 
 export const GenericErrorMessage =

@@ -123,7 +123,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const images: any =
       this.imageUploadComponent?.getFilesToUpload()?.length > 0
         ? this.imageUploadComponent?.getFilesToUpload()
-        : this.avatarImage.value || [];
+        : this.avatarImage.value || undefined;
 
     this.store.dispatch(
       userProfileActions.editUserProfile({
