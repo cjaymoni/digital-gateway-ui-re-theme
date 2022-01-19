@@ -19,6 +19,7 @@ export const CommentsEndpoint = environment.API_URL + 'comments/';
 export const SignUpEndpoint = environment.API_URL + 'register/';
 export const ProfileTypeEndpoint = environment.API_URL + 'profile-types/';
 export const UserProfileEndpoint = environment.API_URL + 'profile/';
+export const UsersEndPoint = environment.API_URL + 'users/';
 export const SearchEndpoint = environment.API_URL + 'fts/?q={query}';
 export const BlocksEndpoint = environment.API_URL + 'blocks/{blockId}';
 export const ArticleBlockEndpoint = environment.API_URL + 'blocks/1/articles/';

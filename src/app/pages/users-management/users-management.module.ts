@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UsersManagementComponent } from './users-management.component';
+import { UsersListPageModule } from './users-list-page/users-list-page.module';
+import { UserManagementRoutingModule } from './user-management-routing.module';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [UsersManagementComponent]
+  imports: [CommonModule, UsersListPageModule, UserManagementRoutingModule],
 })
-export class UsersManagementModule { }
+export class UsersManagementModule {}
