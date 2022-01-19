@@ -95,6 +95,9 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
   readonly featuredEvents$: Observable<ThemeSettings['highlightArticles']> =
     this.select(state => state.featuredEvents);
 
+    readonly forumMetrics$: Observable<any> =
+    this.select(state => state.forumMetrics);
+
   readonly highlightArticlesArray$ = this.select(
     this.highlightArticles$.pipe(map(d => d as any[])),
     highlights => {

@@ -26,8 +26,6 @@ export class ThemeSettingsService extends ResourceService {
       this.getForumMetrics(),
     ]).pipe(
       map(data => {
-        console.log(data);
-
         return {
           highlightArticles: data[0],
           featuredCategories: data[1],
@@ -63,7 +61,8 @@ export class ThemeSettingsService extends ResourceService {
   }
 
   getForumMetrics() {
-    return this.getResources(ForumEndpoint + 'metrics').pipe(
+    return this.http.get(ForumEndpoint + 'metrics').pipe(
+      map(data => data as any),
       defaultIfEmpty([]),
       catchError(e => of([]))
     );
