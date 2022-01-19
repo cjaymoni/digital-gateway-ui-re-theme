@@ -4,6 +4,7 @@
     icon="pi pi-save"
     label="Save"
     class="p-button-secondary p-button"
+    (click)="saveChanges()"
   ></button>
 </div>
 
@@ -19,6 +20,8 @@
   sourceFilterPlaceholder="Search by name"
   targetFilterPlaceholder="Search by name"
   listStyleClass="min-h-full h-15rem"
+  (onMoveToTarget)="checkNumberAndMove($event)"
+  (onMoveAllToTarget)="checkNumberAndMove($event)"
 >
   <ng-template let-product pTemplate="item" let-index="index">
     <div>

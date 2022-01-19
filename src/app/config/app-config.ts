@@ -4,7 +4,7 @@ import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
 export const TABLET_WIDTH_BREAKPOINT = 960;
-export const DEFAULT_PAGE_SIZE = 100;
+export const DEFAULT_PAGE_SIZE = 50;
 
 export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
@@ -32,6 +32,7 @@ export enum FeatureNamesForStore {
   ProfileType = 'profileType',
   UserProfile = 'userProfile',
   UsersList = 'usersList',
+  MultiMedia = 'multiMedia',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -126,7 +127,20 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     main: 'resources',
     add: 'post-resource',
   },
-
+  MultimediaManagement: {
+    main: 'multimedia-management',
+    add: 'post-media',
+    edit: 'edit-media/:id',
+    view: 'view-media/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management', false);
+      },
+    },
+  },
   //content management
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',
@@ -156,7 +170,7 @@ export enum PrimeNgSeverity {
   Info = 'info',
   Danger = 'danger',
   Success = 'success',
-  Warn = 'warning',
+  Warn = 'warn',
   Custom = 'custom',
   Error = 'error',
 }
@@ -170,10 +184,10 @@ export const enum PrimeNgAlerts {
 }
 
 export const PublishedStatusMapping: { [key: string]: string } = {
-  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Danger,
+  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Error,
   [ArticlePublishedStatus.Published]: PrimeNgSeverity.Success,
   [ArticlePublishedStatus.Draft]: PrimeNgSeverity.Info,
-  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Info,
+  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Warn,
   [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Success,
 };
 
@@ -195,6 +209,13 @@ export enum TagType {
   article = 'article',
   product = 'product',
   ad = 'ad',
+}
+
+export enum SearchList {
+  ARTICLE = 'article',
+  ADS = 'ad',
+  FORUM = 'forum',
+  FORUM_POST = 'post',
 }
 
 export const GenericErrorMessage =
@@ -252,6 +273,13 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       icon: 'pi pi-cog',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
+    {
+      id: 'multimedia-management',
+      label: 'Multimedia Management',
+      routerLink: [Pages.MultimediaManagement.main],
+      icon: 'pi pi-video',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
   ];
 };
 
@@ -275,6 +303,7 @@ export enum Context {
   Forum = Pages.Forum.main,
   ForumPost = Pages.ForumPost.main,
   MarketPlace = Pages.MarketPlace.main,
+  MultimediaManagement = Pages.MultimediaManagement.main,
   // Auth = Pages.Auth.
 }
 
@@ -299,6 +328,11 @@ export enum Roles {
   Editor = 'editor',
   ServiceProvider = 'service_provider',
 }
+
+export const getUserRole = () => {
+  const user = JSON.parse(localStorage.getItem(APP_USER_TOKEN) || '{}');
+  return user.role;
+};
 
 export const MainMenu: MenuItem[] = [
   {
@@ -361,9 +395,8 @@ export const MainMenu: MenuItem[] = [
         label: 'Add Resource',
         icon: 'pi pi-plus',
         routerLink: [Pages.Resources.main, Pages.Resources.add],
-        visible: (() => {
-          const user = JSON.parse(localStorage.getItem(APP_USER_TOKEN) || '{}');
-          const userRole = user.role;
+        disabled: (() => {
+          const userRole = getUserRole();
           return (
             userRole === Roles.Admin ||
             userRole === Roles.Editor ||
@@ -374,3 +407,5 @@ export const MainMenu: MenuItem[] = [
     ],
   },
 ];
+
+export const MAX_FEATURED_CATEGORIES = 8;

@@ -83,7 +83,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
         title: article.title,
         content: article.content,
         category: article.category.id,
-        tags: (article.tags as Tag[]).map(tag => tag.id),
+        tags: ((article.tags as Tag[]) || [])?.map(tag => tag.id),
         slug: slugify(article.title),
         created_by: 1,
       };

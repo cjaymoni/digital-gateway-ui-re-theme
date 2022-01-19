@@ -1,9 +1,9 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  ViewChild,
+  Component,
   OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -12,15 +12,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { User, UserProfile } from 'src/app/models/user-auth.model';
-import { ImageUploadComponent } from 'src/app/shared-ui-modules/image-upload/image-upload.component';
+import { filter, Subscription, tap } from 'rxjs';
+import { UserProfile } from 'src/app/models/user-auth.model';
+import {
+  ImageUploadComponent,
+  ImageUploadMode,
+} from 'src/app/shared-ui-modules/image-upload/image-upload.component';
+import { userProfileActions } from 'src/app/store/actions/user-profile.actions';
 import { userProfileSelectors } from 'src/app/store/selectors/user-profile.selectors';
 import { userAuthSelectors } from '../../store/selectors/user-auth.selectors';
-import { filter, map, Subscription, tap } from 'rxjs';
-import { userProfileActions } from 'src/app/store/actions/user-profile.actions';
-import { UserProfileService } from './services/user-profile.service';
-import { PrimeNgAlerts } from 'src/app/config/app-config';
-import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -31,8 +31,10 @@ import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-al
 export class UserProfileComponent implements OnInit, OnDestroy {
   selectedUser$ = this.store.select(userProfileSelectors.selectedUserProfile);
 
-  @ViewChild('imageUpload', { static: true })
+  @ViewChild('imageUpload')
   imageUploadComponent: ImageUploadComponent | null = null;
+
+  imageUploadMode = ImageUploadMode.Basic;
 
   profileForm!: FormGroup;
 
@@ -42,12 +44,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store,
-    private alert: AppAlertService,
-    private userProfileService: UserProfileService
-  ) {}
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -55,8 +52,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.profileForm = this.fb.group({
-      email: [''],
-      name: [''],
+      email: ['', [Validators.required]],
+      name: ['', [Validators.required]],
       website: [''],
       facebook: [''],
       youtube: [''],
@@ -65,20 +62,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       address: [''],
       ghana_post: [''],
       district: [''],
-      avatar: [],
+      avatar: [''],
     });
 
     this.subscription = this.getUserProfileToEditSubscription();
     this.getloggedInUser();
   }
 
-  get profileHasImage() {
-    return this.avatarImage.value?.[0]?.avatar;
-  }
-
   get avatarImage() {
     return this.profileForm.get('avatar') as FormControl;
   }
+
   removeImage() {
     this.avatarImage.setValue([]);
   }
@@ -115,7 +109,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const profileToSend = this.profileForm.value;
     const toSend = {
       email: profileToSend.email,
-
       name: profileToSend.name,
       website: profileToSend.website,
       twitter: profileToSend.twitter,
@@ -127,14 +120,26 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       district: profileToSend.district,
     };
 
-    const images: any = (this.avatarImage.value || []).concat(
-      this.imageUploadComponent?.getFilesToUpload() || []
-    );
+    const images: any =
+      this.imageUploadComponent?.getFilesToUpload()?.length > 0
+        ? this.imageUploadComponent?.getFilesToUpload()
+        : this.avatarImage.value || undefined;
+
     this.store.dispatch(
       userProfileActions.editUserProfile({
         userProfile: { ...toSend, id: this.user.id },
         imageToUpload: images,
       })
     );
+  }
+
+  getImageToUpload() {
+    return (
+      this.imageUploadComponent?.getFilesToUpload()?.[0]?.objectURL || null
+    );
+  }
+
+  onUploadCancel() {
+    this.imageUploadComponent?.clear();
   }
 }

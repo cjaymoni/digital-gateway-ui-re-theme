@@ -1,14 +1,24 @@
 import {
-  Component,
-  OnInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, map, Observable, of, withLatestFrom } from 'rxjs';
-import { Category } from 'src/app/models/category.model';
+import {
+  BehaviorSubject,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  skip,
+  take,
+  tap,
+} from 'rxjs';
 import { ArticleService } from 'src/app/pages/articles/services/articles.service';
-import { categorySelectors } from 'src/app/store/selectors/category.selectors';
+import { BlockService } from 'src/app/services/blocks.service';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
@@ -17,18 +27,22 @@ import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
   styleUrls: ['./highlights-settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HighlightsSettingsComponent implements OnInit, OnDestroy {
+export class HighlightsSettingsComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   filteredArticles$ = new BehaviorSubject(new Array(0));
 
-  selectedArticles = new Array(0);
+  searchArticleInput = new FormControl('', [Validators.minLength(3)]);
+
+  selectedArticles$ = new BehaviorSubject(Array(0));
 
   mergeCurrentlySelected$ = this.themeStore.highlightArticles$
     .pipe(
       map(ha => {
-        const newArray = [...this.selectedArticles].concat(
+        const newArray = [...this.selectedArticles$.getValue()].concat(
           [...ha].map(h => h.article)
         );
-        this.selectedArticles = newArray;
+        this.selectedArticles$.next(newArray);
       })
     )
     .subscribe();
@@ -36,25 +50,57 @@ export class HighlightsSettingsComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     private themeStore: ThemeSettingsStore,
-    private articleService: ArticleService
+    private articleService: ArticleService,
+    private blockService: BlockService,
+    private cdref: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {}
+  ngAfterViewInit(): void {
+    this.cdref.detectChanges();
+  }
+
+  ngOnInit() {
+    this.mergeCurrentlySelected$.add(
+      this.searchArticleInput.valueChanges
+        .pipe(
+          tap(_ => {}),
+          distinctUntilChanged(),
+          skip(2),
+          debounceTime(300)
+        )
+        .subscribe(query => {
+          if (query.trim() === '') {
+            this.filteredArticles$.next([]);
+            return;
+          } else {
+            this.searchArticle(query);
+          }
+        })
+    );
+  }
 
   ngOnDestroy(): void {
     this.mergeCurrentlySelected$.unsubscribe();
   }
 
-  searchArticle(event: any) {
-    // event.query
-    if (event.query.trim() === '') {
-      this.filteredArticles$.next([]);
-      return;
-    }
+  searchArticle(query: string) {
     this.articleService
       .searchArticle({
-        slug: event.query,
+        search: query,
       })
-      .subscribe(articles => this.filteredArticles$.next(articles));
+      .pipe(
+        take(1),
+        map((articles: any) => {
+          const newArray = [...articles];
+          this.filteredArticles$.next(newArray);
+        })
+      )
+      .subscribe();
+  }
+
+  saveChanges() {
+    this.blockService
+      .saveHiglightedArticles(this.selectedArticles$.getValue())
+      .subscribe();
   }
 }

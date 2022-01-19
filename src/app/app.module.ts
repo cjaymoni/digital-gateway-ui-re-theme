@@ -18,6 +18,8 @@ import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginTokenInterceptor } from './interceptors/login-token.interceptor';
 import { ErrorMessageInterceptor } from './interceptors/error.interceptor';
+import { SearchResultsModule } from './pages/search-results/search-results.module';
+import { DirectivesModule } from './directives/directives.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +32,8 @@ import { ErrorMessageInterceptor } from './interceptors/error.interceptor';
     TestComponentModule,
     LoginModule,
     SignupFormModule,
+    SearchResultsModule,
+    DirectivesModule,
     NgxYoutubePlayerModule.forRoot(),
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),

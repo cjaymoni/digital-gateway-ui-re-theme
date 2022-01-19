@@ -6,6 +6,7 @@ import { districtReducer } from './reducers/district.reducer';
 import { forumPostReducer } from './reducers/forum-post.reducers';
 import { forumReducer } from './reducers/forum.reducer';
 import { menuItemReducer } from './reducers/menu-items.reducers';
+import { multiMediaReducer } from './reducers/multimedia.reducers';
 import { productAdReducer } from './reducers/product-ad.reducers';
 import { productTypeReducer } from './reducers/product-types.reducers';
 import { profileTypeReducer } from './reducers/profile-types.reducers';
@@ -29,4 +30,5 @@ export const appReducersMap = {
   [FeatureNamesForStore.ProfileType]: profileTypeReducer,
   [FeatureNamesForStore.UserProfile]: userProfileReducer,
   [FeatureNamesForStore.UsersList]: userListReducer,
+  [FeatureNamesForStore.MultiMedia]: multiMediaReducer,
 };

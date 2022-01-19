@@ -24,7 +24,7 @@ export interface UserProfile {
   profile_type?: ProfileType[];
   ghana_post?: string;
   district?: string;
-  avatar?: Avatar[];
+  avatar?: string;
 }
 
 export interface Avatar {

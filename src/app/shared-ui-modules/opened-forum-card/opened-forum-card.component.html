@@ -9,8 +9,19 @@
     {{ (forum$ | async)?.description }}
 
     <hr />
-    <div class="flex justify-content-between align-items-center">
-      <div class="col-9 justify-content-between align-items-center">
+    <div
+      class="
+        flex
+        justify-content-between
+        align-items-center
+        flex-column
+        md:flex-row
+      "
+    >
+      <div
+        class="col-9 justify-content-between align-items-center"
+        *ngIf="(forum$ | async)?.tags?.length"
+      >
         <i class="pi pi-tag text-blue-700 mr-2"></i>
         <span
           *ngFor="let tag of (forum$ | async)?.tags"
@@ -22,9 +33,15 @@
       <button
         pButton
         icon="pi pi-plus"
-        class="col p-button-outlined p-button-secondary flex align-items-center"
+        class="
+          col-12
+          md:col-3
+          p-button-outlined p-button-secondary
+          align-self-end
+        "
         label="Add Forum Post"
-        (click)="goToAddForumPost()"
+        proceedIfLoggedIn
+        (onProceed)="goToAddForumPost()"
       ></button>
     </div>
   </div>

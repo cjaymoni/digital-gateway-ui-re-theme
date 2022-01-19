@@ -106,3 +106,38 @@ body {
     margin: revert !important;
   }
 }
+
+.gap-8 {
+  > :not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.gap-v-8 {
+  > :not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.gap-16 {
+  > :not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.gap-v-16 {
+  > :not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.z-10 {
+  z-index: 10 !important;
+}

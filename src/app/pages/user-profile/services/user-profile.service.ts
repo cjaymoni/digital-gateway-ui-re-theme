@@ -14,7 +14,12 @@ export class UserProfileService extends ResourceService {
   }
 
   editProfile(profile: any, imageToUpload?: File[] | any[]) {
-    const formData = this.getFormDataFromUserObject(profile, imageToUpload);
+    console.log(imageToUpload);
+
+    const formData = this.getFormDataFromUserObject(profile);
+    if (imageToUpload?.length! > 0) {
+      formData.append('avatar', imageToUpload![0]);
+    }
     return this.updateResource(formData, profile.id).pipe(
       map(data => data as UserProfile)
     );

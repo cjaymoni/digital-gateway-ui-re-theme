@@ -1,18 +1,27 @@
 <div>
-  <div class="text-xl font-bold mt-3">
-      Quick Links
-  </div>
+  <div class="text-xl font-bold mt-3">Quick Links</div>
 
-  <div >
-    <div class="mt-3">
-      Quick Link 1
+  <div>
+    <div
+      class="mt-3 cursor-pointer hover-underline"
+      [routerLink]="['/articles', 'about_us']"
+    >
+      About Us
     </div>
-    <div class="mt-3">
-      Quick Link 2
+    <div
+      class="mt-3 cursor-pointer hover-underline"
+      [routerLink]="['/articles']"
+    >
+      Information Hub
     </div>
-    <div class="mt-3">
-      Quick Link 3
+    <div class="mt-3 cursor-pointer hover-underline" [routerLink]="['/forum']">
+      Forums
+    </div>
+    <div
+      class="mt-3 cursor-pointer hover-underline"
+      [routerLink]="['/market-place']"
+    >
+      Market Place
     </div>
   </div>
-
 </div>

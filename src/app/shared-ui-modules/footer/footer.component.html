@@ -1,20 +1,22 @@
 <div
   class="
     flex
-    justify-content-around
+    justify-content-center
+    md:justify-content-evenly
+    align-items-center
+    md:align-items-start
     flex-column
     md:flex-row
     relative
     footer
     p-4
     bg-darkblue
+    gap-v-16
   "
 >
   <app-footer-quick-links></app-footer-quick-links>
 
-  <app-footer-quick-links></app-footer-quick-links>
-
-  <app-footer-category></app-footer-category>
+  <app-footer-contact-us></app-footer-contact-us>
 
   <app-footer-socials></app-footer-socials>
 </div>
@@ -23,9 +25,10 @@
     flex
     align-items-center
     justify-content-center
-    py-3
-    bg-darkblue
+    py-5
     text-white
+    m-0
+    bg-darkblue
   "
 >
   <app-footer-powered-by></app-footer-powered-by>

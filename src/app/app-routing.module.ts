@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Pages, RouterOutlets } from './config/app-config';
+import { SearchResultsComponent } from './pages/search-results/search-results.component';
 import { SignupFormComponent } from './pages/signup/signup-form/signup-form.component';
 
 const routes: Routes = [
@@ -75,6 +76,16 @@ const routes: Routes = [
     },
   },
   {
+    path: Pages.MultimediaManagement.main,
+    loadChildren: () =>
+      import('./pages/multimedia-management/multimedia-management.module').then(
+        m => m.MultimediaManagementModule
+      ),
+    data: {
+      breadcrumb: 'Multimedia Management',
+    },
+  },
+  {
     path: Pages.SignUp,
     component: SignupFormComponent,
     outlet: RouterOutlets.Right,
@@ -88,6 +99,10 @@ const routes: Routes = [
     data: {
       breadcrumb: 'Users Management',
     },
+  },
+  {
+    path: 'search/:query',
+    component: SearchResultsComponent,
   },
 ];
 
