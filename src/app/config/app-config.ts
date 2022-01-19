@@ -159,7 +159,6 @@ export const urlMatcherForEditAndView = (
     : path.startsWith('edit-' + matcher)
     ? true
     : false;
-  console.log(startsWithViewOrEdit);
 
   return startsWithViewOrEdit ? { consumed: url } : null;
 };

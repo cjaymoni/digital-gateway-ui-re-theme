@@ -91,7 +91,7 @@ export class MultimediaFormComponent implements OnInit, OnDestroy {
       } else {
         this.store.dispatch(
           multimediaActions.editMultiMedia({
-            multimedia: { ...newMedia, author: 1 },
+            multimedia: { ...newMedia, author: 1, id: this.multimedia.id },
           })
         );
       }

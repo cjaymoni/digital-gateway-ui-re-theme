@@ -55,7 +55,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  multimedia = ['PUUpJMdvKKw', '1ASNZ_Xs2gU', 'sOyemzzJQtQ'];
+  multimedia$ = this.themeStore.featuredMultimedia$;
 
   productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);

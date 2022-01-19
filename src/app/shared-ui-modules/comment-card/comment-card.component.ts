@@ -153,7 +153,6 @@ export class CommentCardComponent implements OnInit, OnDestroy {
         filter(({ id }) => id === this.comment.id),
         map(({ id }) => {
           this.comment.downvotes++;
-          console.log(id === this.comment.id);
         })
       )
       .subscribe();

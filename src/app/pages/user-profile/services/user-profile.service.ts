@@ -14,8 +14,6 @@ export class UserProfileService extends ResourceService {
   }
 
   editProfile(profile: any, imageToUpload?: File[] | any[]) {
-    console.log(imageToUpload);
-
     const formData = this.getFormDataFromUserObject(profile);
     if (imageToUpload?.length! > 0) {
       formData.append('avatar', imageToUpload![0]);

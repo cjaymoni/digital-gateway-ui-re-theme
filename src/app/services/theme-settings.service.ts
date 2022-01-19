@@ -6,6 +6,7 @@ import {
   FeaturedCategoriesEndpoint,
   ForumEndpoint,
   HighlightArticlesEndpoint,
+  MultiMediaEndpoint,
 } from '../config/routes';
 import { initialHomepageState } from '../store/theme-settings.state';
 import { ResourceService } from './resources.service';
@@ -24,6 +25,7 @@ export class ThemeSettingsService extends ResourceService {
       this.getFeaturedCategories(),
       this.getEvents(),
       this.getForumMetrics(),
+      this.getMultimedia(),
     ]).pipe(
       map(data => {
         return {
@@ -33,6 +35,7 @@ export class ThemeSettingsService extends ResourceService {
           forumMetrics: data[3],
           featuredEvents: data[2],
           featuredArticles: [],
+          multimedia: data[4],
         };
       }),
       catchError(e => of(initialHomepageState))
@@ -63,6 +66,14 @@ export class ThemeSettingsService extends ResourceService {
   getForumMetrics() {
     return this.http.get(ForumEndpoint + 'metrics').pipe(
       map(data => data as any),
+      defaultIfEmpty([]),
+      catchError(e => of([]))
+    );
+  }
+
+  getMultimedia() {
+    return this.http.get(MultiMediaEndpoint + '?featured=True').pipe(
+      map((data: any) => data.results as any),
       defaultIfEmpty([]),
       catchError(e => of([]))
     );

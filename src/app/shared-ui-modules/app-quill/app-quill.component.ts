@@ -38,7 +38,5 @@ export class AppQuillComponent implements OnInit {
 
   onSelectionChanged = (event: any) => {};
 
-  onContentChanged = (event: any) => {
-    //console.log(event.html);
-  };
+  onContentChanged = (event: any) => {};
 }

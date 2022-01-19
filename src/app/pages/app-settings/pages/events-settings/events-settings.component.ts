@@ -39,7 +39,6 @@ export class EventsSettingsComponent implements OnInit {
           [...ha].map(h => h.article)
         );
         this.selectedArticles$.next(newArray);
-        console.log(newArray);
       })
     )
     .subscribe();
