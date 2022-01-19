@@ -4,6 +4,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { MultiMedia } from 'src/app/models/multimedia.model';
 
 @Component({
   selector: 'app-multimedia',
@@ -14,11 +15,22 @@ import {
 export class MultimediaComponent implements OnInit {
   player!: YT.Player;
 
-  @Input() videoId = '4gBpIi-gXhc';
+  videoId = '';
+
+  @Input() multimedia: MultiMedia | null = null;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const indexOfEqualSign = this.multimedia?.url.indexOf('=') || -1;
+    const indexOfAmpersand =
+      this.multimedia?.url.indexOf('&', indexOfEqualSign) || -1;
+
+    this.videoId = this.multimedia?.url.slice(
+      indexOfEqualSign > -1 ? indexOfEqualSign + 1 : undefined,
+      indexOfAmpersand > -1 ? indexOfAmpersand : undefined
+    ) as string;
+  }
 
   savePlayer(player: YT.Player) {
     this.player = player;

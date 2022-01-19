@@ -29,28 +29,28 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   articleSearchResults$ = this.searchResults$.pipe(
     map((value: any[]) => {
-      const filtered = value.filter(val => val.source==SearchList.ARTICLE);
+      const filtered = value.filter(val => val.source == SearchList.ARTICLE);
       return filtered;
     })
   );
 
   adsSearchResults$ = this.searchResults$.pipe(
     map((value: any[]) => {
-      const filtered = value.filter(val => val.source==SearchList.ADS);
+      const filtered = value.filter(val => val.source == SearchList.ADS);
       return filtered;
     })
   );
 
   forumSearchResults$ = this.searchResults$.pipe(
     map((value: any[]) => {
-      const filtered = value.filter(val => val.source==SearchList.FORUM);
+      const filtered = value.filter(val => val.source == SearchList.FORUM);
       return filtered;
     })
   );
 
   forumPostSearchResults$ = this.searchResults$.pipe(
     map((value: any[]) => {
-      const filtered = value.filter(val => val.source==SearchList.FORUM_POST);
+      const filtered = value.filter(val => val.source == SearchList.FORUM_POST);
       return filtered;
     })
   );
@@ -74,7 +74,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   constructor(
     private searchService: SearchService,
     private store: Store,
-    private navigator: NavigatorService,
+    private navigator: NavigatorService
   ) {}
 
   ngOnInit(): void {}
@@ -101,12 +101,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   openForumPost(slug: string) {
     this.selectedForum$.pipe(take(1)).subscribe(forum => {
-      // console.log(forum);
-
-      this.navigator.forum.goToReadForumPost(
-        forum.slug as string,
-        slug || ''
-      );
+      this.navigator.forum.goToReadForumPost(forum.slug as string, slug || '');
     });
   }
 }

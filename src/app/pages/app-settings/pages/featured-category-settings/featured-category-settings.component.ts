@@ -27,8 +27,6 @@ export class FeaturedCategorySettingsComponent implements OnInit {
   categories$ = this.store.select(categorySelectors.all).pipe(
     withLatestFrom(this.categoriesSelected$.pipe(map(sc => sc.map(c => c.id)))),
     map(([all, selected]) => {
-      console.log(all, selected);
-
       const filtered = (all as Category[]).filter(
         c => !selected.includes(c.id)
       );
@@ -87,9 +85,6 @@ export class FeaturedCategorySettingsComponent implements OnInit {
   }
 
   saveChanges() {
-    // this.selectedArray
-    console.log('save changes');
-
     this.blockService
       .saveFeaturedCategories(this.selectedArray)
       .subscribe(_ => this.alert.showToast('Saved Successfully'));

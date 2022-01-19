@@ -6,15 +6,11 @@
     [numScroll]="1"
     [numVisible]="1"
     [circular]="true"
+    [showIndicators]="false"
   >
     <ng-template let-item pTemplate="item">
       <div
-        class="
-          p-1
-          cursor-pointer
-          event-slider
-          transition-duration-500 transition-all
-        "
+        class="p-1 cursor-pointer event-slider transition-duration-500 transition-all"
         (click)="goToArticle(item.article)"
       >
         <!-- (pointerLeave)="pointerLeave($event)" -->
@@ -25,21 +21,7 @@
             class="w-full h-10rem md:h-25rem object-fit-cover"
           />
           <div
-            class="
-              fadeinleft
-              article-title
-              bg-white
-              text-gray-900
-              static
-              md:absolute
-              animation-duration-2000
-              h-auto
-              font-bold
-              text-xl
-              md:text-4xl
-              animation-linear
-              col
-            "
+            class="fadeinleft article-title bg-white text-gray-900 static md:absolute animation-duration-2000 h-auto font-bold text-xl md:text-4xl animation-linear col"
           >
             {{ item.article.title }}
           </div>
@@ -58,6 +40,7 @@
       [numScroll]="3"
       [circular]="true"
       [responsiveOptions]="responsiveOptions"
+      [showIndicators]="false"
     >
       <!-- [responsiveOptions]="responsiveOptions" -->
       <ng-template pTemplate="item" let-article>
@@ -73,70 +56,53 @@
 
   <div class="mb-6">
     <div class="text-2xl font-bold my-3">Forum</div>
-    <app-forum-card [forum]="forum$ | async"></app-forum-card>
+    <div class="pb-2">
+      <div class="text-lg my-2">Most Topics</div>
+      <app-forum-card
+        [forum]="(forumMetrics$ | async)?.most_posts?.forum"
+      ></app-forum-card>
+    </div>
+    <div>
+      <div class="text-lg my-2">Recently Added</div>
+      <app-forum-card
+        [forum]="(forumMetrics$ | async)?.most_recent_post?.forum"
+      ></app-forum-card>
+    </div>
   </div>
-  <div>
-    <div class="text-2xl font-bold my-3">Marketing Info</div>
-    <p-carousel
-      #marketSlider
-      [value]="(productAds$ | async) || []"
-      styleClass="custom-carousel py-2"
-      [numVisible]="3"
-      [numScroll]="1"
-      [responsiveOptions]="responsiveOptions"
-    >
-      <ng-template pTemplate="item" let-productAd>
-        <div class="p-2">
-          <app-market-card [productAd]="productAd"></app-market-card>
-        </div>
-      </ng-template>
-    </p-carousel>
-  </div>
-  <!-- <div>
-    <div class="text-2xl font-bold my-3">About Us</div>
-    <p-card>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non massa
-      vitae metus imperdiet ultrices. Fusce sed laoreet nunc. Maecenas tempor
-      mollis turpis pellentesque egestas. Pellentesque habitant morbi tristique
-      senectus et netus et malesuada fames ac turpis egestas. In viverra magna
-      nec enim rhoncus, vitae auctor dolor hendrerit. Pellentesque habitant
-      morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-      Nam mattis neque eget tortor vulputate, in finibus risus dictum. In
-      suscipit fringilla sem eget aliquet. Nam vitae consectetur neque. Proin
-      laoreet eros eget nisl finibus ornare. Sed et blandit leo. In luctus
-      accumsan enim, a facilisis enim venenatis vestibulum. Maecenas rutrum
-      pellentesque ex et sodales. Nunc sit amet dignissim augue, id mollis
-      turpis. Pellentesque imperdiet, justo quis viverra lacinia, odio sapien
-      efficitur nunc, vitae cursus neque turpis ut neque. Nulla iaculis tellus
-      nisi, nec ullamcorper libero consequat facilisis. Pellentesque elementum
-      lorem est, at convallis justo pellentesque et. Vivamus sed aliquam dolor,
-      quis tempus leo. Donec sit amet purus a metus pretium convallis at quis
-      quam. Fusce eget sem ac tellus suscipit rutrum vitae porttitor purus. Orci
-      varius natoque penatibus et magnis dis parturient montes, nascetur
-      ridiculus mus. Nam venenatis, nisi in vehicula consectetur, neque odio
-      tincidunt enim, sed suscipit dui ante sit amet odio. Cras et nulla ac
-      lorem bibendum faucibus. Suspendisse ligula augue, facilisis eu magna in,
-      sollicitudin ornare diam. Donec placerat aliquam quam, eu fringilla justo
-      accumsan a.
-    </p-card>
 
-    <div class="text-2xl font-bold my-3">Multimedia</div>
-    <p-carousel
-      #multimediaSlider
-      [value]="multimedia"
-      styleClass="custom-carousel"
-      [numVisible]="4"
-      [numScroll]="4"
-      [circular]="true"
-      [responsiveOptions]="responsiveOptions"
-    >
-      <ng-template pTemplate="item" let-video>
-        <div class="p-2 h-15rem">
-          <app-multimedia [videoId]="video"></app-multimedia>
-        </div>
-      </ng-template>
-    </p-carousel>
-  </div> -->
+  <div class="text-2xl font-bold my-3">Multimedia</div>
+  <p-carousel
+    #multimediaSlider
+    [value]="(multimedia$ | async) || []"
+    styleClass="custom-carousel"
+    [numVisible]="4"
+    [numScroll]="4"
+    [circular]="true"
+    [responsiveOptions]="responsiveOptions"
+  >
+    <ng-template pTemplate="item" let-video>
+      <div class="p-2 h-15rem">
+        <app-multimedia [multimedia]="video"></app-multimedia>
+      </div>
+    </ng-template>
+  </p-carousel>
+
+  <div class="text-2xl font-bold my-3">Marketing Info</div>
+  <p-carousel
+    #marketSlider
+    [value]="(productAds$ | async) || []"
+    styleClass="custom-carousel py-2"
+    [numVisible]="3"
+    [numScroll]="1"
+    [responsiveOptions]="responsiveOptions"
+    [showIndicators]="false"
+  >
+    <ng-template pTemplate="item" let-productAd>
+      <div class="p-2">
+        <app-market-card [productAd]="productAd"></app-market-card>
+      </div>
+    </ng-template>
+  </p-carousel>
 
   <!-- <div>
     <div class="text-2xl font-bold my-3">Partners</div>

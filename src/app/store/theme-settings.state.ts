@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { catchError, EMPTY, map, Observable, retry, tap } from 'rxjs';
 import { AppUploadedImage } from '../models/article.model';
 import { Category } from '../models/category.model';
+import { MultiMedia } from '../models/multimedia.model';
 import { ThemeSettingsService } from '../services/theme-settings.service';
 import { categorySelectors } from './selectors/category.selectors';
 
@@ -61,6 +62,7 @@ export interface ThemeSettings {
   }[];
 
   forumMetrics: any[];
+  multimedia: MultiMedia[];
 }
 
 export const initialHomepageState: ThemeSettings = {
@@ -69,6 +71,7 @@ export const initialHomepageState: ThemeSettings = {
   forumMetrics: [],
   featuredArticles: [],
   featuredEvents: [],
+  multimedia: [],
 };
 
 @Injectable()
@@ -94,6 +97,13 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
 
   readonly featuredEvents$: Observable<ThemeSettings['highlightArticles']> =
     this.select(state => state.featuredEvents);
+
+  readonly featuredMultimedia$: Observable<ThemeSettings['multimedia']> =
+    this.select(state => state.multimedia);
+
+  readonly forumMetrics$: Observable<any> = this.select(
+    state => state.forumMetrics
+  );
 
   readonly highlightArticlesArray$ = this.select(
     this.highlightArticles$.pipe(map(d => d as any[])),
@@ -132,8 +142,7 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
 
   readonly getHomepageData = this.effect(() => {
     return this.themeSettings.getHompageData().pipe(
-      retry(3),
-      tap(d => console.log(d)),
+      retry(2),
       tap({
         next: homepageData => this.setState(homepageData),
         error: () => {
