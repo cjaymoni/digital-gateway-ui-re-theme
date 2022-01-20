@@ -29,8 +29,6 @@ export class ForumPostCardComponent implements OnInit {
 
   openForumPost() {
     this.selectedForum$.pipe(take(1)).subscribe(selectedForum => {
-      console.log(selectedForum.slug, this.forumPost?.slug);
-
       this.navigator.forum.goToReadForumPost(
         selectedForum.slug as string,
         this.forumPost?.slug || ''

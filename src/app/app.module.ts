@@ -19,6 +19,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginTokenInterceptor } from './interceptors/login-token.interceptor';
 import { ErrorMessageInterceptor } from './interceptors/error.interceptor';
 import { SearchResultsModule } from './pages/search-results/search-results.module';
+import { DirectivesModule } from './directives/directives.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { SearchResultsModule } from './pages/search-results/search-results.modul
     LoginModule,
     SignupFormModule,
     SearchResultsModule,
+    DirectivesModule,
     NgxYoutubePlayerModule.forRoot(),
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),

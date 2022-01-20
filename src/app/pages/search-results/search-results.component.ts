@@ -5,11 +5,14 @@ import {
   OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, filter, map, switchMap } from 'rxjs';
+import { BehaviorSubject, filter, map, switchMap, take } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 import { selectRouteParam } from 'src/app/store/selectors/router.selectors';
 import { SearchService } from './services/search.service';
+import { SearchList } from 'src/app/config/app-config';
+import { NavigatorService } from 'src/app/services/navigator.service';
+import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 
 @Component({
   selector: 'app-search-results',
@@ -19,9 +22,38 @@ import { SearchService } from './services/search.service';
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
   query$ = this.store.select(selectRouteParam('query'));
+  selectedForum$ = this.store.select(forumSelectors.selectedForum);
 
   searching$ = new BehaviorSubject(true);
   searchResults$ = new BehaviorSubject(new Array(0));
+
+  articleSearchResults$ = this.searchResults$.pipe(
+    map((value: any[]) => {
+      const filtered = value.filter(val => val.source == SearchList.ARTICLE);
+      return filtered;
+    })
+  );
+
+  adsSearchResults$ = this.searchResults$.pipe(
+    map((value: any[]) => {
+      const filtered = value.filter(val => val.source == SearchList.ADS);
+      return filtered;
+    })
+  );
+
+  forumSearchResults$ = this.searchResults$.pipe(
+    map((value: any[]) => {
+      const filtered = value.filter(val => val.source == SearchList.FORUM);
+      return filtered;
+    })
+  );
+
+  forumPostSearchResults$ = this.searchResults$.pipe(
+    map((value: any[]) => {
+      const filtered = value.filter(val => val.source == SearchList.FORUM_POST);
+      return filtered;
+    })
+  );
 
   querySubscription = this.query$
     .pipe(
@@ -39,7 +71,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     )
     .subscribe();
 
-  constructor(private searchService: SearchService, private store: Store) {}
+  constructor(
+    private searchService: SearchService,
+    private store: Store,
+    private navigator: NavigatorService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -49,5 +85,23 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   stopSearching() {
     this.searching$.next(false);
+  }
+
+  openArticle(slug: string) {
+    this.navigator.article.goToViewDetailsPage(slug);
+  }
+
+  openMarketAd(id: number) {
+    this.navigator.marketAd.goToViewDetailsPage(id);
+  }
+
+  openForum(slug: string) {
+    this.navigator.forum.goToViewDetailsPage(slug);
+  }
+
+  openForumPost(slug: string) {
+    this.selectedForum$.pipe(take(1)).subscribe(forum => {
+      this.navigator.forum.goToReadForumPost(forum.slug as string, slug || '');
+    });
   }
 }

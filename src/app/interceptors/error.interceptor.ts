@@ -48,9 +48,7 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
               PrimeNgAlerts.ERROR
             );
           }
-        }
-
-        if (event.status === 401) {
+        } else if (event.status === 401) {
           this.alert.showToast(
             event.error.message ||
               `You have been logged out. Please log in and retry`,
@@ -59,18 +57,19 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
           localStorage.removeItem(APP_TOKEN);
           localStorage.removeItem(APP_USER_TOKEN);
           this.navigator.auth.goToLogin();
-        }
-
-        if (event.status === 403) {
+        } else if (event.status === 403) {
           this.alert.showToast(
             `Sorry you are not permitted to perform this function. See administrator`,
             PrimeNgAlerts.ERROR
           );
-        }
-
-        if (event.error?.message && event.status >= 500) {
+        } else if (event.error?.message && event.status >= 500) {
           this.alert.showToast(
             `An error occured. Rest assured, it will be rectified soon.`,
+            PrimeNgAlerts.ERROR
+          );
+        } else {
+          this.alert.showToast(
+            `An error occured. Try again later`,
             PrimeNgAlerts.ERROR
           );
         }

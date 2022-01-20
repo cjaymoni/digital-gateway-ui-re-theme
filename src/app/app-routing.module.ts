@@ -76,9 +76,29 @@ const routes: Routes = [
     },
   },
   {
+    path: Pages.MultimediaManagement.main,
+    loadChildren: () =>
+      import('./pages/multimedia-management/multimedia-management.module').then(
+        m => m.MultimediaManagementModule
+      ),
+    data: {
+      breadcrumb: 'Multimedia Management',
+    },
+  },
+  {
     path: Pages.SignUp,
     component: SignupFormComponent,
     outlet: RouterOutlets.Right,
+  },
+  {
+    path: Pages.UserManagement,
+    loadChildren: () =>
+      import('./pages/users-management/users-management.module').then(
+        m => m.UsersManagementModule
+      ),
+    data: {
+      breadcrumb: 'Users Management',
+    },
   },
   {
     path: 'search/:query',

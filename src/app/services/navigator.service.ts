@@ -212,6 +212,11 @@ export class NavigatorService {
     this.panelTitle$,
     this.modalTitle$
   );
+  multiMedia = new MultiMediaRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
 }
 
 class AppRoutesConfig {
@@ -423,5 +428,22 @@ class ResourceRoutes extends AppRoutesConfig {
     modalsubject: BehaviorSubject<string>
   ) {
     super(Pages.Resources, router, subject, modalsubject);
+  }
+}
+
+class MultiMediaRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.MultimediaManagement, router, subject, modalsubject);
+  }
+
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
   }
 }

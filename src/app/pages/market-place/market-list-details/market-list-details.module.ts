@@ -6,6 +6,8 @@ import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { SkeletonModule } from 'primeng/skeleton';
 import { GalleriaModule } from 'primeng/galleria';
+import { TagModule } from 'primeng/tag';
+import { MessageModule } from 'primeng/message';
 
 @NgModule({
   imports: [
@@ -16,6 +18,8 @@ import { GalleriaModule } from 'primeng/galleria';
     SkeletonModule,
     GalleriaModule,
     ImageModule,
+    TagModule,
+    MessageModule,
   ],
   exports: [MarketListDetailsComponent],
   declarations: [MarketListDetailsComponent],

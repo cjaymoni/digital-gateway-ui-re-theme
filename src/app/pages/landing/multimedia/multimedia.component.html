@@ -1,6 +1,7 @@
 <youtube-player
+  *ngIf="videoId"
   [videoId]="videoId"
   (ready)="savePlayer($event)"
-  [height]="150"
+  [height]="250"
   [width]="250"
 ></youtube-player>

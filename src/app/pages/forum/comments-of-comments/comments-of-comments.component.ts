@@ -107,7 +107,6 @@ export class CommentsOfCommentsComponent
       .pipe(
         ofType(forumActions.comments.addCommentSuccessful),
         withLatestFrom(this.comment$),
-        tap(d => console.log(d)),
         filter(
           ([{ comment }, stateComment]) =>
             comment.parent === stateComment?.id ||
@@ -118,7 +117,6 @@ export class CommentsOfCommentsComponent
             )
         ),
         map(([{ comment }, stateComment]) => {
-          console.log('this is my syb comment comment');
           if (comment.parent === stateComment?.id) {
             this.addSubComment(comment);
           } else {

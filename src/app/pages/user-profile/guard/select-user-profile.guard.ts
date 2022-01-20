@@ -30,12 +30,6 @@ export class SelectUserProfileGuard implements CanActivate {
     | UrlTree {
     const profileId = JSON.parse(localStorage['app_user_access_token']);
 
-    // route.url[0].path.split(':')[1];
-    // this.store
-    //   .select(selectRouteParams)
-    //   .pipe(tap(rp => console.log(rp)))
-    //   .subscribe();
-
     this.store.dispatch(
       userProfileActions.findAndSelectUserProfileById({
         id: profileId.id,

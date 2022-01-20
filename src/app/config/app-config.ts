@@ -31,6 +31,8 @@ export enum FeatureNamesForStore {
   ForumPost = 'forumPost',
   ProfileType = 'profileType',
   UserProfile = 'userProfile',
+  UsersList = 'usersList',
+  MultiMedia = 'multiMedia',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -125,13 +127,27 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     main: 'resources',
     add: 'post-resource',
   },
-
+  MultimediaManagement: {
+    main: 'multimedia-management',
+    add: 'post-media',
+    edit: 'edit-media/:id',
+    view: 'view-media/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management', false);
+      },
+    },
+  },
   //content management
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
   Login: 'login',
+  UserManagement: 'user-management',
 };
 
 export const urlMatcherForEditAndView = (
@@ -145,7 +161,6 @@ export const urlMatcherForEditAndView = (
     : path.startsWith('edit-' + matcher)
     ? true
     : false;
-  console.log(startsWithViewOrEdit);
 
   return startsWithViewOrEdit ? { consumed: url } : null;
 };
@@ -195,6 +210,13 @@ export enum TagType {
   ad = 'ad',
 }
 
+export enum SearchList {
+  ARTICLE = 'article',
+  ADS = 'ad',
+  FORUM = 'forum',
+  FORUM_POST = 'post',
+}
+
 export const GenericErrorMessage =
   'Sorry, an error occurred. Rest assured, it will be fixed';
 
@@ -238,10 +260,23 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       visible: userRole === Roles.Admin,
     },
     {
+      id: 'user-management',
+      label: 'User Management',
+      routerLink: [Pages.UserManagement],
+      icon: 'pi pi-users',
+    },
+    {
       id: 'content-settings',
       label: 'Content Management',
       routerLink: [Pages.ContentManagement],
       icon: 'pi pi-cog',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
+    {
+      id: 'multimedia-management',
+      label: 'Multimedia Management',
+      routerLink: [Pages.MultimediaManagement.main],
+      icon: 'pi pi-video',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
   ];
@@ -267,6 +302,7 @@ export enum Context {
   Forum = Pages.Forum.main,
   ForumPost = Pages.ForumPost.main,
   MarketPlace = Pages.MarketPlace.main,
+  MultimediaManagement = Pages.MultimediaManagement.main,
   // Auth = Pages.Auth.
 }
 

@@ -55,13 +55,14 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  multimedia = ['PUUpJMdvKKw', '1ASNZ_Xs2gU', 'sOyemzzJQtQ'];
+  multimedia$ = this.themeStore.featuredMultimedia$;
 
   productAds$ = this.store.select(productAdSelectors.all);
   articles$ = this.store.select(articleSelectors.all);
   featuredEvents$ = this.themeStore.featuredEventsArray$;
 
-  forum$ = this.store.select(forumSelectors.getById(1));
+  // forum$ = this.store.select(forumSelectors.getById(1));
+  forumMetrics$ = this.themeStore.forumMetrics$;
 
   constructor(
     private store: Store,

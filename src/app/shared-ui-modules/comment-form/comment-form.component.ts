@@ -41,7 +41,5 @@ export class CommentFormComponent implements OnInit {
     this.cancelEvent.emit();
   }
 
-  onClickedOutside(e: any) {
-    console.log('e :>> ', e);
-  }
+  onClickedOutside(e: any) {}
 }
