@@ -9,6 +9,12 @@ export interface ProductAdState extends EntityState<ProductAd> {
   searchQuery: '';
   loading: boolean;
   selectedProductAdToEdit: ProductAd | null;
+  searchResults: ProductAd[];
+  myMarketAds: ProductAd[];
+  searchPage: number;
+  searchCount: number;
+  page: number;
+  count: number;
 }
 export function selectId(productAd: ProductAd): string {
   //In this case this would be optional since primary key is id
@@ -27,6 +33,12 @@ export const initialState: ProductAdState =
     searchQuery: '',
     loading: false,
     selectedProductAdToEdit: null,
+    searchResults: [],
+    myMarketAds: [],
+    searchPage: 1,
+    searchCount: 0,
+    page: 1,
+    count: 0
   });
 
 export const productAdReducer = createReducer(
@@ -39,6 +51,15 @@ export const productAdReducer = createReducer(
       ...state,
       loading: false,
     });
+  }),
+  on(productAdActions.fetchSearchSuccessful, (state, { productAd }) => {
+    return { ...state, loading: false, searchResults: productAd };
+  }),
+  on(productAdActions.fetchMyProductAdsSuccessful, (state, { productAd }) => {
+    return { ...state, loading: false, myArticles: productAd };
+  }),
+  on(productAdActions.searchProductAd, state => {
+    return { ...state, loading: true };
   }),
   on(productAdActions.fetchError, state => {
     return { ...state, loading: false };
@@ -60,6 +81,18 @@ export const productAdReducer = createReducer(
   ),
   on(productAdActions.deleteProductAdSuccessful, (state, { id }) => {
     return productAdEntityAdapter.removeOne(id, state);
+  }),
+  on(productAdActions.changePage, (state, { page }) => {
+    return { ...state, page };
+  }),
+  on(productAdActions.changeSearchPage, (state, { searchPage }) => {
+    return { ...state, searchPage };
+  }),
+  on(productAdActions.setCount, (state, { count }) => {
+    return { ...state, count };
+  }),
+  on(productAdActions.setSearchCount, (state, { count }) => {
+    return { ...state, searchCount: count };
   }),
   on(productAdActions.clearAllSelected, state => {
     return { ...state, selectedProductAdToEdit: null, selectedProductAd: null };
