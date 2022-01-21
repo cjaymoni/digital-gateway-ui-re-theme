@@ -60,6 +60,7 @@
       <div class="text-lg my-2">Most Topics</div>
       <app-forum-card
         [forum]="(forumMetrics$ | async)?.most_posts?.forum"
+        [count]="(forumMetrics$ | async)?.most_posts?.count"
       ></app-forum-card>
     </div>
     <div>
