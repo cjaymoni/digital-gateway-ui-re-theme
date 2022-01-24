@@ -23,7 +23,7 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
   @ViewChild('descriptionColumnTemplate')
   descriptionTemplate!: TemplateRef<any>;
 
-  myMarketAds$ = this.store.select(productAdSelectors.all);
+  myMarketAds$ = this.store.select(productAdSelectors.myMarketAds);
   count$ = this.store.select(productAdSelectors.searchCount);
 
   columns: any[] = [];

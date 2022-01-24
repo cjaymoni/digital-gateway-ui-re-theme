@@ -56,7 +56,7 @@ export const productAdReducer = createReducer(
     return { ...state, loading: false, searchResults: productAd };
   }),
   on(productAdActions.fetchMyProductAdsSuccessful, (state, { productAd }) => {
-    return { ...state, loading: false, myArticles: productAd };
+    return { ...state, loading: false, myMarketAds: productAd };
   }),
   on(productAdActions.searchProductAd, state => {
     return { ...state, loading: true };
