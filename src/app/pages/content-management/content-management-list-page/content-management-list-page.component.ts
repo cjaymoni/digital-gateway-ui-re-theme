@@ -29,7 +29,9 @@ export class ContentManagementListPageComponent implements OnInit {
 
   categoryForm!: FormGroup;
 
-  constructor(private store: Store, private fb: FormBuilder,) {}
+  tagFeatured = new FormControl(false);
+
+  constructor(private store: Store, private fb: FormBuilder) {}
 
   productTags$ = this.store.select(tagSelectors.productTags);
   articleTags$ = this.store.select(tagSelectors.articleTags);
@@ -63,9 +65,11 @@ export class ContentManagementListPageComponent implements OnInit {
           name: tagName,
           slug: slugify(tagName),
           tag_type: tagType,
+          featured: this.tagFeatured.value,
         },
       })
     );
+    this.tagFeatured.setValue(false);
   }
 
   removeCategory(category: Category) {

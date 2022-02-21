@@ -13,12 +13,17 @@ import { IAuthService } from 'src/app/models/auth-service';
 import { Store } from '@ngrx/store';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { LoginEndpoint, LogoutEndpoint } from 'src/app/config/routes';
+import { LocalStorageService } from 'src/app/helpers/localstorage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService implements IAuthService {
-  constructor(private http: HttpClient, private store: Store) {
+  constructor(
+    private http: HttpClient,
+    private store: Store,
+    private localStorage: LocalStorageService
+  ) {
     // this.setUpUser()
   }
 
@@ -33,17 +38,20 @@ export class LoginService implements IAuthService {
   token!: string;
 
   get loggedInUser(): any {
-    if (!localStorage.getItem(APP_USER_TOKEN)) return null;
-    return JSON.parse(localStorage.getItem(APP_USER_TOKEN) || '{}');
+    if (!this.localStorage.getItem(APP_USER_TOKEN)) return null;
+    return JSON.parse(this.localStorage.getItem(APP_USER_TOKEN) || '{}');
   }
 
   login(data: any): Observable<boolean> {
     return this.http.post(LoginEndpoint, data).pipe(
       map((response: any) => {
         response = response;
-        localStorage.setItem(APP_TOKEN, response.access);
-        localStorage.setItem(APP_REFRESH_TOKEN, response.refresh);
-        localStorage.setItem(APP_USER_TOKEN, JSON.stringify(response.user));
+        this.localStorage.setItem(APP_TOKEN, response.access);
+        this.localStorage.setItem(APP_REFRESH_TOKEN, response.refresh);
+        this.localStorage.setItem(
+          APP_USER_TOKEN,
+          JSON.stringify(response.user)
+        );
 
         if (response.user) {
           this.store.dispatch(
@@ -61,13 +69,13 @@ export class LoginService implements IAuthService {
   logout(): Observable<boolean> {
     return this.http
       .post(LogoutEndpoint, {
-        refresh: localStorage.getItem(APP_REFRESH_TOKEN),
+        refresh: this.localStorage.getItem(APP_REFRESH_TOKEN),
       })
       .pipe(
         map(_ => {
-          localStorage.removeItem(APP_TOKEN);
-          localStorage.removeItem(APP_USER_TOKEN);
-          localStorage.removeItem(APP_REFRESH_TOKEN);
+          this.localStorage.removeItem(APP_TOKEN);
+          this.localStorage.removeItem(APP_USER_TOKEN);
+          this.localStorage.removeItem(APP_REFRESH_TOKEN);
           this.store.dispatch(userAuthActions.logoutSuccessful());
           this.store.dispatch(forumActions.fetch());
           return true;

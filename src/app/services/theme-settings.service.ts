@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, defaultIfEmpty, forkJoin, map, of, tap } from 'rxjs';
+import { catchError, defaultIfEmpty, forkJoin, map, of } from 'rxjs';
 import {
   EventsEndpoint,
+  FeaturedArticlesEndpoint,
   FeaturedCategoriesEndpoint,
   ForumEndpoint,
   HighlightArticlesEndpoint,
@@ -25,17 +26,17 @@ export class ThemeSettingsService extends ResourceService {
       this.getFeaturedCategories(),
       this.getEvents(),
       this.getForumMetrics(),
+      this.getFeaturedArticles(),
       this.getMultimedia(),
     ]).pipe(
       map(data => {
         return {
           highlightArticles: data[0],
           featuredCategories: data[1],
-          events: data[2],
-          forumMetrics: data[3],
           featuredEvents: data[2],
-          featuredArticles: [],
-          multimedia: data[4],
+          forumMetrics: data[3],
+          featuredArticles: data[4],
+          multimedia: data[5],
         };
       }),
       catchError(e => of(initialHomepageState))
@@ -74,6 +75,13 @@ export class ThemeSettingsService extends ResourceService {
   getMultimedia() {
     return this.http.get(MultiMediaEndpoint + '?featured=True').pipe(
       map((data: any) => data.results as any),
+      defaultIfEmpty([]),
+      catchError(e => of([]))
+    );
+  }
+
+  getFeaturedArticles() {
+    return this.getResources(FeaturedArticlesEndpoint).pipe(
       defaultIfEmpty([]),
       catchError(e => of([]))
     );

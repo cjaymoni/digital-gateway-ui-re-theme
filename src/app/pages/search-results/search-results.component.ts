@@ -13,6 +13,7 @@ import { SearchService } from './services/search.service';
 import { SearchList } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
+import { SeoService } from 'src/app/helpers/seo.service';
 
 @Component({
   selector: 'app-search-results',
@@ -74,10 +75,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   constructor(
     private searchService: SearchService,
     private store: Store,
-    private navigator: NavigatorService
+    private navigator: NavigatorService,
+    private seo: SeoService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.seo.generateTags({
+      title: 'Showing Search Results',
+      description: 'Search Results from MSME Gateway',
+    });
+  }
 
   ngOnDestroy() {
     this.querySubscription.unsubscribe();

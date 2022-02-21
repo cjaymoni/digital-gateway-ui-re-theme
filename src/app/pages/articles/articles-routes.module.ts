@@ -38,6 +38,12 @@ const routes: Routes = [
     canActivate: [ArticleGuard],
     data: { breadcrumb: 'Search' },
   },
+  {
+    path: 'tag/:tag',
+    component: ArticleListComponent,
+    canActivate: [ArticleGuard],
+    data: { breadcrumb: 'Search' },
+  },
 
   {
     path: Pages.Articles.myList,

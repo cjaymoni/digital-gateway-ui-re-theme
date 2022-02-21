@@ -5,13 +5,21 @@ import {
   OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, debounceTime, filter, map, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  debounceTime,
+  filter,
+  map,
+  skip,
+  Subscription,
+} from 'rxjs';
 import { Category } from 'src/app/models/category.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { articleActions } from 'src/app/store/actions/article.actions';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 import { categorySelectors } from 'src/app/store/selectors/category.selectors';
 import { selectRouteParams } from 'src/app/store/selectors/router.selectors';
+import { tagSelectors } from 'src/app/store/selectors/tag.selectors';
 
 @Component({
   selector: 'app-article-list',
@@ -41,6 +49,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
         debounceTime(100),
         map((params: any) => {
           const categorySlug = params.category;
+          const tagSlug = params.tag;
 
           if (params.category) {
             this.store
@@ -58,6 +67,22 @@ export class ArticleListComponent implements OnInit, OnDestroy {
                 })
               )
               .subscribe();
+          } else if (params.tag) {
+            this.store
+              .select(tagSelectors.getBySlug(tagSlug))
+              .subscribe(tag => {
+                if (tag) {
+                  this.title$.next(`${tag.name.toUpperCase()}`);
+                  this.store.dispatch(
+                    articleActions.searchArticle({
+                      searchParams: {
+                        tag: tag.id,
+                      },
+                    })
+                  );
+                  this.articles$ = this.articlesSearch$;
+                }
+              });
           } else {
             this.articles$ = this.allArticles$;
           }

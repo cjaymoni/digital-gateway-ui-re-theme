@@ -38,7 +38,7 @@ export class FeaturedArticlesSettingsComponent
 
   selectedArticles$ = new BehaviorSubject(Array(0));
 
-  mergeCurrentlySelected$ = this.themeStore.highlightArticles$
+  mergeCurrentlySelected$ = this.themeStore.featuredArticles$
     .pipe(
       map(ha => {
         const newArray = [...this.selectedArticles$.getValue()].concat(

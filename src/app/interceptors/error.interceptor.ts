@@ -11,6 +11,7 @@ import {
   APP_USER_TOKEN,
   PrimeNgAlerts,
 } from 'src/app/config/app-config';
+import { LocalStorageService } from '../helpers/localstorage.service';
 import { NavigatorService } from '../services/navigator.service';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
 
@@ -18,7 +19,8 @@ import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.s
 export class ErrorMessageInterceptor implements HttpInterceptor {
   constructor(
     private alert: AppAlertService,
-    private navigator: NavigatorService
+    private navigator: NavigatorService,
+    private localStorage: LocalStorageService
   ) {}
 
   intercept(
@@ -54,8 +56,8 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
               `You have been logged out. Please log in and retry`,
             PrimeNgAlerts.ERROR
           );
-          localStorage.removeItem(APP_TOKEN);
-          localStorage.removeItem(APP_USER_TOKEN);
+          this.localStorage.removeItem(APP_TOKEN);
+          this.localStorage.removeItem(APP_USER_TOKEN);
           this.navigator.auth.goToLogin();
         } else if (event.status === 403) {
           this.alert.showToast(
@@ -67,12 +69,13 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
             `An error occured. Rest assured, it will be rectified soon.`,
             PrimeNgAlerts.ERROR
           );
-        } else {
-          this.alert.showToast(
-            `An error occured. Try again later`,
-            PrimeNgAlerts.ERROR
-          );
         }
+        // else {
+        //   this.alert.showToast(
+        //     `An error occured. Try again later`,
+        //     PrimeNgAlerts.ERROR
+        //   );
+        // }
 
         return EMPTY;
       })

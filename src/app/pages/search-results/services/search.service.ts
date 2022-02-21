@@ -12,6 +12,6 @@ export class SearchService extends ResourceService {
   }
 
   searchAll(query: string) {
-    return this.http.get(this.endpoint.replace('{query}', query));
+    return this.http.get(this.endpoint.replace('{query}', query.trim()));
   }
 }
