@@ -35,7 +35,7 @@ export class ResourceService {
 
   updateResourcePut(toStore: any, id: any, url = this.endpoint) {
     return this.http
-      .put(`${url + id}`, toStore)
+      .put(`${url + id + '/'}`, toStore)
       .pipe(map(data => data as object));
   }
 

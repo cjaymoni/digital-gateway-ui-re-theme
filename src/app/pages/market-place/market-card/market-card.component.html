@@ -1,11 +1,10 @@
-<p-card
+<!-- <p-card
   *ngIf="productAd"
   [header]="productAd.product.name"
   (click)="openMarketAd(); $event.stopPropagation()"
   styleClass="cursor-pointer hover:bg-gray-100 min-h-full p-2 w-full fadein animation-duration-500 justify-content-between align-items-center"
 >
   <ng-template pTemplate="header">
-    <!-- static image -->
     <div
       class="div-with-background-image"
       [style.backgroundImage]="backgroundImage"
@@ -13,16 +12,44 @@
   </ng-template>
 
   <ng-template pTemplate="footer">
-    <!-- <div class="flex justify-content-center align-self-end"> -->
-    <div class="flex justify-content-between align-items-center">
-      <div class="font-bold">Price: {{ productAd.product.price }} GHS</div>
+    <div class="flex justify-content-center align-self-end">
+      <div class="flex justify-content-between align-items-center">
+        <div class="font-bold">Price: {{ productAd.product.price }} GHS</div>
+        <p-message
+          [severity]="productAd.ad_type === 'offer' ? 'info' : 'warn'"
+          [text]="productAd.ad_type | uppercase"
+          styleClass="p-2 p-message-no-icon"
+        ></p-message>
+      </div>
+      <div><i class="pi pi-map-marker"></i> {{ productAd.location }}</div>
+    </div>
+  </ng-template>
+</p-card> -->
+
+<p-card
+  *ngIf="productAd"
+  (click)="openMarketAd(); $event.stopPropagation()"
+  styleClass="border-round cursor-pointer hover:bg-gray-100 min-h-full p-2 w-full fadein animation-duration-500 justify-content-between align-items-center"
+>
+  <ng-template pTemplate="header">
+    <div
+      class="div-with-background-image"
+      [style.backgroundImage]="backgroundImage"
+    ></div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="font-bold mb-2">{{ productAd.product.name }}</div>
+
+    <div class="font-bold mb-2">GHS {{ productAd.product.price }}</div>
+    <div class="flex justify-content-between">
+      <div class="font-bold">
+        <i class="pi pi-map-marker"></i> {{ productAd.location }}
+      </div>
       <p-message
         [severity]="productAd.ad_type === 'offer' ? 'info' : 'warn'"
         [text]="productAd.ad_type | uppercase"
         styleClass="p-2 p-message-no-icon"
       ></p-message>
     </div>
-    <div><i class="pi pi-map-marker"></i> {{ productAd.location }}</div>
-    <!-- </div> -->
   </ng-template>
 </p-card>
