@@ -8,6 +8,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { GalleriaModule } from 'primeng/galleria';
 import { TagModule } from 'primeng/tag';
 import { MessageModule } from 'primeng/message';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { MessageModule } from 'primeng/message';
     ImageModule,
     TagModule,
     MessageModule,
+    ButtonModule,
   ],
   exports: [MarketListDetailsComponent],
   declarations: [MarketListDetailsComponent],
