@@ -4,13 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build-dev": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run MSME-UI:serve-ssr",
     "serve:ssr": "node dist/MSME-UI/server/main.js",
     "build:ssr": "ng build && ng run MSME-UI:server",
-    "prerender": "ng run MSME-UI:prerender"
+    "prerender": "ng run MSME-UI:prerender",
+    "vercel-build": "npm run build:ssr"
   },
   "private": true,
   "dependencies": {

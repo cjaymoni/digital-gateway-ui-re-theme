@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "public": true,
+  "name": "msme-gateway",
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "dist/MSME-UI/browser/**"
+    }
+  }
+}
