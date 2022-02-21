@@ -32,3 +32,4 @@ export const LogoutEndpoint = environment.API_URL + 'logout/';
 
 export const LoginEndpoint = environment.API_URL + 'login/';
 export const MultiMediaEndpoint = environment.API_URL + 'multi-media/';
+export const SocialMediaEndpoint = environment.API_URL + 'social-group/';

@@ -1,0 +1,37 @@
+<div class="text-center flex justify-content-end">
+  <button
+    pButton
+    class="align-self-end p-btn p-btn-lg"
+    icon="pi pi-plus"
+    label="Add New Group"
+    ></button>
+    <!-- (click)="goToAddNewMedia()" -->
+</div>
+<app-table
+  [data]="(socialMedia$ | async) || []"
+  [columnsDefinition]="columns"
+  [actionTemplate]="actions"
+  [showAction]="true"
+></app-table>
+
+<ng-template #actions let-multimedia>
+  <div class="flex justify-content-between">
+    <button
+      class="p-button p-button-rounded p-button-danger mr-3"
+      pButton
+      tooltipPosition="bottom"
+      pTooltip="View MultiMedia"
+      icon="pi pi-eye"
+
+    ></button>
+
+    <button
+      class="p-button p-button-info p-button-rounded mr-auto"
+      pButton
+      pTooltip="Edit MultiMedia"
+      tooltipPosition="bottom"
+      icon="pi pi-pencil"
+
+    ></button>
+  </div>
+</ng-template>

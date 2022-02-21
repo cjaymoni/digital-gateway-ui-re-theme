@@ -6,6 +6,7 @@ import { EventsSettingsModule } from './pages/events-settings/events-settings.mo
 import { FeaturedCategorySettingsModule } from './pages/featured-category-settings/featured-category-settings.module';
 import { HighlightsSettingsModule } from './pages/highlights-settings/highlights-settings.module';
 import { FeaturedArticlesSettingsModule } from './pages/featured-articles-settings/featured-articles-settings.module';
+import { SocialMediaSettingsModule } from './pages/social-media-settings/social-media-settings.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { FeaturedArticlesSettingsModule } from './pages/featured-articles-settin
     FeaturedCategorySettingsModule,
     HighlightsSettingsModule,
     FeaturedArticlesSettingsModule,
+    SocialMediaSettingsModule,
   ],
 })
 export class AppSettingsModule {}

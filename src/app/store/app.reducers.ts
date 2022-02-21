@@ -10,6 +10,7 @@ import { multiMediaReducer } from './reducers/multimedia.reducers';
 import { productAdReducer } from './reducers/product-ad.reducers';
 import { productTypeReducer } from './reducers/product-types.reducers';
 import { profileTypeReducer } from './reducers/profile-types.reducers';
+import { socialMediaReducer } from './reducers/socialmedia.reducers';
 import { tagReducer } from './reducers/tag.reducers';
 import { userAuthReducer } from './reducers/user-auth.reducers';
 import { userProfileReducer } from './reducers/user-profile.reducers';
@@ -31,4 +32,5 @@ export const appReducersMap = {
   [FeatureNamesForStore.UserProfile]: userProfileReducer,
   [FeatureNamesForStore.UsersList]: userListReducer,
   [FeatureNamesForStore.MultiMedia]: multiMediaReducer,
+  [FeatureNamesForStore.SocialMedia]: socialMediaReducer,
 };

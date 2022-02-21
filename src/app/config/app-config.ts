@@ -33,6 +33,7 @@ export enum FeatureNamesForStore {
   UserProfile = 'userProfile',
   UsersList = 'usersList',
   MultiMedia = 'multiMedia',
+  SocialMedia = 'socialMedia',
 }
 
 export const SLUG_PREFIX = 'read';
