@@ -7,21 +7,18 @@
         : 'hidden'
     "
   >
-
     <div [ngClass]="addTemplate ? 'flex flex-column w-full h-full' : 'w-9'">
       <input
-      pInput
-      type="text"
-      [placeholder]="placeholder"
-      class="w-full h-full"
-      [ngClass]="addTemplate? 'h-3rem w-11 mb-2' : ''"
-      [formControl]="inputFormControl"
-      maxlength="20"
+        pInput
+        type="text"
+        [placeholder]="placeholder"
+        class="w-full h-full"
+        [ngClass]="addTemplate ? 'h-3rem w-11 mb-2' : ''"
+        [formControl]="inputFormControl"
+        maxlength="50"
       />
       <ng-container *ngIf="addTemplate">
-        <ng-container
-        [ngTemplateOutlet]="addTemplate"
-        ></ng-container>
+        <ng-container [ngTemplateOutlet]="addTemplate"></ng-container>
       </ng-container>
     </div>
     <div>
@@ -93,9 +90,7 @@
             pButton
             type="button"
             icon="pi pi-times"
-            class="
-              p-button-danger p-button-rounded p-button-outline p-button-text
-            "
+            class="p-button-danger p-button-rounded p-button-outline p-button-text"
             pTooltip="Remove"
             tooltipPosition="bottom"
             clickConfirmation
