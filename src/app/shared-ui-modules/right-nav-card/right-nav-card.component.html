@@ -6,40 +6,34 @@
   ></p-divider>
 
   <!-- <div class="flex flex-column"> -->
-  <div *ngIf="multimedia$ | async" class="flex flex-column mt-3 w-full">
-    <!-- VIDEOS -->
-    <!-- {{ multimedia$ | async | json }} -->
-    <div class="p-tag p-tag-info max-w-max mb-3">
+  <!-- <div *ngIf="multimedia$ | async" class="flex flex-column mt-3 w-full"> -->
+  <!-- VIDEOS -->
+  <!-- {{ multimedia$ | async | json }} -->
+  <!-- <div class="p-tag p-tag-info max-w-max mb-3">
       <i class="pi pi-star mr-2"></i>
       VIDEOS
     </div>
     <div class="flex flex-column w-full">
       <ng-container *ngFor="let video of multimedia$ | async">
-        <app-multimedia [multimedia]="video"></app-multimedia>
+        <app-multimedia [multimedia]="video"></app-multimedia> -->
 
-        <div *ngIf="featuredArticles$ | async" class="flex flex-column">
-          <div class="p-tag p-tag-info w-full text-base mb-3">
-            Featured Articles
-          </div>
+  <div *ngIf="featuredArticles$ | async" class="flex flex-column">
+    <div class="p-tag p-tag-info w-full text-base mb-3">Featured Articles</div>
 
-          <div class="grid">
-            <ng-container *ngFor="let article of featuredArticles$ | async">
-              <div class="mb-6 col-6 md:col-4 lg:col-12">
-                <app-featured-article-card [featuredArticle]="article">
-                </app-featured-article-card>
-              </div>
-            </ng-container>
-          </div>
-          <button
-            pButton
-            class="p-button-danger w-full mb-3"
-            icon="pi pi-youtube"
-          >
-            Goto YouTube
-          </button>
+    <div class="grid">
+      <ng-container *ngFor="let article of featuredArticles$ | async">
+        <div class="mb-6 col-6 md:col-4 lg:col-12">
+          <app-featured-article-card [featuredArticle]="article">
+          </app-featured-article-card>
         </div>
-        <!-- </div> -->
       </ng-container>
     </div>
+    <!-- <button pButton class="p-button-danger w-full mb-3" icon="pi pi-youtube">
+      Goto YouTube
+    </button> -->
   </div>
+  <!-- </div> -->
+  <!-- </ng-container> -->
+  <!-- </div> -->
+  <!-- </div> -->
 </div>
