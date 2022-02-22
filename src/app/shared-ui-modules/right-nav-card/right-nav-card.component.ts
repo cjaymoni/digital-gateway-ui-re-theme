@@ -20,6 +20,7 @@ export class RightNavCard implements OnInit {
   ) {}
 
   highlightArticles$ = this.themeStore.highlightArticlesArray$;
+  multimedia$ = this.themeStore.featuredMultimedia$;
 
   ngOnInit() {}
 

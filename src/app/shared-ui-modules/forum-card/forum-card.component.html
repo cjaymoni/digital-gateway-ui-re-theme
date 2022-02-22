@@ -15,12 +15,22 @@
     {{ forum.name | uppercase }}
   </div>
 
-  <div class="font-italic text-purple-800 font-semibold text-xs">
-    {{ forum.posts?.length ?? 0 }} Topic(s)
+  <div class="font-italic text-purple-800 font-semibold text-xs" *ngIf="count; else length">
+    {{ count }} Topic(s)
     <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
       {{ tag.name }}
     </span>
   </div>
+
+  <ng-template #length>
+    <div class="font-italic text-purple-800 font-semibold text-xs">
+      {{ forum.posts?.length ?? 0 }} Topic(s)
+      <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
+        {{ tag.name }}
+      </span>
+    </div>
+  </ng-template>
+
   <!-- <div class="flex justify-content-between">
     <app-comments></app-comments>
     <app-votes></app-votes>

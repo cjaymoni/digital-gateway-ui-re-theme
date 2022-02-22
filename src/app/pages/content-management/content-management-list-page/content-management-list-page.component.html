@@ -5,6 +5,7 @@
       [availableList]="(articleTags$ | async) || []"
       (removeItemEvent)="removeTag($event)"
       (addItemEvent)="addTag($event, TagTypes.article)"
+      [addTemplate]="addTagTemplate"
     ></app-content-list>
   </div>
   <div class="col-12 md:col-6 lg:col-6">
@@ -56,5 +57,16 @@
     <app-category-autocomplete
       [selectedCategory]="category"
     ></app-category-autocomplete>
+  </div>
+</ng-template>
+
+<ng-template #addTagTemplate>
+  <div class="w-9 field-checkbox">
+    <p-checkbox
+      name="featured"
+      [formControl]="tagFeatured"
+      [binary]="true"
+    ></p-checkbox>
+    <label for="featured"> Featured ? : {{ tagFeatured.value }}</label>
   </div>
 </ng-template>

@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 import {
-  ArticleBlockEndpoint,
   CategoryBlockEndpoint,
   EventBlockEndpoint,
   FeaturedArticlesBlockEndpoint,
+  HighlightedArticlesBlockEndpoint,
 } from '../config/routes';
 import { Article } from '../models/article.model';
 import { Category } from '../models/category.model';
@@ -30,7 +30,7 @@ export class BlockService extends ResourceService {
     });
 
     return this.http
-      .put(ArticleBlockEndpoint, data)
+      .put(HighlightedArticlesBlockEndpoint, data)
       .pipe(tap(_ => this.alert.showToast('Saved Successfully')));
   }
 

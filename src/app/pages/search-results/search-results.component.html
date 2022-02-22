@@ -7,10 +7,17 @@
     *ngIf="(searchResults$ | async)?.length === 0; else resultDisplay"
   >
     <div class="text-2xl text-center font-bold">
-      NO RESULTS FOUND. TRY ANOTHER SEARCH TERM
+      SHOWING RESULTS FOR :
+      <span class="font-italic text-pink-700">"{{ query$ | async }}"</span>
+    </div>
+    <div class="text-lg text-center text-blue-800 mt-3">
+      NO RESULTS FOUND. TRY ANOTHER SEARCH TERM.
     </div>
   </ng-container>
   <ng-template #resultDisplay>
+    <div class="text-2xl text-center font-bold">
+      SHOWING RESULTS FOR : {{ query$ | async }}
+    </div>
     <p-tabView #tabs>
       <p-tabPanel
         [header]="'All (' + (searchResults$ | async)?.length + ')'"

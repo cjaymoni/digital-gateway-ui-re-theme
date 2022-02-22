@@ -4,6 +4,7 @@
   [itemTemplate]="articleCardTemplate"
   [items]="articles$ | async"
 ></app-listing-page>
+<p-paginator></p-paginator>
 
 <ng-template #articleCardTemplate let-article>
   <app-article-card [article]="article"></app-article-card>

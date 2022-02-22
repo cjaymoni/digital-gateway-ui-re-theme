@@ -29,7 +29,7 @@ export class ContentManagementListComponent implements OnInit {
   inputFormControl = new FormControl('', [Validators.required]);
   selectedItems = [];
 
-  constructor(private cdref: ChangeDetectorRef) {}
+  constructor() {}
 
   ngOnInit() {}
 

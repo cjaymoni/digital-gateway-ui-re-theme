@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MultimediaComponent } from './multimedia.component';
-import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
-  imports: [CommonModule, NgxYoutubePlayerModule],
+  imports: [CommonModule, YouTubePlayerModule],
   exports: [MultimediaComponent],
   declarations: [MultimediaComponent],
 })

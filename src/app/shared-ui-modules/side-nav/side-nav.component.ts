@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { tagSelectors } from 'src/app/store/selectors/tag.selectors';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
@@ -8,11 +10,12 @@ import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNavComponent implements OnInit {
-  constructor(private themeSetting: ThemeSettingsStore) {}
+  constructor(private themeSetting: ThemeSettingsStore, private store: Store) {}
 
   showAll = false;
 
-  featuredCategory$ = this.themeSetting.featuredCategoryArray$;
+  // featuredCategory$ = this.themeSetting.featuredCategoryArray$;
+  featuredTags$ = this.store.select(tagSelectors.featuredArticleTags);
 
   ngOnInit(): void {}
 
