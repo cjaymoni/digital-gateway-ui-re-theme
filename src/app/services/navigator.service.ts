@@ -217,6 +217,11 @@ export class NavigatorService {
     this.panelTitle$,
     this.modalTitle$
   );
+  digitalLink = new DigitalLinkRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
 }
 
 class AppRoutesConfig {
@@ -449,6 +454,23 @@ class MultiMediaRoutes extends AppRoutesConfig {
     modalsubject: BehaviorSubject<string>
   ) {
     super(Pages.MultimediaManagement, router, subject, modalsubject);
+  }
+
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
+  }
+}
+
+class DigitalLinkRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.DigitalLinks, router, subject, modalsubject);
   }
 
   override goToViewDetailsPage(id: any) {
