@@ -37,7 +37,10 @@
       [title]="'Category'"
       [availableList]="(category$ | async) || []"
       (removeItemEvent)="removeCategory($event)"
-      (addItemEvent)="addCategory($event)"
+      (addNewItemEvent)="addCategory($event)"
+      [customCreate]="true"
+      [showEdit]="true"
+      (editItemEvent)="editCategory($event)"
       [addTemplate]="addTemplate"
     ></app-content-list>
   </div>

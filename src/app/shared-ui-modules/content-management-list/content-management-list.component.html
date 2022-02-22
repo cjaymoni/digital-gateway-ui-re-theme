@@ -86,17 +86,29 @@
             {{ item.name }}
           </div>
 
-          <button
-            pButton
-            type="button"
-            icon="pi pi-times"
-            class="p-button-danger p-button-rounded p-button-outline p-button-text"
-            pTooltip="Remove"
-            tooltipPosition="bottom"
-            clickConfirmation
-            (click)="$event.stopPropagation()"
-            (onConfirm)="removeItem(item)"
-          ></button>
+          <div>
+            <button
+              *ngIf="showEdit"
+              pButton
+              type="button"
+              icon="pi pi-pencil"
+              class="p-button-info p-button-rounded p-button-outline p-button-text"
+              pTooltip="Edit"
+              tooltipPosition="bottom"
+              (click)="$event.stopPropagation(); editItemSelected(item)"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-times"
+              class="p-button-danger p-button-rounded p-button-outline p-button-text"
+              pTooltip="Remove"
+              tooltipPosition="bottom"
+              clickConfirmation
+              (click)="$event.stopPropagation()"
+              (onConfirm)="removeItem(item)"
+            ></button>
+          </div>
         </div>
       </ng-template>
     </p-listbox>

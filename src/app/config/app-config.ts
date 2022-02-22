@@ -148,6 +148,20 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   SignUp: 'sign-up',
   Login: 'login',
   UserManagement: 'user-management',
+
+  Category: {
+    main: 'category',
+    add: 'add-category',
+    edit: 'edit-category/:id',
+    view: 'view-category/:id',
+  },
+
+  Tag: {
+    main: 'tag',
+    add: 'add-tag',
+    edit: 'edit-tag/:id',
+    view: 'view-tag/:id',
+  },
 };
 
 export const urlMatcherForEditAndView = (
@@ -329,9 +343,8 @@ export enum Roles {
 }
 
 export const getUserRole = () => {
-  // const user = JSON.parse(localStorage?.getItem(APP_USER_TOKEN) || '{}');
-  // return user.role;
-  return 'Admin';
+  const user = JSON.parse(localStorage?.getItem(APP_USER_TOKEN) || '{}');
+  return user.role;
 };
 
 export const MainMenu: MenuItem[] = [
@@ -386,8 +399,8 @@ export const MainMenu: MenuItem[] = [
     items: [
       {
         id: 'view-resources',
-        label: 'View Resource',
-        icon: 'pi pi-eye',
+        label: 'Reports',
+        icon: 'pi pi-file',
         routerLink: [Pages.Resources.main],
       },
       {
@@ -403,6 +416,12 @@ export const MainMenu: MenuItem[] = [
             userRole === Roles.ServiceProvider
           );
         })(),
+      },
+      {
+        id: 'view-resources',
+        label: 'Direct Links',
+        icon: 'pi pi-logout',
+        routerLink: [Pages.Resources.main],
       },
     ],
   },
