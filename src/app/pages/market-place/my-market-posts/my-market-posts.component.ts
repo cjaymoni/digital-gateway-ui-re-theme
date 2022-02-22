@@ -23,11 +23,14 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
   @ViewChild('descriptionColumnTemplate')
   descriptionTemplate!: TemplateRef<any>;
 
-  myMarketAds$ = this.store.select(productAdSelectors.all);
+  myMarketAds$ = this.store.select(productAdSelectors.myMarketAds);
+  count$ = this.store.select(productAdSelectors.searchCount);
 
   columns: any[] = [];
 
-  constructor(private store: Store, private navigator: NavigatorService) {}
+  constructor(private store: Store, private navigator: NavigatorService) {
+    this.store.dispatch(productAdActions.fetchMyProductAds());
+  }
 
   ngAfterViewInit(): void {
     this.columns = [
@@ -60,6 +63,14 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
       productAd.product.id,
       'Edit Product',
       RouterOutlets.Modal
+    );
+  }
+
+  changePage(event: any) {
+    this.store.dispatch(
+      productAdActions.changeSearchPage({
+        searchPage: event.page + 1,
+      })
     );
   }
 
