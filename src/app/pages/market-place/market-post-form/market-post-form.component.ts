@@ -135,14 +135,14 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       if (this.createForm) {
         this.store.dispatch(
           productAdActions.addProductAd({
-            productAd: { ...productAdFromForm, author: 1 },
+            productAd: { ...productAdFromForm, author: 1, is_active: true },
             imagesToUpload: images,
           })
         );
       } else {
         this.store.dispatch(
           productAdActions.editProductAd({
-            productAd: { ...productAdFromForm, author: 1 },
+            productAd: { ...productAdFromForm, author: 1, is_active: true },
             imagesToUpload: images,
           })
         );
