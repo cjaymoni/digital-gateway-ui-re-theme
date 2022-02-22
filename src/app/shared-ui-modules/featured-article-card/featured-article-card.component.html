@@ -1,0 +1,21 @@
+<ng-container *ngIf="featuredArticle">
+  <div
+    class="p-0 w-full cursor-pointer scalein animation-duration-500 flex justify-content-between"
+    (click)="readArticle(featuredArticle.slug)"
+  >
+    <div class="w-4 h-auto flex">
+      <p-image
+        [src]="featuredArticle.images?.[0]?.image ?? ''"
+        imageClass="h-full w-full border-round"
+      ></p-image>
+    </div>
+    <div class="w-7 h-full flex flex-wrap">
+      <div class="w-full text-sm font-medium mb-4">
+        {{ featuredArticle.title }}
+      </div>
+      <div class="w-full text-sm mb-5">
+        {{ featuredArticle.created_on | date: 'longDate' }}
+      </div>
+    </div>
+  </div>
+</ng-container>

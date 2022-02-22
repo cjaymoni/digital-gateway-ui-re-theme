@@ -1,5 +1,62 @@
 <ng-container *ngIf="product$ | async; else loading">
   <div class="text-center flex justify-content-center flex-column">
+    <div class="text-lg md:text-2xl m-0 font-bold mb-3">
+      {{ (product$ | async).product.name | uppercase }}
+    </div>
+  </div>
+
+  <div class="w-9 block ml-auto mr-auto">
+    <p-galleria
+      [value]="(product$ | async).product.images"
+      [responsiveOptions]="responsiveOptions"
+      [containerClass]="'container'"
+      [showThumbnails]="false"
+      [autoPlay]="true"
+      [circular]="true"
+      [(visible)]="displayImage"
+      [(activeIndex)]="activeIndex"
+    >
+      <ng-template pTemplate="item" let-item>
+        <img
+          [src]="item.image"
+          [alt]="item.title"
+          class="w-12 h-23rem border-round align-items-center justify-content-center"
+        />
+      </ng-template>
+      <ng-template pTemplate="thumbnail" let-item>
+        <div class="grid grid-nogutter">
+          <img [src]="item.image" class="w-7rem h-7rem" />
+        </div>
+      </ng-template>
+    </p-galleria>
+
+    <div
+      *ngIf="(product$ | async).product.images"
+      class="grid col-12 w-full ml-0 my-3"
+    >
+      <div
+        *ngFor="let img of (product$ | async).product.images; let index = index"
+        class="col-3"
+      >
+        <img
+          [src]="img.image"
+          [alt]="img.name"
+          class="cursor-pointer border-round w-full h-10rem object-fit-cover thumbnail transition-all transition-duration-300 transition-ease-in-out"
+          (click)="imageClick(index)"
+        />
+      </div>
+    </div>
+
+    <div class="text-lg shadow-1 p-4 mt-4 border-round">
+      <div class="mb-3 font-bold text-left">Description</div>
+      <div class="text-justify">
+        {{ (product$ | async).product.description }}
+      </div>
+    </div>
+  </div>
+
+  <!-- <ng-container *ngIf="product$ | async; else loading">
+  <div class="text-center flex justify-content-center flex-column">
     <div class="text-lg md:text-2xl m-0 font-bold mb-2">
       {{ (product$ | async).product.name | uppercase }}
     </div>
@@ -13,11 +70,11 @@
       [fullScreen]="true"
       [showThumbnails]="false"
       [showItemNavigators]="true"
+      [numVisible]="5"
     >
       <ng-template pTemplate="item" let-item>
         <img [src]="item.image" [alt]="item.title" class="h-17rem" />
-        <!-- [preview]="true" -->
-        <!-- </img> -->
+   
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
         <div class="grid grid-nogutter">
@@ -31,19 +88,12 @@
     >
       <div
         *ngFor="let img of (product$ | async).product.images; let index = index"
-        class="col-2"
+        class="col-4"
       >
         <img
           [src]="img.image"
           [alt]="img.name"
-          class="
-            cursor-pointer
-            w-full
-            h-auto
-            object-fit-cover
-            thumbnail
-            transition-all transition-duration-300 transition-ease-in-out
-          "
+          class="cursor-pointer w-full h-auto object-fit-cover thumbnail transition-all transition-duration-300 transition-ease-in-out"
           (click)="imageClick(index)"
         />
       </div>
@@ -113,19 +163,6 @@
       <div class="font-bold">District</div>
       : {{ (product$ | async).district.name }}
     </div>
-  </div>
-
-  <div class="text-lg shadow-1 p-4 mt-4">
-    <div class="mb-3 font-bold text-left">Description</div>
-    <div class="text-justify">
-      {{ (product$ | async).product.description }}
-    </div>
-  </div>
-
-  <!-- <div class="text-lg p-3 mt-5">
-    Related items
-
-    <hr />
   </div> -->
 </ng-container>
 <ng-template #loading>

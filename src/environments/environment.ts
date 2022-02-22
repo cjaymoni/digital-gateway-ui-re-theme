@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://196.43.196.108:2040/',
+  // API_URL: 'http://196.43.196.108:2040/',
+  API_URL: 'https://api.msme.aiti-kace.com.gh/',
 };
 
 /*

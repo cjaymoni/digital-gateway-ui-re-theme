@@ -8,6 +8,7 @@ import { MarketCardModule } from '../../market-place/market-card/market-card.mod
 import { RightNavCardModule } from 'src/app/shared-ui-modules/right-nav-card/right-nav-card.module';
 import { ForumCardModule } from 'src/app/shared-ui-modules/forum-card/forum-card.module';
 import { MultimediaModule } from '../multimedia/multimedia.module';
+import { DirectLinksCardModule } from '../../../shared-ui-modules/direct-links-card/direct-links-card.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { MultimediaModule } from '../multimedia/multimedia.module';
     ForumCardModule,
     CardModule,
     MultimediaModule,
+    DirectLinksCardModule,
   ],
-  declarations: [LayoutComponent]
+  declarations: [LayoutComponent],
 })
-export class LayoutModule { }
+export class LayoutModule {}
