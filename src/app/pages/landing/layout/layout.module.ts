@@ -9,6 +9,8 @@ import { RightNavCardModule } from 'src/app/shared-ui-modules/right-nav-card/rig
 import { ForumCardModule } from 'src/app/shared-ui-modules/forum-card/forum-card.module';
 import { MultimediaModule } from '../multimedia/multimedia.module';
 import { DirectLinksCardModule } from '../../../shared-ui-modules/direct-links-card/direct-links-card.module';
+import { FeaturedCategoriesCardModule } from '../../../shared-ui-modules/featured-categories-card/featured-categories-card.module';
+import { OpportunitisCardModule } from 'src/app/shared-ui-modules/opportunitis-card/opportunitis-card.module';
 
 @NgModule({
   imports: [
@@ -21,6 +23,8 @@ import { DirectLinksCardModule } from '../../../shared-ui-modules/direct-links-c
     CardModule,
     MultimediaModule,
     DirectLinksCardModule,
+    FeaturedCategoriesCardModule,
+    OpportunitisCardModule,
   ],
   declarations: [LayoutComponent],
 })

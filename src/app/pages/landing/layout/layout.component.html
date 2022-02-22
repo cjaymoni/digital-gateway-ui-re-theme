@@ -3,71 +3,77 @@
     #eventSlider
     [value]="(multimedia$ | async) || []"
     [showNavigators]="false"
-    [numScroll]="4"
-    [numVisible]="4"
     [circular]="true"
     [showIndicators]="true"
+    [contentClass]="'content'"
     [responsiveOptions]="responsiveOptions"
   >
     <ng-template pTemplate="item" let-video>
-      <div class="p-2 h-15rem">
+      <div class="p-2 h-full w-full border-round">
         <app-multimedia [multimedia]="video"></app-multimedia>
       </div>
     </ng-template>
-    <!-- <ng-template let-item pTemplate="item">
-      <div
-        class="p-1 cursor-pointer event-slider transition-duration-500 transition-all"
-        (click)="goToArticle(item.article)"
-      > -->
-    <!-- (pointerLeave)="pointerLeave($event)" -->
-    <!-- <div class="mb-0 md:mb-3 col-12 relative event-slider">
-          <img
-            [src]="item.article.images?.[0]?.image"
-            [alt]="item.article.title"
-            class="w-full h-10rem md:h-25rem border-round object-fit-cover"
-          />
-        </div>
-      </div>
-    </ng-template> -->
   </p-carousel>
 
   <div *ngIf="featuredCategories$ | async">
-    <div class="text-2xl font-bold my-5">Featured Category</div>
+    <div class="text-center text-2xl font-bold my-5">Featured Category</div>
     <p-carousel
       #articleSlider
-      [value]="(articles$ | async) || []"
+      [value]="(featuredCategories$ | async) || []"
       styleClass="custom-carousel"
       [numVisible]="3"
       [numScroll]="3"
       [circular]="true"
       [responsiveOptions]="responsiveOptions"
       [showIndicators]="false"
+      [showNavigators]="false"
     >
-      <!-- [responsiveOptions]="responsiveOptions" -->
-      <ng-template pTemplate="item" let-article>
+      <ng-template pTemplate="item" let-category>
         <div class="col p-2">
-          <app-article-card
-            cardClass="md:h-10rem"
-            [article]="article"
-          ></app-article-card>
+          <app-featured-categories-card
+            [category]="category"
+          ></app-featured-categories-card>
         </div>
       </ng-template>
     </p-carousel>
   </div>
-  <div class="text-2xl font-bold my-5">Current Opportunities</div>
 
-  <div class="text-2xl font-bold my-5">Direct Links</div>
+  <div *ngIf="featuredCategories$ | async">
+    <div class="text-center text-2xl font-bold my-5">Current Opportunities</div>
+    <p-carousel
+      #articleSlider
+      [value]="(featuredCategories$ | async) || []"
+      styleClass="custom-carousel"
+      [numVisible]="3"
+      [numScroll]="3"
+      [circular]="true"
+      [responsiveOptions]="responsiveOptions"
+      [showIndicators]="false"
+      [showNavigators]="false"
+    >
+      <ng-template pTemplate="item" let-opportunity>
+        <div class="col p-2">
+          <app-opportunitis-card
+            [opportunity]="opportunity"
+          ></app-opportunitis-card>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+
+  <div class="text-center text-2xl font-bold my-5">Direct Links</div>
   <p-carousel
     #articleSlider
-    [value]="(articles$ | async) || []"
+    [value]="digiLinks || []"
     styleClass="custom-carousel"
     [circular]="true"
     [responsiveOptions]="responsiveOptions"
     [showIndicators]="false"
+    [showNavigators]="false"
   >
-    <ng-template pTemplate="item" let-article>
+    <ng-template pTemplate="item" let-digiLink>
       <div class="col p-2">
-        <app-direct-links-card></app-direct-links-card>
+        <app-direct-links-card [digiLink]="digiLink"></app-direct-links-card>
       </div>
     </ng-template>
   </p-carousel>

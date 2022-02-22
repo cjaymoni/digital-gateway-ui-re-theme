@@ -11,6 +11,7 @@ export const ForumPostEndpoint = environment.API_URL + 'forum-posts/';
 export const ResourceEndpoint = environment.API_URL + 'uploads/';
 export const FeaturedCategoriesEndpoint =
   environment.API_URL + 'categoryblocks/';
+
 export const HighlightArticlesEndpoint =
   environment.API_URL + 'articleblocks/?block=1';
 
@@ -32,3 +33,4 @@ export const LogoutEndpoint = environment.API_URL + 'logout/';
 
 export const LoginEndpoint = environment.API_URL + 'login/';
 export const MultiMediaEndpoint = environment.API_URL + 'multi-media/';
+export const DigiLinksEndpoint = environment.API_URL + 'digital-links/';

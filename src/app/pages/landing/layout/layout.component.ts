@@ -15,6 +15,8 @@ import { Article } from 'src/app/models/article.model';
 import { Carousel } from 'primeng/carousel';
 import { debounceTime, fromEvent, Subscription, tap } from 'rxjs';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
+import { categorySelectors } from '../../../store/selectors/category.selectors';
+import { LandingService } from '../service/landing.service';
 
 @Component({
   selector: 'app-layout',
@@ -64,12 +66,15 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   // forum$ = this.store.select(forumSelectors.getById(1));
   forumMetrics$ = this.themeStore.forumMetrics$;
 
-  featuredCategories$ = this.themeStore.featuredCategoryArray$;
+  featuredCategories$ = this.store.select(categorySelectors.all);
+
+  digiLinks!: any;
 
   constructor(
     private store: Store,
     private navigator: NavigatorService,
-    private themeStore: ThemeSettingsStore
+    private themeStore: ThemeSettingsStore,
+    private landingService: LandingService
   ) {}
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
@@ -117,7 +122,9 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getDirectLinks();
+  }
 
   goToArticle(article: Article) {
     this.navigator.article.goToViewDetailsPage(article.slug);
@@ -151,5 +158,11 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.startCarouselAutoplay(carouselRef, interval);
       });
+  }
+
+  getDirectLinks() {
+    this.landingService.getResources().subscribe(data => {
+      this.digiLinks = data;
+    });
   }
 }
