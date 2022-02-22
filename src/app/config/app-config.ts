@@ -142,9 +142,23 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
       },
     },
   },
+  SiteSettings: {
+    main: 'site-settings',
+    add: 'post-social',
+    edit: 'edit-media/:id',
+    view: 'view-media/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'site-settings');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'site-settings', false);
+      },
+    },
+  },
   //content management
   ContentManagement: 'content-management',
-  SiteSettings: 'site-settings',
+  // SiteSettings: 'site-settings',
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
   Login: 'login',
@@ -256,7 +270,7 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
     {
       id: 'site-settings',
       label: 'Site Settings',
-      routerLink: [Pages.SiteSettings],
+      routerLink: [Pages.SiteSettings.main],
       icon: 'pi pi-cog',
       visible: userRole === Roles.Admin,
     },

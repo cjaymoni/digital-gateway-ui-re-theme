@@ -7,6 +7,7 @@ import { FeaturedCategorySettingsModule } from './pages/featured-category-settin
 import { HighlightsSettingsModule } from './pages/highlights-settings/highlights-settings.module';
 import { FeaturedArticlesSettingsModule } from './pages/featured-articles-settings/featured-articles-settings.module';
 import { SocialMediaSettingsModule } from './pages/social-media-settings/social-media-settings.module';
+import { SocialMediaFormModule } from './pages/social-media-settings/social-media-form/social-media-form.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { SocialMediaSettingsModule } from './pages/social-media-settings/social-
     HighlightsSettingsModule,
     FeaturedArticlesSettingsModule,
     SocialMediaSettingsModule,
+    SocialMediaFormModule,
   ],
 })
 export class AppSettingsModule {}

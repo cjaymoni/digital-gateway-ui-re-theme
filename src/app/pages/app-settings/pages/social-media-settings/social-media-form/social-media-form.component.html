@@ -1,3 +1,58 @@
-<p>
-  social-media-form works!
-</p>
+<ng-container [formGroup]="socialmediaForm">
+  <div class="fluid formgrid grid p-3">
+    <div class="field col-12">
+      <label for="twitter">Twitter</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="twitter"
+        placeholder="Enter a twitter url"
+      />
+    </div>
+
+    <div class="field col-12">
+      <label for="facebook">Facebook</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="facebook"
+        placeholder="Enter a facebook url"
+      />
+    </div>
+
+    <div class="field col-12">
+      <label for="instagram">Instagram</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="Instagram"
+        placeholder="Enter a instagram url"
+      />
+    </div>
+  </div>
+
+  <div class="col-12 ml-auto flex justify-content-end">
+    <button
+      pButton
+      pRipple
+      class="mr-1"
+      type="button"
+      icon="pi pi-save"
+      [label]="(createForm ? 'Add' : 'Update') + ' SocialMedia'"
+      [disabled]="socialmediaForm.invalid"
+      (click)="onAddOrUpdateMedia()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      class="p-button-danger mr-1"
+      icon="pi pi-times"
+      type="button"
+      label="Cancel"
+      (click)="goBack()"
+    ></button>
+  </div>
+</ng-container>

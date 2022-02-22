@@ -4,8 +4,8 @@
     class="align-self-end p-btn p-btn-lg"
     icon="pi pi-plus"
     label="Add New Group"
+    (click)="goToAddNewMedia()"
     ></button>
-    <!-- (click)="goToAddNewMedia()" -->
 </div>
 <app-table
   [data]="(socialMedia$ | async) || []"

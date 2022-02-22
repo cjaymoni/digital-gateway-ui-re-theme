@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { RouterOutlets } from 'src/app/config/app-config';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { socialMediaSelectors } from 'src/app/store/selectors/socialmedia.selectors';
 import { SocialMediaService } from './services/social-media.service';
 import { socialmediaActions } from 'src/app/store/actions/socialmedia.actions';
@@ -20,7 +22,8 @@ export class SocialMediaSettingsComponent implements OnInit {
   constructor(
     private store: Store,
     private socialMediaService: SocialMediaService,
-  ) {
+    private navigator: NavigatorService
+    ) {
     this.store.dispatch(socialmediaActions.fetch());
   }
 
@@ -45,5 +48,10 @@ export class SocialMediaSettingsComponent implements OnInit {
     //   console.log(this.socialMedia);
     // });
   }
+
+  goToAddNewMedia() {
+    this.navigator.siteSettings.goToAddPage(RouterOutlets.Modal);
+  }
+
 
 }
