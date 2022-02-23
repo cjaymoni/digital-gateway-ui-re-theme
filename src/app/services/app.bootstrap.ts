@@ -43,8 +43,8 @@ export class AppBootstrap {
         // console.log(this.route.snapshot);
         const returnUrl = this.route.snapshot.queryParams['returnUrl'];
         if (returnUrl) {
-          let url = returnUrl.replace('/', '');
-          url = url.split('(')[0];
+          let url: string = returnUrl;
+          url = url.includes('login') ? url.split('(')[0] : url;
           this.router.navigateByUrl(url);
         }
       }

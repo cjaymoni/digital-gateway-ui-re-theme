@@ -19,7 +19,8 @@ export class ForumPostGuard implements CanActivate {
    *
    */
   constructor(private store: Store) {
-    this.store.dispatch(forumActions.fetch());
+    this.store.dispatch(forumActions.fetch()),
+      this.store.dispatch(forumPostActions.fetch());
   }
   canActivate(
     route: ActivatedRouteSnapshot,

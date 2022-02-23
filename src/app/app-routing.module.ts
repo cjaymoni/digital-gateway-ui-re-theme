@@ -94,6 +94,16 @@ const routes: Routes = [
     },
   },
   {
+    path: Pages.DigitalLinks.main,
+    loadChildren: () =>
+      import('./pages/digital-links/digital-links.module').then(
+        m => m.DigitalLinksModule
+      ),
+    data: {
+      breadcrumb: 'Digital Links',
+    },
+  },
+  {
     path: Pages.SignUp,
     component: SignupFormComponent,
     outlet: RouterOutlets.Right,

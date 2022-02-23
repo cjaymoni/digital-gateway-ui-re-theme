@@ -33,6 +33,7 @@ export enum FeatureNamesForStore {
   UserProfile = 'userProfile',
   UsersList = 'usersList',
   MultiMedia = 'multiMedia',
+  DigitalLink = 'digitalLink',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -92,6 +93,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     viewDetails: ':slug',
     add: 'post-forum',
     myList: 'my-forum-post',
+    moderation: 'moderation',
     matcher: {
       view: (url: UrlSegment[]) => {
         return urlMatcherForEditAndView(url, 'forum-post');
@@ -141,6 +143,20 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
       },
     },
   },
+  DigitalLinks: {
+    main: 'digital-links',
+    add: 'post-link',
+    edit: 'edit-link/:id',
+    view: 'view-link/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'digital-links');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'digital-links', false);
+      },
+    },
+  },
   //content management
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',
@@ -148,6 +164,20 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   SignUp: 'sign-up',
   Login: 'login',
   UserManagement: 'user-management',
+
+  Category: {
+    main: 'category',
+    add: 'add-category',
+    edit: 'edit-category/:id',
+    view: 'view-category/:id',
+  },
+
+  Tag: {
+    main: 'tag',
+    add: 'add-tag',
+    edit: 'edit-tag/:id',
+    view: 'view-tag/:id',
+  },
 };
 
 export const urlMatcherForEditAndView = (
@@ -279,6 +309,13 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       icon: 'pi pi-video',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
+    {
+      id: 'digital-links',
+      label: 'Digital Links',
+      routerLink: [Pages.DigitalLinks.main],
+      icon: 'pi pi-link',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
   ];
 };
 
@@ -329,9 +366,8 @@ export enum Roles {
 }
 
 export const getUserRole = () => {
-  // const user = JSON.parse(localStorage?.getItem(APP_USER_TOKEN) || '{}');
-  // return user.role;
-  return 'Admin';
+  const user = JSON.parse(localStorage?.getItem(APP_USER_TOKEN) || '{}');
+  return user.role;
 };
 
 export const MainMenu: MenuItem[] = [
@@ -343,7 +379,7 @@ export const MainMenu: MenuItem[] = [
   },
   {
     id: 'forum',
-    label: 'Forums',
+    label: 'Entrepreneurs\' Forum',
     icon: 'pi pi-discord',
     items: [
       {
@@ -381,13 +417,13 @@ export const MainMenu: MenuItem[] = [
   },
   {
     id: 'resource',
-    label: 'Resource',
+    label: 'Resources',
     icon: 'pi pi-file-o',
     items: [
       {
         id: 'view-resources',
-        label: 'View Resource',
-        icon: 'pi pi-eye',
+        label: 'Reports',
+        icon: 'pi pi-file',
         routerLink: [Pages.Resources.main],
       },
       {
@@ -404,8 +440,14 @@ export const MainMenu: MenuItem[] = [
           );
         })(),
       },
+      {
+        id: 'view-resources',
+        label: 'Direct Links',
+        icon: 'pi pi-logout',
+        routerLink: [Pages.Resources.main],
+      },
     ],
   },
 ];
 
-export const MAX_FEATURED_CATEGORIES = 8;
+export const MAX_FEATURED_CATEGORIES = 6;

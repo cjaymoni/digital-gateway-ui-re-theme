@@ -217,6 +217,16 @@ export class NavigatorService {
     this.panelTitle$,
     this.modalTitle$
   );
+  digitalLink = new DigitalLinkRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
+  contentManagement = new ContentManagementRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
 }
 
 class AppRoutesConfig {
@@ -300,6 +310,10 @@ class AppRoutesConfig {
 
   goToListPage() {
     this.router.navigate([this.page.main, this.page.myList]);
+  }
+
+  goTo(route: string[]) {
+    this.router.navigate([...route]);
   }
 }
 
@@ -458,3 +472,41 @@ class MultiMediaRoutes extends AppRoutesConfig {
     ]);
   }
 }
+
+class DigitalLinkRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.DigitalLinks, router, subject, modalsubject);
+  }
+
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
+  }
+}
+
+class ContentManagementRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.ContentManagement, router, subject, modalsubject);
+  }
+  gotoAddCategoryPage() {
+    this.openModal([this.page, Pages.Category.add], 'Add Category');
+  }
+
+  gotoEditCategoryPage(id: any) {
+    this.openModal(
+      [this.page, ...Pages.Category.edit.replace(':id', id).split('/')],
+      'Edit Category'
+    );
+  }
+}
+

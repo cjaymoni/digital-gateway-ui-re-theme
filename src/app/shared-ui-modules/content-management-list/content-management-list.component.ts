@@ -19,11 +19,16 @@ import { FormControl, Validators } from '@angular/forms';
 export class ContentManagementListComponent implements OnInit {
   @Input() title: string = '';
   @Input() placeholder = 'Type name here';
+  @Input() customCreate = false;
+  @Input() showEdit = false;
+
   @Input() availableList: any[] = [];
   @Input() addTemplate!: TemplateRef<any>;
 
   @Output() addItemEvent = new EventEmitter();
+  @Output() addNewItemEvent = new EventEmitter();
   @Output() removeItemEvent = new EventEmitter();
+  @Output() editItemEvent = new EventEmitter();
 
   showCreate = false;
   inputFormControl = new FormControl('', [Validators.required]);
@@ -34,7 +39,10 @@ export class ContentManagementListComponent implements OnInit {
   ngOnInit() {}
 
   addNewItem() {
-    this.showCreate = true;
+    this.addNewItemEvent.emit();
+    if (!this.customCreate) {
+      this.showCreate = true;
+    }
   }
 
   cancelAdd() {
@@ -54,5 +62,9 @@ export class ContentManagementListComponent implements OnInit {
   removeSelected() {
     this.removeItemEvent.emit(this.selectedItems);
     this.selectedItems = [];
+  }
+
+  editItemSelected(item: any) {
+    this.editItemEvent.emit(item);
   }
 }
