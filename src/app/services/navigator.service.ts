@@ -306,6 +306,10 @@ class AppRoutesConfig {
   goToListPage() {
     this.router.navigate([this.page.main, this.page.myList]);
   }
+
+  goTo(route: string[]) {
+    this.router.navigate([...route]);
+  }
 }
 
 class ArticleRoutes extends AppRoutesConfig {

@@ -1,20 +1,19 @@
 <ng-container *ngIf="digiLink">
-  <a class="no-underline" [href]="digiLink.url">
-    <div class="p-0 w-full cursor-pointer scalein animation-duration-500 mb-4">
-      <div class="flex mb-2">
-        <i class="pi pi-arrow-right mr-2 text-lg text-orange-400"></i>
-        <span class="capitalize font-bold text-xl text-bluegray-900">
-          <!-- Government agency -->
+  <div class="p-0 w-full scalein animation-duration-500 mb-4">
+    <a
+      class="no-underline hover-underline"
+      [href]="digiLink.url"
+      target="_blank"
+    >
+      <div class="flex mb-3">
+        <span class="capitalize font-bold text-xl text-teal-500">
           {{ digiLink.title }}
         </span>
       </div>
+    </a>
 
-      <div class="flex underline text-800 mb-4">
-        <!-- Government agency responsoble for the registration of
-        Businesses,Industrial Property Rights, Marriages, Administration of
-        Estates, Public Trusts and provision of related services. -->
-        {{ digiLink.description }}
-      </div>
+    <div class="flex text-800 mb-4">
+      {{ digiLink.description }}
     </div>
-  </a>
+  </div>
 </ng-container>

@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { Category } from '../../models/category.model';
 
 @Component({
@@ -14,9 +15,12 @@ import { Category } from '../../models/category.model';
 })
 export class FeaturedCategoriesCardComponent implements OnInit {
   @Input() category: Category | null = null;
-  imageSrc =
-    'https://www.collinsdictionary.com/images/full/market_large_354703739_1000.jpg';
-  constructor() {}
+
+  constructor(private navigator: NavigatorService) {}
 
   ngOnInit() {}
+
+  gotoCategoryPage(category: Category) {
+    this.navigator.article.goTo(['articles', 'search', category?.slug]);
+  }
 }

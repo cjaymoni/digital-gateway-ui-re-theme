@@ -8,7 +8,7 @@
   <div class="col-12 grid pt-0 pb-0 justify-content-center">
     <!-- left sidebar -->
     <div
-      class="hidden col-3 xl:col-2 lg:block p-2 xl:sticky xl:top-0 pt-5 bg-light-pink z-4"
+      class="hidden col-3 xl:col-2 lg:block p-2 xl:sticky xl:top-0 pt-5 bg-darkblue z-4"
     >
       <app-side-nav></app-side-nav>
       <div class="col-12 xl:hidden pt-5">
@@ -17,19 +17,17 @@
     </div>
     <!-- middle content -->
     <div
-      class="col-12 lg:col-9 xl:col-8 grid justify-content-center h-full p-0 pt-5 px-1 md:px-3"
+      class="col-12 lg:col-9 xl:col-8 grid justify-content-center h-full p-0 pt-5 mb-7"
     >
       <div class="col-12 min-h-screen p-0 pl-3 pb-8">
-        <div class="flex">
-          <div class="mr-3 hidden lg:flex">
+        <!-- <div class="mr-3 hidden lg:flex">
             <app-back-button styleClass="h-3rem"></app-back-button>
-          </div>
-          <p-breadcrumb
-            styleClass="p-0 border-noround border-none m-0 pl-2 mb-3 bg-white"
-            [home]="home"
-            [model]="(breadcrumbs$ | async) ?? []"
-          ></p-breadcrumb>
-        </div>
+          </div> -->
+        <p-breadcrumb
+          *ngIf="((breadcrumbs$ | async) || []).length > 1"
+          styleClass="p-0 border-noround border-none m-0 pl-2 mb-3 bg-white"
+          [model]="(breadcrumbs$ | async) ?? []"
+        ></p-breadcrumb>
         <router-outlet></router-outlet>
       </div>
 

@@ -6,6 +6,7 @@ import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
     DirectivesModule,
     CardModule,
     TooltipModule,
+    RouterModule,
   ],
   declarations: [FeaturedCategoriesCardComponent],
   exports: [FeaturedCategoriesCardComponent],

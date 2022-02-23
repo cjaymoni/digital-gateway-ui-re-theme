@@ -357,7 +357,7 @@ export const MainMenu: MenuItem[] = [
   },
   {
     id: 'forum',
-    label: 'Forums',
+    label: 'Entrepreneurs\' Forum',
     icon: 'pi pi-discord',
     items: [
       {
@@ -395,7 +395,7 @@ export const MainMenu: MenuItem[] = [
   },
   {
     id: 'resource',
-    label: 'Resource',
+    label: 'Resources',
     icon: 'pi pi-file-o',
     items: [
       {
@@ -428,4 +428,4 @@ export const MainMenu: MenuItem[] = [
   },
 ];
 
-export const MAX_FEATURED_CATEGORIES = 8;
+export const MAX_FEATURED_CATEGORIES = 6;

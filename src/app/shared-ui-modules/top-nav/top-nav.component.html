@@ -1,7 +1,7 @@
 <p-menubar
   [model]="(items$ | async) || []"
   [autoDisplay]="true"
-  styleClass="sticky z-1 border-none border-noround p-divider-no-background bg-darkblue"
+  styleClass="sticky z-1 border-none border-noround p-divider-no-background p-2"
 >
   <ng-template pTemplate="start">
     <div
@@ -12,10 +12,17 @@
       </div>
 
       <div
-        class="flex align-content-end justify-content-center text-lg font-bold fadein text-white animation-duration-500 animation-ease-in-out cursor-pointer hover:font-italic hover:text-pink-600 align-self-center"
+        class="flex align-content-end justify-content-center text-lg text-darkblue font-bold fadein text-white animation-duration-500 animation-ease-in-out cursor-pointer align-self-center"
         routerLink="/"
       >
-        <div>&nbsp;&nbsp;MSME GATEWAY</div>
+        <div class="text-darkblue">
+          &nbsp;&nbsp; MSME GATEWAY
+          <i class="pi pi-home"></i>
+        </div>
+        <!-- <em class="text-xs">One stop for information</em> -->
+        <div class="hidden lg:block mx-6 align-items-center">
+          <ng-container [ngTemplateOutlet]="search"></ng-container>
+        </div>
       </div>
 
       <div class="xl:hidden flex justify-content-between align-items-center">
@@ -38,7 +45,7 @@
 
   <ng-template pTemplate="end">
     <ng-container>
-      <div class="flex justify-content-between align-items-center">
+      <div class="flex md:hidden justify-content-between align-items-center">
         <ng-container [ngTemplateOutlet]="search"></ng-container>
         <ng-container [ngTemplateOutlet]="userLoginMenu"></ng-container>
       </div>
@@ -83,30 +90,5 @@
 </ng-template>
 
 <ng-template #userLoginMenu>
-  <button
-    *ngIf="isLoggedIn$ | async; else login"
-    class="p-button-outlined p-button-rounded p-button-secondary ml-3 relative"
-    icon="pi pi-user"
-    pButton
-    (click)="loginMenu.toggle($event)"
-  ></button>
-  <p-menu
-    #loginMenu
-    [popup]="true"
-    [model]="(loggedInMenu | async) ?? []"
-    styleClass="loginMenu"
-  ></p-menu>
-</ng-template>
-<!-- (click)="goToLoginPage()" -->
-
-<ng-template #login>
-  <button
-    class="p-button-text p-button-rounded p-button-info mr-1"
-    icon="pi pi-user"
-    label="Login"
-    pButton
-    (click)="goToLoginPage()"
-  ></button>
-  <!-- (click)="signup.toggle($event)" -->
-  <!-- <p-menu #signup [popup]="true" [model]="signUpMenu"></p-menu> -->
+  <app-login-button></app-login-button>
 </ng-template>

@@ -10,6 +10,7 @@ import { BackButtonModule } from '../back-button/back-button.module';
 import { StyleClassModule } from 'primeng/styleclass';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from 'src/app/directives/directives.module';
+import { LoginButtonModule } from '../login-button/login-button.module';
 @NgModule({
   declarations: [TopNavComponent],
   imports: [
@@ -24,6 +25,7 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
     FormsModule,
     ReactiveFormsModule,
     DirectivesModule,
+    LoginButtonModule,
   ],
   exports: [TopNavComponent],
 })

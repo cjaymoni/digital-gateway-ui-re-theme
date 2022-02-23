@@ -1,6 +1,6 @@
 :host ::ng-deep {
   .p-menubar-start {
-    margin-right: 3%;
+    margin-right: 5%;
   }
 
   p-menubarsub {
@@ -8,6 +8,10 @@
       top: 54px;
       border-radius: var(--border-radius);
     }
+  }
+
+  p-menubarsub {
+    // margin-left: 20%;
   }
 
   @media screen and (max-width: 1024px) {
@@ -24,7 +28,7 @@
     }
 
     .p-menubar-start {
-      width: 85%;
+      width: 87%;
     }
   }
 
