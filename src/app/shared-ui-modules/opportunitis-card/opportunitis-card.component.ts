@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Category } from 'src/app/models/category.model';
+import { Article } from '../../models/article.model';
 
 @Component({
   selector: 'app-opportunitis-card',
@@ -7,7 +7,7 @@ import { Category } from 'src/app/models/category.model';
   styleUrls: ['./opportunitis-card.component.scss'],
 })
 export class OpportunitisCardComponent implements OnInit {
-  @Input() opportunity: Category | null = null;
+  @Input() opportunity: Article | null = null;
   imageSrc =
     'https://www.cater4you.co.uk/acatalog/large-brown-carry-pack-food-packaging-1000.jpg';
   constructor() {}

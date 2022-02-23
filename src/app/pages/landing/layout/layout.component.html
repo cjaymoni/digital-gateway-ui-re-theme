@@ -31,13 +31,11 @@
     </div>
   </div>
 
-  <div *ngIf="featuredCategories$ | async">
-    <div class="text-center text-2xl font-bold my-5 text-darkblue">
-      Current Opportunities
-    </div>
+  <div *ngIf="featuredEvents$ | async">
+    <div class="text-center text-2xl font-bold my-5">Current Opportunities</div>
     <p-carousel
       #articleSlider
-      [value]="(featuredCategories$ | async) || []"
+      [value]="(featuredEvents$ | async) || []"
       styleClass="custom-carousel"
       [numVisible]="3"
       [numScroll]="3"
@@ -49,7 +47,7 @@
       <ng-template pTemplate="item" let-opportunity>
         <div class="col p-2">
           <app-opportunitis-card
-            [opportunity]="opportunity"
+            [opportunity]="opportunity.article"
           ></app-opportunitis-card>
         </div>
       </ng-template>
