@@ -66,6 +66,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
       title: ['', [Validators.required]],
       content: ['', Validators.required],
       category: ['', [Validators.required]],
+      description: ['', [Validators.required]],
       tags: [''],
       images: [],
     });
@@ -85,6 +86,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
         category: article.category.id,
         tags: ((article.tags as Tag[]) || [])?.map(tag => tag.id),
         slug: slugify(article.title),
+        meta_description: article.description,
         created_by: 1,
       };
 
