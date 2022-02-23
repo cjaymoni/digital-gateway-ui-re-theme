@@ -1,6 +1,5 @@
 import { EventsSettingsComponent } from '../events-settings/events-settings.component';
 import { FeaturedCategorySettingsComponent } from '../featured-category-settings/featured-category-settings.component';
-import { MarketAdsSettingsComponent } from '../market-ads-settings/market-ads-settings.component';
 import {
   Component,
   OnInit,
@@ -8,6 +7,7 @@ import {
   Input,
 } from '@angular/core';
 import { HighlightsSettingsComponent } from '../highlights-settings/highlights-settings.component';
+import { FeaturedArticlesSettingsComponent } from '../featured-articles-settings/featured-articles-settings.component';
 
 @Component({
   selector: 'app-settings-view',
@@ -22,20 +22,20 @@ export class SettingsViewComponent implements OnInit {
   ngOnInit() {
     this.tabItems = [
       {
-        header: 'Available Featured Category',
+        header: 'Featured Category',
         content: FeaturedCategorySettingsComponent,
       },
       {
-        header: 'Available HighLights',
+        header: 'HighLights',
         content: HighlightsSettingsComponent,
       },
       {
-        header: 'Available Events',
+        header: 'Events',
         content: EventsSettingsComponent,
       },
       {
-        header: 'Available MarketAds',
-        content: MarketAdsSettingsComponent,
+        header: 'Featured Articles',
+        content: FeaturedArticlesSettingsComponent,
       },
     ];
   }

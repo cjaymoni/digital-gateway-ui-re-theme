@@ -1,12 +1,11 @@
-<div class="text-center text-2xl text-darkblue">{{ title }}</div>
+<div class="text-center text-2xl text-darkblue uppercase">{{ title }}</div>
 <ng-container *ngIf="loading; else loaded">
   <div class="grid">
-    <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
-    <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
-    <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
-    <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
-    <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
-    <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
+    <ng-container
+      *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
+    >
+      <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
+    </ng-container>
   </div>
 </ng-container>
 

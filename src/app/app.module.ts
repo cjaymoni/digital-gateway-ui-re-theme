@@ -14,16 +14,16 @@ import { appReducersMap } from './store/app.reducers';
 import { TestComponentModule } from './test/test-component/test-component.module';
 import { LoginModule } from './pages/login/login.module';
 import { SignupFormModule } from './pages/signup/signup-form/signup-form.module';
-import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginTokenInterceptor } from './interceptors/login-token.interceptor';
 import { ErrorMessageInterceptor } from './interceptors/error.interceptor';
 import { SearchResultsModule } from './pages/search-results/search-results.module';
+import { DirectivesModule } from './directives/directives.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AppRoutingModule,
     LayoutModule,
@@ -32,7 +32,7 @@ import { SearchResultsModule } from './pages/search-results/search-results.modul
     LoginModule,
     SignupFormModule,
     SearchResultsModule,
-    NgxYoutubePlayerModule.forRoot(),
+    DirectivesModule,
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot(appStoreEffects),

@@ -63,8 +63,8 @@ export class ForumPostFormComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.forumPostForm = this.fb.group({
-      title: ['', [Validators.required]],
-      content: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
+      content: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
       forum: [''],
     });
     this.oldTitle = this.title.getTitle();

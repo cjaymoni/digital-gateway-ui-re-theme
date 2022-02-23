@@ -8,6 +8,9 @@ import { ForumEffects } from './effects/forum.effects';
 import { ForumPostEffects } from './effects/forum-post.effects';
 import { MenuItemEffects } from './effects/menu-items.effect';
 import { ProfileTypeEffects } from './effects/profile-type.effects';
+import { UserProfileEffects } from './effects/user-profile.effects';
+import { UsersListEffects } from './effects/users-list.effects';
+import { MultiMediaEffects } from './effects/multimedia.effects';
 
 export const appStoreEffects = [
   ArticleEffects,
@@ -20,4 +23,7 @@ export const appStoreEffects = [
   ForumPostEffects,
   MenuItemEffects,
   ProfileTypeEffects,
+  UserProfileEffects,
+  UsersListEffects,
+  MultiMediaEffects,
 ];

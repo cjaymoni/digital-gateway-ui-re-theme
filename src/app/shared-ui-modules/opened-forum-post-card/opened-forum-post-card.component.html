@@ -2,11 +2,17 @@
   <div class="p-3 w-full fadein animation-duration-500 p-component shadow-2">
     <div class="flex justify-content-between align-content-center">
       <div class="flex">
-        <p-avatar styleClass="mr-2" size="large" shape="circle"></p-avatar>
+        <p-avatar
+          styleClass="mr-2"
+          size="large"
+          shape="circle"
+          [image]="(forumPost$ | async)?.submitter.avatar"
+        ></p-avatar>
         <div class="text-xl font-bold mt-1">
           {{ (forumPost$ | async)?.title | uppercase }}
-          <div class="text-sm">
-            {{ (forumPost$ | async)?.submitter.username }}
+          <div class="text-sm font-italic text-blue-800">
+            {{ (forumPost$ | async)?.submitter.username }} |
+            {{ (forumPost$ | async)?.created_on | date: 'longDate' }}
           </div>
         </div>
       </div>

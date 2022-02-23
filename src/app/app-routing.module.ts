@@ -3,10 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { Pages, RouterOutlets } from './config/app-config';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
 import { SignupFormComponent } from './pages/signup/signup-form/signup-form.component';
+import { RoleGuard } from './services/role.guard';
 
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
     loadChildren: () =>
       import('./pages/landing/landing.module').then(m => m.LandingModule),
   },
@@ -51,6 +57,7 @@ const routes: Routes = [
         m => m.ContentManagementModule
       ),
     data: { breadcrumb: 'Content Management' },
+    // canActivate: [RoleGuard],
   },
   {
     path: Pages.SiteSettings,
@@ -59,6 +66,7 @@ const routes: Routes = [
         m => m.AppSettingsModule
       ),
     data: { breadcrumb: 'Theme Settings' },
+    // canActivate: [RoleGuard],
   },
   {
     path: Pages.Resources.main,
@@ -76,13 +84,39 @@ const routes: Routes = [
     },
   },
   {
+    path: Pages.MultimediaManagement.main,
+    loadChildren: () =>
+      import('./pages/multimedia-management/multimedia-management.module').then(
+        m => m.MultimediaManagementModule
+      ),
+    data: {
+      breadcrumb: 'Multimedia Management',
+    },
+  },
+  {
     path: Pages.SignUp,
     component: SignupFormComponent,
     outlet: RouterOutlets.Right,
   },
   {
+    path: Pages.UserManagement,
+    loadChildren: () =>
+      import('./pages/users-management/users-management.module').then(
+        m => m.UsersManagementModule
+      ),
+    data: {
+      breadcrumb: 'Users Management',
+    },
+  },
+  {
     path: 'search/:query',
+    pathMatch: 'full',
     component: SearchResultsComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
 ];
 
@@ -90,6 +124,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
+      initialNavigation: 'enabledBlocking',
     }),
   ],
   exports: [RouterModule],

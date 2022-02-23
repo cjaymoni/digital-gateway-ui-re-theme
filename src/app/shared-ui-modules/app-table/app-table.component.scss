@@ -3,6 +3,10 @@ div.holder {
 }
 
 :host ::ng-deep {
+  p-dropdown {
+    display: none !important;
+  }
+
   .p-datatable-responsive-demo .p-datatable-tbody > tr > td .p-column-title {
     display: none;
   }

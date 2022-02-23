@@ -1,23 +1,29 @@
 <ng-container *ngIf="product$ | async; else loading">
   <div class="text-center flex justify-content-center flex-column">
-    <div class="text-lg md:text-2xl m-0 font-bold mb-2">
+    <div class="text-lg md:text-2xl m-0 font-bold mb-3">
       {{ (product$ | async).product.name | uppercase }}
     </div>
+  </div>
+
+  <div class="w-9 block ml-auto mr-auto">
     <p-galleria
       [value]="(product$ | async).product.images"
       [responsiveOptions]="responsiveOptions"
+      [containerClass]="'container'"
+      [showThumbnails]="false"
       [autoPlay]="true"
       [circular]="true"
       [(visible)]="displayImage"
       [(activeIndex)]="activeIndex"
-      [fullScreen]="true"
-      [showThumbnails]="false"
       [showItemNavigators]="true"
+      [numVisible]="5"
     >
       <ng-template pTemplate="item" let-item>
-        <img [src]="item.image" [alt]="item.title" class="h-17rem" />
-        <!-- [preview]="true" -->
-        <!-- </img> -->
+        <img
+          [src]="item.image"
+          [alt]="item.title"
+          class="w-12 h-23rem border-round align-items-center justify-content-center"
+        />
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
         <div class="grid grid-nogutter">
@@ -25,53 +31,97 @@
         </div>
       </ng-template>
     </p-galleria>
+
     <div
       *ngIf="(product$ | async).product.images"
-      class="grid col-12 justify-content-center align-items-center"
+      class="grid w-full ml-0 my-3"
     >
       <div
         *ngFor="let img of (product$ | async).product.images; let index = index"
-        class="col-2"
+        class="col-3"
       >
         <img
           [src]="img.image"
           [alt]="img.name"
-          class="
-            cursor-pointer
-            w-full
-            h-auto
-            object-fit-cover
-            thumbnail
-            transition-all transition-duration-300 transition-ease-in-out
-          "
+          class="cursor-pointer border-round w-full h-10rem object-fit-cover thumbnail transition-all transition-duration-300 transition-ease-in-out"
           (click)="imageClick(index)"
         />
       </div>
     </div>
-  </div>
-  <div class="flex text-lg shadow-1 p-4">
-    <div class="flex-auto flex align-items-center justify-content-center">
-      PRICE : {{ (product$ | async).product.price }}
-    </div>
-    <div class="flex-auto flex align-items-center justify-content-center">
-      TYPE : {{ (product$ | async).ad_type | uppercase }}
-    </div>
-    <div class="flex-auto flex align-items-center justify-content-center">
-      CONTACT : {{ (product$ | async).cellphone | uppercase }}
-    </div>
-  </div>
-  <div class="flex ml-3 py-4">
-    <p><i class="pi pi-map-marker"></i> {{ (product$ | async).location }}</p>
-  </div>
-  <div>
-    <div class="text-lg shadow-1 p-4">
-      <div class="mb-3">Description:</div>
-      <div class="text-left">
+
+    <div class="text-lg shadow-1 p-4 mt-6 border-round">
+      <div class="mb-3 font-bold text-left">Description</div>
+      <div class="text-justify">
         {{ (product$ | async).product.description }}
       </div>
     </div>
   </div>
 </ng-container>
+
+<ng-template #sideInfo>
+  <div class="w-4">
+    <div class="font-bold text-left uppercase mb-2">
+      {{ (product$ | async).product.name }}
+    </div>
+
+    <div class="font-normal text-left mb-2">
+      GHS {{ (product$ | async).product.price }}
+    </div>
+
+    <p-message
+      [severity]="(product$ | async).ad_type === 'offer' ? 'info' : 'warn'"
+      [text]="(product$ | async).ad_type | uppercase"
+      styleClass="p-message-no-icon mb-4"
+    ></p-message>
+    <button
+      pButton
+      class="w-full mb-2"
+      label="Show Contact"
+      icon="pi pi-phone"
+    ></button>
+
+    <button
+      pButton
+      class="w-full mb-4 p-button-outlined"
+      label="Create an Ad"
+    ></button>
+    <div class="w-full border-round surface-200">
+      <div class="p-3">
+        <div class="flex justify-content-between my-3">
+          <span class="flex font-medium text-left">Type:</span>
+          <span class="flex font-normal text-right uppercase">
+            {{ (product$ | async).ad_type }}
+          </span>
+        </div>
+        <div class="flex justify-content-between my-3">
+          <span class="flex font-medium text-left">Product Type:</span>
+          <span class="flex font-normal text-right capitalize">
+            {{ (product$ | async).product.product_type[0].name }}
+          </span>
+        </div>
+        <div class="flex justify-content-between my-3">
+          <span class="flex font-medium text-left">Location:</span>
+          <span class="flex font-normal text-right capitalize">
+            {{ (product$ | async).location }}
+          </span>
+        </div>
+        <div class="flex justify-content-between my-3">
+          <span class="flex font-medium text-left">District:</span>
+          <span class="flex font-normal text-right capitalize">
+            {{ (product$ | async).district.name }}
+          </span>
+        </div>
+        <div class="flex justify-content-between my-3">
+          <span class="flex font-medium text-left">Ghana Post:</span>
+          <span class="flex font-normal text-right uppercase">
+            {{ (product$ | async).gh_post }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
 <ng-template #loading>
   <p-skeleton></p-skeleton>
 </ng-template>

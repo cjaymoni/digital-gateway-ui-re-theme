@@ -1,0 +1,31 @@
+<ng-container [ngTemplateOutlet]="userLoginMenu"></ng-container>
+
+<ng-template #userLoginMenu>
+  <button
+    *ngIf="isLoggedIn$ | async; else login"
+    class="p-button-outlined p-button-rounded p-button-secondary ml-3 relative user-icon"
+    icon="pi pi-user"
+    pButton
+    (click)="loginMenu.toggle($event)"
+  ></button>
+  <p-menu
+    #loginMenu
+    [popup]="true"
+    [model]="(loggedInMenu | async) ?? []"
+    styleClass="loginMenu shadow-4"
+    [appendTo]="'body'"
+  ></p-menu>
+</ng-template>
+<!-- (click)="goToLoginPage()" -->
+
+<ng-template #login>
+  <button
+    class="p-button-text p-button-rounded p-button-info mr-1 login-button"
+    icon="pi pi-user"
+    label="Login"
+    pButton
+    (click)="goToLoginPage()"
+  ></button>
+  <!-- (click)="signup.toggle($event)" -->
+  <!-- <p-menu #signup [popup]="true" [model]="signUpMenu"></p-menu> -->
+</ng-template>

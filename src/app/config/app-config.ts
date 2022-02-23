@@ -4,7 +4,7 @@ import { ArticlePublishedStatus } from '../models/article.model';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
 export const TABLET_WIDTH_BREAKPOINT = 960;
-export const DEFAULT_PAGE_SIZE = 100;
+export const DEFAULT_PAGE_SIZE = 50;
 
 export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
@@ -30,6 +30,9 @@ export enum FeatureNamesForStore {
   Forum = 'forum',
   ForumPost = 'forumPost',
   ProfileType = 'profileType',
+  UserProfile = 'userProfile',
+  UsersList = 'usersList',
+  MultiMedia = 'multiMedia',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -89,6 +92,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     viewDetails: ':slug',
     add: 'post-forum',
     myList: 'my-forum-post',
+    moderation: 'moderation',
     matcher: {
       view: (url: UrlSegment[]) => {
         return urlMatcherForEditAndView(url, 'forum-post');
@@ -124,13 +128,41 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     main: 'resources',
     add: 'post-resource',
   },
-
+  MultimediaManagement: {
+    main: 'multimedia-management',
+    add: 'post-media',
+    edit: 'edit-media/:id',
+    view: 'view-media/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'multimedia-management', false);
+      },
+    },
+  },
   //content management
   ContentManagement: 'content-management',
   SiteSettings: 'site-settings',
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
   Login: 'login',
+  UserManagement: 'user-management',
+
+  Category: {
+    main: 'category',
+    add: 'add-category',
+    edit: 'edit-category/:id',
+    view: 'view-category/:id',
+  },
+
+  Tag: {
+    main: 'tag',
+    add: 'add-tag',
+    edit: 'edit-tag/:id',
+    view: 'view-tag/:id',
+  },
 };
 
 export const urlMatcherForEditAndView = (
@@ -144,7 +176,6 @@ export const urlMatcherForEditAndView = (
     : path.startsWith('edit-' + matcher)
     ? true
     : false;
-  console.log(startsWithViewOrEdit);
 
   return startsWithViewOrEdit ? { consumed: url } : null;
 };
@@ -153,7 +184,7 @@ export enum PrimeNgSeverity {
   Info = 'info',
   Danger = 'danger',
   Success = 'success',
-  Warn = 'warning',
+  Warn = 'warn',
   Custom = 'custom',
   Error = 'error',
 }
@@ -167,10 +198,10 @@ export const enum PrimeNgAlerts {
 }
 
 export const PublishedStatusMapping: { [key: string]: string } = {
-  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Danger,
+  [ArticlePublishedStatus.Archived]: PrimeNgSeverity.Error,
   [ArticlePublishedStatus.Published]: PrimeNgSeverity.Success,
   [ArticlePublishedStatus.Draft]: PrimeNgSeverity.Info,
-  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Info,
+  [ArticlePublishedStatus.Review]: PrimeNgSeverity.Warn,
   [ArticlePublishedStatus.Ready]: PrimeNgSeverity.Success,
 };
 
@@ -192,6 +223,13 @@ export enum TagType {
   article = 'article',
   product = 'product',
   ad = 'ad',
+}
+
+export enum SearchList {
+  ARTICLE = 'article',
+  ADS = 'ad',
+  FORUM = 'forum',
+  FORUM_POST = 'post',
 }
 
 export const GenericErrorMessage =
@@ -237,10 +275,23 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       visible: userRole === Roles.Admin,
     },
     {
+      id: 'user-management',
+      label: 'User Management',
+      routerLink: [Pages.UserManagement],
+      icon: 'pi pi-users',
+    },
+    {
       id: 'content-settings',
       label: 'Content Management',
       routerLink: [Pages.ContentManagement],
       icon: 'pi pi-cog',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
+    {
+      id: 'multimedia-management',
+      label: 'Multimedia Management',
+      routerLink: [Pages.MultimediaManagement.main],
+      icon: 'pi pi-video',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
   ];
@@ -266,6 +317,7 @@ export enum Context {
   Forum = Pages.Forum.main,
   ForumPost = Pages.ForumPost.main,
   MarketPlace = Pages.MarketPlace.main,
+  MultimediaManagement = Pages.MultimediaManagement.main,
   // Auth = Pages.Auth.
 }
 
@@ -292,7 +344,7 @@ export enum Roles {
 }
 
 export const getUserRole = () => {
-  const user = JSON.parse(localStorage.getItem(APP_USER_TOKEN) || '{}');
+  const user = JSON.parse(localStorage?.getItem(APP_USER_TOKEN) || '{}');
   return user.role;
 };
 
@@ -305,7 +357,7 @@ export const MainMenu: MenuItem[] = [
   },
   {
     id: 'forum',
-    label: 'Forums',
+    label: 'Entrepreneurs\' Forum',
     icon: 'pi pi-discord',
     items: [
       {
@@ -343,13 +395,13 @@ export const MainMenu: MenuItem[] = [
   },
   {
     id: 'resource',
-    label: 'Resource',
+    label: 'Resources',
     icon: 'pi pi-file-o',
     items: [
       {
         id: 'view-resources',
-        label: 'View Resource',
-        icon: 'pi pi-eye',
+        label: 'Reports',
+        icon: 'pi pi-file',
         routerLink: [Pages.Resources.main],
       },
       {
@@ -366,8 +418,14 @@ export const MainMenu: MenuItem[] = [
           );
         })(),
       },
+      {
+        id: 'view-resources',
+        label: 'Direct Links',
+        icon: 'pi pi-logout',
+        routerLink: [Pages.Resources.main],
+      },
     ],
   },
 ];
 
-export const MAX_FEATURED_CATEGORIES = 8;
+export const MAX_FEATURED_CATEGORIES = 6;

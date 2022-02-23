@@ -1,4 +1,9 @@
-import { Component, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LOGIN_SERVICE } from 'src/app/config/injectables';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -21,35 +26,41 @@ export class LoginFormComponent implements OnInit {
     private fb: FormBuilder,
     private navigator: NavigatorService,
     private alert: AppAlertService,
-    @Inject(LOGIN_SERVICE) public loginService: IAuthService,
-  ) { }
+    @Inject(LOGIN_SERVICE) public loginService: IAuthService
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.minLength(5), Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]]
+      email: [
+        '',
+        [Validators.required, Validators.minLength(5), Validators.email],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(50),
+        ],
+      ],
     });
     this.navigator.setPanelTitle('WELCOME BACK. PLEASE LOGIN');
   }
 
-  onLoginSubmit(){
+  onLoginSubmit() {
     if (this.loginForm.valid) {
-      this.loginService.login(this.loginForm.value).
-      pipe(
-        catchError(err => of(false))
-      ).
-      subscribe(
-        success => {
-          // console.log(success);
-          if (success){
-            this.alert.showToast("Log in successful", PrimeNgAlerts.SUCCESS);
+      this.loginService
+        .login(this.loginForm.value)
+        .pipe(catchError(err => of(false)))
+        .subscribe(success => {
+          if (success) {
+            this.alert.showToast('Log in successful', PrimeNgAlerts.SUCCESS);
             return this.navigator.goBack();
-          }else {
-            this.loginForm.setErrors({invalid: true});
-            this.alert.showToast("Invalid login", PrimeNgAlerts.ERROR)
+          } else {
+            this.loginForm.setErrors({ invalid: true });
+            this.alert.showToast('Invalid login', PrimeNgAlerts.ERROR);
           }
-        }
-      )
+        });
     }
   }
 

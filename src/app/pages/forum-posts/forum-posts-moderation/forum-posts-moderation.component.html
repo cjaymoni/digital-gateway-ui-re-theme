@@ -1,0 +1,48 @@
+<div>FORUM POSTS</div>
+
+<app-table
+  [data]="(forumPosts$ | async) || []"
+  [columnsDefinition]="columns"
+  [actionTemplate]="actions"
+  [showAction]="true"
+></app-table>
+
+<ng-template #actions let-forumPost>
+  <div class="flex justify-content-between">
+    <button
+      class="p-button p-button-rounded p-button-danger mr-3"
+      pButton
+      tooltipPosition="bottom"
+      pTooltip="Edit Blacklist Status"
+      icon="pi pi-book"
+      (click)="
+        selectedForumPost = forumPost; blacklistStatusMenu.toggle($event)
+      "
+    ></button>
+
+    <button
+      class="p-button p-button-info p-button-rounded mr-auto"
+      pButton
+      pTooltip="Edit Active Status"
+      tooltipPosition="bottom"
+      icon="pi pi-ban"
+      (click)="selectedForumPost = forumPost; activeStatusMenu.toggle($event)"
+    ></button>
+  </div>
+</ng-template>
+
+<p-menu #activeStatusMenu [popup]="true" [model]="activeStatusList"></p-menu>
+
+<p-menu
+  #blacklistStatusMenu
+  [popup]="true"
+  [model]="blacklistStatusList"
+></p-menu>
+
+<ng-template #statusTemplate let-status>
+  <p-message
+    [severity]="status === true ? 'info' : 'warn'"
+    [text]="status | BooleanPipe"
+    styleClass="p-message-no-icon"
+  ></p-message>
+</ng-template>

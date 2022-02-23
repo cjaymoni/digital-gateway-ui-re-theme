@@ -7,21 +7,18 @@
         : 'hidden'
     "
   >
-
     <div [ngClass]="addTemplate ? 'flex flex-column w-full h-full' : 'w-9'">
       <input
-      pInput
-      type="text"
-      [placeholder]="placeholder"
-      class="w-full h-full"
-      [ngClass]="addTemplate? 'h-3rem w-11 mb-2' : ''"
-      [formControl]="inputFormControl"
-      maxlength="20"
+        pInput
+        type="text"
+        [placeholder]="placeholder"
+        class="w-full h-full"
+        [ngClass]="addTemplate ? 'h-3rem w-11 mb-2' : ''"
+        [formControl]="inputFormControl"
+        maxlength="50"
       />
       <ng-container *ngIf="addTemplate">
-        <ng-container
-        [ngTemplateOutlet]="addTemplate"
-        ></ng-container>
+        <ng-container [ngTemplateOutlet]="addTemplate"></ng-container>
       </ng-container>
     </div>
     <div>
@@ -89,19 +86,29 @@
             {{ item.name }}
           </div>
 
-          <button
-            pButton
-            type="button"
-            icon="pi pi-times"
-            class="
-              p-button-danger p-button-rounded p-button-outline p-button-text
-            "
-            pTooltip="Remove"
-            tooltipPosition="bottom"
-            clickConfirmation
-            (click)="$event.stopPropagation()"
-            (onConfirm)="removeItem(item)"
-          ></button>
+          <div>
+            <button
+              *ngIf="showEdit"
+              pButton
+              type="button"
+              icon="pi pi-pencil"
+              class="p-button-info p-button-rounded p-button-outline p-button-text"
+              pTooltip="Edit"
+              tooltipPosition="bottom"
+              (click)="$event.stopPropagation(); editItemSelected(item)"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-times"
+              class="p-button-danger p-button-rounded p-button-outline p-button-text"
+              pTooltip="Remove"
+              tooltipPosition="bottom"
+              clickConfirmation
+              (click)="$event.stopPropagation()"
+              (onConfirm)="removeItem(item)"
+            ></button>
+          </div>
         </div>
       </ng-template>
     </p-listbox>

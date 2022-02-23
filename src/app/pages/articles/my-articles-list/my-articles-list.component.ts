@@ -29,6 +29,7 @@ import { articleActions } from 'src/app/store/actions/article.actions';
 })
 export class MyArticlesListComponent implements OnInit, AfterViewInit {
   myArticles$ = this.store.select(articleSelectors.myArticles);
+  count$ = this.store.select(articleSelectors.searchCount);
 
   @ViewChild('statusTemplate') statusTemplate: TemplateRef<any> | undefined =
     undefined;
@@ -127,7 +128,7 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
       status: this.selectedStatus,
     };
     const articleId = this.selectedArticle.id;
-    // console.log(status, this.selectedArticle.id);
+
     this.articleService
       .editArticleStatus(`${articleId}`, formData)
       .subscribe((data: any) => {
@@ -136,5 +137,13 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
           PrimeNgAlerts.UNOBSTRUSIVE
         );
       });
+  }
+
+  changePage(event: any) {
+    this.store.dispatch(
+      articleActions.changeSearchPage({
+        searchPage: event.page + 1,
+      })
+    );
   }
 }

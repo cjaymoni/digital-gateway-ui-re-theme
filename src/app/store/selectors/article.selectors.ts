@@ -32,6 +32,13 @@ class ArticleSelectors extends DefaultAdapterSelectors {
     this.state,
     (state: ArticleState) => state.myArticles
   );
+
+  count = createSelector(this.state, (state: ArticleState) => state.count);
+
+  searchCount = createSelector(
+    this.state,
+    (state: ArticleState) => state.searchCount
+  );
 }
 
 export const articleSelectors = new ArticleSelectors();

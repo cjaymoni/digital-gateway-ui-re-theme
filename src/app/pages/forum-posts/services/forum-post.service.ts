@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { ForumPostEndpoint } from 'src/app/config/routes';
 import { ForumPost } from 'src/app/models/forum.model';
 import { ResourceService } from 'src/app/services/resources.service';
+import { forumPostActions } from '../../../store/actions/forum-post.action';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ForumPostsService extends ResourceService {
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private store: Store) {
     super(http, ForumPostEndpoint);
   }
 
@@ -31,6 +33,19 @@ export class ForumPostsService extends ResourceService {
     const formData = this.getFormDataFromObject(forum, images);
     return this.updateResourcePut(formData, forum.id).pipe(
       map(data => data as ForumPost)
+    );
+  }
+
+  editForumPostStatus(formData: any, forumPostId: any) {
+    return this.updateResource(formData, forumPostId).pipe(
+      map(data => data as ForumPost),
+      tap(forumpost =>
+        this.store.dispatch(
+          forumPostActions.editForumPostSuccessful({
+            updatedForumPost: { id: forumpost.id, changes: forumpost },
+          })
+        )
+      )
     );
   }
 }

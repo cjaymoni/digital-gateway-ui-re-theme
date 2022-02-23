@@ -75,8 +75,8 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       expires: [],
       ad_type: [this.adTypes[0], [Validators.required]],
       product: this.fb.group({
-        name: ['', [Validators.required]],
-        description: ['', Validators.required],
+        name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
+        description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
         price: ['', [Validators.required]],
         brand: [''],
         tags: [],
@@ -135,14 +135,14 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       if (this.createForm) {
         this.store.dispatch(
           productAdActions.addProductAd({
-            productAd: { ...productAdFromForm, author: 1 },
+            productAd: { ...productAdFromForm, author: 1, is_active: true },
             imagesToUpload: images,
           })
         );
       } else {
         this.store.dispatch(
           productAdActions.editProductAd({
-            productAd: { ...productAdFromForm, author: 1 },
+            productAd: { ...productAdFromForm, author: 1, is_active: true },
             imagesToUpload: images,
           })
         );

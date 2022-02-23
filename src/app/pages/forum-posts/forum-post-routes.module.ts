@@ -5,6 +5,7 @@ import { ForumPostDetailsComponent } from '../../shared-ui-modules/forum-post-de
 import { ForumPostFormComponent } from '../../shared-ui-modules/forum-post-form/forum-post-form.component';
 import { ForumPostGuard } from './guard/forum-post.guard';
 import { MyForumPostsComponent } from './my-forum-posts/my-forum-posts.component';
+import { ForumPostsModerationComponent } from './forum-posts-moderation/forum-posts-moderation.component';
 
 const routes: Routes = [
   {
@@ -12,10 +13,16 @@ const routes: Routes = [
     redirectTo: Pages.ForumPost.myList,
   },
   {
+    path: Pages.ForumPost.moderation,
+    component: ForumPostsModerationComponent,
+    canActivate: [ForumPostGuard],
+    data: { breadcrumb: 'Moderation' },
+  },
+  {
     path: Pages.ForumPost.myList,
     component: MyForumPostsComponent,
     canActivate: [ForumPostGuard],
-    data: { breadcrumb: 'Moderation' },
+    data: { breadcrumb: 'My Forum Posts' },
   },
   {
     path: Pages.ForumPost.add,

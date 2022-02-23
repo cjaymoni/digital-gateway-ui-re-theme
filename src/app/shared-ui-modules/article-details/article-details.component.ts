@@ -7,6 +7,7 @@ import {
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { filter, tap } from 'rxjs';
+import { SeoService } from 'src/app/helpers/seo.service';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 
 @Component({
@@ -19,12 +20,21 @@ export class ArticleDetailsComponent implements OnInit {
   constructor(
     private store: Store,
     public sanitizer: DomSanitizer,
-    private title: Title
+    private title: Title,
+    private seo: SeoService
   ) {}
 
   @Input() article$ = this.store.select(articleSelectors.selectedArticle).pipe(
     filter(article => !!article),
-    tap(article => this.title.setTitle(article.title))
+    tap(article => {
+      this.seo.generateTags({
+        title: article.title,
+        image: article.images?.[0].image,
+        description: article.meta_description,
+        author: article.meta_author,
+        url: ``,
+      });
+    })
   );
 
   ngOnInit() {}

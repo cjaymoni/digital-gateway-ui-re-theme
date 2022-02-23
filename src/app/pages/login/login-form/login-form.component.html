@@ -1,5 +1,10 @@
 <ng-container>
-  <form [formGroup]="loginForm" class="my-8">
+  <form
+    [formGroup]="loginForm"
+    class="my-8"
+    enterPressed
+    (onEnterPressed)="onLoginSubmit()"
+  >
     <div
       class="fluid formgrid grid justify-content-between align-content-center"
     >

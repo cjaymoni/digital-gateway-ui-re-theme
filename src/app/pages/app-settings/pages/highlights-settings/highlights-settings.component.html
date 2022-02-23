@@ -10,16 +10,12 @@
 
 <p-pickList
   [source]="(filteredArticles$ | async) || []"
-  [target]="selectedArticles"
-  sourceHeader="Available Highlight Categories"
-  targetHeader="Selected Highlight Categories"
+  [target]="(selectedArticles$ | async) || []"
+  targetHeader="Selected Highlight"
   [dragdrop]="true"
   [responsive]="true"
-  filterBy="title"
-  sourceFilterPlaceholder="Search by title"
-  targetFilterPlaceholder="Search by title"
-  (onSourceFilter)="searchArticle($event)"
   [showSourceFilter]="false"
+  [showTargetFilter]="false"
 >
   <ng-template let-article pTemplate="item">
     <div>
@@ -29,7 +25,7 @@
   </ng-template>
 
   <ng-template pTemplate="sourceHeader">
-    <div class="font-bold mb-5">Available Highlight Categories</div>
+    <div class="font-bold mb-5">Available Highlight</div>
 
     <span class="p-input-icon-right w-full">
       <i class="pi pi-search"></i>

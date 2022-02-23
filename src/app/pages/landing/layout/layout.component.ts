@@ -14,6 +14,9 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { Article } from 'src/app/models/article.model';
 import { Carousel } from 'primeng/carousel';
 import { debounceTime, fromEvent, Subscription, tap } from 'rxjs';
+import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
+import { categorySelectors } from '../../../store/selectors/category.selectors';
+import { LandingService } from '../service/landing.service';
 
 @Component({
   selector: 'app-layout',
@@ -54,66 +57,74 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  multimedia = ['PUUpJMdvKKw', '1ASNZ_Xs2gU', 'sOyemzzJQtQ'];
+  multimedia$ = this.themeStore.featuredMultimedia$;
 
   productAds$ = this.store.select(productAdSelectors.all);
-  articles$ = this.store.select(articleSelectors.all);
-  forum$ = this.store.select(forumSelectors.getById(1));
+  highlights$ = this.themeStore.highlightArticlesArray$;
+  featuredArticles$ = this.themeStore.featuredArticlesArray$;
+  featuredEvents$ = this.themeStore.featuredEventsArray$;
 
-  constructor(private store: Store, private navigator: NavigatorService) {}
+  // forum$ = this.store.select(forumSelectors.getById(1));
+  forumMetrics$ = this.themeStore.forumMetrics$;
+
+  featuredCategories$ = this.themeStore.featuredCategoryArray$;
+
+  digiLinks!: any;
+
+  constructor(
+    private store: Store,
+    private navigator: NavigatorService,
+    private themeStore: ThemeSettingsStore,
+    private landingService: LandingService
+  ) {}
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
   ngAfterViewInit(): void {
-    this.startCarouselAutoplay(this.eventSlider, 15000);
-    this.startCarouselAutoplay(this.marketSlider, 7000);
-    this.startCarouselAutoplay(this.articleSlider, 8000);
-    this.startCarouselAutoplay(this.multimediaSlider, 8000);
-
+    // this.startCarouselAutoplay(this.eventSlider, 15000);
+    // this.startCarouselAutoplay(this.marketSlider, 7000);
+    // this.startCarouselAutoplay(this.articleSlider, 8000);
+    // this.startCarouselAutoplay(this.multimediaSlider, 8000);
     // event
-    this.subscription = this.getCarouselMouseEnterSubscription(
-      this.eventSlider
-    );
-
+    // this.subscription = this.getCarouselMouseEnterSubscription(
+    //   this.eventSlider
+    // );
     // articles
-    this.subscription.add(
-      this.getCarouselMouseEnterSubscription(this.articleSlider)
-    );
-
-    this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.articleSlider, 8000)
-    );
-
-    this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.eventSlider, 15000)
-    );
-
+    // this.subscription.add(
+    //   this.getCarouselMouseEnterSubscription(this.articleSlider)
+    // );
+    // this.subscription.add(
+    //   this.getCarouselMouseLeaveSubscription(this.articleSlider, 8000)
+    // );
+    // this.subscription.add(
+    //   this.getCarouselMouseLeaveSubscription(this.eventSlider, 15000)
+    // );
     // market
-    this.subscription.add(
-      this.getCarouselMouseEnterSubscription(this.marketSlider)
-    );
-
-    this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.marketSlider, 7000)
-    );
-
+    // this.subscription.add(
+    //   this.getCarouselMouseEnterSubscription(this.marketSlider)
+    // );
+    // this.subscription.add(
+    //   this.getCarouselMouseLeaveSubscription(this.marketSlider, 7000)
+    // );
     // multimedia
-    this.subscription.add(
-      this.getCarouselMouseEnterSubscription(this.multimediaSlider)
-    );
-
-    this.subscription.add(
-      this.getCarouselMouseLeaveSubscription(this.multimediaSlider, 8000)
-    );
+    // this.subscription.add(
+    //   this.getCarouselMouseEnterSubscription(this.multimediaSlider)
+    // );
+    // this.subscription.add(
+    //   this.getCarouselMouseLeaveSubscription(this.multimediaSlider, 8000)
+    // );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getDirectLinks();
+  }
 
   goToArticle(article: Article) {
     this.navigator.article.goToViewDetailsPage(article.slug);
   }
 
   startCarouselAutoplay(carouselRef: Carousel, interval = 3000) {
+    if (!carouselRef) return;
     carouselRef.allowAutoplay = true;
     carouselRef.autoplayInterval = interval;
     carouselRef.startAutoplay();
@@ -121,6 +132,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   stopCarouselAutoplay(carouselRef: Carousel) {
+    if (!carouselRef) return;
     carouselRef.allowAutoplay = false;
     carouselRef.autoplayInterval = 0;
     carouselRef.stopAutoplay();
@@ -141,5 +153,11 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.startCarouselAutoplay(carouselRef, interval);
       });
+  }
+
+  getDirectLinks() {
+    this.landingService.getResources().subscribe(data => {
+      this.digiLinks = data;
+    });
   }
 }

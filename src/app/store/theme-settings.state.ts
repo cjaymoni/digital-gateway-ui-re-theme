@@ -4,12 +4,42 @@ import { Store } from '@ngrx/store';
 import { catchError, EMPTY, map, Observable, retry, tap } from 'rxjs';
 import { AppUploadedImage } from '../models/article.model';
 import { Category } from '../models/category.model';
+import { MultiMedia } from '../models/multimedia.model';
 import { ThemeSettingsService } from '../services/theme-settings.service';
-import { categoryActions } from './actions/category.actions';
 import { categorySelectors } from './selectors/category.selectors';
 
 export interface ThemeSettings {
   highlightArticles: {
+    article: {
+      slug: string;
+      title: string;
+      id: number;
+      images: AppUploadedImage[];
+    };
+    block: {
+      name: string;
+      logo: string;
+    };
+    is_pinned: boolean;
+    display_order: number;
+  }[];
+
+  featuredEvents: {
+    article: {
+      slug: string;
+      title: string;
+      id: number;
+      images: AppUploadedImage[];
+    };
+    block: {
+      name: string;
+      logo: string;
+    };
+    is_pinned: boolean;
+    display_order: number;
+  }[];
+
+  featuredArticles: {
     article: {
       slug: string;
       title: string;
@@ -32,12 +62,16 @@ export interface ThemeSettings {
   }[];
 
   forumMetrics: any[];
+  multimedia: MultiMedia[];
 }
 
 export const initialHomepageState: ThemeSettings = {
   highlightArticles: [],
   featuredCategories: [],
   forumMetrics: [],
+  featuredArticles: [],
+  featuredEvents: [],
+  multimedia: [],
 };
 
 @Injectable()
@@ -54,8 +88,46 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
 
   readonly featuredCatgories$: Observable<ThemeSettings['featuredCategories']> =
     this.select(state => state.featuredCategories);
+
   readonly highlightArticles$: Observable<ThemeSettings['highlightArticles']> =
     this.select(state => state.highlightArticles);
+
+  readonly featuredArticles$: Observable<ThemeSettings['featuredArticles']> =
+    this.select(state => state.featuredArticles);
+
+  readonly featuredEvents$: Observable<ThemeSettings['highlightArticles']> =
+    this.select(state => state.featuredEvents);
+
+  readonly featuredMultimedia$: Observable<ThemeSettings['multimedia']> =
+    this.select(state => state.multimedia);
+
+  readonly forumMetrics$: Observable<any> = this.select(
+    state => state.forumMetrics
+  );
+
+  readonly highlightArticlesArray$ = this.select(
+    this.highlightArticles$.pipe(map(d => d as any[])),
+    highlights => {
+      const _ha = [...highlights];
+      return _ha.sort((a, b) => a.display_order - b.display_order);
+    }
+  );
+
+  readonly featuredArticlesArray$ = this.select(
+    this.featuredArticles$.pipe(map(d => d as any[])),
+    featured => {
+      const _ha = [...featured];
+      return _ha.sort((a, b) => a.display_order - b.display_order);
+    }
+  );
+
+  readonly featuredEventsArray$ = this.select(
+    this.featuredEvents$.pipe(map(d => d as any[])),
+    highlights => {
+      const _ha = [...highlights];
+      return _ha.sort((a, b) => a.display_order - b.display_order);
+    }
+  );
 
   readonly featuredCategoryArray$ = this.select(
     this.categories$.pipe(map(cat => cat as Category[])),
@@ -78,7 +150,7 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
 
   readonly getHomepageData = this.effect(() => {
     return this.themeSettings.getHompageData().pipe(
-      retry(3),
+      // retry(1),
       tap({
         next: homepageData => this.setState(homepageData),
         error: () => {

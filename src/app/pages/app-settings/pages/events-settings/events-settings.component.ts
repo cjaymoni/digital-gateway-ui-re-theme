@@ -1,8 +1,23 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Category } from '../../../../models/category.model';
-import { categorySelectors } from '../../../../store/selectors/category.selectors';
-import { async } from '@angular/core/testing';
+import {
+  BehaviorSubject,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  skip,
+  take,
+  tap,
+} from 'rxjs';
+import { ArticleService } from 'src/app/pages/articles/services/articles.service';
+import { BlockService } from 'src/app/services/blocks.service';
+import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
   selector: 'app-events-settings',
@@ -11,13 +26,72 @@ import { async } from '@angular/core/testing';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventsSettingsComponent implements OnInit {
-  sourceProducts: Category[] = [];
+  filteredArticles$ = new BehaviorSubject(new Array(0));
 
-  targetProducts: Category[] = [];
+  searchArticleInput = new FormControl('', [Validators.minLength(3)]);
 
-  categories$ = this.store.select(categorySelectors.all);
+  selectedArticles$ = new BehaviorSubject(Array(0));
 
-  constructor(private store: Store) {}
+  mergeCurrentlySelected$ = this.themeStore.featuredEvents$
+    .pipe(
+      map(ha => {
+        const newArray = [...this.selectedArticles$.getValue()].concat(
+          [...ha].map(h => h.article)
+        );
+        this.selectedArticles$.next(newArray);
+      })
+    )
+    .subscribe();
 
-  ngOnInit() {}
+  constructor(
+    private store: Store,
+    private themeStore: ThemeSettingsStore,
+    private articleService: ArticleService,
+    private blockService: BlockService,
+    private cdref: ChangeDetectorRef
+  ) {}
+
+  ngAfterViewInit(): void {
+    this.cdref.detectChanges();
+  }
+
+  ngOnInit() {
+    this.mergeCurrentlySelected$.add(
+      this.searchArticleInput.valueChanges
+        .pipe(distinctUntilChanged(), skip(2), debounceTime(300))
+        .subscribe((query: string) => {
+          if (query.trim() === '') {
+            this.filteredArticles$.next([]);
+            return;
+          } else {
+            this.searchArticle(query);
+          }
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.mergeCurrentlySelected$.unsubscribe();
+  }
+
+  searchArticle(query: string) {
+    this.articleService
+      .searchArticle({
+        search: query,
+      })
+      .pipe(
+        take(1),
+        map((articles: any) => {
+          const newArray = [...articles];
+          this.filteredArticles$.next(newArray);
+        })
+      )
+      .subscribe();
+  }
+
+  saveChanges() {
+    this.blockService
+      .saveFeaturedEvents(this.selectedArticles$.getValue())
+      .subscribe();
+  }
 }

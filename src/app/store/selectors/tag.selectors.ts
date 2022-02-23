@@ -20,6 +20,9 @@ class TagSelectors extends DefaultAdapterSelectors {
   productTags = this.filterTags(TagType.product);
   articleTags = this.filterTags(TagType.article);
   adTags = this.filterTags(TagType.ad);
+  featuredArticleTags = createSelector(this.articleTags, (tags: Tag[]) =>
+    tags.filter(t => t.featured)
+  );
 
   getTagByName = (name: string, tagType: TagType) => {
     const listToUse = this.filterTags(tagType);

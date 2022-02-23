@@ -8,6 +8,8 @@ class ProductAdActions {
 
   fetch = createAction(`${this.type} Fetch`);
 
+  fetchMyProductAds = createAction(`${this.type} Fetch My Product Ad`);
+
   fetchSuccessful = createAction(
     `${this.type} Fetch Successful`,
     props<{ productAds: ProductAd[] }>()
@@ -87,6 +89,33 @@ class ProductAdActions {
   deleteProductAdSuccessful = createAction(
     `${this.type} Delete Product Ad Successful`,
     props<{ id: number }>()
+  );
+
+  fetchSearchSuccessful = createAction(
+    `${this.type} Fetch Search Successful`,
+    props<{ productAd: ProductAd[] }>()
+  );
+
+  fetchMyProductAdsSuccessful = createAction(
+    `${this.type} Fetch Search Successful`,
+    props<{ productAd: ProductAd[] }>()
+  );
+
+  changeSearchPage = createAction(
+    `${this.type} Change Search Page`,
+    props<{ searchPage: number }>()
+  );
+
+  changePage = createAction(
+    `${this.type} Change Page`,
+    props<{ page: number }>()
+  );
+
+  setCount = createAction(`${this.type} Set Count`, props<{ count: number }>());
+
+  setSearchCount = createAction(
+    `${this.type} Set Search Count`,
+    props<{ count: number }>()
   );
 
   clearAllSelected = createAction(`${this.type} Clear All Selected ProductAds`);

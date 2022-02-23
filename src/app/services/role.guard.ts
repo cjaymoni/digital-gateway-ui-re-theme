@@ -38,6 +38,7 @@ export class RoleGuard implements CanActivate {
       map(user => {
         if (user) {
           const role = user?.role;
+
           if (!neededRoles) {
             return true;
           }
@@ -49,10 +50,11 @@ export class RoleGuard implements CanActivate {
             "Sorry you don't have enough permission to access this resource"
           );
           return false;
+        } else {
+          this.alert.showToast('You need to login');
+          this.navigator.auth.goToLogin(undefined, undefined, state.url);
+          return false;
         }
-        this.alert.showToast('You need to login');
-        this.navigator.auth.goToLogin();
-        return false;
       })
     );
   }

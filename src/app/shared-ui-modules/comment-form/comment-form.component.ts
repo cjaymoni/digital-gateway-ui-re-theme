@@ -24,6 +24,7 @@ export class CommentFormComponent implements OnInit {
   commentFormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(4),
+    Validators.maxLength(160),
   ]);
 
   isHandheld$ = this.device.isHandheld$;
@@ -41,7 +42,5 @@ export class CommentFormComponent implements OnInit {
     this.cancelEvent.emit();
   }
 
-  onClickedOutside(e: any) {
-    console.log('e :>> ', e);
-  }
+  onClickedOutside(e: any) {}
 }

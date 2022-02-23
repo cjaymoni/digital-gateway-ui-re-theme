@@ -4,23 +4,38 @@
     icon="pi pi-save"
     label="Save"
     class="p-button-secondary p-button"
+    (click)="saveChanges()"
   ></button>
 </div>
+
 <p-pickList
-  [source]="(categories$ | async) || []"
-  [target]="targetProducts"
-  sourceHeader="Available Events Categories"
-  targetHeader="Selected Events Categories"
+  [source]="(filteredArticles$ | async) || []"
+  [target]="(selectedArticles$ | async) || []"
+  targetHeader="Selected Events"
   [dragdrop]="true"
   [responsive]="true"
-  filterBy="name"
-  sourceFilterPlaceholder="Search by name"
-  targetFilterPlaceholder="Search by name"
+  [showSourceFilter]="false"
+  [showTargetFilter]="false"
 >
-  <ng-template let-product pTemplate="item">
+  <ng-template let-article pTemplate="item">
     <div>
-      <i class="pi pi-bookmark mr-2"></i>
-      <span class="product-category">{{ product.name }}</span>
+      <i class="pi pi-book mr-2"></i>
+      <span class="product-category">{{ article.title }}</span>
     </div>
+  </ng-template>
+
+  <ng-template pTemplate="sourceHeader">
+    <div class="font-bold mb-5">Available Events</div>
+
+    <span class="p-input-icon-right w-full">
+      <i class="pi pi-search"></i>
+      <input
+        type="text"
+        class="w-full"
+        placeholder="Search article by title"
+        pInputText
+        [formControl]="searchArticleInput"
+      />
+    </span>
   </ng-template>
 </p-pickList>
