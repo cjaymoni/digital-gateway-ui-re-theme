@@ -222,6 +222,11 @@ export class NavigatorService {
     this.panelTitle$,
     this.modalTitle$
   );
+  contentManagement = new ContentManagementRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
 }
 
 class AppRoutesConfig {
@@ -480,3 +485,24 @@ class DigitalLinkRoutes extends AppRoutesConfig {
     ]);
   }
 }
+
+class ContentManagementRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.ContentManagement, router, subject, modalsubject);
+  }
+  gotoAddCategoryPage() {
+    this.openModal([this.page, Pages.Category.add], 'Add Category');
+  }
+
+  gotoEditCategoryPage(id: any) {
+    this.openModal(
+      [this.page, ...Pages.Category.edit.replace(':id', id).split('/')],
+      'Edit Category'
+    );
+  }
+}
+

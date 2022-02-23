@@ -4,7 +4,9 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
@@ -16,8 +18,10 @@ import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 export class RightNavCard implements OnInit {
   constructor(
     private themeStore: ThemeSettingsStore,
-    private navigator: NavigatorService
+    private navigator: NavigatorService,
+    private store: Store
   ) {}
+  featuredArticles$ = this.store.select(articleSelectors.all);
 
   highlightArticles$ = this.themeStore.highlightArticlesArray$;
   multimedia$ = this.themeStore.featuredMultimedia$;

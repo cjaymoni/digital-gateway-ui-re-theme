@@ -1,5 +1,6 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
+import { Image } from 'primeng/image';
 import { Category } from 'src/app/models/category.model';
 
 class CategoryActions {
@@ -19,7 +20,7 @@ class CategoryActions {
 
   addCategory = createAction(
     `${this.type} Add Category`,
-    props<{ category: Category }>()
+    props<{ category: Category; imageToUpload?: Image | any }>()
   );
 
   addCategorySuccessful = createAction(
@@ -29,7 +30,7 @@ class CategoryActions {
 
   editCategory = createAction(
     `${this.type} Edit Category`,
-    props<{ category: Category }>()
+    props<{ category: Category; imageToUpload?: Image | any }>()
   );
 
   editCategorySuccessful = createAction(

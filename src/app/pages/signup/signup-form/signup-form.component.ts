@@ -27,11 +27,11 @@ export class SignupFormComponent implements OnInit {
 
   ngOnInit() {
     this.signupForm = this.fb.group({
-      fname: ['', [Validators.required]],
-      lname: ['', [Validators.required]],
-      email: ['', [Validators.email, Validators.required]],
+      fname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      lname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      email: ['', [Validators.email, Validators.required, Validators.minLength(5)]],
 
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
     });
 
     this.navigator.setPanelTitle('SIGN UP');

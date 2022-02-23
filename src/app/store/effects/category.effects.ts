@@ -29,8 +29,8 @@ export class CategoryEffects {
   addCategory$ = createEffect(() =>
     this.actions$.pipe(
       ofType(categoryActions.addCategory),
-      switchMap(({ category }) =>
-        this.categoryService.storeResource(category).pipe(
+      switchMap(({ category, imageToUpload }) =>
+        this.categoryService.addCategory(category, imageToUpload).pipe(
           map((category: any) =>
             categoryActions.addCategorySuccessful({
               category,
@@ -39,6 +39,31 @@ export class CategoryEffects {
           tap(_ =>
             this.alert.showToast(
               'Category added successfully',
+              PrimeNgAlerts.SUCCESS
+            )
+          ),
+          catchError(error => of(categoryActions.fetchError(error)))
+        )
+      )
+    )
+  );
+
+  editCategory$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(categoryActions.editCategory),
+      switchMap(({ category, imageToUpload }) =>
+        this.categoryService.editCategory(category, imageToUpload).pipe(
+          map((category: any) =>
+            categoryActions.editCategorySuccessful({
+              updatedCategory: {
+                changes: category,
+                id: category.id,
+              },
+            })
+          ),
+          tap(_ =>
+            this.alert.showToast(
+              'Category edited successfully',
               PrimeNgAlerts.SUCCESS
             )
           ),

@@ -6,6 +6,7 @@ import { DividerModule } from 'primeng/divider';
 import { ArticleImageModule } from '../article-image/article-image.module';
 import { MultimediaModule } from 'src/app/pages/landing/multimedia/multimedia.module';
 import { ButtonModule } from 'primeng/button';
+import { FeaturedArticleCardModule } from '../featured-article-card/featured-article-card.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
     ArticleImageModule,
     MultimediaModule,
     ButtonModule,
+    FeaturedArticleCardModule,
   ],
   declarations: [RightNavCard],
   exports: [RightNavCard],

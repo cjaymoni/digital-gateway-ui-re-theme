@@ -1,0 +1,13 @@
+<ng-container *ngIf="opportunity">
+  <div
+    class="p-0 w-full scalein animation-duration-500 overflow-hidden border-round cursor-pointer"
+  >
+    <p-image
+      [src]="imageSrc"
+      imageClass="w-full h-full border-round mb-3"
+    ></p-image>
+    <div>
+      {{ opportunity.name }}
+    </div>
+  </div>
+</ng-container>

@@ -13,13 +13,20 @@
   }
 }
 
-.active::after {
-  content: '>>>';
+.active::before {
+  content: '-->>';
 }
 
 .wrapper {
   @media screen and (max-width: 1024px) and (min-width: 100px) {
     background-color: var(--darkblue-50) !important;
     padding: 4px;
+  }
+}
+
+:host ::ng-deep {
+  .sidemenu {
+    z-index: 1000 !important;
+    background-color: rgba($color: white, $alpha: 0.95) !important;
   }
 }

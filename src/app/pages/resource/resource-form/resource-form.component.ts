@@ -27,8 +27,8 @@ export class ResourceFormComponent implements OnInit {
 
   ngOnInit() {
     this.resourceForm = this.fb.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
+      description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
       upload: [''],
     });
   }
