@@ -1,41 +1,34 @@
-<div class="p-3">
+<div class="p-1 pt-0">
   <p-carousel
     #eventSlider
     [value]="(multimedia$ | async) || []"
     [showNavigators]="false"
     [circular]="true"
-    [showIndicators]="true"
+    [showIndicators]="false"
     [contentClass]="'content'"
-    [responsiveOptions]="responsiveOptions"
+    [numVisible]="1"
+    [numScroll]="1"
   >
     <ng-template pTemplate="item" let-video>
-      <div class="p-2 h-full w-full border-round">
+      <div class="p-2 w-full border-round">
         <app-multimedia [multimedia]="video"></app-multimedia>
       </div>
     </ng-template>
   </p-carousel>
 
   <div *ngIf="featuredCategories$ | async">
-    <div class="text-center text-2xl font-bold my-5">Featured Category</div>
-    <p-carousel
-      #articleSlider
-      [value]="(featuredCategories$ | async) || []"
-      styleClass="custom-carousel"
-      [numVisible]="3"
-      [numScroll]="3"
-      [circular]="true"
-      [responsiveOptions]="responsiveOptions"
-      [showIndicators]="false"
-      [showNavigators]="false"
-    >
-      <ng-template pTemplate="item" let-category>
-        <div class="col p-2">
+    <div class="text-center text-2xl font-bold my-5 text-darkblue">
+      Featured Categories
+    </div>
+    <div class="grid">
+      <ng-container *ngFor="let featured of featuredCategories$ | async">
+        <div class="col-12 md:col-4 p-3">
           <app-featured-categories-card
-            [category]="category"
+            [category]="featured.category"
           ></app-featured-categories-card>
         </div>
-      </ng-template>
-    </p-carousel>
+      </ng-container>
+    </div>
   </div>
 
   <div *ngIf="featuredEvents$ | async">
@@ -61,7 +54,9 @@
     </p-carousel>
   </div>
 
-  <div class="text-center text-2xl font-bold my-5">Direct Links</div>
+  <div class="text-center text-2xl font-bold my-5 text-darkblue">
+    Direct Links
+  </div>
   <p-carousel
     #articleSlider
     [value]="digiLinks || []"

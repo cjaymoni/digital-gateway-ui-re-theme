@@ -2,6 +2,7 @@ import { routerReducer } from '@ngrx/router-store';
 import { FeatureNamesForStore } from '../config/app-config';
 import { articleReducer } from './reducers/article.reducers';
 import { categoryReducer } from './reducers/category.reducers';
+import { digitalLinkReducer } from './reducers/digital-link.reducers';
 import { districtReducer } from './reducers/district.reducer';
 import { forumPostReducer } from './reducers/forum-post.reducers';
 import { forumReducer } from './reducers/forum.reducer';
@@ -31,4 +32,5 @@ export const appReducersMap = {
   [FeatureNamesForStore.UserProfile]: userProfileReducer,
   [FeatureNamesForStore.UsersList]: userListReducer,
   [FeatureNamesForStore.MultiMedia]: multiMediaReducer,
+  [FeatureNamesForStore.DigitalLink]: digitalLinkReducer,
 };

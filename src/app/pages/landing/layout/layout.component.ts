@@ -67,7 +67,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   // forum$ = this.store.select(forumSelectors.getById(1));
   forumMetrics$ = this.themeStore.forumMetrics$;
 
-  featuredCategories$ = this.store.select(categorySelectors.all);
+  featuredCategories$ = this.themeStore.featuredCategoryArray$;
 
   digiLinks!: any;
 

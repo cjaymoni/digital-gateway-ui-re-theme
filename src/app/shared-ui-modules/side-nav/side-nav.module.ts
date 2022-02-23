@@ -6,6 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
+import { LoginButtonModule } from '../login-button/login-button.module';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
   declarations: [SideNavComponent],
@@ -16,6 +18,8 @@ import { SidebarModule } from 'primeng/sidebar';
     DividerModule,
     MenuModule,
     SidebarModule,
+    LoginButtonModule,
+    ClickOutsideModule,
   ],
   exports: [SideNavComponent],
 })
