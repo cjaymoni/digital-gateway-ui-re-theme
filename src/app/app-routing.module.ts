@@ -72,6 +72,7 @@ const routes: Routes = [
     path: Pages.Resources.main,
     loadChildren: () =>
       import('./pages/resource/resource.module').then(m => m.ResourceModule),
+    data: { breadcrumb: 'Resources' },
   },
   {
     path: Pages.UserProfile,
