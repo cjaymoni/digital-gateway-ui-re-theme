@@ -8,6 +8,7 @@
     [contentClass]="'content'"
     [numVisible]="1"
     [numScroll]="1"
+    [autoplayInterval]="7000"
   >
     <ng-template pTemplate="item" let-video>
       <div class="p-2 w-full border-round">
@@ -17,9 +18,9 @@
   </p-carousel>
 
   <div *ngIf="featuredCategories$ | async">
-    <div class="text-center text-2xl font-bold my-5 text-darkblue">
+    <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
       Featured Categories
-    </div>
+    </h3>
     <div class="grid">
       <ng-container *ngFor="let featured of featuredCategories$ | async">
         <div class="col-12 md:col-4 p-3">
@@ -30,48 +31,30 @@
       </ng-container>
     </div>
   </div>
-
-  <div *ngIf="featuredEvents$ | async">
-    <div class="text-center text-2xl font-bold my-5">Current Opportunities</div>
-    <p-carousel
-      #articleSlider
-      [value]="(featuredEvents$ | async) || []"
-      styleClass="custom-carousel"
-      [numVisible]="3"
-      [numScroll]="3"
-      [circular]="true"
-      [responsiveOptions]="responsiveOptions"
-      [showIndicators]="false"
-      [showNavigators]="false"
-    >
-      <ng-template pTemplate="item" let-opportunity>
-        <div class="col p-2">
-          <app-opportunitis-card
-            [opportunity]="opportunity.article"
-          ></app-opportunitis-card>
-        </div>
-      </ng-template>
-    </p-carousel>
+<!-- 
+  <div *ngIf="featuredOpportunities$ | async">
+    <h3 class="text-center text-2xl font-bold my-5 text-darkblue">Current Opportunities</h3>
+<div class="grid">
+  <div *ngFor="let opportunity of featuredOpportunities$ | async" class="col p-2 h-18rem">
+    <app-opportunitis-card
+      [opportunity]="opportunity.article"
+    ></app-opportunitis-card>
   </div>
+</div>
+  </div> -->
 
-  <div class="text-center text-2xl font-bold my-5 text-darkblue">
+  <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
     Direct Links
-  </div>
-  <p-carousel
-    #articleSlider
-    [value]="digiLinks || []"
-    styleClass="custom-carousel"
-    [circular]="true"
-    [responsiveOptions]="responsiveOptions"
-    [showIndicators]="false"
-    [showNavigators]="false"
-  >
-    <ng-template pTemplate="item" let-digiLink>
+  </h3>
+
+    <div class="grid">
+      <ng-container *ngFor="let directLink of directLinks$ | async">
       <div class="col p-2">
-        <app-direct-links-card [digiLink]="digiLink"></app-direct-links-card>
+        <app-direct-links-card [digiLink]="directLink"></app-direct-links-card>
       </div>
-    </ng-template>
-  </p-carousel>
+    </ng-container>
+    </div>
+
   <!-- <div class="mb-6">
     <div class="text-2xl font-bold my-3">Forum</div>
     <div class="pb-2">

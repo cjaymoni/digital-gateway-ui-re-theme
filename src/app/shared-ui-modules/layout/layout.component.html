@@ -2,9 +2,12 @@
 <app-toasts></app-toasts>
 <app-dialog></app-dialog>
 <div class="grid h-full block md:flex">
-  <nav class="topbar w-full sticky top-0 z-5 bg-teal-700">
+  <nav class="topbar w-full sticky top-0 z-5">
+    {{ loading$ | async | json}}
     <app-top-nav></app-top-nav>
   </nav>
+  <!-- main content -->
+  <ng-container *ngIf="!(loading$ | async); else loading" >
   <div class="col-12 grid pt-0 pb-0 justify-content-center">
     <!-- left sidebar -->
     <div
@@ -17,7 +20,7 @@
     </div>
     <!-- middle content -->
     <div
-      class="col-12 lg:col-9 xl:col-8 grid justify-content-center h-full p-0 pt-5 mb-7"
+      class="col-12 lg:col-9 xl:col-8 grid justify-content-center h-full p-2 pt-5 mb-7"
     >
       <div class="col-12 min-h-screen p-0 pl-3 pb-8">
         <!-- <div class="mr-3 hidden lg:flex">
@@ -55,6 +58,7 @@
   <footer class="col-12 footer p-0">
     <app-footer></app-footer>
   </footer>
+</ng-container>
   <!-- right panel -->
   <app-right-overlay-panel>
     <router-outlet name="right-panel"></router-outlet>
@@ -64,3 +68,9 @@
     <app-modal-components></app-modal-components>
   </ng-container>
 </div>
+
+<ng-template #loading>
+  <div class="container square">
+    <i class="pi pi-spinner" style="font-size: 8rem;"></i>
+  </div>
+</ng-template>

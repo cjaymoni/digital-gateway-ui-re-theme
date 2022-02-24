@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, map, Observable, of, take } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, take } from 'rxjs';
 import { trackById } from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
 import { Tag } from 'src/app/models/tag.model';
@@ -30,7 +30,7 @@ export class SideNavComponent implements OnInit {
 
   // featuredCategory$ = this.themeSetting.featuredCategoryArray$;
   featuredTags$ = this.store.select(tagSelectors.featuredArticleTags);
-  loading$ = this.store.select(articleSelectors.loading);
+  loading$ = new BehaviorSubject(false);
   articles$: BehaviorSubject<Article[]> = new BehaviorSubject([] as Article[]);
 
   display = false;
@@ -51,21 +51,8 @@ export class SideNavComponent implements OnInit {
     if (this.display) {
       this.currentIndex = index;
     }
-    // if (!this.display) {
-    //   this.currentIndex = index;
-    //   this.display = true;
-    // }
-
-    // if (this.currentIndex !== index && this.display) {
-    //   this.currentIndex = index;
-    //   this.display = true;
-    // }
-    // else if (this.currentIndex === index && this.display) {
-    //   this.display = false;
-    // }
-
-    // if (!this.display) return;
-
+   
+    this.loading$.next(true);
     this.articleService
       .searchArticle({
         tag: tag.id,
@@ -73,9 +60,12 @@ export class SideNavComponent implements OnInit {
       .pipe(
         take(1),
         map(articles => {
-          console.log(articles);
-
+          this.loading$.next(false);
           this.articles$.next(articles);
+        }),
+        catchError(e => {
+          this.loading$.next(false)
+          return e;
         })
       )
       .subscribe();

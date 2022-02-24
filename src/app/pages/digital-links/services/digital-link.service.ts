@@ -4,14 +4,14 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { ResourceService } from 'src/app/services/resources.service';
 import { DigitalLink } from 'src/app/models/digital-link.model';
-import { DigitalLinkEndpoint } from 'src/app/config/routes';
+import { DirectLinkEndpoint } from 'src/app/config/routes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DigitalLinkService extends ResourceService {
   constructor(http: HttpClient, private store: Store) {
-    super(http, DigitalLinkEndpoint);
+    super(http, DirectLinkEndpoint);
   }
 
   searchDigitalLink(searchParams: { [key: string]: any }) {
@@ -30,6 +30,12 @@ export class DigitalLinkService extends ResourceService {
   editDigitalLink(digitallink: DigitalLink) {
     return this.updateResource(digitallink, digitallink.id).pipe(
       map(data => data as DigitalLink)
+    );
+  }
+
+  getFeaturedLinks(){
+    return this.getResources(this.endpoint, undefined, {'featured': 'True'}).pipe(
+      map(data => data as DigitalLink[])
     );
   }
 

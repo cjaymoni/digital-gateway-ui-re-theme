@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, defaultIfEmpty, forkJoin, map, of } from 'rxjs';
+import { BehaviorSubject, catchError, defaultIfEmpty, forkJoin, map, of, tap } from 'rxjs';
 import {
   EventsEndpoint,
   FeaturedArticlesEndpoint,
@@ -9,6 +9,7 @@ import {
   HighlightArticlesEndpoint,
   MultiMediaEndpoint,
 } from '../config/routes';
+import { DigitalLinkService } from '../pages/digital-links/services/digital-link.service';
 import { initialHomepageState } from '../store/theme-settings.state';
 import { ResourceService } from './resources.service';
 
@@ -16,9 +17,14 @@ import { ResourceService } from './resources.service';
   providedIn: 'root',
 })
 export class ThemeSettingsService extends ResourceService {
-  constructor(http: HttpClient) {
+  
+  loadingHomepageData$ = new BehaviorSubject(true);
+  
+  constructor(http: HttpClient, private directLinkService: DigitalLinkService) {
     super(http, '');
   }
+
+
 
   getHompageData() {
     return forkJoin([
@@ -28,6 +34,7 @@ export class ThemeSettingsService extends ResourceService {
       this.getForumMetrics(),
       this.getFeaturedArticles(),
       this.getMultimedia(),
+      this.getDirectLinks()
     ]).pipe(
       map(data => {
         return {
@@ -37,9 +44,11 @@ export class ThemeSettingsService extends ResourceService {
           forumMetrics: data[3],
           featuredArticles: data[4],
           multimedia: data[5],
+          featuredDirectLinks: data[6]
         };
       }),
-      catchError(e => of(initialHomepageState))
+      catchError(e => of(initialHomepageState)),
+      tap(_ => this.loadingHomepageData$.next(false))
     );
   }
 
@@ -82,6 +91,13 @@ export class ThemeSettingsService extends ResourceService {
 
   getFeaturedArticles() {
     return this.getResources(FeaturedArticlesEndpoint).pipe(
+      defaultIfEmpty([]),
+      catchError(e => of([]))
+    );
+  }
+
+  getDirectLinks(){
+    return this.directLinkService.getFeaturedLinks().pipe(
       defaultIfEmpty([]),
       catchError(e => of([]))
     );
