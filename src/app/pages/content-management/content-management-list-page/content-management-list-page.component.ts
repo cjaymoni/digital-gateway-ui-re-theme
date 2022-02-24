@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,6 +11,7 @@ import { slugify } from 'src/app/helpers/app.helper.functions';
 import { Category } from 'src/app/models/category.model';
 import { ProductType } from 'src/app/models/product-ad.model';
 import { Tag } from 'src/app/models/tag.model';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { categoryActions } from 'src/app/store/actions/category.actions';
 import { productTypeActions } from 'src/app/store/actions/product-type.actions';
 import { tagActions } from 'src/app/store/actions/tag.actions';
@@ -31,7 +32,11 @@ export class ContentManagementListPageComponent implements OnInit {
 
   tagFeatured = new FormControl(false);
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private navigator: NavigatorService
+  ) {}
 
   productTags$ = this.store.select(tagSelectors.productTags);
   articleTags$ = this.store.select(tagSelectors.articleTags);
@@ -81,18 +86,24 @@ export class ContentManagementListPageComponent implements OnInit {
   }
 
   addCategory(categoryName: string) {
-    this.store.dispatch(
-      categoryActions.addCategory({
-        category: {
-          name: categoryName,
-          slug: slugify(categoryName),
-          created_by: 1,
-          is_active: true,
-          description: categoryName,
-          parent: this.categoryForm.value.category.id,
-        },
-      })
-    );
+    this.navigator.contentManagement.gotoAddCategoryPage();
+
+    // this.store.dispatch(
+    //   categoryActions.addCategory({
+    //     category: {
+    //       name: categoryName,
+    //       slug: slugify(categoryName),
+    //       created_by: 1,
+    //       is_active: true,
+    //       description: categoryName,
+    //       parent: this.categoryForm.value.category.id,
+    //     },
+    //   })
+    // );
+  }
+
+  editCategory(category: Category) {
+    this.navigator.contentManagement.gotoEditCategoryPage(category.id);
   }
 
   addProductType(productTypeName: string) {

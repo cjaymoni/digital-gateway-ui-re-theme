@@ -1,25 +1,31 @@
 <div
-  class="
-    shadow-6
-    h-10rem
-    p-2
-    w-full
-    fadein
-    animation-duration-500
-    justify-content-between
-    align-items-center
-    flex flex-column
-  "
+  class="shadow-4 h-10rem p-2 w-full fadein animation-duration-500 justify-content-between align-items-center flex flex-column border-round"
+>
+  <div class="flex align-items-center text-blue-900 mt-4">
+    <i class="pi pi-file text-5xl"></i>
+  </div>
+  <div>
+    <span class="align-items-center mr-2">{{ resource.name }}</span>
+
+    <i
+      class="pi pi-download text-xl text-green-500 cursor-pointer ml-1"
+      (click)="downloadFile()"
+      pTooltip="Download File"
+    ></i>
+  </div>
+
+  <div class="text align-items-center p-1 font-italic mb-2">
+    {{ resource.description }}
+  </div>
+</div>
+
+<!-- <div
+  class="shadow-4 h-10rem p-2 w-full fadein animation-duration-500 justify-content-between align-items-center flex flex-column border-round"
 >
   <div
-    class="
-      flex
-      justify-content-between
-      align-items-center
-      text-blue-900 text-2xl
-    "
+    class="flex justify-content-between align-items-center text-blue-900 text-2xl"
   >
-    <i class="pi pi-file"></i>
+    <i class="pi pi-file mr-2 text-2xl"></i>
     <div>{{ resource.name }}</div>
   </div>
 
@@ -30,4 +36,4 @@
     (click)="downloadFile()"
     pTooltip="Download File"
   ></p-button>
-</div>
+</div> -->

@@ -1,4 +1,4 @@
-<ng-container [formGroup]="articleForm" ]>
+<ng-container [formGroup]="articleForm">
   <div class="fluid formgrid grid">
     <div class="field col-12">
       <label for="title">Title</label>
@@ -7,6 +7,15 @@
         pInputText
         class="inputfield w-full"
         formControlName="title"
+      />
+    </div>
+    <div class="field col-12">
+      <label for="meta_description">Description</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="meta_description"
       />
     </div>
     <!-- tag and category -->
@@ -39,14 +48,7 @@
             ></button>
           </div>
           <div
-            class="
-              flex
-              justify-content-center
-              align-items-center
-              border-solid
-              p-1
-              border-200
-            "
+            class="flex justify-content-center align-items-center border-solid p-1 border-200"
           >
             <img [src]="article?.images?.[0]?.image" alt="" class="h-15rem" />
           </div>

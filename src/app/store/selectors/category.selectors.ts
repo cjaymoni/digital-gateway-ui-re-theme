@@ -10,6 +10,8 @@ class CategorySelectors extends DefaultAdapterSelectors {
   constructor() {
     super(categoryEntityAdapter, categoryFeatureSelector);
   }
+
+  selectedCategory = this.state;
 }
 
 export const categorySelectors = new CategorySelectors();

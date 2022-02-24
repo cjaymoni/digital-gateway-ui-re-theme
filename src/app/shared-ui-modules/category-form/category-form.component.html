@@ -1,0 +1,86 @@
+<ng-container [formGroup]="categoryForm">
+  <div class="fluid formgrid grid">
+    <div class="field col-12">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="name"
+      />
+    </div>
+
+    <div class="field col-12">
+      <div>
+        <label for="description">Description</label>
+      </div>
+      <textarea
+        pInputTextarea
+        formControlName="description"
+        styleClass="w-12rem"
+        [autoResize]="true"
+        [cols]="50"
+        [rows]="10"
+      ></textarea>
+    </div>
+    <!-- tag and category -->
+    <!-- <div class="flex flex-column md:flex-row col-12"> -->
+    <div class="field col-12">
+      <label for="parentCategory">Parent Category</label>
+      <app-category-autocomplete
+        [selectedCategory]="parentCategory"
+      ></app-category-autocomplete>
+    </div>
+    <!-- </div> -->
+    <div class="field col-12">
+      <ng-container *ngIf="!createForm && categoryHasImage">
+        <div class="mb-1">
+          <div class="flex justify-content-evenly align-items-center">
+            <div class="font-bold">
+              Current Image (Remove to upload a new one)
+            </div>
+            <button
+              pButton
+              pTooltip="Remove current image"
+              class="p-button p-button-text p-button-rounded p-button-danger"
+              icon="pi pi-trash"
+              clickConfirmation
+              (onConfirm)="removeImage()"
+            ></button>
+          </div>
+          <div
+            class="flex justify-content-center align-items-center border-solid p-1 border-200"
+          >
+            <img [src]="category?.image" alt="" class="h-15rem" />
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!categoryHasImage">
+        <label for="imageUpload">Image Upload</label>
+        <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
+      </ng-container>
+    </div>
+  </div>
+  <div class="col-12 ml-auto flex justify-content-end w-full">
+    <button
+      pButton
+      pRipple
+      class="mr-1 w-max px-3"
+      type="button"
+      icon="pi pi-save"
+      [disabled]="categoryForm.invalid"
+      (click)="onAddOrUpdateCategory()"
+    >
+      {{ (createForm ? 'Add' : 'Update') + ' Category' }}
+    </button>
+    <button
+      pButton
+      pRipple
+      class="p-button-danger mr-1 w-max px-3"
+      icon="pi pi-times"
+      type="button"
+      label="Cancel"
+      (click)="goBack()"
+    ></button>
+  </div>
+</ng-container>

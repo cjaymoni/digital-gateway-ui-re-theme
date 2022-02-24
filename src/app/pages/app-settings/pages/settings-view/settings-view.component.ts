@@ -31,7 +31,7 @@ export class SettingsViewComponent implements OnInit {
         content: HighlightsSettingsComponent,
       },
       {
-        header: 'Events',
+        header: 'Current Opportunities',
         content: EventsSettingsComponent,
       },
       {

@@ -46,16 +46,6 @@ export class TopNavComponent implements OnInit {
 
   signUpMenu = SignUpMenu;
 
-  loggedInMenu = this.loggedInUser$.pipe(
-    map(user => {
-      if (user) {
-        return [...LoggedInMenu(user.role), ...this.logoutMenu()];
-      } else {
-        return [];
-      }
-    })
-  );
-
   ngOnInit(): void {}
 
   selectMenu(id: number, link?: [string]) {
@@ -68,25 +58,6 @@ export class TopNavComponent implements OnInit {
     if (link) {
       this.navigator.goToRoute(link);
     }
-  }
-
-  goToLoginPage() {
-    this.navigator.auth.goToLogin();
-  }
-
-  logout = () => {
-    this.loginService.logout().subscribe(_ => this.navigator.goToRoute(['/']));
-  };
-
-  logoutMenu(): MenuItem[] {
-    return [
-      {
-        id: 'logout',
-        label: 'Logout',
-        command: this.logout,
-        icon: 'pi pi-power-off',
-      },
-    ];
   }
 
   searchTerm() {

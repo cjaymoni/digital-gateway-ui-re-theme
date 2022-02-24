@@ -7,4 +7,5 @@ export interface Category {
   is_active: boolean;
   created_by: number;
   subcategories?: Category[];
+  image?: any;
 }

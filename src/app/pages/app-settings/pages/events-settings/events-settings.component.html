@@ -11,7 +11,7 @@
 <p-pickList
   [source]="(filteredArticles$ | async) || []"
   [target]="(selectedArticles$ | async) || []"
-  targetHeader="Selected Events"
+  targetHeader="Selected Opportunities"
   [dragdrop]="true"
   [responsive]="true"
   [showSourceFilter]="false"
@@ -25,7 +25,7 @@
   </ng-template>
 
   <ng-template pTemplate="sourceHeader">
-    <div class="font-bold mb-5">Available Events</div>
+    <div class="font-bold mb-5">Available Opportunities</div>
 
     <span class="p-input-icon-right w-full">
       <i class="pi pi-search"></i>
