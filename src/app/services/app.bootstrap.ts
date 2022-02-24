@@ -34,10 +34,10 @@ export class AppBootstrap {
     this.themeSettings.getHomepageData();
     this.store.dispatch(tagActions.fetch());
     this.store.dispatch(categoryActions.fetch());
-    this.store.dispatch(productTypeActions.fetch());
-    this.store.dispatch(articleActions.fetch());
-    this.store.dispatch(productAdActions.fetch());
-    this.store.dispatch(forumActions.fetch());
+    // this.store.dispatch(productTypeActions.fetch());
+    // this.store.dispatch(articleActions.fetch());
+    // this.store.dispatch(productAdActions.fetch());
+    // this.store.dispatch(forumActions.fetch());
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

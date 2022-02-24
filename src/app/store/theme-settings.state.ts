@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
-import { catchError, EMPTY, map, Observable, retry, tap } from 'rxjs';
+import { catchError, EMPTY, map, noop, Observable, retry, tap } from 'rxjs';
 import { AppUploadedImage } from '../models/article.model';
 import { Category } from '../models/category.model';
 import { DigitalLink } from '../models/digital-link.model';
@@ -77,15 +79,21 @@ export const initialHomepageState: ThemeSettings = {
   featuredDirectLinks: []
 };
 
+const HOMEPAGE_DATA_KEY = makeStateKey<ThemeSettings>('initialData');
+
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
   constructor(
     private themeSettings: ThemeSettingsService,
-    private store: Store
+    private store: Store,
+    private transferState: TransferState,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) {
     super(initialHomepageState);
+   
+
   }
 
   categories$ = this.store.select(categorySelectors.all);
@@ -155,10 +163,31 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
   );
 
   readonly getHomepageData = this.effect(() => {
+    console.log(this.transferState);
+    if(this.transferState.hasKey(HOMEPAGE_DATA_KEY)){
+      console.log('data exists already');
+      
+      const homepageData = this.transferState.get<ThemeSettings>(HOMEPAGE_DATA_KEY, initialHomepageState);
+      this.transferState.remove(HOMEPAGE_DATA_KEY);
+      this.setState(homepageData)
+      // return of(course);
+
+      return EMPTY;
+    }
+
     return this.themeSettings.getHompageData().pipe(
       // retry(1),
       tap({
-        next: homepageData => this.setState(homepageData),
+        next: homepageData => {
+          this.setState(homepageData);
+          console.log({homepageData});
+          
+          if (isPlatformServer(this.platformId)) {
+            console.log('is server');
+            
+            this.transferState.set(HOMEPAGE_DATA_KEY, homepageData);
+          }
+        },
         error: () => {
           this.setState(initialHomepageState);
         },

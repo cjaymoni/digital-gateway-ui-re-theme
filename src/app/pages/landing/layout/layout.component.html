@@ -1,18 +1,17 @@
 <div class="p-1 pt-0">
   <p-carousel
-    #eventSlider
     [value]="(multimedia$ | async) || []"
-    [showNavigators]="false"
+    [showNavigators]="true"
     [circular]="true"
     [showIndicators]="false"
     [contentClass]="'content'"
     [numVisible]="1"
     [numScroll]="1"
-    [autoplayInterval]="7000"
   >
     <ng-template pTemplate="item" let-video>
-      <div class="p-2 w-full border-round">
-        <app-multimedia [multimedia]="video"></app-multimedia>
+      <div class="p-0 w-full border-round">
+        <app-multimedia [multimedia]="video"     *appShellRender
+        ></app-multimedia>
       </div>
     </ng-template>
   </p-carousel>
@@ -21,7 +20,7 @@
     <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
       Featured Categories
     </h3>
-    <div class="grid">
+    <div class="grid" *appShellRender>
       <ng-container *ngFor="let featured of featuredCategories$ | async">
         <div class="col-12 md:col-4 p-3">
           <app-featured-categories-card
@@ -31,23 +30,25 @@
       </ng-container>
     </div>
   </div>
-<!-- 
+
+
+
   <div *ngIf="featuredOpportunities$ | async">
     <h3 class="text-center text-2xl font-bold my-5 text-darkblue">Current Opportunities</h3>
-<div class="grid">
-  <div *ngFor="let opportunity of featuredOpportunities$ | async" class="col p-2 h-18rem">
+<div class="grid" *appShellNoRender>
+  <div *ngFor="let opportunity of featuredOpportunities$ | async" class="col-12 md:col-4 p-3">
     <app-opportunitis-card
       [opportunity]="opportunity.article"
     ></app-opportunitis-card>
   </div>
 </div>
-  </div> -->
+  </div>
 
   <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
     Direct Links
   </h3>
 
-    <div class="grid">
+    <div class="grid" *appShellNoRender>
       <ng-container *ngFor="let directLink of directLinks$ | async">
       <div class="col p-2">
         <app-direct-links-card [digiLink]="directLink"></app-direct-links-card>

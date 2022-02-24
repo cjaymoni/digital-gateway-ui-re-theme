@@ -3,18 +3,17 @@
 <app-dialog></app-dialog>
 <div class="grid h-full block md:flex">
   <nav class="topbar w-full sticky top-0 z-5">
-    {{ loading$ | async | json}}
     <app-top-nav></app-top-nav>
   </nav>
   <!-- main content -->
-  <ng-container *ngIf="!(loading$ | async); else loading" >
+  <ng-container *ngIf="!(loading$ | async); else loading"  >
   <div class="col-12 grid pt-0 pb-0 justify-content-center">
     <!-- left sidebar -->
     <div
       class="hidden col-3 xl:col-2 lg:block p-2 xl:sticky xl:top-0 pt-5 bg-darkblue z-4"
     >
       <app-side-nav></app-side-nav>
-      <div class="col-12 xl:hidden pt-5">
+      <div class="col-12 xl:hidden pt-5 right-nav-in-sidebar">
         <app-right-nav-card></app-right-nav-card>
       </div>
     </div>
@@ -48,14 +47,14 @@
     </div>
 
     <!-- right side bar -->
-    <div class="hidden xl:flex xl:col-2 h-full p-0 pt-5">
+    <div class="hidden xl:flex xl:col-2 h-full p-0 pt-5" >
       <div class="col-12">
         <app-right-nav-card></app-right-nav-card>
       </div>
     </div>
   </div>
   <!-- footer -->
-  <footer class="col-12 footer p-0">
+  <footer class="col-12 footer p-0 z-4">
     <app-footer></app-footer>
   </footer>
 </ng-container>
@@ -70,7 +69,8 @@
 </div>
 
 <ng-template #loading>
-  <div class="container square">
-    <i class="pi pi-spinner" style="font-size: 8rem;"></i>
-  </div>
+    <div class="ml-auto mr-auto loader">
+      <i class="pi pi-spin pi-spinner" style="font-size: 8rem;"></i>
+      <h6 class="text-lg text-teal-500 text-center">Please wait...</h6>
+    </div>
 </ng-template>

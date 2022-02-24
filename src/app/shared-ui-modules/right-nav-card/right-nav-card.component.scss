@@ -1,11 +1,3 @@
-.article-title-text {
-  color: var(--text-color);
-
-  @media screen and (max-width: 1200px) and (min-width: 700px) {
-    color: var(--darkblue-500) !important;
-  }
-}
-
 :host {
   width: 100% !important;
   ::ng-deep {

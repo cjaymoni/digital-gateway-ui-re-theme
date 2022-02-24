@@ -11,6 +11,7 @@ import { MultimediaModule } from '../multimedia/multimedia.module';
 import { DirectLinksCardModule } from '../../../shared-ui-modules/direct-links-card/direct-links-card.module';
 import { FeaturedCategoriesCardModule } from '../../../shared-ui-modules/featured-categories-card/featured-categories-card.module';
 import { OpportunitisCardModule } from 'src/app/shared-ui-modules/opportunitis-card/opportunitis-card.module';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   imports: [
@@ -25,7 +26,9 @@ import { OpportunitisCardModule } from 'src/app/shared-ui-modules/opportunitis-c
     DirectLinksCardModule,
     FeaturedCategoriesCardModule,
     OpportunitisCardModule,
+    DirectivesModule
   ],
   declarations: [LayoutComponent],
+  exports: [LayoutComponent]
 })
 export class LayoutModule {}

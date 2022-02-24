@@ -7,3 +7,16 @@
     color: unset;
   }
 }
+
+
+.loader {
+  margin-top: 30vh;
+}
+
+.right-nav-in-sidebar {
+  ::ng-deep {
+    app-right-nav-card > * {
+      color: white !important
+    }
+  }
+}
