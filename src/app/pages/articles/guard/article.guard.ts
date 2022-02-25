@@ -35,7 +35,6 @@ export class ArticleGuard implements CanActivate {
       .select(selectRouteNestedParam('article-id'))
       .pipe(
         filter(d => !!d),
-        // tap(() => this.store.dispatch(articleActions.))
         tap(articleId => {
           this.store.dispatch(
             articleActions.findAndSelectArticleById({

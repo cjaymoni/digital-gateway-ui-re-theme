@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { CookieService } from 'ngx-cookie';
+
 import { environment } from 'src/environments/environment';
 import { APP_USER_TOKEN } from '../config/app-config';
 import { LocalStorageService } from '../helpers/localstorage.service';
@@ -24,7 +26,7 @@ export class AppBootstrap {
   constructor(
     private store: Store,
     private router: Router,
-    private localStorage: LocalStorageService,
+    private cookieService: CookieService,
     private seo: SeoService,
     private route: ActivatedRoute,
     private themeSettings: ThemeSettingsStore
@@ -42,19 +44,20 @@ export class AppBootstrap {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.seo.setURL(`${environment.APP_URL}${event.url}`);
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'];
-        if (returnUrl) {
-          let url: string = returnUrl;
-          url = url.includes('login') ? url.split('(')[0] : url;
-          this.router.navigateByUrl(url);
-        }
+        // const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+        // if (returnUrl) {
+        //   let url: string = returnUrl;
+        //   url = url.includes('login') ? url.split('(')[0] : url;
+        //   this.router.navigateByUrl(url);
+        // }
       }
     });
   }
 
   initializeLogin() {
-    const user = JSON.parse(this.localStorage.getItem(APP_USER_TOKEN) || '{}');
-    if (user.email) {
+    const user: any = this.cookieService.getObject(APP_USER_TOKEN) || null;
+
+    if (user?.email) {
       this.store.dispatch(userAuthActions.loginSuccessful({ user }));
     }
   }

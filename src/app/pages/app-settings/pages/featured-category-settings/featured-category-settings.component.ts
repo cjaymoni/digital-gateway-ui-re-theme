@@ -36,7 +36,7 @@ export class FeaturedCategorySettingsComponent implements OnInit {
 
   selectedArray: Category[] = [];
 
-  categorySubscription$ = this.themeStore.featuredCategoryArray$
+  categorySubscription$ = this.themeStore.featuredCatgories$
     .pipe(
       withLatestFrom(
         this.categoriesSelected$,

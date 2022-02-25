@@ -483,3 +483,15 @@ export const MainMenu: MenuItem[] = [
 ];
 
 export const MAX_FEATURED_CATEGORIES = 6;
+
+export const ERROR_MESSAGES_MAPPING = {
+  errors: {
+    useValue: {
+      required: 'This field is required',
+      minlength: ({ requiredLength, actualLength }: any) =>
+        `Expected ${requiredLength} but got ${actualLength}`,
+      maxlength: ({ requiredLength, actualLength }: any) =>
+        `Expected ${requiredLength} but got ${actualLength}`,
+    },
+  },
+};
