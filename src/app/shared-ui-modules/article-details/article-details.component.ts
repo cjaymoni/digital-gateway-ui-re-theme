@@ -4,9 +4,9 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { DomSanitizer, Title } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { filter, tap } from 'rxjs';
+import { filter, take, tap } from 'rxjs';
 import { SeoService } from 'src/app/helpers/seo.service';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 
@@ -20,12 +20,12 @@ export class ArticleDetailsComponent implements OnInit {
   constructor(
     private store: Store,
     public sanitizer: DomSanitizer,
-    private title: Title,
     private seo: SeoService
   ) {}
 
   @Input() article$ = this.store.select(articleSelectors.selectedArticle).pipe(
     filter(article => !!article),
+    take(1),
     tap(article => {
       this.seo.generateTags({
         title: article.title,

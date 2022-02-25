@@ -10,6 +10,7 @@ import { ImageUploadModule } from '../image-upload/image-upload.module';
 import { TagAutocompleteModule } from '../tag-autocomplete/tag-autocomplete.module';
 import { ArticleFormComponent } from './article-form.component';
 import { DirectivesModule } from './../../directives/directives.module';
+import { ErrorTailorModule } from '@ngneat/error-tailor';
 
 @NgModule({
   declarations: [ArticleFormComponent],
@@ -25,6 +26,7 @@ import { DirectivesModule } from './../../directives/directives.module';
     ImageUploadModule,
     TooltipModule,
     DirectivesModule,
+    ErrorTailorModule,
   ],
   exports: [ArticleFormComponent],
 })

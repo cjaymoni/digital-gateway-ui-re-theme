@@ -1,4 +1,4 @@
-<ng-container [formGroup]="forumPostForm">
+<ng-container [formGroup]="forumPostForm" errorTailor>
   <div class="formgrid grid">
     <div *ngIf="selectedForum$ | async" class="text-blue-600 mb-3">
       Add a post to Forum :

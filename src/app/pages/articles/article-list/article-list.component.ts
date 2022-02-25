@@ -50,6 +50,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
         map((params: any) => {
           const categorySlug = params.category;
           const tagSlug = params.tag;
+          this.store.dispatch(articleActions.startLoad());
 
           if (params.category) {
             this.store

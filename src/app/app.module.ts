@@ -5,12 +5,15 @@ import {
   BrowserTransferStateModule,
 } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorTailorModule } from '@ngneat/error-tailor';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CookieModule } from 'ngx-cookie';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ERROR_MESSAGES_MAPPING } from './config/app-config';
 import { DirectivesModule } from './directives/directives.module';
 import { ErrorMessageInterceptor } from './interceptors/error.interceptor';
 import { LoginTokenInterceptor } from './interceptors/login-token.interceptor';
@@ -36,8 +39,12 @@ import { TestComponentModule } from './test/test-component/test-component.module
     SignupFormModule,
     SearchResultsModule,
     DirectivesModule,
+    ErrorTailorModule.forRoot(ERROR_MESSAGES_MAPPING),
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
+    CookieModule.forRoot({
+      httpOnly: false,
+    }),
     EffectsModule.forRoot(appStoreEffects),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

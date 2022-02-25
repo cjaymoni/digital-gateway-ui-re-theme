@@ -6,8 +6,9 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { CookieService } from 'ngx-cookie';
 import { map, Observable } from 'rxjs';
-import { Roles } from '../config/app-config';
+import { APP_USER_TOKEN, Roles } from '../config/app-config';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
 import { userAuthSelectors } from '../store/selectors/user-auth.selectors';
 import { NavigatorService } from './navigator.service';
@@ -22,7 +23,8 @@ export class RoleGuard implements CanActivate {
   constructor(
     private store: Store,
     private alert: AppAlertService,
-    private navigator: NavigatorService
+    private navigator: NavigatorService,
+    private cookieService: CookieService
   ) {}
   canActivate(
     route: ActivatedRouteSnapshot,

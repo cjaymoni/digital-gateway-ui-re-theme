@@ -5,6 +5,8 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie';
+
 import { catchError, EMPTY, Observable } from 'rxjs';
 import {
   APP_TOKEN,
@@ -20,7 +22,8 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
   constructor(
     private alert: AppAlertService,
     private navigator: NavigatorService,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private cookieService: CookieService
   ) {}
 
   intercept(
@@ -58,6 +61,7 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
           );
           this.localStorage.removeItem(APP_TOKEN);
           this.localStorage.removeItem(APP_USER_TOKEN);
+          this.cookieService.removeAll();
           this.navigator.auth.goToLogin();
         } else if (event.status === 403) {
           this.alert.showToast(

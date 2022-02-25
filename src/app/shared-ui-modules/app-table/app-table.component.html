@@ -11,13 +11,13 @@
       #dt
       [columns]="columnsDefinition"
       [value]="dataToDisplay"
-      [scrollable]="true"
+      [scrollable]="false"
       [(selection)]="selectedData"
       [paginatorPosition]="'top'"
       [rows]="DEFAULT_PAGE_SIZE"
       [showCurrentPageReport]="true"
       [paginator]="false"
-      scrollHeight="450px"
+      scrollHeight="500px"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} records"
       [rowsPerPageOptions]="[]"
       dataKey="id"
@@ -26,13 +26,7 @@
     >
       <ng-template pTemplate="caption" *ngIf="showCaption">
         <div
-          class="
-            flex
-            align-items-center
-            justify-content-center
-            flex-column
-            md:flex-row
-          "
+          class="flex align-items-center justify-content-center flex-column md:flex-row"
         >
           <div class="md:mr-auto">
             {{ title }}

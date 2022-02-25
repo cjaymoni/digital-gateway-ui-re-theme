@@ -138,7 +138,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
   }
 
   removeImage() {
-    this.image.setValue([]);
+    this.image.setValue(null);
   }
 
   goBack() {
@@ -154,7 +154,6 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
           categoryActions.editCategorySuccessful
         ),
         map(_ => {
-          console.log('add edit success');
           this.navigator.closeModal();
         })
       )
