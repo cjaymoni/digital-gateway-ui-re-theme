@@ -4,13 +4,14 @@ import { map } from 'rxjs';
 import { UserProfileEndpoint } from 'src/app/config/routes';
 import { Avatar, UserProfile } from 'src/app/models/user-auth.model';
 import { ResourceService } from 'src/app/services/resources.service';
+import { TransferStateService } from 'src/app/services/transfer-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserProfileService extends ResourceService {
-  constructor(http: HttpClient) {
-    super(http, UserProfileEndpoint);
+  constructor(http: HttpClient, transferState: TransferStateService) {
+    super(http, UserProfileEndpoint, transferState);
   }
 
   editProfile(profile: any, imageToUpload?: File[] | any[]) {

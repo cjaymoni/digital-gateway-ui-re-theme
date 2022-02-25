@@ -6,13 +6,18 @@ import { ResourceService } from 'src/app/services/resources.service';
 import { map, tap } from 'rxjs';
 import { usersListActions } from 'src/app/store/actions/users-list.actions';
 import { Store } from '@ngrx/store';
+import { TransferStateService } from 'src/app/services/transfer-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserManagementService extends ResourceService {
-  constructor(http: HttpClient, private store: Store) {
-    super(http, UsersEndPoint);
+  constructor(
+    http: HttpClient,
+    private store: Store,
+    transferState: TransferStateService
+  ) {
+    super(http, UsersEndPoint, transferState);
   }
 
   editUser(user: any, imageToUpload: any) {}

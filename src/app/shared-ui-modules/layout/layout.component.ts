@@ -2,12 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription, tap } from 'rxjs';
 import { RouterOutlets } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { ThemeSettingsService } from 'src/app/services/theme-settings.service';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 import { AppAlertService } from '../alerts/service/app-alert.service';
 import { ModalComponentsComponent } from '../modal-components/modal-components.component';
@@ -20,6 +21,9 @@ import { ModalComponentsComponent } from '../modal-components/modal-components.c
   providers: [ThemeSettingsStore],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
+
+  loading$ = this.themeService.loadingHomepageData$;
+
   RouterOutlets = RouterOutlets;
 
   modalActiveSubcription$!: Subscription;
@@ -38,7 +42,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   constructor(
     private appAlert: AppAlertService,
-    private navigator: NavigatorService
+    private navigator: NavigatorService,
+    private themeService: ThemeSettingsService
   ) {}
 
   ngOnDestroy(): void {

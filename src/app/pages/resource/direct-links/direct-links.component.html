@@ -1,0 +1,10 @@
+<app-listing-page
+  [loading]="loadingLinkList$ |async"
+  [title]="'Direct Links'"
+  [itemTemplate]="resourceCardTemplate"
+  [items]="linkList$ | async"
+></app-listing-page>
+
+<ng-template #resourceCardTemplate  let-lists>
+  <app-direct-links-card [digiLink]="lists"></app-direct-links-card>
+</ng-template>

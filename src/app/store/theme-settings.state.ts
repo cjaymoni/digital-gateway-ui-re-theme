@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
-import { catchError, EMPTY, map, Observable, retry, tap } from 'rxjs';
+import { catchError, EMPTY, map, noop, Observable, retry, tap } from 'rxjs';
 import { AppUploadedImage } from '../models/article.model';
 import { Category } from '../models/category.model';
+import { DigitalLink } from '../models/digital-link.model';
 import { MultiMedia } from '../models/multimedia.model';
 import { ThemeSettingsService } from '../services/theme-settings.service';
 import { categorySelectors } from './selectors/category.selectors';
@@ -63,6 +66,7 @@ export interface ThemeSettings {
 
   forumMetrics: any[];
   multimedia: MultiMedia[];
+  featuredDirectLinks: DigitalLink[];
 }
 
 export const initialHomepageState: ThemeSettings = {
@@ -72,13 +76,18 @@ export const initialHomepageState: ThemeSettings = {
   featuredArticles: [],
   featuredEvents: [],
   multimedia: [],
+  featuredDirectLinks: [],
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
   constructor(
     private themeSettings: ThemeSettingsService,
-    private store: Store
+    private store: Store,
+    private transferState: TransferState,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {
     super(initialHomepageState);
     this.getHomepageData();
@@ -104,6 +113,10 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
   readonly forumMetrics$: Observable<any> = this.select(
     state => state.forumMetrics
   );
+
+  readonly featuredDirectLinks$: Observable<
+    ThemeSettings['featuredDirectLinks']
+  > = this.select(state => state.featuredDirectLinks);
 
   readonly highlightArticlesArray$ = this.select(
     this.highlightArticles$.pipe(map(d => d as any[])),
@@ -152,7 +165,9 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
     return this.themeSettings.getHompageData().pipe(
       // retry(1),
       tap({
-        next: homepageData => this.setState(homepageData),
+        next: homepageData => {
+          this.setState(homepageData);
+        },
         error: () => {
           this.setState(initialHomepageState);
         },

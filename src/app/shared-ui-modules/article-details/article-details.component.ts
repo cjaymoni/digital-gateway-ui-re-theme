@@ -32,10 +32,11 @@ export class ArticleDetailsComponent implements OnInit {
         image: article.images?.[0].image,
         description: article.meta_description,
         author: article.meta_author,
-        url: ``,
       });
     })
   );
+
+  loading$ = this.store.select(articleSelectors.loading);
 
   ngOnInit() {}
 }

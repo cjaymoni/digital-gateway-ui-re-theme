@@ -133,5 +133,9 @@ class ArticleActions {
   );
 
   clearAllSelected = createAction(`${this.type} Clear All Selected Articles`);
+
+  startLoad = createAction(`${this.type} Start loading`);
+
+  finishLoad = createAction(`${this.type} Finish loading`);
 }
 export const articleActions = new ArticleActions();

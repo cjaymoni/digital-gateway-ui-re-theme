@@ -59,10 +59,10 @@ export const articleReducer = createReducer(
     return { ...state, loading: false };
   }),
   on(articleActions.selectArticle, (state, { article }) => {
-    return { ...state, selectedArticle: article };
+    return { ...state, selectedArticle: article, loading: false };
   }),
   on(articleActions.selectArticleToEdit, (state, { article }) => {
-    return { ...state, selectedArticleToEdit: article };
+    return { ...state, selectedArticleToEdit: article, loading: false };
   }),
   on(articleActions.addArticleSuccessful, (state, { article }) => {
     return articleEntityAdapter.addOne(article, state);
@@ -94,5 +94,11 @@ export const articleReducer = createReducer(
   }),
   on(articleActions.clearAllSelected, state => {
     return { ...state, selectedArticleToEdit: null, selectedArticle: null };
+  }),
+  on(articleActions.startLoad, state => {
+    return { ...state, loading: true };
+  }),
+  on(articleActions.finishLoad, state => {
+    return { ...state, loading: false };
   })
 );

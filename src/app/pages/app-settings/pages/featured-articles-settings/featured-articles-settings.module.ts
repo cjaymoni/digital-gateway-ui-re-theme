@@ -4,6 +4,7 @@ import { FeaturedArticlesSettingsComponent } from './featured-articles-settings.
 import { ButtonModule } from 'primeng/button';
 import { PickListModule } from 'primeng/picklist';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     PickListModule,
     ButtonModule,
+    InputTextModule,
   ],
   declarations: [FeaturedArticlesSettingsComponent],
   exports: [FeaturedArticlesSettingsComponent],

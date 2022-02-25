@@ -72,6 +72,7 @@ const routes: Routes = [
     path: Pages.Resources.main,
     loadChildren: () =>
       import('./pages/resource/resource.module').then(m => m.ResourceModule),
+    data: { breadcrumb: 'Resources' },
   },
   {
     path: Pages.UserProfile,
@@ -91,6 +92,16 @@ const routes: Routes = [
       ),
     data: {
       breadcrumb: 'Multimedia Management',
+    },
+  },
+  {
+    path: Pages.DigitalLinks.main,
+    loadChildren: () =>
+      import('./pages/digital-links/digital-links.module').then(
+        m => m.DigitalLinksModule
+      ),
+    data: {
+      breadcrumb: 'Digital Links',
     },
   },
   {
