@@ -28,7 +28,7 @@ const routes: Routes = [
     canActivate: [RoleGuard, ArticleGuard],
     data: {
       breadcrumb: 'Edit',
-      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+      roles: [Roles.Admin, Roles.Editor],
     },
   },
 
@@ -51,7 +51,7 @@ const routes: Routes = [
     canActivate: [RoleGuard, ArticleGuard],
     data: {
       breadcrumb: 'List',
-      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+      roles: [Roles.Admin, Roles.Editor],
     },
   },
 
@@ -62,7 +62,7 @@ const routes: Routes = [
     canActivate: [RoleGuard, ArticleGuard],
     data: {
       breadcrumb: 'Add',
-      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+      roles: [Roles.Admin, Roles.Editor, Roles.Reporter],
     },
   },
   {

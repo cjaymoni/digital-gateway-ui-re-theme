@@ -1,6 +1,9 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  BrowserTransferStateModule,
+} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -23,6 +26,7 @@ import { TestComponentModule } from './test/test-component/test-component.module
   declarations: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserTransferStateModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     LayoutModule,
@@ -34,7 +38,6 @@ import { TestComponentModule } from './test/test-component/test-component.module
     DirectivesModule,
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
-    BrowserTransferStateModule,
     EffectsModule.forRoot(appStoreEffects),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

@@ -4,13 +4,14 @@ import { map } from 'rxjs';
 import { CategoryEndpoint } from '../config/routes';
 import { Category } from '../models/category.model';
 import { ResourceService } from './resources.service';
+import { TransferStateService } from './transfer-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService extends ResourceService {
-  constructor(httpClient: HttpClient) {
-    super(httpClient, CategoryEndpoint);
+  constructor(httpClient: HttpClient, transferState: TransferStateService) {
+    super(httpClient, CategoryEndpoint, transferState);
   }
 
   addCategory(category: Category, image?: File[]) {

@@ -6,58 +6,55 @@
     <app-top-nav></app-top-nav>
   </nav>
   <!-- main content -->
-  <ng-container *ngIf="!(loading$ | async); else loading"  >
-  <div class="col-12 grid pt-0 pb-0 justify-content-center">
-    <!-- left sidebar -->
-    <div
-      class="hidden col-3 xl:col-2 lg:block p-2 xl:sticky xl:top-0 pt-5 bg-darkblue z-4"
-    >
-      <app-side-nav></app-side-nav>
-      <div class="col-12 xl:hidden pt-5 right-nav-in-sidebar">
-        <app-right-nav-card></app-right-nav-card>
-      </div>
-    </div>
-    <!-- middle content -->
-    <div
-      class="col-12 lg:col-9 xl:col-8 grid justify-content-center h-full p-2 pt-5 mb-7"
-    >
-      <div class="col-12 min-h-screen p-0 pl-3 pb-8">
-        <!-- <div class="mr-3 hidden lg:flex">
-            <app-back-button styleClass="h-3rem"></app-back-button>
-          </div> -->
-        <p-breadcrumb
-          *ngIf="((breadcrumbs$ | async) || []).length > 1"
-          styleClass="p-0 border-noround border-none m-0 pl-2 mb-3 bg-white"
-          [model]="(breadcrumbs$ | async) ?? []"
-        ></p-breadcrumb>
-        <router-outlet></router-outlet>
-      </div>
-
-      <!-- left bar loaded below -->
-      <div class="col-12 lg:hidden justify-content-center p-0 pt-5 pl-3">
+  <ng-container *ngIf="!(loading$ | async); else loading">
+    <div class="col-12 grid pt-0 pb-0 justify-content-center">
+      <!-- left sidebar -->
+      <div
+        class="hidden col-3 xl:col-2 lg:block p-2 xl:sticky xl:top-0 pt-5 bg-darkblue z-4"
+      >
         <app-side-nav></app-side-nav>
       </div>
-
-      <!-- right bar loaded below -->
+      <!-- middle content -->
       <div
-        class="rightcontent col-12 lg:hidden justify-content-center p-0 pt-5 pl-3"
+        class="col-12 lg:col-9 xl:col-8 grid justify-content-center h-full p-2 pt-5 mb-7"
       >
-        <app-right-nav-card></app-right-nav-card>
-      </div>
-    </div>
+        <div class="col-12 min-h-screen p-0 pl-3 pb-8">
+          <!-- <div class="mr-3 hidden lg:flex">
+            <app-back-button styleClass="h-3rem"></app-back-button>
+          </div> -->
+          <p-breadcrumb
+            *ngIf="((breadcrumbs$ | async) || []).length > 1"
+            styleClass="p-0 border-noround border-none m-0 pl-2 mb-3 bg-white"
+            [model]="(breadcrumbs$ | async) ?? []"
+          ></p-breadcrumb>
+          <router-outlet></router-outlet>
+        </div>
 
-    <!-- right side bar -->
-    <div class="hidden xl:flex xl:col-2 h-full p-0 pt-5" >
-      <div class="col-12">
-        <app-right-nav-card></app-right-nav-card>
+        <!-- right bar loaded below -->
+        <div
+          class="rightcontent col-12 xl:hidden justify-content-center p-0 pt-5 pl-3"
+        >
+          <app-right-nav-card></app-right-nav-card>
+        </div>
+
+        <!-- left bar loaded below -->
+        <div class="col-12 lg:hidden justify-content-center p-0 pt-5 pl-3">
+          <app-side-nav></app-side-nav>
+        </div>
+      </div>
+
+      <!-- right side bar -->
+      <div class="hidden xl:flex xl:col-2 h-full p-0 pt-5">
+        <div class="col-12">
+          <app-right-nav-card></app-right-nav-card>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- footer -->
-  <footer class="col-12 footer p-0 z-4">
-    <app-footer></app-footer>
-  </footer>
-</ng-container>
+    <!-- footer -->
+    <footer class="col-12 footer p-0 z-4">
+      <app-footer></app-footer>
+    </footer>
+  </ng-container>
   <!-- right panel -->
   <app-right-overlay-panel>
     <router-outlet name="right-panel"></router-outlet>
@@ -69,8 +66,8 @@
 </div>
 
 <ng-template #loading>
-    <div class="ml-auto mr-auto loader">
-      <i class="pi pi-spin pi-spinner" style="font-size: 8rem;"></i>
-      <h6 class="text-lg text-teal-500 text-center">Please wait...</h6>
-    </div>
+  <div class="ml-auto mr-auto loader">
+    <i class="pi pi-spin pi-spinner" style="font-size: 8rem"></i>
+    <h6 class="text-lg text-teal-500 text-center">Please wait...</h6>
+  </div>
 </ng-template>

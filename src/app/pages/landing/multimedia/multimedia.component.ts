@@ -3,6 +3,8 @@ import {
   Input,
   OnInit,
   ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { MultiMedia } from 'src/app/models/multimedia.model';
 
@@ -19,6 +21,8 @@ export class MultimediaComponent implements OnInit {
   videoId = '';
 
   @Input() multimedia: MultiMedia | null = null;
+
+  @Output() playerStatus = new EventEmitter();
 
   constructor() {}
 
@@ -40,5 +44,9 @@ export class MultimediaComponent implements OnInit {
       document.body.appendChild(tag);
       apiLoaded = true;
     }
+  }
+
+  stateChange(event: any) {
+    this.playerStatus.emit(event);
   }
 }

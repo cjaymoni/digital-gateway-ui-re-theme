@@ -11,13 +11,14 @@ import { AppUploadedImage } from 'src/app/models/article.model';
 import { Comment } from 'src/app/models/comments.model';
 import { Forum } from 'src/app/models/forum.model';
 import { ResourceService } from 'src/app/services/resources.service';
+import { TransferStateService } from 'src/app/services/transfer-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ForumsService extends ResourceService {
-  constructor(http: HttpClient) {
-    super(http, ForumEndpoint);
+  constructor(http: HttpClient, transferState: TransferStateService) {
+    super(http, ForumEndpoint, transferState);
   }
 
   searchForum(searchParams: { [key: string]: any }) {

@@ -1,23 +1,28 @@
-import { isPlatformServer } from "@angular/common";
-import { Directive, Inject, OnInit, PLATFORM_ID, TemplateRef, ViewContainerRef } from "@angular/core";
+import { isPlatformBrowser } from '@angular/common';
+import {
+  Directive,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+  TemplateRef,
+  ViewContainerRef,
+} from '@angular/core';
 
 @Directive({
-  selector: '[appShellRender]'
+  selector: '[appShellNoRender]',
 })
-export class AppShellRenderDirective implements OnInit {
-
+export class AppShellNoRenderDirective implements OnInit {
   constructor(
-      private viewContainer: ViewContainerRef,
-      private templateRef: TemplateRef<any>,
-      @Inject(PLATFORM_ID) private platformId: any) {}
-        
+    private viewContainer: ViewContainerRef,
+    private templateRef: TemplateRef<any>,
+    @Inject(PLATFORM_ID) private platformId: any
+  ) {}
+
   ngOnInit() {
-      if (isPlatformServer(this.platformId)) {
-          this.viewContainer.createEmbeddedView(this.templateRef);
-      }
-      else {
-          this.viewContainer.clear();
-      }
+    if (isPlatformBrowser(this.platformId)) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainer.clear();
+    }
   }
 }
-        

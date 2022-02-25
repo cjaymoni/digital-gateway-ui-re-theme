@@ -6,20 +6,27 @@ import { DEFAULT_PAGE_SIZE } from 'src/app/config/app-config';
 import { ArticlesEndpoint, CategoryEndpoint } from 'src/app/config/routes';
 import { Article, AppUploadedImage } from 'src/app/models/article.model';
 import { ResourceService } from 'src/app/services/resources.service';
+import { TransferStateService } from 'src/app/services/transfer-state.service';
 import { articleActions } from 'src/app/store/actions/article.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService extends ResourceService {
-  constructor(http: HttpClient, private store: Store) {
-    super(http, ArticlesEndpoint);
+  constructor(
+    http: HttpClient,
+    private store: Store,
+    transferState: TransferStateService
+  ) {
+    super(http, ArticlesEndpoint, transferState);
   }
 
   override getOneResource(id: any) {
-    return this.http
+    const one = this.http
       .get(`${this.endpoint}${id}/?moderate=True`)
       .pipe(map(data => data as Article));
+
+    return this.transferState.fetch('oneArticle' + id, one);
   }
 
   searchArticle(searchParams: { [key: string]: any }) {
@@ -29,12 +36,14 @@ export class ArticleService extends ResourceService {
     return this.getResources(this.endpoint, undefined, searchParams).pipe(
       map(data => data as Article[])
     );
+    // return this.transferState.fetch('searchArticle', search);
   }
 
   searchArticleByCategory(categoryId: number) {
-    return this.http
+    const searchCat = this.http
       .get(`${CategoryEndpoint}${categoryId}/articles`)
       .pipe(map((data: any) => data.results as Article[]));
+    return this.transferState.fetch('searchArticleCategory', searchCat);
   }
 
   findArticleUsingSlug(slug: string) {

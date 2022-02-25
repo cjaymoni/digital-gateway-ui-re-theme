@@ -1,4 +1,4 @@
-import { isPlatformServer } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ComponentStore } from '@ngrx/component-store';
@@ -76,24 +76,21 @@ export const initialHomepageState: ThemeSettings = {
   featuredArticles: [],
   featuredEvents: [],
   multimedia: [],
-  featuredDirectLinks: []
+  featuredDirectLinks: [],
 };
 
-const HOMEPAGE_DATA_KEY = makeStateKey<ThemeSettings>('initialData');
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
   constructor(
     private themeSettings: ThemeSettingsService,
     private store: Store,
     private transferState: TransferState,
-    @Inject(PLATFORM_ID) private platformId: any,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {
     super(initialHomepageState);
-   
-
+    this.getHomepageData();
   }
 
   categories$ = this.store.select(categorySelectors.all);
@@ -117,7 +114,9 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
     state => state.forumMetrics
   );
 
-  readonly featuredDirectLinks$: Observable<ThemeSettings['featuredDirectLinks']> = this.select(state => state.featuredDirectLinks)
+  readonly featuredDirectLinks$: Observable<
+    ThemeSettings['featuredDirectLinks']
+  > = this.select(state => state.featuredDirectLinks);
 
   readonly highlightArticlesArray$ = this.select(
     this.highlightArticles$.pipe(map(d => d as any[])),
@@ -163,30 +162,11 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
   );
 
   readonly getHomepageData = this.effect(() => {
-    console.log(this.transferState);
-    if(this.transferState.hasKey(HOMEPAGE_DATA_KEY)){
-      console.log('data exists already');
-      
-      const homepageData = this.transferState.get<ThemeSettings>(HOMEPAGE_DATA_KEY, initialHomepageState);
-      this.transferState.remove(HOMEPAGE_DATA_KEY);
-      this.setState(homepageData)
-      // return of(course);
-
-      return EMPTY;
-    }
-
     return this.themeSettings.getHompageData().pipe(
       // retry(1),
       tap({
         next: homepageData => {
           this.setState(homepageData);
-          console.log({homepageData});
-          
-          if (isPlatformServer(this.platformId)) {
-            console.log('is server');
-            
-            this.transferState.set(HOMEPAGE_DATA_KEY, homepageData);
-          }
         },
         error: () => {
           this.setState(initialHomepageState);

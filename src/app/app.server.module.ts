@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
-import { ServerModule, ServerTransferStateModule } from '@angular/platform-server';
-
-import { AppModule } from './app.module';
+import {
+  ServerModule,
+  ServerTransferStateModule,
+} from '@angular/platform-server';
 import { AppComponent } from './app.component';
-import { BrowserModule } from '@angular/platform-browser';
+import { AppModule } from './app.module';
 
 @NgModule({
-  imports: [AppModule, ServerModule, ServerTransferStateModule,  BrowserModule.withServerTransition({ appId: 'serverApp' }),],
+  imports: [AppModule, ServerModule, ServerTransferStateModule],
   bootstrap: [AppComponent],
 })
 export class AppServerModule {}

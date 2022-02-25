@@ -6,13 +6,18 @@ import { ForumPost } from 'src/app/models/forum.model';
 import { ResourceService } from 'src/app/services/resources.service';
 import { forumPostActions } from '../../../store/actions/forum-post.action';
 import { Store } from '@ngrx/store';
+import { TransferStateService } from 'src/app/services/transfer-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ForumPostsService extends ResourceService {
-  constructor(http: HttpClient, private store: Store) {
-    super(http, ForumPostEndpoint);
+  constructor(
+    http: HttpClient,
+    private store: Store,
+    transferState: TransferStateService
+  ) {
+    super(http, ForumPostEndpoint, transferState);
   }
 
   searchForumPost(searchParams: { [key: string]: any }) {

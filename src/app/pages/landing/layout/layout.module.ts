@@ -26,9 +26,9 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
     DirectLinksCardModule,
     FeaturedCategoriesCardModule,
     OpportunitisCardModule,
-    DirectivesModule
+    DirectivesModule,
   ],
   declarations: [LayoutComponent],
-  exports: [LayoutComponent]
+  exports: [LayoutComponent],
 })
 export class LayoutModule {}

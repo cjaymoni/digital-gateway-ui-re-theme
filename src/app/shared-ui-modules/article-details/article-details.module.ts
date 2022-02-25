@@ -8,17 +8,20 @@ import { ButtonModule } from 'primeng/button';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { NoResultsFoundModule } from '../no-results-found/no-results-found.module';
+import { ForumLoadingCardModule } from '../forum-loading-card/forum-loading-card.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    SkeletonModule,
     ArticleImageModule,
     TagModule,
     OverlayPanelModule,
     ButtonModule,
     ShareButtonsModule,
     ShareIconsModule,
+    NoResultsFoundModule,
+    ForumLoadingCardModule,
   ],
   declarations: [ArticleDetailsComponent],
   exports: [ArticleDetailsComponent],

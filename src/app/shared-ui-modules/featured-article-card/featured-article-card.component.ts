@@ -15,7 +15,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeaturedArticleCardComponent implements OnInit {
-  @Input() featuredArticle: Article | null = null;
+  @Input() featuredArticle: any = null;
 
   constructor(private store: Store, private navigator: NavigatorService) {}
 

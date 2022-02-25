@@ -1,5 +1,9 @@
 :host ::ng-deep {
   .video-container {
+    @media screen and (max-width: 500px) {
+      padding-bottom: 56.25% !important; /* 16:9 */
+    }
+
     position: relative;
     // padding-bottom: 56.25%; /* 16:9 */
     padding-bottom: 42.25%; /* 16:9 */

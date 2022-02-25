@@ -1,6 +1,7 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ArticlePublishedStatus } from '../models/article.model';
+import { CREATE_AD, CREATE_RESOURCE } from './activity-roles';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
 export const TABLET_WIDTH_BREAKPOINT = 960;
@@ -265,16 +266,14 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       label: 'Article Moderation',
       routerLink: [Pages.Articles.main, Pages.Articles.myList],
       icon: 'pi pi-list',
-      visible:
-        userRole === Roles.Admin ||
-        userRole === Roles.Editor ||
-        userRole === Roles.Contributor,
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
     {
       id: 'my-forum-post',
       label: 'My Forum Posts',
       routerLink: [Pages.ForumPost.main, Pages.ForumPost.myList],
       icon: 'pi pi-list',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
     {
       id: 'my-market-ad',
@@ -294,6 +293,7 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       label: 'User Management',
       routerLink: [Pages.UserManagement],
       icon: 'pi pi-users',
+      visible: userRole === Roles.Admin,
     },
     {
       id: 'content-settings',
@@ -353,16 +353,39 @@ export enum CommentType {
   Comment,
 }
 
-export const trackById = (index: number, comment: any): number => {
-  return comment.id;
+export const trackById = (index: number, data: any): number => {
+  return data.id;
+};
+
+export const trackByAny = (key: string) => {
+  return function (index: number, data: any) {
+    if (key.includes('.')) {
+      const keys = key.split('.');
+      let retrievedData: any;
+      let currentData: any;
+      for (let index = 0; index < keys.length; index++) {
+        const key = keys[index];
+        if (index === 0) {
+          currentData = { ...data[key] };
+        } else {
+          retrievedData = currentData[key];
+        }
+      }
+      return retrievedData;
+    }
+    return data[key];
+  };
+};
+(index: number, data: any): number => {
+  return data.id;
 };
 
 export enum Roles {
   Contributor = 'contributor',
-  Moderator = 'moderator',
+  Reporter = 'reporter',
   Admin = 'admin',
   Editor = 'editor',
-  ServiceProvider = 'service_provider',
+  ServiceProvider = 'service',
 }
 
 export const getUserRole = () => {
@@ -379,7 +402,7 @@ export const MainMenu: MenuItem[] = [
   },
   {
     id: 'forum',
-    label: 'Entrepreneurs\' Forum',
+    label: "Entrepreneurs' Forum",
     icon: 'pi pi-discord',
     items: [
       {
@@ -393,6 +416,14 @@ export const MainMenu: MenuItem[] = [
         label: 'Create A Forum',
         icon: 'pi pi-plus',
         routerLink: [Pages.Forum.main, Pages.Forum.add],
+        visible: (() => {
+          const userRole = getUserRole();
+          return (
+            userRole === Roles.Admin ||
+            userRole === Roles.Editor ||
+            userRole === Roles.ServiceProvider
+          );
+        })(),
       },
     ],
   },
@@ -412,6 +443,10 @@ export const MainMenu: MenuItem[] = [
         label: 'Create An Ad',
         icon: 'pi pi-plus',
         routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
+        visible: (() => {
+          const userRole = getUserRole();
+          return CREATE_AD(userRole);
+        })(),
       },
     ],
   },
@@ -431,13 +466,9 @@ export const MainMenu: MenuItem[] = [
         label: 'Add Resource',
         icon: 'pi pi-plus',
         routerLink: [Pages.Resources.main, Pages.Resources.add],
-        disabled: (() => {
+        visible: (() => {
           const userRole = getUserRole();
-          return (
-            userRole === Roles.Admin ||
-            userRole === Roles.Editor ||
-            userRole === Roles.ServiceProvider
-          );
+          return CREATE_RESOURCE(userRole);
         })(),
       },
       {
