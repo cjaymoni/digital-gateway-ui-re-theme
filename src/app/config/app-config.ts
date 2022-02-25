@@ -129,6 +129,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   Resources: {
     main: 'resources',
     add: 'post-resource',
+    links: 'direct-links',
   },
   MultimediaManagement: {
     main: 'multimedia-management',
@@ -472,10 +473,10 @@ export const MainMenu: MenuItem[] = [
         })(),
       },
       {
-        id: 'view-resources',
+        id: 'view-links',
         label: 'Direct Links',
-        icon: 'pi pi-logout',
-        routerLink: [Pages.Resources.main],
+        icon: 'pi pi-link',
+        routerLink: [Pages.Resources.main, Pages.Resources.links],
       },
     ],
   },
