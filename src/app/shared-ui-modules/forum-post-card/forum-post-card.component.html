@@ -1,8 +1,10 @@
 <div
   class="
     forum-post-card
-    shadow-5
-    p-component p-3
+    shadow-3
+    p-component
+    px-8
+    py-4
     border-round
     fadeindown
     animation-duration-1000
@@ -12,30 +14,31 @@
   (click)="openForumPost()"
   *ngIf="forumPost"
 >
-  <div class="flex justify-content-between align-content-center">
-    <div class="flex">
+  <div class="grid">
+    <div class="col-2">
       <p-avatar
         [image]="forumPost.submitter.image"
         styleClass="mr-2"
-        size="large"
+        size="xlarge"
         shape="circle"
       ></p-avatar>
-      <div class="text-lg font-bold mt-1">
+    </div>
+    <div class="col-10">
+      <div class="text-lg font-bold mr-8">
         {{ forumPost.title | uppercase }}
         <div class="text-sm">
           {{ forumPost.submitter.username }}
         </div>
       </div>
-    </div>
 
-    <div class="align-content-end">
-      <app-comments
-        [commentCount]="forumPost.comment_count || 0"
-      ></app-comments>
+      <div class="pt-2 flex justify-content-between">
+        {{ forumPost.content || '' | appEllipsis: 150 }}
+        <div>
+          <app-comments
+            [commentCount]="forumPost.comment_count || 0"
+          ></app-comments>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div>
-    {{ forumPost.content || '' | appEllipsis: 150 }}
   </div>
 </div>

@@ -1,8 +1,10 @@
 <div
   class="
     forum-post-card
-    shadow-4
-    p-component p-3
+    shadow-2
+    p-component
+    px-8
+    py-4
     border-round
     fadeindown
     animation-duration-500
@@ -11,11 +13,11 @@
   *ngIf="forum"
   (click)="openForum()"
 >
-  <div class="text-lg xl:text-2xl font-bold text-darkblue">
+  <div class="text-lg xl:text-2xl font-bold text-black-alpha-90 mr-8">
     {{ forum.name | uppercase }}
   </div>
 
-  <div class="font-italic text-purple-800 font-semibold text-xs" *ngIf="count; else length">
+  <div class="text-black-alpha-90 font-semibold text-xs pt-2" *ngIf="count; else length">
     {{ count }} Topic(s)
     <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
       {{ tag.name }}
@@ -23,7 +25,7 @@
   </div>
 
   <ng-template #length>
-    <div class="font-italic text-purple-800 font-semibold text-xs">
+    <div class="text-black-alpha-90 font-semibold text-xs pt-2 flex justify-content-between">
       {{ forum.posts?.length ?? 0 }} Topic(s)
       <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
         {{ tag.name }}

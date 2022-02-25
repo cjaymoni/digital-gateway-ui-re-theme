@@ -1,9 +1,9 @@
 <app-listing-page
   [loading]="loadingForums$ | async"
-  [title]="'FORUMS'"
+  [title]="'Entrepreneur\'s Forum'"
   [itemTemplate]="forumCardTemplate"
   [items]="forums$ | async"
-  itemClass="col-12"
+  itemClass="col-12 px-8 pt-3"
 ></app-listing-page>
 
 <ng-template #forumCardTemplate let-forum>
