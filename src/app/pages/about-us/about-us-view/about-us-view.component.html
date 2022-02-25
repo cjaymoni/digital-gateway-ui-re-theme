@@ -1,0 +1,87 @@
+<div class="m-7">
+  <!-- hero -->
+  <div class="w-full h-12rem bg-darkblue border-round text-center">
+    <div class="text-white pt-7 font-bold text-5xl">MSME Gateway</div>
+    <div class="text-white font-bold text-lg">One-Stop Portal for Business</div>
+  </div>
+
+  <!-- content -->
+  <div class="grid mt-8">
+    <div class="col-8">
+      <div>
+        The Digital Gateway is a centralised information platform for Micro,
+        Small, Medium, Enterprises (MSME) in Ghana. It serves as a one-stop
+        business advisory platform, to assist MSMEs find timely, relevant, and
+        credible information to manage challenges related to financial, market,
+        operations, and external factors. Businesses will discover reliable
+        business-related information to deal with common problems and issues
+        through the provision of business advisory and information, digital
+        marketing
+        <!-- opportunities and guidance,
+      technology
+      and business innovation support facilitation, business matching services,
+      and various channels of online initiatives that are linked to implementing
+      agencies. -->
+      </div>
+    </div>
+    <div class="col-4">
+      <img
+        [src]="sideImage"
+        class="h-full w-full border-round"
+        alt="Side Image"
+      />
+    </div>
+    <div class="col-12"></div>
+    <div class="col-12">
+      <div class="font-bold">
+        The following information is available on the platform.
+      </div>
+
+      <ul class="list-none -ml-6">
+        <li>
+          Government Policy on MSME and information on Regulations/Standards
+        </li>
+        <li>Financing and Financial Information</li>
+
+        <li>Taxation Incentives, Subsidies</li>
+
+        <li>Advertising Information</li>
+
+        <li>Technical Support, Training and Capacity Building</li>
+
+        <li>Information on inputs including Raw Materials and Machinery</li>
+
+        <li>Business Development, Advisory and Investment Opportunities</li>
+
+        <li>Product and Market Information</li>
+
+        <li>Export and Import Trade-related including AfCFTA</li>
+
+        <li>Security and safety</li>
+
+        <li>
+          The digital gateway has been designed to enable access and sharing of
+          useful information for business owners as well as or policy/decision
+          makers and researchers. Business can share experiences in trading,
+          operating their businesses or challenges faced at the multiple land
+          crossing border points, airports and ports.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="w-full mt-7">
+    <div class="font-bold">Our Partners</div>
+    <div class="grid mt-3">
+      <ng-container *ngFor="let _ of [].constructor(6)">
+        <div class="col-2">
+          <img
+            [src]="partImage"
+            class="h-full w-full border-round"
+            alt="Partners Image"
+          />
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

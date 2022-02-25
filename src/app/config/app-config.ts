@@ -164,6 +164,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   SignUp: 'sign-up',
   Login: 'login',
   UserManagement: 'user-management',
+  AboutUs: 'about-us',
 
   Category: {
     main: 'category',
@@ -379,7 +380,7 @@ export const MainMenu: MenuItem[] = [
   },
   {
     id: 'forum',
-    label: 'Entrepreneurs\' Forum',
+    label: "Entrepreneurs' Forum",
     icon: 'pi pi-discord',
     items: [
       {

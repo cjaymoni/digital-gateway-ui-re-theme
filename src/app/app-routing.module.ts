@@ -119,6 +119,14 @@ const routes: Routes = [
     },
   },
   {
+    path: Pages.AboutUs,
+    loadChildren: () =>
+      import('./pages/about-us/about-us.module').then(m => m.AboutUsModule),
+    data: {
+      breadcrumb: 'About Us',
+    },
+  },
+  {
     path: 'search/:query',
     pathMatch: 'full',
     component: SearchResultsComponent,
