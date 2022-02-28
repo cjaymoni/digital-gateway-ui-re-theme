@@ -75,7 +75,7 @@
     <ng-container
       *ngFor="let directLink of directLinks$ | async; trackBy: trackBy"
     >
-      <div class="col p-2">
+      <div class="col-12 md:col-4 p-3">
         <app-direct-links-card [digiLink]="directLink"></app-direct-links-card>
       </div>
     </ng-container>
