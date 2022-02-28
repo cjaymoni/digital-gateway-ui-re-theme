@@ -28,6 +28,14 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   searching$ = new BehaviorSubject(true);
   searchResults$ = new BehaviorSubject(new Array(0));
 
+  totalSearchResults$ = this.searchResults$.pipe(
+    map((value: any[]) => {
+      const filtered = value.filter(val => val.source == SearchList.ARTICLE ||
+        val.source == SearchList.ADS || val.source == SearchList.FORUM || val.source == SearchList.FORUM_POST);
+      return filtered;
+    })
+  );
+
   articleSearchResults$ = this.searchResults$.pipe(
     map((value: any[]) => {
       const filtered = value.filter(val => val.source == SearchList.ARTICLE);
