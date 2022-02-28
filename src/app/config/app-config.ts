@@ -166,6 +166,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   SignUp: 'sign-up',
   Login: 'login',
   UserManagement: 'user-management',
+  AboutUs: 'about-us',
 
   Category: {
     main: 'category',
