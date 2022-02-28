@@ -1,16 +1,7 @@
 <div
-  class="
-    forum-post-card
-    shadow-5
-    p-component p-3
-    border-round
-    fadeindown
-    animation-duration-1000
-    hover:text-pink-700 hover:bg-gray-100
-    transition-all transition-duration-500 transition-ease-out
-  "
-  (click)="openForumPost()"
   *ngIf="forumPost"
+  class="forum-post-card shadow-5 p-component p-3 border-round fadeindown animation-duration-1000 hover:text-pink-700 hover:bg-gray-100 transition-all transition-duration-500 transition-ease-out"
+  (click)="openForumPost()"
 >
   <div class="flex justify-content-between align-content-center">
     <div class="flex">

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import {
   BehaviorSubject,
@@ -22,11 +21,7 @@ import {
 } from '../config/routes';
 import { Category } from '../models/category.model';
 import { DigitalLinkService } from '../pages/digital-links/services/digital-link.service';
-import { categorySelectors } from '../store/selectors/category.selectors';
-import {
-  initialHomepageState,
-  ThemeSettings,
-} from '../store/theme-settings.state';
+import { initialHomepageState } from '../store/theme-settings.state';
 import { CategoryService } from './category.service';
 import { ResourceService } from './resources.service';
 import { TransferStateService } from './transfer-state.service';
@@ -49,33 +44,52 @@ export class ThemeSettingsService extends ResourceService {
     super(http, 'themeData', transferState);
   }
 
-  getHompageData() {
-    const homeDataRequest = forkJoin([
-      this.getHighlightArticles(),
-      this.getFeaturedCategories(),
-      this.getEvents(),
-      this.getForumMetrics(),
-      this.getFeaturedArticles(),
-      this.getMultimedia(),
-      this.getDirectLinks(),
-    ]).pipe(
-      map(data => {
-        return {
-          highlightArticles: data[0],
-          featuredCategories: data[1],
-          featuredEvents: data[2],
-          forumMetrics: data[3],
-          featuredArticles: data[4],
-          multimedia: data[5],
-          featuredDirectLinks: data[6],
-        };
-      }),
-      catchError(e => of(initialHomepageState)),
-      tap(_ => this.loadingHomepageData$.next(false))
-    );
+  getHompageData(initial = true) {
+    let homeDataRequest = null;
+    // initial fetch only needed data
+    // featured cat, multimedia
+    if (initial) {
+      homeDataRequest = forkJoin([
+        this.getFeaturedCategories(),
+        // this.getMultimedia(),
+      ]).pipe(
+        map(data => {
+          return {
+            featuredCategories: data[0],
+            // multimedia: data[1],
+          };
+        }),
+        catchError(e => of(initialHomepageState)),
+        tap(_ => this.loadingHomepageData$.next(false))
+      );
+    } else {
+      homeDataRequest = forkJoin([
+        this.getHighlightArticles(),
+        this.getEvents(),
+        this.getFeaturedArticles(),
+        this.getDirectLinks(),
+        this.getMultimedia(),
+      ]).pipe(
+        map(data => {
+          return {
+            highlightArticles: data[0],
+            featuredEvents: data[1],
+            featuredArticles: data[2],
+            featuredDirectLinks: data[3],
+            multimedia: data[4],
+          };
+        }),
+        catchError(e => of(initialHomepageState)),
+        tap(_ => this.loadingHomepageData$.next(false))
+      );
+    }
+
+    // fetch other data
+    // featured articles, opportunities, direct links etc
+    // return homeDataRequest;
 
     return this.transferState.fetch(
-      HOMEPAGE_DATA_KEY,
+      `${initial}_${HOMEPAGE_DATA_KEY}`,
       homeDataRequest,
       initialHomepageState as any
     );
@@ -89,8 +103,6 @@ export class ThemeSettingsService extends ResourceService {
       false,
       'featuredCategories'
     ).pipe(
-      defaultIfEmpty([]),
-      catchError(e => of([])),
       switchMap((fCat: any[]) => {
         const _fc = [...fCat];
         const _fCatSorted = _fc.sort(
@@ -108,7 +120,9 @@ export class ThemeSettingsService extends ResourceService {
               return _sorted;
             })
           );
-      })
+      }),
+      defaultIfEmpty([]),
+      catchError(e => of([]))
     );
   }
 

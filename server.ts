@@ -30,6 +30,7 @@ export function app(): express.Express {
   global['MouseEvent'] = win.Event;
   global['Event']['prototype'] = win.Event.prototype;
   global['document'] = win.document;
+  (global as any)['gtag'] = () => {};
   applyDomino(global, join(distFolder, 'index.html'));
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)

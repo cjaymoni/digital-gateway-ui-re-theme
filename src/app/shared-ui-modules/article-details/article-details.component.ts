@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Input,
@@ -8,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { filter, take, tap } from 'rxjs';
 import { SeoService } from 'src/app/helpers/seo.service';
+import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 
 @Component({
@@ -16,11 +18,12 @@ import { articleSelectors } from 'src/app/store/selectors/article.selectors';
   styleUrls: ['./article-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArticleDetailsComponent implements OnInit {
+export class ArticleDetailsComponent implements OnInit, AfterViewInit {
   constructor(
     private store: Store,
     public sanitizer: DomSanitizer,
-    private seo: SeoService
+    private seo: SeoService,
+    private gtag: GoogleAnalyticsService
   ) {}
 
   @Input() article$ = this.store.select(articleSelectors.selectedArticle).pipe(
@@ -39,4 +42,15 @@ export class ArticleDetailsComponent implements OnInit {
   loading$ = this.store.select(articleSelectors.loading);
 
   ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.article$
+      .pipe(
+        filter(d => !!d),
+        take(1)
+      )
+      .subscribe(article => {
+        this.gtag.Pages.articleOpened(article);
+      });
+  }
 }

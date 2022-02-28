@@ -21,8 +21,10 @@
           (click)="getRelatedArtciles(featured, index)"
         >
           <!-- [routerLink]="['articles', 'tag', featured?.slug]" -->
-
-          {{ featured?.name }} &nbsp;&nbsp; >
+          <div class="flex justify-content-between">
+            <div>{{ featured?.name }}</div>
+            <div class="arrow">></div>
+          </div>
         </div>
       </ng-container>
       <button

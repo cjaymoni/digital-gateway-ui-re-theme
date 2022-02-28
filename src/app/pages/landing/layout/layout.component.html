@@ -1,9 +1,6 @@
 <div class="p-1 pt-0">
-  <div class="p-0 w-full border-round">
-    <app-multimedia
-      *appShellRender
-      [multimedia]="(multimedia$ | async)?.[0] ?? null"
-    ></app-multimedia>
+  <div class="p-4 w-full border-round" *appShellRender>
+    <p-skeleton styleClass="mb-3 w-11" height="20rem"></p-skeleton>
   </div>
 
   <p-carousel
@@ -48,6 +45,10 @@
     </div>
   </div>
 
+  <div class="p-4 w-full border-round" *appShellRender>
+    <p-skeleton styleClass="mb-3 w-11" height="20rem"></p-skeleton>
+  </div>
+
   <div *ngIf="featuredOpportunities$ | async">
     <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
       Current Opportunities
@@ -67,6 +68,10 @@
     </div>
   </div>
 
+  <div class="p-4 w-full border-round" *appShellRender>
+    <p-skeleton styleClass="mb-3 w-11" height="20rem"></p-skeleton>
+  </div>
+
   <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
     Direct Links
   </h3>
@@ -75,7 +80,7 @@
     <ng-container
       *ngFor="let directLink of directLinks$ | async; trackBy: trackBy"
     >
-      <div class="col p-2">
+      <div class="col-12 md:col-4 p-3">
         <app-direct-links-card [digiLink]="directLink"></app-direct-links-card>
       </div>
     </ng-container>

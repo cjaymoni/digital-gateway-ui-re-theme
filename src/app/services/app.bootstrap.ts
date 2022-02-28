@@ -1,10 +1,16 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Gtag } from 'angular-gtag';
 import { CookieService } from 'ngx-cookie';
 
 import { environment } from 'src/environments/environment';
-import { APP_USER_TOKEN } from '../config/app-config';
+import {
+  APP_REFRESH_TOKEN,
+  APP_TOKEN,
+  APP_USER_TOKEN,
+} from '../config/app-config';
 import { LocalStorageService } from '../helpers/localstorage.service';
 import { SeoService } from '../helpers/seo.service';
 import { articleActions } from '../store/actions/article.actions';
@@ -29,35 +35,49 @@ export class AppBootstrap {
     private cookieService: CookieService,
     private seo: SeoService,
     private route: ActivatedRoute,
-    private themeSettings: ThemeSettingsStore
+    private themeSettings: ThemeSettingsStore,
+    private localStorageService: LocalStorageService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {}
 
   initializeAppData() {
-    this.themeSettings.getHomepageData();
-    this.store.dispatch(tagActions.fetch());
-    this.store.dispatch(categoryActions.fetch());
     // this.store.dispatch(productTypeActions.fetch());
     // this.store.dispatch(articleActions.fetch());
     // this.store.dispatch(productAdActions.fetch());
     // this.store.dispatch(forumActions.fetch());
+    if (isPlatformBrowser(this.platformId)) {
+      this.store.dispatch(tagActions.fetch());
+      this.store.dispatch(categoryActions.fetch());
+    }
+    this.initializeLogin();
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.seo.setURL(`${environment.APP_URL}${event.url}`);
-        // const returnUrl = this.route.snapshot.queryParams['returnUrl'];
-        // if (returnUrl) {
-        //   let url: string = returnUrl;
-        //   url = url.includes('login') ? url.split('(')[0] : url;
-        //   this.router.navigateByUrl(url);
-        // }
+        const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+        if (returnUrl) {
+          let url: string = returnUrl;
+          url = url.includes('login') ? url.split('(')[0] : url;
+          this.router.navigateByUrl(url);
+        }
       }
     });
   }
 
   initializeLogin() {
-    const user: any = this.cookieService.getObject(APP_USER_TOKEN) || null;
+    const user: any =
+      this.cookieService.getObject(APP_USER_TOKEN) ||
+      JSON.parse(this.localStorageService.getItem(APP_USER_TOKEN) || '{}');
 
     if (user?.email) {
+      if (!this.cookieService.hasKey(APP_TOKEN)) {
+        const appToken = this.localStorageService.getItem(APP_TOKEN) || '';
+        const appRefreshToken =
+          this.localStorageService.getItem(APP_REFRESH_TOKEN) || '';
+        this.cookieService.putObject(APP_USER_TOKEN, user);
+        this.cookieService.put(APP_REFRESH_TOKEN, appRefreshToken);
+        this.cookieService.put(APP_TOKEN, appToken);
+      }
       this.store.dispatch(userAuthActions.loginSuccessful({ user }));
     }
   }

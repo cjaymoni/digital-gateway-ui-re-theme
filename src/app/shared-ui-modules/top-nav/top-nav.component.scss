@@ -24,9 +24,19 @@
 
     p-menubar {
       .p-menubar .p-menubar-button {
-        width: 2.5rem !important;
-        height: 2.5rem !important;
-        border: 1px solid var(--dark-blue-500);
+        &::after {
+          content: ' Menu';
+        }
+
+        &:hover {
+          outline: none !important;
+          background: none !important;
+          border: none !important;
+        }
+        &:focus {
+          box-shadow: none !important;
+        }
+
         color: var(--dark-blue-500) !important;
       }
 

@@ -16,6 +16,7 @@
   [showAction]="true"
   [totalDataLength]="(count$ | async) || 0"
   (pageChangeEvent)="changePage($event)"
+  [refreshDataFunction]="fetchMyMarketAds"
 ></app-table>
 
 <ng-template #actions let-productAd>
