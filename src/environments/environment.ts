@@ -7,6 +7,7 @@ export const environment = {
   // API_URL: 'http://196.43.196.108:2040/',
   APP_URL: 'http://localhost:4200',
   API_URL: 'https://api.msme.aiti-kace.com.gh/',
+  GTAG_ID: 'G-EWVY9H4P8P',
 };
 
 /*

@@ -20,6 +20,7 @@ import { CommentType, Pages, VoteType } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { Comment } from 'src/app/models/comments.model';
 import { DeviceService } from 'src/app/services/device.service';
+import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
@@ -53,7 +54,8 @@ export class CommentCardComponent implements OnInit, OnDestroy {
     private store: Store,
     private navigator: NavigatorService,
     private action$: Actions,
-    private device: DeviceService
+    private device: DeviceService,
+    private gtag: GoogleAnalyticsService
   ) {}
 
   ngOnInit() {
@@ -88,6 +90,7 @@ export class CommentCardComponent implements OnInit, OnDestroy {
               },
             })
           );
+          this.gtag.Events.commentOnForumPost(forumPost);
         })
       )
       .subscribe(_ => (this.showCommentForm = false));
@@ -103,6 +106,7 @@ export class CommentCardComponent implements OnInit, OnDestroy {
         id: this.comment.id,
       })
     );
+    this.gtag.Events.likeComment();
   }
 
   dislikeComment() {
@@ -111,6 +115,7 @@ export class CommentCardComponent implements OnInit, OnDestroy {
         id: this.comment.id,
       })
     );
+    this.gtag.Events.dislikeComment();
   }
 
   loadSubcomments() {

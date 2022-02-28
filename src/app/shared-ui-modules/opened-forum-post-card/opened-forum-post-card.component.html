@@ -38,15 +38,8 @@
           <ng-template pTemplate="item" let-item>
             <img
               [src]="item.image"
-              class="
-                mt-2
-                h-20rem
-                w-auto
-                object-fit-cover
-                border-gray-300 border-1
-                p-2
-                border-round
-              "
+              class="mt-2 h-20rem w-auto object-fit-cover border-gray-300 border-1 p-2 border-round"
+              alt="forum-post-image"
             />
           </ng-template>
         </p-galleria>
@@ -57,11 +50,7 @@
         <button
           [style.visibility]="showCommentForm ? 'hidden' : 'visible'"
           pButton
-          class="
-            p-button-text p-button-danger
-            justify-content-center
-            align-self-end
-          "
+          class="p-button-text p-button-danger justify-content-center align-self-end"
           icon="pi pi-reply"
           label="Reply"
           proceedIfLoggedIn

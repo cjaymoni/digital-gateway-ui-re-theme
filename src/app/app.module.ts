@@ -7,6 +7,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorTailorModule } from '@ngneat/error-tailor';
 import { EffectsModule } from '@ngrx/effects';
+import { TransferHttpCacheModule } from '@nguniversal/common';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -24,6 +25,8 @@ import { LayoutModule } from './shared-ui-modules/layout/layout.module';
 import { appStoreEffects } from './store/app.effects';
 import { appReducersMap } from './store/app.reducers';
 import { TestComponentModule } from './test/test-component/test-component.module';
+import { GtagModule } from 'angular-gtag';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,6 +45,11 @@ import { TestComponentModule } from './test/test-component/test-component.module
     ErrorTailorModule.forRoot(ERROR_MESSAGES_MAPPING),
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
+    TransferHttpCacheModule,
+    GtagModule.forRoot({
+      trackingId: environment.GTAG_ID,
+      trackPageviews: false,
+    }),
     CookieModule.forRoot({
       httpOnly: false,
     }),

@@ -1,3 +1,4 @@
+<ng-template [ngTemplateOutlet]="productAdFilter"></ng-template>
 <app-listing-page
   [loading]="productAdsLoading$ | async"
   [title]="'Product Ads'"
@@ -8,4 +9,67 @@
 
 <ng-template #productCardTemplate let-productAd>
   <app-market-card [productAd]="productAd"></app-market-card>
+</ng-template>
+
+<ng-template #productAdFilter>
+  <div class="flex flex-column mb-3 p-card p-4" [formGroup]="productFilterForm">
+    <div class="flex justify-content-between">
+      <h1 class="text-sm text-left">Filter Products</h1>
+      <button
+        pButton
+        class="p-button p-button-text"
+        [icon]="showFilter ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"
+        (click)="toggleFilter()"
+        pTooltip="Hide/Show Filter Options"
+      ></button>
+    </div>
+    <ng-container *ngIf="showFilter">
+      <div
+        class="flex flex-column lg:flex-row justify-content-center align-items-center fadeinup"
+      >
+        <div class="col">
+          <label for="productType">Product Type</label>
+          <app-product-type-autocomplete
+            [selectedProductType]="productType"
+          ></app-product-type-autocomplete>
+        </div>
+        <div class="col">
+          <div class="mb-4">
+            Price Range between GHS {{ priceRange?.value[0] || 0 }} and
+            {{ priceRange?.value[1] || 0 }}
+          </div>
+          <p-slider
+            [formControl]="priceRange"
+            [min]="1"
+            [max]="10000"
+            [step]="100"
+            [animate]="true"
+            [range]="true"
+          ></p-slider>
+        </div>
+        <div class="col">
+          <label for="productType">District</label>
+          <app-district-auto-complete
+            [selectedDistrict]="district"
+          ></app-district-auto-complete>
+        </div>
+      </div>
+      <div class="col align-self-end">
+        <button
+          pButton
+          label="Reset"
+          icon="pi pi-refresh"
+          class="p-button p-button-danger fadeinup animation-duration-150 mr-3"
+          (click)="resetFilter()"
+        ></button>
+        <button
+          pButton
+          label="Filter"
+          icon="pi pi-filter"
+          class="p-button p-button-warning fadeinup animation-duration-150"
+          (click)="filterProducts()"
+        ></button>
+      </div>
+    </ng-container>
+  </div>
 </ng-template>

@@ -14,6 +14,7 @@ import { SearchList } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 import { SeoService } from 'src/app/helpers/seo.service';
+import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 
 @Component({
   selector: 'app-search-results',
@@ -61,7 +62,12 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       filter(q => !!q),
       switchMap(q =>
         this.searchService.searchAll(q!).pipe(
-          map((response: any) => this.searchResults$.next(response.results)),
+          map((response: any) => {
+            if (q?.length && q?.length > 3) {
+              this.gtag.Events.search(q);
+            }
+            this.searchResults$.next(response.results);
+          }),
           tap(_ => this.stopSearching()),
           catchError(_ => {
             this.stopSearching();
@@ -76,7 +82,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     private searchService: SearchService,
     private store: Store,
     private navigator: NavigatorService,
-    private seo: SeoService
+    private seo: SeoService,
+    private gtag: GoogleAnalyticsService
   ) {}
 
   ngOnInit(): void {

@@ -7,6 +7,11 @@
   .featured-category {
     &:hover {
       margin-left: 1.5rem;
+      color: #ffdaa9 !important;
+
+      .arrow {
+        margin-right: 1.5rem !important;
+      }
     }
     &:focus {
       outline: none !important;

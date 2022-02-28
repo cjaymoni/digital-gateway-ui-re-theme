@@ -1,11 +1,11 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
   Input,
+  OnInit,
 } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Article } from 'src/app/models/article.model';
+import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 
 @Component({
@@ -17,10 +17,14 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 export class FeaturedArticleCardComponent implements OnInit {
   @Input() featuredArticle: any = null;
 
-  constructor(private store: Store, private navigator: NavigatorService) {}
+  constructor(
+    private navigator: NavigatorService,
+    private gtag: GoogleAnalyticsService
+  ) {}
 
   ngOnInit() {}
-  readArticle(slug: string) {
-    this.navigator.article.goToViewDetailsPage(slug);
+  readArticle(article: Article) {
+    this.gtag.Events.openedFeaturedArticle(article.id);
+    this.navigator.article.goToViewDetailsPage(article.slug);
   }
 }

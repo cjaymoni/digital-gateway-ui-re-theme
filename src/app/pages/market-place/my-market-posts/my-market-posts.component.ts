@@ -28,9 +28,7 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
 
   columns: any[] = [];
 
-  constructor(private store: Store, private navigator: NavigatorService) {
-    this.store.dispatch(productAdActions.fetchMyProductAds());
-  }
+  constructor(private store: Store, private navigator: NavigatorService) {}
 
   ngAfterViewInit(): void {
     this.columns = [
@@ -45,7 +43,9 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetchMyMarketAds();
+  }
 
   goToAddPostPage() {
     this.navigator.marketAd.goToAddPage();
@@ -75,4 +75,8 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
   }
 
   expireMarketAd(productAd: ProductAd) {}
+
+  fetchMyMarketAds = () => {
+    this.store.dispatch(productAdActions.fetchMyProductAds());
+  };
 }

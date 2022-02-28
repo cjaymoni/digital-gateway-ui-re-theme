@@ -7,6 +7,8 @@ import { ArticleImageModule } from '../article-image/article-image.module';
 import { MultimediaModule } from 'src/app/pages/landing/multimedia/multimedia.module';
 import { ButtonModule } from 'primeng/button';
 import { FeaturedArticleCardModule } from '../featured-article-card/featured-article-card.module';
+import { SkeletonModule } from 'primeng/skeleton';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   imports: [
@@ -17,6 +19,8 @@ import { FeaturedArticleCardModule } from '../featured-article-card/featured-art
     MultimediaModule,
     ButtonModule,
     FeaturedArticleCardModule,
+    SkeletonModule,
+    DirectivesModule,
   ],
   declarations: [RightNavCard],
   exports: [RightNavCard],

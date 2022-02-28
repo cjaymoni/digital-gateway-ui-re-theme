@@ -12,6 +12,7 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { Pages, PrimeNgAlerts } from 'src/app/config/app-config';
+import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 
 @Component({
   selector: 'app-login-form',
@@ -26,7 +27,8 @@ export class LoginFormComponent implements OnInit {
     private fb: FormBuilder,
     private navigator: NavigatorService,
     private alert: AppAlertService,
-    @Inject(LOGIN_SERVICE) public loginService: IAuthService
+    @Inject(LOGIN_SERVICE) public loginService: IAuthService,
+    private gtag: GoogleAnalyticsService
   ) {}
 
   ngOnInit() {
@@ -54,8 +56,13 @@ export class LoginFormComponent implements OnInit {
         .pipe(catchError(err => of(false)))
         .subscribe(success => {
           if (success) {
-            this.alert.showToast('Log in successful', PrimeNgAlerts.SUCCESS);
-            return this.navigator.goBack();
+            this.alert.showToast(
+              'Log in successful',
+              PrimeNgAlerts.UNOBSTRUSIVE
+            );
+            this.gtag.Events.login();
+            this.navigator.closeModal();
+            this.navigator.hidePanel();
           } else {
             this.loginForm.setErrors({ invalid: true });
             this.alert.showToast('Invalid login', PrimeNgAlerts.ERROR);
