@@ -1,5 +1,5 @@
 export interface SocialMedia {
-  id?: number;
+  id?: number | any;
   twitter: string;
   facebook: string;
   Instagram: string;

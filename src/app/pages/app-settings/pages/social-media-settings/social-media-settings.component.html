@@ -14,24 +14,24 @@
   [showAction]="true"
 ></app-table>
 
-<ng-template #actions let-multimedia>
+<ng-template #actions let-socialmedia>
   <div class="flex justify-content-between">
     <button
       class="p-button p-button-rounded p-button-danger mr-3"
       pButton
       tooltipPosition="bottom"
-      pTooltip="View MultiMedia"
+      pTooltip="View SocialMedia"
       icon="pi pi-eye"
-
+      (click)="viewMedia(socialmedia)"
     ></button>
 
     <button
       class="p-button p-button-info p-button-rounded mr-auto"
       pButton
-      pTooltip="Edit MultiMedia"
+      pTooltip="Edit SocialMedia"
       tooltipPosition="bottom"
       icon="pi pi-pencil"
-
+      (click)="editMedia(socialmedia)"
     ></button>
   </div>
 </ng-template>

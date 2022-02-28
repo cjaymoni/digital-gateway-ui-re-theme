@@ -5,6 +5,7 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 import { socialMediaSelectors } from 'src/app/store/selectors/socialmedia.selectors';
 import { SocialMediaService } from './services/social-media.service';
 import { socialmediaActions } from 'src/app/store/actions/socialmedia.actions';
+import { SocialMedia } from 'src/app/models/social-media.model';
 
 @Component({
   selector: 'app-social-media-settings',
@@ -51,6 +52,22 @@ export class SocialMediaSettingsComponent implements OnInit {
 
   goToAddNewMedia() {
     this.navigator.siteSettings.goToAddPage(RouterOutlets.Modal);
+  }
+
+  editMedia(socialmedia: SocialMedia) {
+    this.navigator.siteSettings.goToEditPage(
+      socialmedia.id,
+      'Edit Social Media',
+      RouterOutlets.Modal
+    );
+  }
+
+  viewMedia(socialmedia: SocialMedia) {
+    this.navigator.siteSettings.goToViewPage(
+      socialmedia.id,
+      'View Social Media',
+      RouterOutlets.Modal
+    );
   }
 
 

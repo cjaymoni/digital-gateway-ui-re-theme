@@ -33,7 +33,7 @@ export class SocialMediaService extends ResourceService {
   }
 
   editSocialMedia(socialmedia: SocialMedia) {
-    return this.updateResource(socialmedia, socialmedia).pipe(
+    return this.updateResource(socialmedia, socialmedia.id).pipe(
       map(data => data as SocialMedia)
     );
   }

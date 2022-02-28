@@ -21,7 +21,7 @@ import { socialmediaActions } from 'src/app/store/actions/socialmedia.actions';
   styleUrls: ['./social-media-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SocialMediaFormComponent implements OnInit {
+export class SocialMediaFormComponent implements OnInit, OnDestroy {
 
   createForm = true;
 
@@ -29,9 +29,11 @@ export class SocialMediaFormComponent implements OnInit {
 
   socialmedia!: SocialMedia;
 
-  mediaTypes = [
-    { name: 'Audio', value: 'audio' },
-    { name: 'Video', value: 'video' },
+  subscription!: Subscription;
+
+  default = [
+    { name: 'Default', value: 'true' },
+    { name: 'Not-Default', value: 'false' },
   ];
 
   constructor(
@@ -41,12 +43,20 @@ export class SocialMediaFormComponent implements OnInit {
     private action$: Actions
   ) {}
 
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
   ngOnInit() {
     this.socialmediaForm = this.fb.group({
+      is_default: [this.default[0], [Validators.required]],
       twitter: ['', [Validators.required]],
       facebook: ['', [Validators.required]],
       Instagram: [''],
     });
+
+    this.subscription = this.getSocialMediaToEditSubscription();
+    this.subscription.add(this.addOrEditSubscription());
   }
 
   goBack() {
@@ -61,6 +71,7 @@ export class SocialMediaFormComponent implements OnInit {
         twitter: formValues.twitter,
         facebook: formValues.facebook,
         Instagram: formValues.Instagram,
+        is_default: formValues.is_default.value,
       };
 
       if (this.createForm) {
@@ -70,13 +81,48 @@ export class SocialMediaFormComponent implements OnInit {
           })
         );
       } else {
-        // this.store.dispatch(
-        //   socialmediaActions.editSocialMedia({
-        //     socialmedia: { ...newMedia, author: 1, id: this.socialmedia.id },
-        //   })
-        // );
+        this.store.dispatch(
+          socialmediaActions.editSocialMedia({
+            socialmedia: { ...newMedia, author: 1, id: this.socialmedia.id },
+          })
+        );
       }
     }
+  }
+
+  private getSocialMediaToEditSubscription() {
+    return this.store
+      .select(socialMediaSelectors.selectedSocialMedia)
+      .pipe(
+        filter(data => !!data),
+        tap((socialmedia: SocialMedia) => {
+          this.socialmediaForm.patchValue({
+            ...socialmedia,
+            is_default: {
+              name: socialmedia.is_default,
+              value: socialmedia.is_default,
+            },
+          });
+
+          this.socialmedia = socialmedia;
+          this.createForm = false;
+          this.navigator.setPanelTitle('Update Social Media');
+        })
+      )
+      .subscribe();
+  }
+  private addOrEditSubscription() {
+    return this.action$
+      .pipe(
+        ofType(
+          socialmediaActions.editSocialMediaSuccessful,
+          socialmediaActions.addSocialMediaSuccessful
+        ),
+        tap(_ => {
+          this.navigator.closeModal();
+        })
+      )
+      .subscribe();
   }
 
 }

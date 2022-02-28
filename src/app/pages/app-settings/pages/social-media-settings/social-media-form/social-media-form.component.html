@@ -1,6 +1,15 @@
 <ng-container [formGroup]="socialmediaForm">
   <div class="fluid formgrid grid p-3">
     <div class="field col-12">
+      <label for="featured">Default</label>
+      <p-selectButton
+        [options]="default"
+        formControlName="is_default"
+        optionLabel="name"
+      ></p-selectButton>
+    </div>
+
+    <div class="field col-12">
       <label for="twitter">Twitter</label>
       <input
         type="text"
