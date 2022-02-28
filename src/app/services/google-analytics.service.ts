@@ -83,6 +83,11 @@ export class GoogleAnalyticsService {
         forum_topic_id: topic.id,
       });
     },
+    aboutUsPage: () => {
+      this.gtag.pageview({
+        page_title: `About Us`,
+      });
+    },
   };
 
   Events = {
