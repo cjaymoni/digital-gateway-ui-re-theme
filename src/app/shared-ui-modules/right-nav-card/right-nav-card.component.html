@@ -1,36 +1,33 @@
-<div class="flex h-full wrapper bg-white">
+<div class="flex h-full wrapper col-12 p-0 w-full p-0">
   <p-divider
     type="solid"
     layout="vertical"
     styleClass="hidden xl:flex p-0 mr-6 border-darkblue"
   ></p-divider>
-  <div *ngIf="highlightArticles$ | async" class="flex flex-column">
-    <div class="p-tag p-tag-info max-w-max mb-3">
-      <i class="pi pi-star mr-2"></i>
-      HIGHLIGHTS
+
+  <div class="p-4 grid flex flex-column" *appShellRender>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+  </div>
+
+  <div *ngIf="featuredArticles$ | async" class="flex flex-column">
+    <div
+      class="text-center text-2xl text-darkblue w-full text-base mb-1 underline"
+    >
+      Featured Articles
     </div>
-    <div class="grid">
-      <ng-container *ngFor="let highlight of highlightArticles$ | async">
-        <div class="mb-6 col-6 md:col-4 lg:col-12">
-          <app-article-image
-            [images]="highlight.article.images"
-            [title]="highlight.article.title"
-            [preview]="false"
-          ></app-article-image>
-          <div
-            class="
-              article-title-text
-              cursor-pointer
-              hover-underline
-              xl:bg-white
-              transition-all transition-linear transition-duration-200
-              hover:font-bold hover:text-primary
-              capitalize
-            "
-            (click)="readArticle(highlight.article.slug)"
-          >
-            {{ highlight.article.title }}
-          </div>
+    <div class="grid gap-8 gap-v-8">
+      <ng-container
+        *ngFor="
+          let fArticle of featuredArticles$ | async;
+          trackBy: trackAny('article.id')
+        "
+      >
+        <div class="mt-4 col-12 sm:col-6 xl:col-12 p-4 xl:p-1 h-15rem xl:13rem">
+          <app-featured-article-card [featuredArticle]="fArticle.article">
+          </app-featured-article-card>
         </div>
       </ng-container>
     </div>

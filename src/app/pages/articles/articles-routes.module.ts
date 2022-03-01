@@ -28,12 +28,18 @@ const routes: Routes = [
     canActivate: [RoleGuard, ArticleGuard],
     data: {
       breadcrumb: 'Edit',
-      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+      roles: [Roles.Admin, Roles.Editor],
     },
   },
 
   {
     path: 'search/:category',
+    component: ArticleListComponent,
+    canActivate: [ArticleGuard],
+    data: { breadcrumb: 'Search' },
+  },
+  {
+    path: 'tag/:tag',
     component: ArticleListComponent,
     canActivate: [ArticleGuard],
     data: { breadcrumb: 'Search' },
@@ -45,7 +51,7 @@ const routes: Routes = [
     canActivate: [RoleGuard, ArticleGuard],
     data: {
       breadcrumb: 'List',
-      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+      roles: [Roles.Admin, Roles.Editor],
     },
   },
 
@@ -56,7 +62,7 @@ const routes: Routes = [
     canActivate: [RoleGuard, ArticleGuard],
     data: {
       breadcrumb: 'Add',
-      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+      roles: [Roles.Admin, Roles.Editor, Roles.Reporter],
     },
   },
   {

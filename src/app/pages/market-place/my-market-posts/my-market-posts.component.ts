@@ -23,13 +23,15 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
   @ViewChild('descriptionColumnTemplate')
   descriptionTemplate!: TemplateRef<any>;
 
-  myMarketAds$ = this.store.select(productAdSelectors.all);
+  myMarketAds$ = this.store.select(productAdSelectors.myMarketAds);
+  count$ = this.store.select(productAdSelectors.searchCount);
 
   columns: any[] = [];
 
   constructor(private store: Store, private navigator: NavigatorService) {}
 
   ngAfterViewInit(): void {
+    this.fetchMyMarketAds();
     this.columns = [
       { header: 'PRODUCT', field: 'product', subField: 'name' },
       {
@@ -63,5 +65,17 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
     );
   }
 
+  changePage(event: any) {
+    this.store.dispatch(
+      productAdActions.changeSearchPage({
+        searchPage: event.page + 1,
+      })
+    );
+  }
+
   expireMarketAd(productAd: ProductAd) {}
+
+  fetchMyMarketAds = () => {
+    this.store.dispatch(productAdActions.fetchMyProductAds());
+  };
 }

@@ -24,7 +24,7 @@ import { selectUrl } from '../store/selectors/router.selectors';
 })
 export class NavigatorService {
   constructor(
-    private router: Router,
+    public router: Router,
     private store: Store,
     private location: Location
   ) {
@@ -148,7 +148,7 @@ export class NavigatorService {
               },
             },
           ]);
-
+          this.modalRef?.close();
           this.modalRef?.destroy();
         })
       )
@@ -213,6 +213,16 @@ export class NavigatorService {
     this.modalTitle$
   );
   multiMedia = new MultiMediaRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
+  digitalLink = new DigitalLinkRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
+  contentManagement = new ContentManagementRoutes(
     this.router,
     this.panelTitle$,
     this.modalTitle$
@@ -300,6 +310,10 @@ class AppRoutesConfig {
 
   goToListPage() {
     this.router.navigate([this.page.main, this.page.myList]);
+  }
+
+  goTo(route: string[]) {
+    this.router.navigate([...route]);
   }
 }
 
@@ -389,18 +403,29 @@ class AuthRoutes extends AppRoutesConfig {
     ]);
   }
 
-  goToLogin(route = RouterOutlets.Right, title = 'Welcome back. Please Login') {
+  goToLogin(
+    route = RouterOutlets.Right,
+    title = 'Welcome back. Please Login',
+    returnUrl = ''
+  ) {
     route === RouterOutlets.Right
       ? this.panelTitleSubject$.next(title)
       : this.modalTitleSubject$.next(title);
-    this.router.navigate([
-      '', //main
-      {
-        outlets: {
-          [route]: Pages.Auth.login,
+    this.router.navigate(
+      [
+        '', //main
+        {
+          outlets: {
+            [route]: Pages.Auth.login,
+          },
         },
-      },
-    ]);
+      ],
+      {
+        queryParams: {
+          returnUrl,
+        },
+      }
+    );
   }
 }
 
@@ -418,6 +443,20 @@ class MarketAdRoutes extends AppRoutesConfig {
       this.page.main,
       ...this.page.viewDetails.replace(':id', id).split('/'),
     ]);
+  }
+
+  addFilters(filters: { [key: string]: string }) {
+    this.router.navigate([this.page.main], {
+      queryParams: { ...filters },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  clearFilters() {
+    this.router.navigate([this.page.main], {
+      queryParams: null,
+      queryParamsHandling: 'merge',
+    });
   }
 }
 
@@ -445,5 +484,42 @@ class MultiMediaRoutes extends AppRoutesConfig {
       this.page.main,
       ...this.page.viewDetails.replace(':id', id).split('/'),
     ]);
+  }
+}
+
+class DigitalLinkRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.DigitalLinks, router, subject, modalsubject);
+  }
+
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
+  }
+}
+
+class ContentManagementRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.ContentManagement, router, subject, modalsubject);
+  }
+  gotoAddCategoryPage() {
+    this.openModal([this.page, Pages.Category.add], 'Add Category');
+  }
+
+  gotoEditCategoryPage(id: any) {
+    this.openModal(
+      [this.page, ...Pages.Category.edit.replace(':id', id).split('/')],
+      'Edit Category'
+    );
   }
 }

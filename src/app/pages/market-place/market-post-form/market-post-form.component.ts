@@ -1,9 +1,9 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  ViewChild,
+  Component,
   OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -13,7 +13,7 @@ import {
 } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { filter, Subscription, take, tap } from 'rxjs';
+import { filter, Subscription, tap } from 'rxjs';
 import { TagType } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { AppUploadedImage } from 'src/app/models/article.model';
@@ -36,7 +36,6 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
   createForm = true;
   productAdForm!: FormGroup;
 
-  // selectedProductAd$ =
   subscription!: Subscription;
 
   productAd!: ProductAd;
@@ -54,6 +53,8 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
     },
   ];
 
+  loading$ = this.store.select(productAdSelectors.loading);
+
   constructor(
     private fb: FormBuilder,
     private navigator: NavigatorService,
@@ -69,19 +70,33 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
     this.productAdForm = this.fb.group({
       gh_post: [],
       location: [],
-      cellphone: [],
+      cellphone: ['', [Validators.required]],
       district: [],
       email: [],
       expires: [],
       ad_type: [this.adTypes[0], [Validators.required]],
       product: this.fb.group({
-        name: ['', [Validators.required]],
-        description: ['', Validators.required],
+        name: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(160),
+          ],
+        ],
+        description: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(160),
+          ],
+        ],
         price: ['', [Validators.required]],
         brand: [''],
         tags: [],
-        images: [],
-        product_type: [''],
+        images: [''],
+        product_type: ['', [Validators.required]],
       }),
     });
 
@@ -135,14 +150,14 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
       if (this.createForm) {
         this.store.dispatch(
           productAdActions.addProductAd({
-            productAd: { ...productAdFromForm, author: 1 },
+            productAd: { ...productAdFromForm, author: 1, is_active: true },
             imagesToUpload: images,
           })
         );
       } else {
         this.store.dispatch(
           productAdActions.editProductAd({
-            productAd: { ...productAdFromForm, author: 1 },
+            productAd: { ...productAdFromForm, author: 1, is_active: true },
             imagesToUpload: images,
           })
         );
@@ -185,6 +200,8 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
         ),
         tap(_ => {
           this.navigator.closeModal();
+          this.productAdForm.reset();
+          this.navigator.marketAd.goToListPage();
         })
       )
       .subscribe();

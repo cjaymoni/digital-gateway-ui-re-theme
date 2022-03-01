@@ -1,0 +1,19 @@
+<ng-container *ngIf="digiLink">
+  <div class="p-0 w-full scalein animation-duration-500 mb-4">
+    <a
+      class="no-underline hover-underline"
+      [href]="digiLink.url"
+      target="_blank"
+    >
+      <div class="flex mb-3">
+        <span class="capitalize font-bold text-xl text-teal-500">
+          {{ digiLink.title }}
+        </span>
+      </div>
+    </a>
+
+    <div class="flex text-800 mb-4">
+      {{ digiLink.description }}
+    </div>
+  </div>
+</ng-container>

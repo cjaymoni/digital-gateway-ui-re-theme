@@ -6,8 +6,9 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
-import { selectRouteParams } from 'src/app/store/selectors/router.selectors';
+import { CookieService } from 'ngx-cookie';
+import { Observable } from 'rxjs';
+import { APP_USER_TOKEN } from 'src/app/config/app-config';
 import { userProfileActions } from '../../../store/actions/user-profile.actions';
 
 @Injectable({
@@ -17,7 +18,7 @@ export class SelectUserProfileGuard implements CanActivate {
   /**
    *
    */
-  constructor(private store: Store) {
+  constructor(private store: Store, private cookieService: CookieService) {
     // this.store.dispatch(articleActions.fetch());
   }
   canActivate(
@@ -28,13 +29,14 @@ export class SelectUserProfileGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const profileId = JSON.parse(localStorage['app_user_access_token']);
-
-    this.store.dispatch(
-      userProfileActions.findAndSelectUserProfileById({
-        id: profileId.id,
-      })
-    );
+    const user = this.cookieService.getObject(APP_USER_TOKEN) as any;
+    if (user?.email) {
+      this.store.dispatch(
+        userProfileActions.findAndSelectUserProfileById({
+          id: user?.profile_id,
+        })
+      );
+    }
 
     return true;
   }

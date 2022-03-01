@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PrimeNgAlerts } from 'src/app/config/app-config';
+import { DEFAULT_PAGE_SIZE, PrimeNgAlerts } from 'src/app/config/app-config';
 import { ProductAd } from 'src/app/models/product-ad.model';
 import { ProductAdService } from 'src/app/services/product-ad.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
@@ -29,14 +29,57 @@ export class ProductAdEffects {
     )
   );
 
+  loadMyProductAds$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        productAdActions.changeSearchPage,
+        productAdActions.fetchMyProductAds
+      ),
+      switchMap((d: any) =>
+        this.productAdService
+          .getProductAdToModerate(d.searchPage || 1, DEFAULT_PAGE_SIZE)
+          .pipe(
+            map((productAd: ProductAd[]) =>
+              productAdActions.fetchMyProductAdsSuccessful({
+                productAd,
+              })
+            ),
+            catchError(error => {
+              this.showError(error);
+              return of(productAdActions.fetchError);
+            })
+          )
+      )
+    )
+  );
+
   searchProductAds$ = createEffect(() =>
     this.actions$.pipe(
       ofType(productAdActions.findAndSelectProductAd),
       switchMap(({ searchParams }) =>
-        this.productAdService.searchResource(searchParams).pipe(
+        this.productAdService.searchAd(searchParams).pipe(
           map((productAds: ProductAd[]) =>
             productAdActions.selectProductAd({
-              productAd: productAds[0],
+              productAd: productAds?.[0],
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(productAdActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
+  searchAllProductAds$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(productAdActions.searchProductAd),
+      switchMap(({ searchParams }) =>
+        this.productAdService.searchAd(searchParams).pipe(
+          map((productAd: ProductAd[]) =>
+            productAdActions.fetchSearchSuccessful({
+              productAd,
             })
           ),
           catchError(error => {

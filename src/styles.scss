@@ -18,11 +18,13 @@ body {
 
   background-color: bisque;
   height: 10rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .p-menuitem-link-active {
   span {
-    color: red !important;
+    color: var(--orange-500) !important;
   }
 }
 
@@ -97,8 +99,16 @@ body {
   background-color: var(--light-pink-500) !important;
 }
 
+.bg-light-blue {
+  background-color: var(--light-blue-500) !important;
+}
+
 .text-darkblue {
   color: var(--darkblue-500) !important;
+}
+
+.text-lime {
+  color: var(--lime-500) !important;
 }
 
 .md-m-unset {
@@ -140,4 +150,12 @@ body {
 
 .z-10 {
   z-index: 10 !important;
+}
+
+.high-z {
+  z-index: 8888 !important;
+}
+.control-error {
+  color: #e24c4c;
+  font-size: 0.9rem;
 }

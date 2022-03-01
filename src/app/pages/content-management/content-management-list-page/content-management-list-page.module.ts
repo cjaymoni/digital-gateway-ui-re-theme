@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContentManagementListPageComponent } from './content-management-list-page.component';
 import { ContentManagementListModule } from 'src/app/shared-ui-modules/content-management-list/content-management-list.module';
 import { CategoryAutocompleteModule } from 'src/app/shared-ui-modules/category-autocomplete/category-autocomplete.module';
-
+import { CheckboxModule } from 'primeng/checkbox';
 @NgModule({
   imports: [
     CommonModule,
@@ -12,6 +12,7 @@ import { CategoryAutocompleteModule } from 'src/app/shared-ui-modules/category-a
     CategoryAutocompleteModule,
     FormsModule,
     ReactiveFormsModule,
+    CheckboxModule,
   ],
   exports: [ContentManagementListPageComponent],
   declarations: [ContentManagementListPageComponent],

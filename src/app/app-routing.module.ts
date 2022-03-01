@@ -3,8 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { Pages, RouterOutlets } from './config/app-config';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
 import { SignupFormComponent } from './pages/signup/signup-form/signup-form.component';
+import { RoleGuard } from './services/role.guard';
 
 const routes: Routes = [
+  {
+    path: 'home',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
   {
     path: '',
     loadChildren: () =>
@@ -51,6 +57,7 @@ const routes: Routes = [
         m => m.ContentManagementModule
       ),
     data: { breadcrumb: 'Content Management' },
+    // canActivate: [RoleGuard],
   },
   {
     path: Pages.SiteSettings,
@@ -59,11 +66,13 @@ const routes: Routes = [
         m => m.AppSettingsModule
       ),
     data: { breadcrumb: 'Theme Settings' },
+    // canActivate: [RoleGuard],
   },
   {
     path: Pages.Resources.main,
     loadChildren: () =>
       import('./pages/resource/resource.module').then(m => m.ResourceModule),
+    data: { breadcrumb: 'Resources' },
   },
   {
     path: Pages.UserProfile,
@@ -86,6 +95,16 @@ const routes: Routes = [
     },
   },
   {
+    path: Pages.DigitalLinks.main,
+    loadChildren: () =>
+      import('./pages/digital-links/digital-links.module').then(
+        m => m.DigitalLinksModule
+      ),
+    data: {
+      breadcrumb: 'Digital Links',
+    },
+  },
+  {
     path: Pages.SignUp,
     component: SignupFormComponent,
     outlet: RouterOutlets.Right,
@@ -101,8 +120,22 @@ const routes: Routes = [
     },
   },
   {
+    path: Pages.AboutUs,
+    loadChildren: () =>
+      import('./pages/about-us/about-us.module').then(m => m.AboutUsModule),
+    data: {
+      breadcrumb: 'About Us',
+    },
+  },
+  {
     path: 'search/:query',
+    pathMatch: 'full',
     component: SearchResultsComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
 ];
 
@@ -110,6 +143,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
+      initialNavigation: 'enabledBlocking',
     }),
   ],
   exports: [RouterModule],

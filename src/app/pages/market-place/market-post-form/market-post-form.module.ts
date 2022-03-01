@@ -15,6 +15,7 @@ import { ProductTypeAutocompleteModule } from 'src/app/shared-ui-modules/product
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { TooltipModule } from 'primeng/tooltip';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { ErrorTailorModule } from '@ngneat/error-tailor';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     DirectivesModule,
     TooltipModule,
     SelectButtonModule,
+    ErrorTailorModule,
   ],
   declarations: [MarketPostFormComponent],
   exports: [MarketPostFormComponent],

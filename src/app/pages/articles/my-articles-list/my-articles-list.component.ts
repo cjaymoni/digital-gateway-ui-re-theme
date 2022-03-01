@@ -50,8 +50,12 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
     private articleService: ArticleService,
     private appAlertService: AppAlertService
   ) {
-    this.store.dispatch(articleActions.fetchMyArticles());
+    this.fetchData();
   }
+
+  fetchData = () => {
+    this.store.dispatch(articleActions.fetchMyArticles());
+  };
 
   ngAfterViewInit(): void {
     this.columns = [
@@ -59,7 +63,7 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
       { header: 'CATEGORY', field: 'category', subField: 'name' },
       { header: 'TAGS', field: 'tags', template: this.tagsTemplate },
       { header: 'STATUS', field: 'status', template: this.statusTemplate },
-      { header: 'CREATED_BY', field: 'created_by', subField: 'username' },
+      { header: 'CREATED_BY', field: 'created_by', subField: 'email' },
     ];
   }
 

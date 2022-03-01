@@ -1,58 +1,100 @@
-<ng-container *ngIf="featuredCategory$ | async">
+<ng-container *ngIf="featuredTags$ | async">
   <div
-    class="
-      wrapper
-      w-full
-      xl:sticky
-      align-self-center
-      flex flex-column
-      align-content-center
-      justify-content-center
-      overflow-x-hidden
-    "
+    class="wrapper w-full lg:sticky align-self-center flex flex-column justify-content-between overflow-x-hidden relative h-auto mb-5"
+    (clickOutside)="clickOutsidePanel($event)"
   >
     <!-- <p-divider align="center" styleClass="p-divider-no-background">
       <span class="p-tag p-tag-info">
         <i class="pi pi-star mr-2"></i>
       </span>
     </p-divider> -->
-    <div class="p-tag p-tag-info w-max">FEATURED CATEGORIES</div>
-
-    <ng-container
-      *ngFor="let featured of featuredCategory$ | async; let index = index"
-    >
-      <div
-        *ngIf="
-          index <
-          (this.showAll ? (featuredCategory$ | async)?.length || 100 : 8)
-        "
-        class="
-          mt-3
-          border-none border-solid border-bottom-2
-          w-full
-          h-auto
-          py-2
-          px-3
-          text-darkblue
-          hover:text-pink-500
-          cursor-pointer
-          featured-category
-          transition-duration-200 transition-all transition-ease-in-out
-        "
-        [routerLink]="['articles', 'search', featured.category.slug]"
-        [routerLinkActive]="'text-pink-500 active'"
+    <!-- <div class="p-tag p-tag-info w-max">FEATURED CATEGORIES</div> -->
+    <div class="mb-5">
+      <ng-container
+        *ngFor="let featured of featuredTags$ | async; let index = index"
       >
-        {{ featured.category.name }}
-      </div>
-    </ng-container>
-    <button
-      *ngIf="(featuredCategory$ | async)?.length! > 8 ?? false"
-      pButton
-      class="cursor-pointer mt-4 w-max p-3 ml-3 p-button-secondary mb-2"
-      (click)="viewMore()"
-      [icon]="showAll ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"
+        <div
+          *ngIf="
+            index < (this.showAll ? (featuredTags$ | async)?.length || 100 : 8)
+          "
+          class="mt-4 border-none w-full h-auto py-2 px-3 text-white cursor-pointer featured-category transition-duration-200 transition-all transition-ease-in-out"
+          (click)="getRelatedArtciles(featured, index)"
+        >
+          <!-- [routerLink]="['articles', 'tag', featured?.slug]" -->
+          <div class="flex justify-content-between">
+            <div>{{ featured?.name }}</div>
+            <div class="arrow">></div>
+          </div>
+        </div>
+      </ng-container>
+      <button
+        *ngIf="(featuredTags$ | async)?.length! > 8 ?? false"
+        pButton
+        class="cursor-pointer mt-4 w-max p-3 ml-3 p-button-secondary mb-2"
+        (click)="viewMore()"
+        [icon]="showAll ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"
+      >
+        View {{ showAll ? 'less ' : 'more ' }} &nbsp;&nbsp;
+      </button>
+    </div>
+
+    <div
+      class="hidden lg:flex mt-8 p-3 pr-3 align-self-end flex-column justify-content-between h-10rem"
     >
-      View {{ showAll ? 'less ' : 'more ' }} &nbsp;&nbsp;
-    </button>
+      <a class="text-white text-lg no-underline" [routerLink]="['about-us']">
+        <span>
+          <i class="pi pi-users"></i>
+        </span>
+        About Us</a
+      >
+      <app-login-button></app-login-button>
+    </div>
   </div>
 </ng-container>
+
+<p-sidebar
+  [(visible)]="display"
+  position="left"
+  [modal]="false"
+  styleClass="sidemenu lg:col-offset-3 xl:col-offset-2 z-5 w-12 lg:w-3"
+  [style]=""
+  [baseZIndex]="10"
+  [blockScroll]="true"
+>
+  <div class="mt-0 lg:mt-3 h-full">
+    <button
+      pButton
+      icon="pi pi-times"
+      class="hidden md:flex p-button-secondary p-button-text p-button-outlined align-content-center justify-content-center mb-3"
+      (click)="this.display = false"
+    ></button>
+
+    <i
+      class="pi pi-spin pi-spinner"
+      *ngIf="loading$ | async; else show"
+      style="font-size: 4rem"
+    ></i>
+    <ng-template #show>
+      <ul>
+        <ng-container *ngIf="(articles$ | async)?.length == 0">
+          <p class="fadein text-lg hover:text-blue-900">
+            Sorry, no related resources
+          </p>
+        </ng-container>
+
+        <ng-container
+          *ngFor="let article of articles$ | async; trackBy: trackById"
+        >
+          <li>
+            <p
+              (click)="readArticle(article)"
+              class="cursor-pointer hover-underline fadein text-lg hover:text-blue-900"
+            >
+              {{ article.title }}
+            </p>
+          </li>
+        </ng-container>
+      </ul>
+    </ng-template>
+  </div>
+</p-sidebar>

@@ -3,8 +3,9 @@
   <p-image
     [src]="getImageToUpload() ?? (selectedUser$ | async)?.avatar"
     styleClass="border-circle w-17rem h-17rem align-self-center"
-    imageClass="border-circle w-15rem h-15rem z-1 border-gray-200 border-1 p-2"
+    imageClass="border-circle w-17rem h-17rem z-1 border-gray-200 border-1 p-2"
     [preview]="true"
+    alt="user-profile-picture"
   ></p-image>
 
   <div class="h-3rem align-self-center mt-3">
@@ -58,7 +59,7 @@
             pInputText
             class="inputfield w-full"
             formControlName="name"
-            placeholder="First Name"
+            placeholder="Full Name"
           />
         </div>
         <div class="field col-12 md:col-6">

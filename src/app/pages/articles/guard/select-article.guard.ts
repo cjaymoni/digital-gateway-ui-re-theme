@@ -30,7 +30,6 @@ export class SelectArticleGuard implements CanActivate {
     | boolean
     | UrlTree {
     const articleId = route.url[0].path.split(':')[1];
-    this.store.select(selectRouteParams).subscribe();
 
     this.store.dispatch(
       articleActions.findAndSelectArticleById({

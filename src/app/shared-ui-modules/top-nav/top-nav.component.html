@@ -1,91 +1,91 @@
-<p-menubar
-  [model]="(items$ | async) || []"
-  [autoDisplay]="true"
-  styleClass="sticky z-1 border-none border-noround p-divider-no-background bg-darkblue"
->
-  <ng-template pTemplate="start">
-    <div
-      class="flex align-content-center flex-row justify-content-between w-full"
-    >
-      <div class="lg:hidden mr-3">
-        <app-back-button></app-back-button>
-      </div>
-
-      <div
-        class="
-          flex
-          align-content-end
-          justify-content-center
-          text-lg
-          font-bold
-          fadein
-          text-white
-          animation-duration-500 animation-ease-in-out
-          cursor-pointer
-          hover:font-italic hover:text-pink-600
-          align-self-center
-        "
-        routerLink="/"
-      >
-        <div>&nbsp;&nbsp;MSME GATEWAY</div>
-      </div>
-
-      <div class="xl:hidden flex justify-content-between align-items-center">
-        <button
-          class="p-button-outlined p-button-rounded p-button-secondary mr-1"
-          icon="pi pi-search"
-          pStyleClass=".searchButton"
-          enterClass="hidden"
-          enterActiveClass="flex"
-          enterToClass="flex"
-          leaveClass="flex"
-          leaveActiveClass="fadeoutup"
-          leaveToClass="hidden"
-          pButton
-        ></button>
-        <ng-container [ngTemplateOutlet]="userLoginMenu"></ng-container>
-      </div>
+<div class="bg-light-blue flex justify-content-between 4-rem p-1 sticky z-1">
+  <!-- start  -->
+  <div
+    class="flex align-content-center flex-row justify-content-between ml-2 col-2"
+  >
+    <div class="lg:hidden mr-3">
+      <app-back-button></app-back-button>
     </div>
-  </ng-template>
 
-  <ng-template pTemplate="end">
-    <ng-container>
-      <div class="flex justify-content-between align-items-center">
-        <ng-container [ngTemplateOutlet]="search"></ng-container>
-        <ng-container [ngTemplateOutlet]="userLoginMenu"></ng-container>
-      </div>
-    </ng-container>
-  </ng-template>
-</p-menubar>
+    <div
+      class="text-lg justify-content-center text-darkblue font-bold fadein text-white animation-duration-500 animation-ease-in-out cursor-pointer align-self-center"
+      routerLink="/"
+    >
+      <!-- home and home icon -->
+      <span class="hidden lg:block text-darkblue text-xl ml-3">
+        MSME GATEWAY
+        <i class="pi pi-home"></i>
+      </span>
+      <span class="text-darkblue lg:hidden text-xl">
+        <i class="pi pi-home" style="font-size: 2rem"></i>
+      </span>
+      <!-- <em class="text-xs">One stop for information</em> -->
+    </div>
+  </div>
 
-<div
-  class="
-    absolute
-    w-full
-    h-4rem
-    hidden
-    surface-600
-    animation-duration-500 animation-ease-out
-    justify-content-center
-    align-items-center
-    fadeinup
-    p-1
-    searchButton
-    xl:hidden
-  "
->
-  <div>
+  <!-- menu -->
+  <p-menubar
+    [model]="(items$ | async) || []"
+    [autoDisplay]="true"
+    styleClass=" border-none border-noround p-divider-no-background p-2"
+  >
+  </p-menubar>
+
+  <!-- search and login for mobile screen -->
+  <ng-container>
+    <div
+      class="md:hidden justify-content-between align-items-center mobile-search-menu col"
+    >
+      <ng-container [ngTemplateOutlet]="search"></ng-container>
+      <ng-container [ngTemplateOutlet]="userLoginMenu"></ng-container>
+    </div>
+  </ng-container>
+  <!-- end search and login for mobile screen -->
+
+  <!-- animated search dropdown -->
+  <div
+    class="absolute w-full h-4rem mt-6 hidden surface-600 animation-duration-500 animation-ease-out justify-content-center align-items-center fadeinup p-1 searchButton xl:hidden"
+  >
+    <div>
+      <ng-container [ngTemplateOutlet]="search"></ng-container>
+    </div>
+  </div>
+  <!-- end animated search dropdown -->
+
+  <!-- search for xl screen -->
+  <div class="hidden xl:block mx-2 align-items-center col">
     <ng-container [ngTemplateOutlet]="search"></ng-container>
   </div>
+  <!-- end search for xl screen -->
+
+  <!-- user login menu for small to lg screen-->
+  <div class="flex justify-content-between align-items-center xl:hidden">
+    <button
+      class="xl:hidden p-button-outlined p-button-rounded p-button-secondary mr-1"
+      icon="pi pi-search"
+      pStyleClass=".searchButton"
+      enterClass="hidden"
+      enterActiveClass="flex"
+      enterToClass="flex"
+      leaveClass="flex"
+      leaveActiveClass="fadeoutup"
+      leaveToClass="hidden"
+      pButton
+    ></button>
+    <div class="lg:hidden flex justify-content-between align-items-center mr-3">
+      <ng-container [ngTemplateOutlet]="userLoginMenu"></ng-container>
+    </div>
+  </div>
+  <!-- user login menu -->
 </div>
 
 <ng-template #search>
-  <div>
+  <div class="flex justify-content-center align-items-center">
     <input
       type="text"
       pInputText
-      class="w-22rem sm:w-22rem md:w-20rem xl:w-30rem mr-3"
-      placeholder="What are you looking for? (4 or more characters)"
+      class="col-10 mr-1"
+      placeholder="What are you looking for?"
       [formControl]="searchInputControl"
       enterPressed
       (onEnterPressed)="searchTerm()"
@@ -93,7 +93,7 @@
     <button
       pButton
       icon="pi pi-search"
-      class="p-button-rounded p-button-secondary"
+      class="p-button-rounded p-button-secondary col-2"
       [disabled]="searchInputControl.invalid"
       (click)="$event.stopPropagation(); searchTerm()"
       pStyleClass=".searchButton"
@@ -108,30 +108,5 @@
 </ng-template>
 
 <ng-template #userLoginMenu>
-  <button
-    *ngIf="isLoggedIn$ | async; else login"
-    class="p-button-outlined p-button-rounded p-button-secondary ml-3 relative"
-    icon="pi pi-user"
-    pButton
-    (click)="loginMenu.toggle($event)"
-  ></button>
-  <p-menu
-    #loginMenu
-    [popup]="true"
-    [model]="(loggedInMenu | async) ?? []"
-    styleClass="loginMenu"
-  ></p-menu>
-</ng-template>
-<!-- (click)="goToLoginPage()" -->
-
-<ng-template #login>
-  <button
-    class="p-button-text p-button-rounded p-button-info mr-1"
-    icon="pi pi-user"
-    label="Login"
-    pButton
-    (click)="goToLoginPage()"
-  ></button>
-  <!-- (click)="signup.toggle($event)" -->
-  <!-- <p-menu #signup [popup]="true" [model]="signUpMenu"></p-menu> -->
+  <app-login-button></app-login-button>
 </ng-template>

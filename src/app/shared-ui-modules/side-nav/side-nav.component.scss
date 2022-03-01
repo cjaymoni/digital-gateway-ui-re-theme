@@ -1,11 +1,17 @@
 .wrapper {
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: 992px) {
     top: 90px;
+    height: 85vh !important;
   }
 
   .featured-category {
     &:hover {
-      margin-left: 1rem;
+      margin-left: 1.5rem;
+      color: #ffdaa9 !important;
+
+      .arrow {
+        margin-right: 1.5rem !important;
+      }
     }
     &:focus {
       outline: none !important;
@@ -13,13 +19,29 @@
   }
 }
 
-.active::after {
-  content: '>>>';
+.wrapper {
+  @media screen and (max-width: 992px) and (min-width: 100px) {
+    background-color: var(--darkblue-500) !important;
+    padding: 4px;
+  }
 }
 
-.wrapper {
-  @media screen and (max-width: 1024px) and (min-width: 100px) {
-    background-color: var(--darkblue-50) !important;
-    padding: 4px;
+:host ::ng-deep {
+  .sidemenu {
+    z-index: 1000 !important;
+    background-color: rgba($color: white, $alpha: 0.95) !important;
+  }
+
+  app-login-button {
+    .login-button,
+    .user-icon {
+      color: var(--lime-500) !important;
+      border-color: var(--lime-500) !important;
+    }
+
+    .loginMenu {
+      left: 15% !important;
+      display: none !important;
+    }
   }
 }

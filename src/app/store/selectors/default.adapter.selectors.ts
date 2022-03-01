@@ -21,7 +21,7 @@ export class DefaultAdapterSelectors {
   total = this.entitySelectors.selectTotal;
 
   getById = (id: number) =>
-    createSelector(this.all, (all: any[]) => all.find(one => one.id === id));
+    createSelector(this.all, (all: any[]) => all.find(one => one.id == id));
 
   getByName = (name: string) =>
     createSelector(this.all, (all: any[]) =>

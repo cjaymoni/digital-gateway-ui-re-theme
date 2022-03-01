@@ -54,6 +54,7 @@ export class ArticleEffects {
   searchArticles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(articleActions.findAndSelectArticle),
+      tap(_ => this.store.dispatch(articleActions.startLoad())),
       switchMap(({ searchParams }) =>
         this.articleService.searchArticle(searchParams).pipe(
           map((articles: Article[]) =>
@@ -92,6 +93,7 @@ export class ArticleEffects {
   searchArticleById$ = createEffect(() =>
     this.actions$.pipe(
       ofType(articleActions.findAndSelectArticleById),
+      tap(_ => this.store.dispatch(articleActions.startLoad())),
       switchMap(({ id }) =>
         this.articleService.getOneResource(id).pipe(
           tap(article => {

@@ -1,5 +1,7 @@
 <ng-container *ngIf="forumPost$ | async; else loading">
-  <div class="p-3 w-full fadein animation-duration-500 p-component shadow-2">
+  <div
+    class="px-8 py-3 w-full fadein animation-duration-500 p-component shadow-2 mt-5"
+  >
     <div class="flex justify-content-between align-content-center">
       <div class="flex">
         <p-avatar
@@ -38,15 +40,8 @@
           <ng-template pTemplate="item" let-item>
             <img
               [src]="item.image"
-              class="
-                mt-2
-                h-20rem
-                w-auto
-                object-fit-cover
-                border-gray-300 border-1
-                p-2
-                border-round
-              "
+              class="mt-2 h-20rem w-auto object-fit-cover border-gray-300 border-1 p-2 border-round"
+              alt="forum-post-image"
             />
           </ng-template>
         </p-galleria>
@@ -57,11 +52,7 @@
         <button
           [style.visibility]="showCommentForm ? 'hidden' : 'visible'"
           pButton
-          class="
-            p-button-text p-button-danger
-            justify-content-center
-            align-self-end
-          "
+          class="p-button-text p-button-danger justify-content-center align-self-end"
           icon="pi pi-reply"
           label="Reply"
           proceedIfLoggedIn
@@ -103,7 +94,7 @@
   </div>
   <ng-container *ngIf="(forumComments$ | async)?.length">
     <div
-      class="mt-3"
+      class="mt-4"
       *ngFor="let comment of forumComments$ | async; trackBy: trackById"
     >
       <app-comment-card

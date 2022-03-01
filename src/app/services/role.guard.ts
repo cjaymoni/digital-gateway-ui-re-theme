@@ -6,8 +6,14 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
-import { Roles } from '../config/app-config';
+import { CookieService } from 'ngx-cookie';
+import { map, Observable, take } from 'rxjs';
+import {
+  APP_USER_TOKEN,
+  PrimeNgAlerts,
+  Roles,
+  RouterOutlets,
+} from '../config/app-config';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
 import { userAuthSelectors } from '../store/selectors/user-auth.selectors';
 import { NavigatorService } from './navigator.service';
@@ -22,7 +28,8 @@ export class RoleGuard implements CanActivate {
   constructor(
     private store: Store,
     private alert: AppAlertService,
-    private navigator: NavigatorService
+    private navigator: NavigatorService,
+    private cookieService: CookieService
   ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -35,9 +42,16 @@ export class RoleGuard implements CanActivate {
     const neededRoles: Roles[] = route.data['roles'];
 
     return this.store.select(userAuthSelectors.loggedInUser).pipe(
+      take(1),
       map(user => {
+        if (user == null) {
+          // check from cookie
+          user = this.cookieService.getObject(APP_USER_TOKEN) as any;
+        }
+
         if (user) {
           const role = user?.role;
+
           if (!neededRoles) {
             return true;
           }
@@ -49,10 +63,15 @@ export class RoleGuard implements CanActivate {
             "Sorry you don't have enough permission to access this resource"
           );
           return false;
+        } else {
+          this.alert.showToast('You need to login', PrimeNgAlerts.UNOBSTRUSIVE);
+          this.navigator.auth.goToLogin(
+            RouterOutlets.Modal,
+            undefined,
+            state.url
+          );
+          return false;
         }
-        this.alert.showToast('You need to login');
-        this.navigator.auth.goToLogin();
-        return false;
       })
     );
   }
