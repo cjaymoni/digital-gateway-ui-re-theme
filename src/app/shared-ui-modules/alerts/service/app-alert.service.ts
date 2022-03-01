@@ -32,7 +32,7 @@ export class AppAlertService {
     type: PrimeNgAlerts
   ): Message => {
     return {
-      life: type === PrimeNgAlerts.ERROR ? TOAST_TIME + 1000 : TOAST_TIME,
+      life: type === PrimeNgAlerts.ERROR ? TOAST_TIME + 3000 : TOAST_TIME,
       severity:
         type === PrimeNgAlerts.UNOBSTRUSIVE ? 'info' : type.toLocaleLowerCase(),
       detail: type === PrimeNgAlerts.ERROR ? message.toUpperCase() : message,
@@ -49,6 +49,7 @@ export class AppAlertService {
     if (type === PrimeNgAlerts.ERROR) {
       this.messageService.clear();
     }
+
     this.messageService.add(this.getMessageObject(message, type));
   }
 

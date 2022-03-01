@@ -48,12 +48,12 @@ export const menuItemReducer = createReducer(
   })
 );
 
-const convertToMenu = (category: Category): MenuItem => {
+const convertToMenu = (category: Category, tag = false): MenuItem => {
   const name = category.name;
   const menuItem: MenuItem = {
     label: name.charAt(0).toUpperCase() + name.slice(1),
     routerLink: [Pages.Articles.main, 'search', category.slug.toLowerCase()],
-    icon: 'pi pi-tag',
+    icon: tag ? 'pi pi-tag' : '',
   };
 
   if (category.subcategories!.length > 0) {
@@ -61,7 +61,7 @@ const convertToMenu = (category: Category): MenuItem => {
     const subs = [];
 
     for (const category of copySub) {
-      const subMenu = convertToMenu(category);
+      const subMenu = convertToMenu(category, true);
       subs.push(subMenu);
     }
     menuItem.items = subs;

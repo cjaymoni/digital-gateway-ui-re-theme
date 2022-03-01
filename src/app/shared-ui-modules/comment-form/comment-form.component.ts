@@ -1,12 +1,9 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  Output,
+  Component,
   EventEmitter,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
+  OnInit,
+  Output,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DeviceService } from 'src/app/services/device.service';

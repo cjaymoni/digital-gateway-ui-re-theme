@@ -54,6 +54,8 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
     },
   ];
 
+  loading$ = this.store.select(productAdSelectors.loading);
+
   constructor(
     private fb: FormBuilder,
     private navigator: NavigatorService,
@@ -69,19 +71,33 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
     this.productAdForm = this.fb.group({
       gh_post: [],
       location: [],
-      cellphone: [],
+      cellphone: ['', [Validators.required]],
       district: [],
       email: [],
       expires: [],
       ad_type: [this.adTypes[0], [Validators.required]],
       product: this.fb.group({
-        name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
-        description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
+        name: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(160),
+          ],
+        ],
+        description: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(160),
+          ],
+        ],
         price: ['', [Validators.required]],
         brand: [''],
         tags: [],
-        images: [],
-        product_type: [''],
+        images: [''],
+        product_type: ['', [Validators.required]],
       }),
     });
 
@@ -185,6 +201,7 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
         ),
         tap(_ => {
           this.navigator.closeModal();
+          this.productAdForm.reset();
         })
       )
       .subscribe();

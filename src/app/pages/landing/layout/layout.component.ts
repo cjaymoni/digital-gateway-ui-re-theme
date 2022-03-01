@@ -1,6 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Inject,
@@ -11,6 +10,7 @@ import {
 import { Carousel } from 'primeng/carousel';
 import { trackByAny, trackById } from 'src/app/config/app-config';
 import { DeviceService } from 'src/app/services/device.service';
+import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 enum PlayStatus {
@@ -48,13 +48,17 @@ export class LayoutComponent implements OnInit {
   constructor(
     private themeStore: ThemeSettingsStore,
     private device: DeviceService,
-    @Inject(PLATFORM_ID) private platform: any
-  ) {}
+    @Inject(PLATFORM_ID) private platform: any,
+    private gtag: GoogleAnalyticsService
+  ) {
+    this.gtag.Pages.homepageOpened();
+  }
 
   ngOnInit() {}
 
   videoStatusChange(event: any) {
     if (event.data === PlayStatus.PLAY) {
+      this.gtag.Events.playMultimedia();
       this._multimediaSlider.stopAutoplay();
     } else if (event.data === PlayStatus.PAUSE) {
       this._multimediaSlider.startAutoplay();

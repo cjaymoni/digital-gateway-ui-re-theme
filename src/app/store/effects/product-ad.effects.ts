@@ -31,7 +31,10 @@ export class ProductAdEffects {
 
   loadMyProductAds$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(productAdActions.changeSearchPage, productAdActions.fetchMyProductAds),
+      ofType(
+        productAdActions.changeSearchPage,
+        productAdActions.fetchMyProductAds
+      ),
       switchMap((d: any) =>
         this.productAdService
           .getProductAdToModerate(d.searchPage || 1, DEFAULT_PAGE_SIZE)

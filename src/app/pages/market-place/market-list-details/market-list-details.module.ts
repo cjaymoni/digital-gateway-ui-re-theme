@@ -9,6 +9,8 @@ import { GalleriaModule } from 'primeng/galleria';
 import { TagModule } from 'primeng/tag';
 import { MessageModule } from 'primeng/message';
 import { ButtonModule } from 'primeng/button';
+import { InplaceModule } from 'primeng/inplace';
+import { ForumLoadingCardModule } from 'src/app/shared-ui-modules/forum-loading-card/forum-loading-card.module';
 
 @NgModule({
   imports: [
@@ -22,6 +24,8 @@ import { ButtonModule } from 'primeng/button';
     TagModule,
     MessageModule,
     ButtonModule,
+    InplaceModule,
+    ForumLoadingCardModule,
   ],
   exports: [MarketListDetailsComponent],
   declarations: [MarketListDetailsComponent],

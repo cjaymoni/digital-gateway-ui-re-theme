@@ -63,10 +63,24 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.articleForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
+      title: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(160),
+        ],
+      ],
       content: ['', Validators.required],
       category: ['', [Validators.required]],
-      meta_description: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(160)]],
+      meta_description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(160),
+        ],
+      ],
       tags: [''],
       images: [],
     });
@@ -144,6 +158,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
           articleActions.editArticleSuccessful
         ),
         map(_ => {
+          this.articleForm.reset();
           this.navigator.closeModal();
         })
       )

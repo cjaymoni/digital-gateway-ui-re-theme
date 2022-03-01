@@ -4,6 +4,14 @@
     layout="vertical"
     styleClass="hidden xl:flex p-0 mr-6 border-darkblue"
   ></p-divider>
+
+  <div class="p-4 grid flex flex-column" *appShellRender>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+  </div>
+
   <div *ngIf="featuredArticles$ | async" class="flex flex-column">
     <div class="text-center text-lg w-full text-base mb-5 underline">
       Featured Articles

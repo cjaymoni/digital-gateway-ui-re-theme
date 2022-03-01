@@ -1,9 +1,8 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
-import { catchError, EMPTY, map, noop, Observable, retry, tap } from 'rxjs';
+import { catchError, EMPTY, map, Observable, tap } from 'rxjs';
 import { AppUploadedImage } from '../models/article.model';
 import { Category } from '../models/category.model';
 import { DigitalLink } from '../models/digital-link.model';
@@ -86,11 +85,14 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
   constructor(
     private themeSettings: ThemeSettingsService,
     private store: Store,
-    private transferState: TransferState,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
     super(initialHomepageState);
-    this.getHomepageData();
+    // this.getHomepageData(false);
+    if (isPlatformBrowser(this.platformId)) {
+      this.getHomepageData(false);
+    }
+    this.getHomepageData(true);
   }
 
   categories$ = this.store.select(categorySelectors.all);
@@ -161,18 +163,19 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
     }
   );
 
-  readonly getHomepageData = this.effect(() => {
-    return this.themeSettings.getHompageData().pipe(
-      // retry(1),
-      tap({
-        next: homepageData => {
-          this.setState(homepageData);
-        },
-        error: () => {
-          this.setState(initialHomepageState);
-        },
-      }),
-      catchError(() => EMPTY)
-    );
-  });
+  readonly getHomepageData = (initial: boolean) =>
+    this.effect(() => {
+      return this.themeSettings.getHompageData(initial).pipe(
+        // retry(1),
+        tap({
+          next: homepageData => {
+            this.patchState({ ...homepageData });
+          },
+          error: () => {
+            this.setState(initialHomepageState);
+          },
+        }),
+        catchError(() => EMPTY)
+      );
+    });
 }
