@@ -45,7 +45,7 @@
                 <div
                   class="div-with-background-image w-12rem"
                   [style.backgroundImage]="
-                    'url(' + searchresults.images[0]?.image + ')'
+                    'url(' + searchresults.images?.[0]?.image + ')'
                   "
                 ></div>
                 <div
@@ -101,7 +101,7 @@
                 <div
                   class="div-with-background-image w-12rem"
                   [style.backgroundImage]="
-                    'url(' + searchresults.product.images[0]?.image + ')'
+                    'url(' + searchresults.product.images?.[0]?.image + ')'
                   "
                 ></div>
                 <div
@@ -130,31 +130,31 @@
       >
         <div *ngFor="let searchresults of articleSearchResults$ | async">
           <p-card
-              styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
-              (click)="openArticle(searchresults.slug)"
-            >
-              <div class="flex flex-column md:flex-row justify-content-start">
-                <div
-                  class="div-with-background-image w-12rem"
-                  [style.backgroundImage]="
-                    'url(' + searchresults.images[0]?.image + ')'
+            styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+            (click)="openArticle(searchresults.slug)"
+          >
+            <div class="flex flex-column md:flex-row justify-content-start">
+              <div
+                class="div-with-background-image w-12rem"
+                [style.backgroundImage]="
+                    'url(' + searchresults.images?.[0]?.image + ')'
                   "
-                ></div>
-                <div
-                  class="text-primary md:pl-3 py-4 flex flex-column justify-content-between"
-                >
-                  <div class="text-2xl font-bold">
-                    {{ searchresults.title }}
-                  </div>
+              ></div>
+              <div
+                class="text-primary md:pl-3 py-4 flex flex-column justify-content-between"
+              >
+                <div class="text-2xl font-bold">
+                  {{ searchresults.title }}
+                </div>
 
-                  <div class="text-900">
-                    Published on:
-                    {{ searchresults.created_on | date: 'longDate' }} by
-                    {{ searchresults.created_by.username }}
-                  </div>
+                <div class="text-900">
+                  Published on:
+                  {{ searchresults.created_on | date: 'longDate' }} by
+                  {{ searchresults.created_by.username }}
                 </div>
               </div>
-            </p-card>
+            </div>
+          </p-card>
         </div>
       </p-tabPanel>
       <p-tabPanel
@@ -170,7 +170,7 @@
               <div
                 class="div-with-background-image w-12rem"
                 [style.backgroundImage]="
-                  'url(' + searchresults.product.images[0]?.image + ')'
+                  'url(' + searchresults.product.images?.[0]?.image + ')'
                 "
               ></div>
               <div
