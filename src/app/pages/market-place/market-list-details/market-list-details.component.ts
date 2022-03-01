@@ -35,24 +35,6 @@ export class MarketListDetailsComponent implements OnInit {
   displayImage = false;
   activeIndex = 0;
 
-  responsiveOptions = [
-    {
-      breakpoint: '1024px',
-      numVisible: 5,
-      numScroll: 3,
-    },
-    {
-      breakpoint: '768px',
-      numVisible: 3,
-      numScroll: 3,
-    },
-    {
-      breakpoint: '560px',
-      numVisible: 1,
-      numScroll: 1,
-    },
-  ];
-
   constructor(private store: Store, private seo: SeoService) {}
 
   ngOnInit() {}

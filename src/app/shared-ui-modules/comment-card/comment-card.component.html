@@ -1,5 +1,17 @@
 <div
-  class="box w-full shadow-1 md:shadow-4 p-2 md:p-3 flex flex-column fadein md:fadeinright border-round animation-duration-500"
+  class="
+    box
+    w-full
+    shadow-1
+    md:shadow-2
+    p-2
+    md:px-8
+    flex flex-column
+    fadein
+    md:fadeinright
+    border-round
+    animation-duration-500
+  "
 >
   <div class="flex">
     <div class="flex flex-column md:flex-row">
@@ -7,7 +19,9 @@
         <p-avatar shape="circle" [image]="comment.author.avatar"></p-avatar>
       </div>
       <div class="flex text-xs flex-column text-gray-500">
-        <div class="font-bold">{{ comment.author.name }}</div>
+        <div class="font-bold text-sm">
+          {{ comment.author.first_name }} {{ comment.author.last_name }}
+        </div>
         <div class="font-italic">
           {{ comment.created_on | date: 'mediumDate' }}
         </div>

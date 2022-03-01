@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { concat, filter, merge, race, tap } from 'rxjs';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { productAdActions } from 'src/app/store/actions/product-ad.actions';
 import { productAdSelectors } from 'src/app/store/selectors/product-ad.selectors';
+import { selectQueryParams } from 'src/app/store/selectors/router.selectors';
 
 @Component({
   selector: 'app-market-place-list',
@@ -22,11 +23,43 @@ export class MarketPlaceListComponent implements OnInit {
   priceRange = new FormControl([1, 500]);
   district = new FormControl();
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private navigator: NavigatorService
+  ) {}
 
   ngOnInit(): void {
     this.productFilterForm = this.fb.group({
       productType: [],
+    });
+
+    this.store.select(selectQueryParams).subscribe(params => {
+      if (params) {
+        this.district.setValue(
+          { id: params['district'] },
+          { emitEvent: false }
+        );
+
+        this.productType.setValue(
+          { id: params['product_type'] },
+          { emitEvent: false }
+        );
+        this.priceRange.setValue(
+          [params['start_price'] || 0, params['end_price'] || 500],
+          { emitEvent: false }
+        );
+
+        this.store.dispatch(
+          productAdActions.searchProductAd({
+            searchParams: {
+              ...params,
+            },
+          })
+        );
+
+        this.productAds$ = this.store.select(productAdSelectors.searchResults);
+      }
     });
   }
 
@@ -45,15 +78,7 @@ export class MarketPlaceListComponent implements OnInit {
     filters.start_price = this.priceRange.value[0];
     filters.end_price = this.priceRange.value[1];
 
-    this.store.dispatch(
-      productAdActions.searchProductAd({
-        searchParams: {
-          ...filters,
-        },
-      })
-    );
-
-    this.productAds$ = this.store.select(productAdSelectors.searchResults);
+    this.navigator.marketAd.addFilters(filters);
   }
 
   resetFilter() {

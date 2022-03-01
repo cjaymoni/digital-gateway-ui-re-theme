@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import {
   Directive,
   Inject,
@@ -19,10 +19,10 @@ export class AppShellNoRenderDirective implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.viewContainer.createEmbeddedView(this.templateRef);
-    } else {
+    if (isPlatformServer(this.platformId)) {
       this.viewContainer.clear();
+    } else {
+      this.viewContainer.createEmbeddedView(this.templateRef);
     }
   }
 }

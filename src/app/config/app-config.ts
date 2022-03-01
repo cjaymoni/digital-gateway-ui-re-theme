@@ -445,7 +445,7 @@ export const MainMenu: MenuItem[] = [
         label: 'Create An Ad',
         icon: 'pi pi-plus',
         routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
-        visible: (() => {
+        disabled: (() => {
           const userRole = getUserRole();
           return CREATE_AD(userRole);
         })(),
@@ -468,10 +468,10 @@ export const MainMenu: MenuItem[] = [
         label: 'Add Resource',
         icon: 'pi pi-plus',
         routerLink: [Pages.Resources.main, Pages.Resources.add],
-        visible: (() => {
-          const userRole = getUserRole();
-          return CREATE_RESOURCE(userRole);
-        })(),
+        // visible: (() => {
+        //   const userRole = getUserRole();
+        //   return CREATE_RESOURCE(userRole);
+        // })(),
       },
       {
         id: 'view-links',

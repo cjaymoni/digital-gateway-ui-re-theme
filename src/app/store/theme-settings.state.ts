@@ -88,7 +88,7 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
     @Inject(PLATFORM_ID) private platformId: any
   ) {
     super(initialHomepageState);
-    // this.getHomepageData(false);
+
     if (isPlatformBrowser(this.platformId)) {
       this.getHomepageData(false);
     }

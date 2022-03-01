@@ -11,6 +11,7 @@ import { MessageModule } from 'primeng/message';
 import { ButtonModule } from 'primeng/button';
 import { InplaceModule } from 'primeng/inplace';
 import { ForumLoadingCardModule } from 'src/app/shared-ui-modules/forum-loading-card/forum-loading-card.module';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { ForumLoadingCardModule } from 'src/app/shared-ui-modules/forum-loading-
     ButtonModule,
     InplaceModule,
     ForumLoadingCardModule,
+    DirectivesModule,
   ],
   exports: [MarketListDetailsComponent],
   declarations: [MarketListDetailsComponent],

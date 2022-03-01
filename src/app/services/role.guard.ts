@@ -7,8 +7,13 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie';
-import { map, Observable } from 'rxjs';
-import { APP_USER_TOKEN, Roles } from '../config/app-config';
+import { map, Observable, take } from 'rxjs';
+import {
+  APP_USER_TOKEN,
+  PrimeNgAlerts,
+  Roles,
+  RouterOutlets,
+} from '../config/app-config';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
 import { userAuthSelectors } from '../store/selectors/user-auth.selectors';
 import { NavigatorService } from './navigator.service';
@@ -37,7 +42,13 @@ export class RoleGuard implements CanActivate {
     const neededRoles: Roles[] = route.data['roles'];
 
     return this.store.select(userAuthSelectors.loggedInUser).pipe(
+      take(1),
       map(user => {
+        if (user == null) {
+          // check from cookie
+          user = this.cookieService.getObject(APP_USER_TOKEN) as any;
+        }
+
         if (user) {
           const role = user?.role;
 
@@ -53,8 +64,12 @@ export class RoleGuard implements CanActivate {
           );
           return false;
         } else {
-          this.alert.showToast('You need to login');
-          this.navigator.auth.goToLogin(undefined, undefined, state.url);
+          this.alert.showToast('You need to login', PrimeNgAlerts.UNOBSTRUSIVE);
+          this.navigator.auth.goToLogin(
+            RouterOutlets.Modal,
+            undefined,
+            state.url
+          );
           return false;
         }
       })

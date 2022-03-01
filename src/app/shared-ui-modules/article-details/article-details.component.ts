@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { filter, take, tap } from 'rxjs';
+import { filter, map, take } from 'rxjs';
 import { SeoService } from 'src/app/helpers/seo.service';
 import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
@@ -29,13 +29,15 @@ export class ArticleDetailsComponent implements OnInit, AfterViewInit {
   @Input() article$ = this.store.select(articleSelectors.selectedArticle).pipe(
     filter(article => !!article),
     take(1),
-    tap(article => {
+    map(article => {
       this.seo.generateTags({
         title: article.title,
-        image: article.images?.[0].image,
+        image: article.images?.[0]?.image || '',
         description: article.meta_description,
         author: article.meta_author,
       });
+
+      return article;
     })
   );
 

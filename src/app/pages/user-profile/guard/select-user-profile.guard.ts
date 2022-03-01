@@ -6,9 +6,9 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
-import { LocalStorageService } from 'src/app/helpers/localstorage.service';
-import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
+import { CookieService } from 'ngx-cookie';
+import { Observable } from 'rxjs';
+import { APP_USER_TOKEN } from 'src/app/config/app-config';
 import { userProfileActions } from '../../../store/actions/user-profile.actions';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class SelectUserProfileGuard implements CanActivate {
   /**
    *
    */
-  constructor(private store: Store, private localStorage: LocalStorageService) {
+  constructor(private store: Store, private cookieService: CookieService) {
     // this.store.dispatch(articleActions.fetch());
   }
   canActivate(
@@ -29,20 +29,15 @@ export class SelectUserProfileGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const profileId = JSON.parse(
-      this.localStorage.getItem('app_user_access_token') || '{}'
-    );
+    const user = this.cookieService.getObject(APP_USER_TOKEN) as any;
+    if (user?.email) {
+      this.store.dispatch(
+        userProfileActions.findAndSelectUserProfileById({
+          id: user?.profile_id,
+        })
+      );
+    }
 
-    return this.store.select(userAuthSelectors.loggedInUser).pipe(
-      map(user => {
-        this.store.dispatch(
-          userProfileActions.findAndSelectUserProfileById({
-            id: user?.id,
-          })
-        );
-
-        return true;
-      })
-    );
+    return true;
   }
 }

@@ -1,4 +1,4 @@
-<div *ngIf="forum$ | async; else loading">
+<div *ngIf="forum$ | async; else loading" class="px-8">
   <div class="flex justify-content-between p-component">
     <div class="text-2xl font-bold">
       {{ (forum$ | async)?.name | uppercase }}
@@ -8,7 +8,7 @@
   <div class="mt-3">
     {{ (forum$ | async)?.description }}
 
-    <hr />
+    <hr class="my-4" />
     <div
       class="
         flex
@@ -34,6 +34,7 @@
         pButton
         icon="pi pi-plus"
         class="
+          w-13rem
           col-12
           md:col-3
           p-button-outlined p-button-secondary
@@ -49,8 +50,9 @@
     <div
       class="
         text-center text-darkblue
+        text-2xl
         font-semibold
-        my-2
+        my-6
         p-component
         border-none
         mb-1
@@ -59,7 +61,7 @@
       TOPICS UNDER DISCUSSION
     </div>
 
-    <div class="mb-2" *ngFor="let forumPosts of forumPosts$ | async">
+    <div class="mb-5" *ngFor="let forumPosts of forumPosts$ | async">
       <app-forum-post-card [forumPost]="forumPosts"></app-forum-post-card>
     </div>
   </ng-container>

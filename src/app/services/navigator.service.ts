@@ -24,7 +24,7 @@ import { selectUrl } from '../store/selectors/router.selectors';
 })
 export class NavigatorService {
   constructor(
-    private router: Router,
+    public router: Router,
     private store: Store,
     private location: Location
   ) {
@@ -148,7 +148,7 @@ export class NavigatorService {
               },
             },
           ]);
-
+          this.modalRef?.close();
           this.modalRef?.destroy();
         })
       )
@@ -444,6 +444,20 @@ class MarketAdRoutes extends AppRoutesConfig {
       ...this.page.viewDetails.replace(':id', id).split('/'),
     ]);
   }
+
+  addFilters(filters: { [key: string]: string }) {
+    this.router.navigate([this.page.main], {
+      queryParams: { ...filters },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  clearFilters() {
+    this.router.navigate([this.page.main], {
+      queryParams: null,
+      queryParamsHandling: 'merge',
+    });
+  }
 }
 
 class ResourceRoutes extends AppRoutesConfig {
@@ -509,4 +523,3 @@ class ContentManagementRoutes extends AppRoutesConfig {
     );
   }
 }
-
