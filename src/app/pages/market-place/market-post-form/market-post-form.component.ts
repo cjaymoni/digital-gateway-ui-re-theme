@@ -1,9 +1,9 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  ViewChild,
+  Component,
   OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -13,7 +13,7 @@ import {
 } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { filter, Subscription, take, tap } from 'rxjs';
+import { filter, Subscription, tap } from 'rxjs';
 import { TagType } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { AppUploadedImage } from 'src/app/models/article.model';
@@ -36,7 +36,6 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
   createForm = true;
   productAdForm!: FormGroup;
 
-  // selectedProductAd$ =
   subscription!: Subscription;
 
   productAd!: ProductAd;
@@ -202,6 +201,7 @@ export class MarketPostFormComponent implements OnInit, OnDestroy {
         tap(_ => {
           this.navigator.closeModal();
           this.productAdForm.reset();
+          this.navigator.marketAd.goToListPage();
         })
       )
       .subscribe();

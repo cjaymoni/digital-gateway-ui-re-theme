@@ -17,7 +17,7 @@
   <div class="grid">
     <div class="col-2">
       <p-avatar
-        [image]="forumPost.submitter.image"
+        [image]="forumPost.submitter.avatar"
         styleClass="mr-2"
         size="xlarge"
         shape="circle"
@@ -27,7 +27,8 @@
       <div class="text-lg font-bold mr-8">
         {{ forumPost.title | uppercase }}
         <div class="text-sm">
-          {{ forumPost.submitter.username }}
+          {{ forumPost.submitter.first_name }}
+          {{ forumPost.submitter.last_name }}
         </div>
       </div>
 

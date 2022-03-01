@@ -9,7 +9,8 @@
           Published On: {{ (article$ | async).created_on | date: 'longDate' }}
         </div>
         <div class="m-1 font-italic">
-          Author: {{ (article$ | async).created_by?.username }}
+          Author: {{ (article$ | async).created_by?.first_name }}
+          {{ (article$ | async).created_by?.last_name }}
         </div>
         <div class="flex m-1 align-items-center">
           <i class="pi pi-tag mr-1 text-blue-500"></i>
