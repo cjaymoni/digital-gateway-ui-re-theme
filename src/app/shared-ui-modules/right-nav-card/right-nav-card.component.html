@@ -13,17 +13,19 @@
   </div>
 
   <div *ngIf="featuredArticles$ | async" class="flex flex-column">
-    <div class="text-center text-lg w-full text-base mb-5 underline">
+    <div
+      class="text-center text-2xl text-darkblue w-full text-base mb-1 underline"
+    >
       Featured Articles
     </div>
-    <div class="grid">
+    <div class="grid gap-8 gap-v-8">
       <ng-container
         *ngFor="
           let fArticle of featuredArticles$ | async;
           trackBy: trackAny('article.id')
         "
       >
-        <div class="mb-4 col-12 sm:col-6 xl:col-12 p-4 xl:p-1">
+        <div class="mt-4 col-12 sm:col-6 xl:col-12 p-4 xl:p-1 h-15rem xl:13rem">
           <app-featured-article-card [featuredArticle]="fArticle.article">
           </app-featured-article-card>
         </div>

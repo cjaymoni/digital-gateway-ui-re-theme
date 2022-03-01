@@ -12,7 +12,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { filter, Subscription, tap } from 'rxjs';
+import { CookieService } from 'ngx-cookie';
+import { filter, Subscription, take, tap } from 'rxjs';
+import { APP_USER_TOKEN } from 'src/app/config/app-config';
 import { UserProfile } from 'src/app/models/user-auth.model';
 import {
   ImageUploadComponent,
@@ -20,7 +22,6 @@ import {
 } from 'src/app/shared-ui-modules/image-upload/image-upload.component';
 import { userProfileActions } from 'src/app/store/actions/user-profile.actions';
 import { userProfileSelectors } from 'src/app/store/selectors/user-profile.selectors';
-import { userAuthSelectors } from '../../store/selectors/user-auth.selectors';
 
 @Component({
   selector: 'app-user-profile',
@@ -44,7 +45,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private cookieService: CookieService
+  ) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -64,9 +69,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       district: [''],
       avatar: [''],
     });
-
-    this.subscription = this.getUserProfileToEditSubscription();
     this.getloggedInUser();
+    this.subscription = this.getUserProfileToEditSubscription();
   }
 
   get avatarImage() {
@@ -82,6 +86,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       .select(userProfileSelectors.selectedUserProfileToEdit)
       .pipe(
         filter(data => !!data),
+        take(1),
         tap((userProfile: UserProfile) => {
           this.profile = userProfile;
           this.profileForm.patchValue({
@@ -94,15 +99,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   getloggedInUser() {
-    return this.store
-      .select(userAuthSelectors.loggedInUser)
-      .pipe(
-        filter(data => !!data),
-        tap(user => {
-          this.user = user;
-        })
-      )
-      .subscribe();
+    this.user = this.cookieService.getObject(APP_USER_TOKEN);
   }
 
   onEditProfile() {
@@ -123,11 +120,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const images: any =
       this.imageUploadComponent?.getFilesToUpload()?.length > 0
         ? this.imageUploadComponent?.getFilesToUpload()
-        : this.avatarImage.value || undefined;
+        : undefined;
+
+    console.log(images);
 
     this.store.dispatch(
       userProfileActions.editUserProfile({
-        userProfile: { ...toSend, id: this.user.id },
+        userProfile: { ...toSend, id: this.user.profile_id },
         imageToUpload: images,
       })
     );

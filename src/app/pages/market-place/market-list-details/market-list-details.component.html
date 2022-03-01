@@ -8,38 +8,30 @@
 
     <div class="w-11 xl:w-10 block ml-auto mr-auto">
       <p-galleria
+        *appShellNoRender
+        #gallery
         [value]="(product$ | async).product?.images"
-        [responsiveOptions]="responsiveOptions"
         [containerClass]="'container'"
         [showThumbnails]="false"
         [autoPlay]="true"
         [circular]="true"
         [(visible)]="displayImage"
         [(activeIndex)]="activeIndex"
-        [showItemNavigators]="true"
+        [showIndicators]="true"
         [numVisible]="5"
       >
-        <ng-template pTemplate="item" let-item>
+        <ng-template pTemplate="item" let-item *appShellNoRender>
           <img
             [src]="item.image"
             [alt]="item.title"
             class="w-12 h-23rem border-round object-fit-contain"
           />
         </ng-template>
-        <ng-template pTemplate="thumbnail" let-item>
-          <div class="flex grid-nogutter justify-content-between">
-            <img
-              [src]="item.image"
-              class="col-4 border-round"
-              alt="product-ad-thumbnail"
-            />
-          </div>
-        </ng-template>
       </p-galleria>
 
       <div
         *ngIf="(product$ | async).product?.images"
-        class="flex w-full ml-0 my-3 overflow-x-scroll"
+        class="flex w-full ml-0 my-3 overflow-x-scroll mt-3"
       >
         <div
           *ngFor="
@@ -49,6 +41,7 @@
           class="col-4 lg:col-3"
         >
           <img
+            *appShellNoRender
             [src]="img.image"
             [alt]="img.name"
             class="cursor-pointer border-round w-full h-10rem object-fit-contain thumbnail transition-all transition-duration-300 transition-ease-in-out"

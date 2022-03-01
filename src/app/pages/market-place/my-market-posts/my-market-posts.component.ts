@@ -31,6 +31,7 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
   constructor(private store: Store, private navigator: NavigatorService) {}
 
   ngAfterViewInit(): void {
+    this.fetchMyMarketAds();
     this.columns = [
       { header: 'PRODUCT', field: 'product', subField: 'name' },
       {
@@ -43,9 +44,7 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  ngOnInit() {
-    this.fetchMyMarketAds();
-  }
+  ngOnInit() {}
 
   goToAddPostPage() {
     this.navigator.marketAd.goToAddPage();

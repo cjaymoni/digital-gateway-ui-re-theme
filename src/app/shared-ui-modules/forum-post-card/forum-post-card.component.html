@@ -6,7 +6,7 @@
   <div class="flex justify-content-between align-content-center">
     <div class="flex">
       <p-avatar
-        [image]="forumPost.submitter.image"
+        [image]="forumPost.submitter.avatar"
         styleClass="mr-2"
         size="large"
         shape="circle"
@@ -14,7 +14,8 @@
       <div class="text-lg font-bold mt-1">
         {{ forumPost.title | uppercase }}
         <div class="text-sm">
-          {{ forumPost.submitter.username }}
+          {{ forumPost.submitter.first_name }}
+          {{ forumPost.submitter.last_name }}
         </div>
       </div>
     </div>

@@ -38,19 +38,31 @@ export const forumPostReducer = createReducer(
   on(forumPostActions.fetchError, state => {
     return { ...state, loading: false };
   }),
+  on(forumPostActions.findAndSelectForumPost, state => {
+    return { ...state, loading: true };
+  }),
+  on(forumPostActions.findAndSelectForumPostById, state => {
+    return { ...state, loading: true };
+  }),
   on(forumPostActions.selectForumPost, (state, { forumPost }) => {
-    return { ...state, selectedForumPost: forumPost };
+    return { ...state, selectedForumPost: forumPost, loading: false };
   }),
   on(forumPostActions.selectForumPostToEdit, (state, { forumPost }) => {
-    return { ...state, selectedForumPostToEdit: forumPost };
+    return { ...state, selectedForumPostToEdit: forumPost, loading: false };
   }),
   on(forumPostActions.addForumPostSuccessful, (state, { forumPost }) => {
-    return forumPostEntityAdapter.addOne(forumPost, state);
+    return forumPostEntityAdapter.addOne(forumPost, {
+      ...state,
+      loading: false,
+    });
   }),
   on(
     forumPostActions.editForumPostSuccessful,
     (state, { updatedForumPost }) => {
-      return forumPostEntityAdapter.updateOne(updatedForumPost, state);
+      return forumPostEntityAdapter.updateOne(updatedForumPost, {
+        ...state,
+        loading: false,
+      });
     }
   ),
   on(forumPostActions.deleteForumPostSuccessful, (state, { id }) => {
