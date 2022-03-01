@@ -7,6 +7,7 @@ import { ProductAdEndpoint } from '../config/routes';
 import { ProductAd } from '../models/product-ad.model';
 import { ResourceService } from './resources.service';
 import { productAdActions } from './../store/actions/product-ad.actions';
+import { TransferStateService } from './transfer-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +15,12 @@ import { productAdActions } from './../store/actions/product-ad.actions';
 export class ProductAdService extends ResourceService {
   PRODUCT_PROPERTY = 'product.';
 
-  constructor(http: HttpClient, private store: Store) {
-    super(http, ProductAdEndpoint);
+  constructor(
+    http: HttpClient,
+    private store: Store,
+    transferState: TransferStateService
+  ) {
+    super(http, ProductAdEndpoint, transferState);
   }
 
   searchAd(searchParams: { [key: string]: any }) {

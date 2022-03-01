@@ -1,8 +1,13 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
   Input,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
@@ -19,7 +24,7 @@ import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
   styleUrls: ['./login-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginButtonComponent implements OnInit {
+export class LoginButtonComponent implements OnInit, AfterViewInit {
   loggedInUser$ = this.store.select(userAuthSelectors.loggedInUser);
 
   isLoggedIn$ = this.store.select(userAuthSelectors.isLoggedIn);
@@ -40,8 +45,16 @@ export class LoginButtonComponent implements OnInit {
     private store: Store,
     private device: DeviceService,
     private loginService: LoginService,
-    private navigator: NavigatorService
+    private navigator: NavigatorService,
+    private cdref: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {}
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.cdref.detectChanges();
+    }
+  }
 
   ngOnInit(): void {}
 

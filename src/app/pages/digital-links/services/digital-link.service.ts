@@ -4,14 +4,19 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { ResourceService } from 'src/app/services/resources.service';
 import { DigitalLink } from 'src/app/models/digital-link.model';
-import { DigitalLinkEndpoint } from 'src/app/config/routes';
+import { DirectLinkEndpoint } from 'src/app/config/routes';
+import { TransferStateService } from 'src/app/services/transfer-state.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DigitalLinkService extends ResourceService {
-  constructor(http: HttpClient, private store: Store) {
-    super(http, DigitalLinkEndpoint);
+  constructor(
+    http: HttpClient,
+    private store: Store,
+    transferState: TransferStateService
+  ) {
+    super(http, DirectLinkEndpoint, transferState);
   }
 
   searchDigitalLink(searchParams: { [key: string]: any }) {
@@ -24,7 +29,9 @@ export class DigitalLinkService extends ResourceService {
   }
 
   addDigitalLink(digitallink: DigitalLink) {
-    return this.storeResource(digitallink).pipe(map(data => data as DigitalLink));
+    return this.storeResource(digitallink).pipe(
+      map(data => data as DigitalLink)
+    );
   }
 
   editDigitalLink(digitallink: DigitalLink) {
@@ -33,4 +40,15 @@ export class DigitalLinkService extends ResourceService {
     );
   }
 
+  getFeaturedLinks() {
+    return this.getResources(
+      this.endpoint,
+      undefined,
+      {
+        featured: 'True',
+      },
+      false,
+      'fearuedDirectLinks'
+    ).pipe(map(data => data as DigitalLink[]));
+  }
 }

@@ -5,8 +5,11 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie';
+
 import { catchError, EMPTY, Observable } from 'rxjs';
 import {
+  APP_REFRESH_TOKEN,
   APP_TOKEN,
   APP_USER_TOKEN,
   PrimeNgAlerts,
@@ -20,7 +23,8 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
   constructor(
     private alert: AppAlertService,
     private navigator: NavigatorService,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private cookieService: CookieService
   ) {}
 
   intercept(
@@ -38,7 +42,7 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
               // if (Object.prototype.hasOwnProperty.call(validationError, key)) {
               // errorMessages += `\n${key.replace(/_/g, ' ').toUpperCase()} : `;
               const messageArray: string[] = validationError[key];
-              errorMessages += key + ' => ';
+              // errorMessages += key + ' => ';
               messageArray.forEach(m => {
                 errorMessages += `\n${m}`;
               });
@@ -51,13 +55,18 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
             );
           }
         } else if (event.status === 401) {
+          if (this.cookieService.hasKey(APP_REFRESH_TOKEN)) {
+          }
+
           this.alert.showToast(
             event.error.message ||
               `You have been logged out. Please log in and retry`,
             PrimeNgAlerts.ERROR
           );
+
           this.localStorage.removeItem(APP_TOKEN);
           this.localStorage.removeItem(APP_USER_TOKEN);
+          this.cookieService.removeAll();
           this.navigator.auth.goToLogin();
         } else if (event.status === 403) {
           this.alert.showToast(

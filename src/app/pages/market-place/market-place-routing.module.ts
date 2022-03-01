@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Pages, RouterOutlets } from 'src/app/config/app-config';
-import { NavigatorService } from 'src/app/services/navigator.service';
 import { RoleGuard } from 'src/app/services/role.guard';
 import { MarketPlaceGuard } from './guard/market-place.guard';
 import { MarketListDetailsComponent } from './market-list-details/market-list-details.component';
@@ -9,13 +8,12 @@ import { MarketPlaceListComponent } from './market-place-list/market-place-list.
 import { MarketPostFormComponent } from './market-post-form/market-post-form.component';
 import { MyMarketPostsComponent } from './my-market-posts/my-market-posts.component';
 
-const rightPanelRoutes: Routes = [];
-
 const routes: Routes = [
   {
     path: '',
     component: MarketPlaceListComponent,
     canActivate: [MarketPlaceGuard],
+    pathMatch: 'full',
   },
   {
     path: Pages.MarketPlace.add,
@@ -24,6 +22,7 @@ const routes: Routes = [
     data: {
       breadcrumb: 'Add Advert',
     },
+    pathMatch: 'full',
   },
   {
     path: Pages.MarketPlace.view,
@@ -33,6 +32,7 @@ const routes: Routes = [
     data: {
       breadcrumb: 'View Advert',
     },
+    pathMatch: 'full',
   },
   {
     path: Pages.MarketPlace.edit,
@@ -42,6 +42,7 @@ const routes: Routes = [
     data: {
       breadcrumb: 'Edit Advert',
     },
+    pathMatch: 'full',
   },
   {
     path: Pages.MarketPlace.myList,
@@ -50,6 +51,7 @@ const routes: Routes = [
     data: {
       breadcrumb: 'Advert List',
     },
+    pathMatch: 'full',
   },
   {
     path: Pages.MarketPlace.viewDetails,
@@ -58,6 +60,7 @@ const routes: Routes = [
     data: {
       breadcrumb: 'View Advert Details',
     },
+    pathMatch: 'full',
   },
 ];
 
@@ -65,8 +68,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MarketPlaceRoutingModule {
-  constructor(private navigator: NavigatorService) {
-    this.navigator.addRightPanelRoutes(rightPanelRoutes);
-  }
-}
+export class MarketPlaceRoutingModule {}

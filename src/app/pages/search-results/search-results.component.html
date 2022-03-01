@@ -20,12 +20,12 @@
     </div>
     <p-tabView #tabs>
       <p-tabPanel
-        [header]="'All (' + (searchResults$ | async)?.length + ')'"
+        [header]="'All (' + (totalSearchResults$ | async)?.length + ')'"
         #tab
       >
-        <div *ngFor="let searchresults of searchResults$ | async">
+        <div *ngFor="let searchresults of totalSearchResults$ | async">
           <div *ngIf="searchresults.source == 'article'">
-            <p-card
+            <!-- <p-card
               [header]="searchresults.title"
               styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
               (click)="openArticle(searchresults.slug)"
@@ -34,6 +34,33 @@
                 Published on:
                 {{ searchresults.created_on | date: 'longDate' }} by
                 {{ searchresults.created_by.username }}
+              </div>
+            </p-card> -->
+
+            <p-card
+              styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+              (click)="openArticle(searchresults.slug)"
+            >
+              <div class="flex justify-content-start">
+                <div
+                  class="div-with-background-image w-12rem"
+                  [style.backgroundImage]="
+                    'url(' + searchresults.images[0].image + ')'
+                  "
+                ></div>
+                <div
+                  class="text-primary pl-3 py-4 flex flex-column justify-content-between"
+                >
+                  <div class="text-2xl font-bold">
+                    {{ searchresults.title }}
+                  </div>
+
+                  <div class="text-900">
+                    Published on:
+                    {{ searchresults.created_on | date: 'longDate' }} by
+                    {{ searchresults.created_by.username }}
+                  </div>
+                </div>
               </div>
             </p-card>
           </div>
@@ -103,15 +130,31 @@
       >
         <div *ngFor="let searchresults of articleSearchResults$ | async">
           <p-card
-            [header]="searchresults.title"
-            styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
-            (click)="openArticle(searchresults.slug)"
-          >
-            <div class="text-900">
-              Published on: {{ searchresults.created_on | date: 'longDate' }} by
-              {{ searchresults.created_by.username }}
-            </div>
-          </p-card>
+              styleClass="text-primary cursor-pointer hover:bg-gray-100 mt-2"
+              (click)="openArticle(searchresults.slug)"
+            >
+              <div class="flex justify-content-start">
+                <div
+                  class="div-with-background-image w-12rem"
+                  [style.backgroundImage]="
+                    'url(' + searchresults.images[0].image + ')'
+                  "
+                ></div>
+                <div
+                  class="text-primary pl-3 py-4 flex flex-column justify-content-between"
+                >
+                  <div class="text-2xl font-bold">
+                    {{ searchresults.title }}
+                  </div>
+
+                  <div class="text-900">
+                    Published on:
+                    {{ searchresults.created_on | date: 'longDate' }} by
+                    {{ searchresults.created_by.username }}
+                  </div>
+                </div>
+              </div>
+            </p-card>
         </div>
       </p-tabPanel>
       <p-tabPanel

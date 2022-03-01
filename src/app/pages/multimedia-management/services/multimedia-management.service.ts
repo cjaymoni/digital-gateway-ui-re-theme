@@ -5,13 +5,18 @@ import { map } from 'rxjs';
 import { ResourceService } from 'src/app/services/resources.service';
 import { MultiMedia } from 'src/app/models/multimedia.model';
 import { MultiMediaEndpoint } from 'src/app/config/routes';
+import { TransferStateService } from 'src/app/services/transfer-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MultiMediaService extends ResourceService {
-  constructor(http: HttpClient, private store: Store) {
-    super(http, MultiMediaEndpoint);
+  constructor(
+    http: HttpClient,
+    private store: Store,
+    transferState: TransferStateService
+  ) {
+    super(http, MultiMediaEndpoint, transferState);
   }
 
   searchMultiMedia(searchParams: { [key: string]: any }) {

@@ -7,12 +7,12 @@ import { RoleGuard } from './services/role.guard';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'home',
+    path: 'home',
+    redirectTo: '',
     pathMatch: 'full',
   },
   {
-    path: 'home',
+    path: '',
     loadChildren: () =>
       import('./pages/landing/landing.module').then(m => m.LandingModule),
   },
@@ -72,6 +72,7 @@ const routes: Routes = [
     path: Pages.Resources.main,
     loadChildren: () =>
       import('./pages/resource/resource.module').then(m => m.ResourceModule),
+    data: { breadcrumb: 'Resources' },
   },
   {
     path: Pages.UserProfile,
@@ -116,6 +117,14 @@ const routes: Routes = [
       ),
     data: {
       breadcrumb: 'Users Management',
+    },
+  },
+  {
+    path: Pages.AboutUs,
+    loadChildren: () =>
+      import('./pages/about-us/about-us.module').then(m => m.AboutUsModule),
+    data: {
+      breadcrumb: 'About Us',
     },
   },
   {

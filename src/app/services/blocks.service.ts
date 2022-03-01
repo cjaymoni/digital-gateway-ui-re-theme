@@ -11,13 +11,18 @@ import { Article } from '../models/article.model';
 import { Category } from '../models/category.model';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
 import { ResourceService } from './resources.service';
+import { TransferStateService } from './transfer-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BlockService extends ResourceService {
-  constructor(httpClient: HttpClient, private alert: AppAlertService) {
-    super(httpClient, '');
+  constructor(
+    httpClient: HttpClient,
+    private alert: AppAlertService,
+    transferState: TransferStateService
+  ) {
+    super(httpClient, '', transferState);
   }
 
   saveHiglightedArticles(articles: Article[]) {

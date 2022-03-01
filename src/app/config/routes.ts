@@ -38,5 +38,4 @@ export const LogoutEndpoint = environment.API_URL + 'logout/';
 
 export const LoginEndpoint = environment.API_URL + 'login/';
 export const MultiMediaEndpoint = environment.API_URL + 'multi-media/';
-export const DigitalLinkEndpoint = environment.API_URL + 'digital-links/';
-export const DigiLinksEndpoint = environment.API_URL + 'digital-links/';
+export const DirectLinkEndpoint = environment.API_URL + 'digital-links/';

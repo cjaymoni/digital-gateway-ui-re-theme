@@ -1,3 +1,7 @@
 <div class="video-container my-3">
-  <youtube-player *ngIf="videoId" [videoId]="videoId"></youtube-player>
+  <youtube-player
+    *ngIf="videoId"
+    [videoId]="videoId"
+    (stateChange)="stateChange($event)"
+  ></youtube-player>
 </div>

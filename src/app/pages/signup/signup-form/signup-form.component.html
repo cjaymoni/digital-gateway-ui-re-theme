@@ -1,5 +1,5 @@
 <ng-container>
-  <form [formGroup]="signupForm" class="my-8">
+  <form [formGroup]="signupForm" class="my-8" errorTailor>
     <div class="fluid formgrid grid">
       <div class="field col-12 md:col-6">
         <div class="p-inputgroup">
@@ -70,14 +70,7 @@
       </div>
 
       <div
-        class="
-          field
-          col-12
-          ml-auto
-          flex
-          align-items-center
-          justify-content-between
-        "
+        class="field col-12 ml-auto flex align-items-center justify-content-between"
       >
         <button
           pButton
@@ -92,14 +85,7 @@
         <div>
           Already have an account?
           <span
-            class="
-              ml-1
-              cursor-pointer
-              text-lg
-              font-bold
-              text-blue-700
-              hover-underline
-            "
+            class="ml-1 cursor-pointer text-lg font-bold text-blue-700 hover-underline"
             (click)="goToLogin(); $event.stopPropagation()"
             >Login</span
           >
