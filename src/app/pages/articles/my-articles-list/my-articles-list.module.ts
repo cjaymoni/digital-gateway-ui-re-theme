@@ -7,6 +7,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { MessageModule } from 'primeng/message';
 import { TagModule } from 'primeng/tag';
 import { MenuModule } from 'primeng/menu';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   declarations: [MyArticlesListComponent],
@@ -18,6 +19,7 @@ import { MenuModule } from 'primeng/menu';
     MessageModule,
     TagModule,
     MenuModule,
+    DirectivesModule,
   ],
   exports: [MyArticlesListComponent],
 })

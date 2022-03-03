@@ -1,56 +1,59 @@
-<div class="text-center flex justify-content-between">
-  <div>MULTIMEDIA MANAGEMENT</div>
-
-  <button
-    pButton
-    class="align-self-end p-btn p-btn-lg"
-    icon="pi pi-plus"
-    label="Add New Media"
-    (click)="goToAddNewMedia()"
-  ></button>
-</div>
-
-<app-table
-  [data]="(multiMedia$ | async) || []"
-  [columnsDefinition]="columns"
-  [actionTemplate]="actions"
-  [showAction]="true"
-></app-table>
-
-<ng-template #actions let-multimedia>
-  <div class="flex justify-content-between">
-    <button
-      class="p-button p-button-rounded p-button-danger mr-3"
-      pButton
-      tooltipPosition="bottom"
-      pTooltip="View MultiMedia"
-      icon="pi pi-eye"
-      (click)="viewMedia(multimedia)"
-    ></button>
+<ng-container *appShellNoRender>
+  <div class="text-center flex justify-content-between">
+    <div>MULTIMEDIA MANAGEMENT</div>
 
     <button
-      class="p-button p-button-info p-button-rounded mr-auto"
       pButton
-      pTooltip="Edit MultiMedia"
-      tooltipPosition="bottom"
-      icon="pi pi-pencil"
-      (click)="editMedia(multimedia)"
+      class="align-self-end p-btn p-btn-lg"
+      icon="pi pi-plus"
+      label="Add New Media"
+      (click)="goToAddNewMedia()"
     ></button>
   </div>
-</ng-template>
 
-<ng-template #mediaTypeTemplate let-mediaType>
-  <p-message
-    [severity]="mediaType === 'audio' ? 'info' : 'warn'"
-    [text]="mediaType | uppercase"
-    styleClass="p-message-no-icon"
-  ></p-message>
-</ng-template>
+  <app-table
+    [data]="(multiMedia$ | async) || []"
+    [columnsDefinition]="columns"
+    [actionTemplate]="actions"
+    [showAction]="true"
+    [refreshDataFunction]="fetchData"
+  ></app-table>
 
-<ng-template #featuredTemplate let-featured>
-  <p-message
-    [severity]="featured === true ? 'info' : 'warn'"
-    [text]="featured | BooleanPipe"
-    styleClass="p-message-no-icon"
-  ></p-message>
-</ng-template>
+  <ng-template #actions let-multimedia>
+    <div class="flex justify-content-between">
+      <button
+        class="p-button p-button-rounded p-button-danger mr-3"
+        pButton
+        tooltipPosition="bottom"
+        pTooltip="View MultiMedia"
+        icon="pi pi-eye"
+        (click)="viewMedia(multimedia)"
+      ></button>
+
+      <button
+        class="p-button p-button-info p-button-rounded mr-auto"
+        pButton
+        pTooltip="Edit MultiMedia"
+        tooltipPosition="bottom"
+        icon="pi pi-pencil"
+        (click)="editMedia(multimedia)"
+      ></button>
+    </div>
+  </ng-template>
+
+  <ng-template #mediaTypeTemplate let-mediaType>
+    <p-message
+      [severity]="mediaType === 'audio' ? 'info' : 'warn'"
+      [text]="mediaType | uppercase"
+      styleClass="p-message-no-icon"
+    ></p-message>
+  </ng-template>
+
+  <ng-template #featuredTemplate let-featured>
+    <p-message
+      [severity]="featured === true ? 'info' : 'warn'"
+      [text]="featured | BooleanPipe"
+      styleClass="p-message-no-icon"
+    ></p-message>
+  </ng-template>
+</ng-container>
