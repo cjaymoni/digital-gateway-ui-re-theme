@@ -5,6 +5,7 @@ import { AppTableModule } from 'src/app/shared-ui-modules/app-table/app-table.mo
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
     ButtonModule,
     MessageModule,
     AppPipesModule,
+    DirectivesModule,
   ],
   declarations: [MultimediaListComponent],
   exports: [MultimediaListComponent],

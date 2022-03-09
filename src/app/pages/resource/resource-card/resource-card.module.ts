@@ -4,9 +4,16 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ResourceCardComponent } from './resource-card.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
 
 @NgModule({
-  imports: [CommonModule, CardModule, ButtonModule, TooltipModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    TooltipModule,
+    AppPipesModule,
+  ],
   exports: [ResourceCardComponent],
   declarations: [ResourceCardComponent],
 })

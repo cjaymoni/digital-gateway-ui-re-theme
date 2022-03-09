@@ -122,8 +122,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         ? this.imageUploadComponent?.getFilesToUpload()
         : undefined;
 
-    console.log(images);
-
     this.store.dispatch(
       userProfileActions.editUserProfile({
         userProfile: { ...toSend, id: this.user.profile_id },

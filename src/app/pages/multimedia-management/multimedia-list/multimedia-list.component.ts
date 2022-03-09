@@ -12,6 +12,7 @@ import { RouterOutlets } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { multiMediaSelectors } from 'src/app/store/selectors/multimedia.selectors';
 import { MultiMedia } from 'src/app/models/multimedia.model';
+import { multimediaActions } from 'src/app/store/actions/multimedia.actions';
 
 @Component({
   selector: 'app-multimedia-list',
@@ -37,6 +38,7 @@ export class MultimediaListComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
+    this.fetchData();
     this.columns = [
       { header: 'URL', field: 'url' },
       {
@@ -74,4 +76,8 @@ export class MultimediaListComponent implements OnInit, AfterViewInit {
       RouterOutlets.Modal
     );
   }
+
+  fetchData = () => {
+    this.store.dispatch(multimediaActions.fetch());
+  };
 }

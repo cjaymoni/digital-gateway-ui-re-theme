@@ -1,8 +1,11 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  Inject,
   OnInit,
+  PLATFORM_ID,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -28,10 +31,16 @@ export class MyMarketPostsComponent implements OnInit, AfterViewInit {
 
   columns: any[] = [];
 
-  constructor(private store: Store, private navigator: NavigatorService) {}
+  constructor(
+    private store: Store,
+    private navigator: NavigatorService,
+    @Inject(PLATFORM_ID) private platformId: any
+  ) {}
 
   ngAfterViewInit(): void {
-    this.fetchMyMarketAds();
+    if (isPlatformBrowser(this.platformId)) {
+      this.fetchMyMarketAds();
+    }
     this.columns = [
       { header: 'PRODUCT', field: 'product', subField: 'name' },
       {

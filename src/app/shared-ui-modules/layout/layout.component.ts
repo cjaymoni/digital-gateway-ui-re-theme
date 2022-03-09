@@ -2,17 +2,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
-  OnInit
+  OnInit,
 } from '@angular/core';
+import { CookieService } from 'ngx-cookie';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription, tap } from 'rxjs';
+import { BehaviorSubject, Subscription, tap } from 'rxjs';
 import { RouterOutlets } from 'src/app/config/app-config';
+import { LocalStorageService } from 'src/app/helpers/localstorage.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ThemeSettingsService } from 'src/app/services/theme-settings.service';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 import { AppAlertService } from '../alerts/service/app-alert.service';
 import { ModalComponentsComponent } from '../modal-components/modal-components.component';
 
+const SHOW_PANEL = 'show_panel';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -21,7 +24,6 @@ import { ModalComponentsComponent } from '../modal-components/modal-components.c
   providers: [ThemeSettingsStore],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-
   loading$ = this.themeService.loadingHomepageData$;
 
   RouterOutlets = RouterOutlets;
@@ -34,6 +36,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   breadcrumbs$ = this.navigator.breadCrumbs$;
 
+  showRightPanel$ = new BehaviorSubject(true);
+
   home = {
     routerLink: ['/'],
     title: 'Go To Home',
@@ -43,8 +47,20 @@ export class LayoutComponent implements OnInit, OnDestroy {
   constructor(
     private appAlert: AppAlertService,
     private navigator: NavigatorService,
-    private themeService: ThemeSettingsService
-  ) {}
+    private themeService: ThemeSettingsService,
+    private cookieService: CookieService,
+    private localStorage: LocalStorageService
+  ) {
+    let showPanel: any = this.cookieService.get(SHOW_PANEL);
+
+    if (typeof showPanel !== 'string') {
+      showPanel = this.localStorage.getItem(SHOW_PANEL);
+    }
+
+    const boolean = showPanel && showPanel === 'true';
+
+    this.showRightPanel$.next(boolean);
+  }
 
   ngOnDestroy(): void {
     this.modalActiveSubcription$?.unsubscribe();
@@ -70,5 +86,13 @@ export class LayoutComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+  }
+
+  toggleRightPanel() {
+    const next = !this.showRightPanel$.getValue();
+
+    this.showRightPanel$.next(next);
+    this.cookieService.put(SHOW_PANEL, `${next}`);
+    this.localStorage.setItem(SHOW_PANEL, `${next}`);
   }
 }

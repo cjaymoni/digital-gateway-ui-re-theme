@@ -468,10 +468,10 @@ export const MainMenu: MenuItem[] = [
         label: 'Add Resource',
         icon: 'pi pi-plus',
         routerLink: [Pages.Resources.main, Pages.Resources.add],
-        // visible: (() => {
-        //   const userRole = getUserRole();
-        //   return CREATE_RESOURCE(userRole);
-        // })(),
+        visible: (() => {
+          const userRole = getUserRole();
+          return CREATE_RESOURCE(userRole);
+        })(),
       },
       {
         id: 'view-links',
