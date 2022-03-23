@@ -77,9 +77,7 @@
   </h3>
 
   <div class="grid">
-    <ng-container
-      *ngFor="let directLink of directLinks$ | async; trackBy: trackBy"
-    >
+    <ng-container *ngFor="let directLink of directLinks$ | async | slice: 0:3">
       <div class="col-12 md:col-4 p-3">
         <app-direct-links-card [digiLink]="directLink"></app-direct-links-card>
       </div>
