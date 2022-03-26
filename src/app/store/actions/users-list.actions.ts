@@ -86,7 +86,7 @@ class UsersListActions {
     props<{ id: number }>()
   );
 
-  clearSelected = createAction(`${this.type} Fetch`);
+  clearSelected = createAction(`${this.type} Clear All Selected Users`);
 }
 
 export const usersListActions = new UsersListActions();
