@@ -8,11 +8,12 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map, Subscription, take, tap } from 'rxjs';
+import { filter, interval, map, Subscription, switchMap, take, tap } from 'rxjs';
 import { CommentType, trackById, VoteType } from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
+import { ForumPostsService } from 'src/app/pages/forum-posts/services/forum-post.service';
 
 @Component({
   selector: 'app-opened-forum-post-card',
@@ -52,10 +53,40 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
 
   CommentType = CommentType;
 
+  currentCommentCount$ = this.forumPost$.pipe(
+    map(value => {
+      const count = value.comments.length;
+      return count;
+    })
+  );
+
+  commentCount$ = this.forumPost$.pipe(
+    map(value => {
+      const id = value.id;
+      let count: any;
+      this.forumPostService.commentCount(id).subscribe(d => count = d);
+      return count;
+    })
+  );
+
+  pollInterval = interval(10000);
+  reloadCommentSubscription = this.pollInterval.pipe(
+    switchMap(q => {
+      return this.commentCount$.pipe(
+        filter(commentNumber => commentNumber !== this.currentCommentCount$),
+        map(commentCount => this.currentCommentCount$ = commentCount),
+        tap(_ => {
+          this.store.dispatch(forumActions)
+        })
+      )
+    })
+  ).subscribe();
+
   constructor(
     public domSanitizer: DomSanitizer,
     private store: Store,
-    private action$: Actions
+    private action$: Actions,
+    private forumPostService: ForumPostsService,
   ) {}
 
   ngOnInit() {
@@ -69,6 +100,7 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.commentAddedSubscription?.unsubscribe();
+    this.reloadCommentSubscription.unsubscribe();
   }
 
   displayCommentForm() {

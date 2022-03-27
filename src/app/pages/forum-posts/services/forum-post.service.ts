@@ -53,4 +53,8 @@ export class ForumPostsService extends ResourceService {
       )
     );
   }
+
+  commentCount(id: number) {
+    return this.getResources(`${ForumPostEndpoint+id}/count-comments/`).pipe(map(data => data));
+  }
 }
