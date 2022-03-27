@@ -12,6 +12,8 @@ export const APP_USER_TOKEN = 'app_user_access_token';
 export const APP_REFRESH_TOKEN = 'app_refresh_token';
 export const LOGIN_PATH = 'login';
 
+export const POLLING_INTERVAL = 10000; // 5 SECONDS
+
 export enum RouterOutlets {
   Main = 'main',
   Right = 'right-panel',
