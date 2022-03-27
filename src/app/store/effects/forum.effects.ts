@@ -306,6 +306,21 @@ export class ForumEffects {
     )
   );
 
+  fetchNewComments$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.fetchNewComments),
+      switchMap(({ id }) => {
+        return this.forumPostService.getOneResource(id).pipe(
+          map((forumPost: ForumPost) =>
+            forumActions.selectForumPost({
+              forumPost,
+            })
+          )
+        );
+      })
+    )
+  );
+
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }

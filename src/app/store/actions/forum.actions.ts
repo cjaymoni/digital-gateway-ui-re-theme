@@ -140,6 +140,13 @@ class ForumActions {
     }>()
   );
 
+  fetchNewComments = createAction(
+    `${this.type} Fetch and Reload Forum Post Comments`,
+    props<{
+      id: number;
+    }>()
+  );
+
   noop = createAction(`${this.type} No Operation`);
 
   comments = new CommentActions();

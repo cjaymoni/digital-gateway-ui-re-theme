@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { ForumPostEndpoint } from 'src/app/config/routes';
 import { ForumPost } from 'src/app/models/forum.model';
 import { ResourceService } from 'src/app/services/resources.service';
@@ -52,5 +52,14 @@ export class ForumPostsService extends ResourceService {
         )
       )
     );
+  }
+
+  commentCount(id: number): Observable<number> {
+    return this.getResources(
+      `${ForumPostEndpoint + id}/count-comments/`,
+      undefined,
+      undefined,
+      true
+    ).pipe(map((data: any) => data as number));
   }
 }
