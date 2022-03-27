@@ -110,7 +110,7 @@ const routes: Routes = [
     outlet: RouterOutlets.Right,
   },
   {
-    path: Pages.UserManagement,
+    path: Pages.UserManagement.main,
     loadChildren: () =>
       import('./pages/users-management/users-management.module').then(
         m => m.UsersManagementModule

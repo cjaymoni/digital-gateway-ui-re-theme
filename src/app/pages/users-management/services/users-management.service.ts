@@ -34,7 +34,22 @@ export class UserManagementService extends ResourceService {
       )
     );
   }
-  addUser() {}
+  editUserPatch(formData: any, userId: any) {
+    return this.updateResource(formData, userId).pipe(
+      map(data => data as User)
+      // tap(user =>
+      //   this.store.dispatch(
+      //     usersListActions.editUserSuccessful({
+      //       updatedUser: { id: user.id, changes: user },
+      //     })
+      //   )
+      // )
+    );
+  }
+  addUser(user: User) {
+    return this.storeResource(user).pipe(map(data => data as User));
+  }
+
   searchUser(searchParams: { [key: string]: any }) {
     for (const key in searchParams) {
       const element = searchParams[key];
