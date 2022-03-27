@@ -12,6 +12,8 @@ export const APP_USER_TOKEN = 'app_user_access_token';
 export const APP_REFRESH_TOKEN = 'app_refresh_token';
 export const LOGIN_PATH = 'login';
 
+export const POLLING_INTERVAL = 10000; // 5 SECONDS
+
 export enum RouterOutlets {
   Main = 'main',
   Right = 'right-panel',
@@ -165,7 +167,20 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
   Login: 'login',
-  UserManagement: 'user-management',
+  UserManagement: {
+    main: 'user-management',
+    add: 'post-user',
+    edit: 'edit-user/:id',
+    view: 'view-user/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'user-management');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'user-management', false);
+      },
+    },
+  },
   AboutUs: 'about-us',
 
   Category: {
@@ -293,7 +308,7 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
     {
       id: 'user-management',
       label: 'User Management',
-      routerLink: [Pages.UserManagement],
+      routerLink: [Pages.UserManagement.main],
       icon: 'pi pi-users',
       visible: userRole === Roles.Admin,
     },
@@ -389,6 +404,14 @@ export enum Roles {
   Editor = 'editor',
   ServiceProvider = 'service',
 }
+
+export const UserRoleMapping: { [key: string]: string } = {
+  [Roles.Admin]: PrimeNgSeverity.Error,
+  [Roles.Editor]: PrimeNgSeverity.Success,
+  [Roles.Contributor]: PrimeNgSeverity.Info,
+  [Roles.ServiceProvider]: PrimeNgSeverity.Warn,
+  [Roles.Reporter]: PrimeNgSeverity.Info,
+};
 
 export const getUserRole = () => {
   const user = JSON.parse(localStorage?.getItem(APP_USER_TOKEN) || '{}');

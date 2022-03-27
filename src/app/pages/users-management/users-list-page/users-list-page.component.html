@@ -28,13 +28,41 @@
     ></button>
 
     <button
-      class="p-button p-button-info p-button-rounded mr-auto"
+      class="p-button p-button-info p-button-rounded mr-3"
       pButton
       pTooltip="Edit User Role"
       tooltipPosition="bottom"
       icon="pi pi-pencil"
       (click)="selectedUser = user; rolesMenu.toggle($event)"
     ></button>
+
+    <button
+      class="p-button p-button-warning p-button-rounded mr-auto"
+      pButton
+      pTooltip="Edit User Status"
+      tooltipPosition="bottom"
+      icon="pi pi-book"
+      (click)="selectedUser = user; statusMenu.toggle($event)"
+    ></button>
   </div>
 </ng-template>
+
 <p-menu #rolesMenu [popup]="true" [model]="rolesList"></p-menu>
+
+<p-menu #statusMenu [popup]="true" [model]="statusList"></p-menu>
+
+<ng-template #roleTemplate let-role>
+  <p-message
+    [severity]="UserRoleMapping[role]"
+    styleClass="p-message-no-icon"
+    [text]="role | uppercase"
+  ></p-message>
+</ng-template>
+
+<ng-template #statusTemplate let-status>
+  <p-message
+    [severity]="status === true ? 'info' : 'warn'"
+    [text]="status | BooleanPipe"
+    styleClass="p-message-no-icon"
+  ></p-message>
+</ng-template>

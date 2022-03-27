@@ -18,7 +18,11 @@
       <div
         class="grid justify-content-center h-full p-2 pt-5 mb-7"
         [ngClass]="
-          (showRightPanel$ | async) ? 'col-12 lg:col-9 xl:col-8' : 'col'
+          !(isHandheld$ | async)
+            ? (showRightPanel$ | async)
+              ? 'col-12 lg:col-9 xl:col-8'
+              : 'col'
+            : 'col-12'
         "
       >
         <div class="col-12 min-h-screen p-0 pl-3 pb-8">
