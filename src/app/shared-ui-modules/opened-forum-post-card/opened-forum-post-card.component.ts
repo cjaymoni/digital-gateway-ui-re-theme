@@ -1,16 +1,30 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  Input,
+  Component,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map, Subscription, take, tap } from 'rxjs';
-import { CommentType, trackById, VoteType } from 'src/app/config/app-config';
+import {
+  filter,
+  interval,
+  map,
+  Subscription,
+  switchMap,
+  take,
+  tap,
+  withLatestFrom,
+} from 'rxjs';
+import {
+  CommentType,
+  POLLING_INTERVAL,
+  trackById,
+  VoteType,
+} from 'src/app/config/app-config';
 import { slugify } from 'src/app/helpers/app.helper.functions';
+import { ForumPostsService } from 'src/app/pages/forum-posts/services/forum-post.service';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 
@@ -22,7 +36,7 @@ import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 })
 export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
   showCommentForm: boolean = false;
-  // @Input()
+
   commentAddedSubscription!: Subscription;
 
   forumPost$ = this.store.select(forumSelectors.selectedForumPost);
@@ -52,10 +66,19 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
 
   CommentType = CommentType;
 
+  currentCommentCount$ = this.forumComments$.pipe(
+    map(comments => comments?.length || 0)
+  );
+
+  pollInterval = interval(POLLING_INTERVAL);
+
+  reloadCommentSubscription!: Subscription;
+
   constructor(
     public domSanitizer: DomSanitizer,
     private store: Store,
-    private action$: Actions
+    private action$: Actions,
+    private forumPostService: ForumPostsService
   ) {}
 
   ngOnInit() {
@@ -65,10 +88,30 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
         tap(_ => (this.showCommentForm = false))
       )
       .subscribe();
+
+    this.reloadCommentSubscription = this.pollInterval
+      .pipe(
+        withLatestFrom(this.forumPost$, this.currentCommentCount$),
+        switchMap(([_, forumPost, currentCommentCount]) => {
+          return this.forumPostService.commentCount(forumPost.id).pipe(
+            filter(
+              retrievedCommentCount =>
+                retrievedCommentCount != currentCommentCount
+            ),
+            tap(_ =>
+              this.store.dispatch(
+                forumActions.fetchNewComments({ id: forumPost.id })
+              )
+            )
+          );
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
     this.commentAddedSubscription?.unsubscribe();
+    this.reloadCommentSubscription?.unsubscribe();
   }
 
   displayCommentForm() {
