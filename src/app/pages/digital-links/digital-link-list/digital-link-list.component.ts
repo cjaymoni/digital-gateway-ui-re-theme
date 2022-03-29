@@ -54,7 +54,7 @@ export class DigitalLinkListComponent implements OnInit, AfterViewInit {
     ];
   }
   ngOnInit() {
-    this.title.setTitle('Digital Links');
+    this.title.setTitle('Direct Links');
   }
 
   goToAddNewLink() {
@@ -64,7 +64,7 @@ export class DigitalLinkListComponent implements OnInit, AfterViewInit {
   editLink(digitallink: DigitalLink) {
     this.navigator.digitalLink.goToEditPage(
       digitallink.id,
-      'Edit Digital Link',
+      'Edit Direct Link',
       RouterOutlets.Modal
     );
   }
@@ -72,7 +72,7 @@ export class DigitalLinkListComponent implements OnInit, AfterViewInit {
   viewLink(digitallink: DigitalLink) {
     this.navigator.digitalLink.goToViewPage(
       digitallink.id,
-      'View Digital Link',
+      'View Direct Link',
       RouterOutlets.Modal
     );
   }

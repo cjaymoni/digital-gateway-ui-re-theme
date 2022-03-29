@@ -18,7 +18,7 @@ const routes: Routes = [
     outlet: RouterOutlets.Modal,
     canActivate: [DigitalLinkGuard],
     data: {
-      breadcrumb: 'Add DigitalLink',
+      breadcrumb: 'Add DirectLink',
     },
     pathMatch: 'full',
   },
@@ -28,7 +28,7 @@ const routes: Routes = [
     outlet: RouterOutlets.Modal,
     canActivate: [DigitalLinkGuard],
     data: {
-      breadcrumb: 'View DigitalLink',
+      breadcrumb: 'View DirectLink',
     },
     pathMatch: 'full',
   },
@@ -38,7 +38,7 @@ const routes: Routes = [
     outlet: RouterOutlets.Modal,
     canActivate: [DigitalLinkGuard],
     data: {
-      breadcrumb: 'Edit DigitalLink',
+      breadcrumb: 'Edit DirectLink',
     },
     pathMatch: 'full',
   },

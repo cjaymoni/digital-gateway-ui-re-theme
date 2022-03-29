@@ -148,16 +148,16 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     },
   },
   DigitalLinks: {
-    main: 'digital-links',
+    main: 'direct-links',
     add: 'post-link',
     edit: 'edit-link/:id',
     view: 'view-link/:id',
     matcher: {
       view: (url: UrlSegment[]) => {
-        return urlMatcherForEditAndView(url, 'digital-links');
+        return urlMatcherForEditAndView(url, 'direct-links');
       },
       edit: (url: UrlSegment[]) => {
-        return urlMatcherForEditAndView(url, 'digital-links', false);
+        return urlMatcherForEditAndView(url, 'direct-links', false);
       },
     },
   },
@@ -327,8 +327,8 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
     {
-      id: 'digital-links',
-      label: 'Digital Links',
+      id: 'direct-links',
+      label: 'Direct Links',
       routerLink: [Pages.DigitalLinks.main],
       icon: 'pi pi-link',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
