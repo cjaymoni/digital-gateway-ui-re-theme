@@ -1,4 +1,4 @@
-<div *ngIf="forum$ | async; else loading" class="px-8">
+<div *ngIf="forum$ | async; else loading" class="md:px-8 px-3">
   <div class="flex justify-content-between p-component">
     <div class="text-2xl font-bold">
       {{ (forum$ | async)?.name | uppercase }}

@@ -29,10 +29,8 @@ export class DigitalLinkGuard implements CanActivate {
 
     if (idExists) {
       this.store.dispatch(
-        digitalLinkActions.findAndSelectDigitalLink({
-          searchParams: {
-            multimedia: id,
-          },
+        digitalLinkActions.findAndSelectDigitalLinkById({
+          id: id
         })
       );
     } else {
