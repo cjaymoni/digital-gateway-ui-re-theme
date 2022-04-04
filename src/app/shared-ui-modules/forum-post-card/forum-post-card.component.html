@@ -1,9 +1,9 @@
 <div
   *ngIf="forumPost"
-  class="mt-4 forum-post-card shadow-3 p-component px-8 py-4 border-round fadeindown animation-duration-1000 hover:text-pink-700 hover:bg-gray-100 transition-all transition-duration-500 transition-ease-out"
+  class="mt-4 forum-post-card shadow-3 p-component md:px-8 px-3 py-4 border-round fadeindown animation-duration-1000 hover:text-pink-700 hover:bg-gray-100 transition-all transition-duration-500 transition-ease-out"
   (click)="openForumPost()"
 >
-  <div class="grid">
+  <div class="flex flex-column md:flex-row">
     <div class="col-1">
       <p-avatar
         [image]="forumPost.submitter.avatar"
