@@ -4,7 +4,7 @@
   (click)="openForumPost()"
 >
   <div class="grid">
-    <div class="col-2">
+    <div class="col-1">
       <p-avatar
         [image]="forumPost.submitter.avatar"
         styleClass="mr-2"
@@ -12,7 +12,7 @@
         shape="circle"
       ></p-avatar>
     </div>
-    <div class="col-10">
+    <div class="col">
       <div class="text-lg font-bold mr-8">
         {{ forumPost.title | uppercase }}
         <div class="text-sm">
@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div class="pt-2 flex justify-content-between">
+      <div class="pt-2 flex justify-content-between text-gray-500">
         {{ forumPost.content || '' | appEllipsis: 150 }}
         <div>
           <app-comments
@@ -32,3 +32,4 @@
     </div>
   </div>
 </div>
+

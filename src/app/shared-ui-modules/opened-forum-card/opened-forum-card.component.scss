@@ -1,0 +1,11 @@
+.forum-title {
+  top: calc(7vh);
+  z-index: 1;
+  padding: 8px;
+
+  @media screen and (min-width: 1024px) {
+    top: calc(8vh);
+    margin-bottom: 4px;
+  }
+}
+

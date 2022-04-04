@@ -10,7 +10,7 @@ import {
   take,
   tap,
 } from 'rxjs/operators';
-import { PrimeNgAlerts } from 'src/app/config/app-config';
+import { PrimeNgAlerts, TODAY_FORUM } from 'src/app/config/app-config';
 import { Forum, ForumPost } from 'src/app/models/forum.model';
 import { ForumsService } from 'src/app/pages/forum/services/forums.service';
 import { ForumPostsService } from 'src/app/pages/forum-posts/services/forum-post.service';
@@ -321,6 +321,27 @@ export class ForumEffects {
     )
   );
 
+  todayPosts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(forumActions.findAndSelectTodayForum),
+      switchMap(() => {
+        return this.forumPostService.todayForumPosts().pipe(
+          // filter()
+          map((forumPosts: ForumPost[]) => {
+            const selectedForum = {
+              ...TODAY_FORUM,
+              title: '',
+              posts: forumPosts || [],
+            };
+            return forumActions.selectForum({
+              forum: selectedForum,
+            });
+          })
+        );
+      })
+    )
+  );
+
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }
@@ -340,3 +361,4 @@ export class ForumEffects {
     private forumPostService: ForumPostsService
   ) {}
 }
+

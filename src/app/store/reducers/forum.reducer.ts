@@ -55,7 +55,7 @@ export const forumReducer = createReducer(
     return {
       ...state,
       selectedForum: forum,
-      postsOfSelectedForum: forum.posts,
+      postsOfSelectedForum: forum?.posts,
     };
   }),
 
@@ -135,3 +135,4 @@ export const forumReducer = createReducer(
     };
   })
 );
+

@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { debounceTime, filter, map, Observable, take, tap } from 'rxjs';
+import { TODAY_FORUM } from 'src/app/config/app-config';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 import { selectRouteNestedParams } from 'src/app/store/selectors/router.selectors';
 import { forumActions } from '../../../store/actions/forum.actions';
@@ -36,7 +37,7 @@ export class ForumGuard implements CanActivate {
         // tap(_ => this.store.dispatch(forumActions.clearAllSelected())),
         take(1),
         tap((params: any) => {
-          if (params.slug) {
+          if (params.slug && params.slug != TODAY_FORUM.slug) {
             this.store.dispatch(
               forumActions.findAndSelectForum({
                 searchParams: {
@@ -90,3 +91,4 @@ export class ForumGuard implements CanActivate {
     return true;
   }
 }
+

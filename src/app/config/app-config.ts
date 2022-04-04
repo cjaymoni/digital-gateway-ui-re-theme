@@ -1,6 +1,7 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ArticlePublishedStatus } from '../models/article.model';
+import { Forum } from '../models/forum.model';
 import { CREATE_AD, CREATE_RESOURCE } from './activity-roles';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
@@ -519,3 +520,14 @@ export const ERROR_MESSAGES_MAPPING = {
     },
   },
 };
+
+export const TODAY_TOPICS = 'today';
+export const TODAY_FORUM: Forum = {
+  name: "Today's Forum Topics",
+  description: 'This forum contains all topics that have been posted today',
+  created_on: new Date().toString(),
+  slug: TODAY_TOPICS,
+  count: 0,
+  icon: 'pi pi-star-fill',
+};
+

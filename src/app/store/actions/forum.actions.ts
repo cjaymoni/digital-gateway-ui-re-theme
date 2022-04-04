@@ -147,8 +147,13 @@ class ForumActions {
     }>()
   );
 
+  findAndSelectTodayForum = createAction(
+    `${this.type} Fetch Today Forum Posts`
+  );
+
   noop = createAction(`${this.type} No Operation`);
 
   comments = new CommentActions();
 }
 export const forumActions = new ForumActions();
+
