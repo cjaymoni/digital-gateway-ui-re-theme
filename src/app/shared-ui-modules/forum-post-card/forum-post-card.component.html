@@ -1,18 +1,20 @@
 <div
   *ngIf="forumPost"
-  class="mt-4 forum-post-card shadow-3 p-component md:px-8 px-3 py-4 border-round fadeindown animation-duration-1000 hover:text-pink-700 hover:bg-gray-100 transition-all transition-duration-500 transition-ease-out"
+  class="mt-4 forum-post-card shadow-3 p-component lg:px-8 px-3 py-4 border-round fadeindown animation-duration-1000 hover:text-pink-700 hover:bg-gray-100 transition-all transition-duration-500 transition-ease-out"
   (click)="openForumPost()"
 >
-  <div class="flex flex-column md:flex-row">
-    <div class="col-1">
+  <div class="flex flex-row">
+    <!--  -->
+    <div class="col-2 md:col-1">
       <p-avatar
         [image]="forumPost.submitter.avatar"
-        styleClass="mr-2"
-        size="xlarge"
+        styleClass="mr-2 "
         shape="circle"
+        size="large"
       ></p-avatar>
     </div>
-    <div class="col">
+    <!--  -->
+    <div class="col flex flex-column">
       <div class="text-lg font-bold mr-8">
         {{ forumPost.title | uppercase }}
         <div class="text-sm">
@@ -20,16 +22,26 @@
           {{ forumPost.submitter.last_name }}
         </div>
       </div>
-
-      <div class="pt-2 flex justify-content-between text-gray-500">
+      <div class="text-gray-500">
         {{ forumPost.content || '' | appEllipsis: 150 }}
-        <div>
-          <app-comments
-            [commentCount]="forumPost.comment_count || 0"
-          ></app-comments>
-        </div>
       </div>
     </div>
+    <!--  -->
+    <div class="col-2 pt-2 flex justify-content-between">
+      <div class="flex flex-column md:flex-row justify-content-between">
+        <app-comments
+          [commentCount]="forumPost.comment_count || 0"
+        ></app-comments>
+
+        <app-votes
+          [clickable]="false"
+          [direction]="direction$ | async"
+          [likeCount]="forumPost.upvotes ?? 0"
+          [dislikeCount]="forumPost.downvotes ?? 0"
+        ></app-votes>
+      </div>
+    </div>
+    <!--  -->
   </div>
 </div>
 

@@ -1,5 +1,5 @@
 <div
-  class="forum-post-card shadow-2 p-component md:px-8 px-3 py-4 border-round fadeindown animation-duration-500 hover:bg-gray-100 justify-content-between align-content-start flex-column md:flex-row"
+  class="flex align-items-center forum-post-card shadow-2 p-component px-2 lg:px-8 py-2 md:py-4 border-round fadeindown animation-duration-500 hover:bg-gray-100 justify-content-between align-content-start flex-column md:flex-row"
   *ngIf="forum"
   (click)="openForum()"
 >
@@ -24,17 +24,24 @@
       </span>
     </div>
     <!--  -->
-    <div class="text-blue-400 text-xs pt-1">
+    <div class="text-blue-400 text-xs pt-1 flex justify-content-between">
       {{ forum.created_on ?? '' | date: 'longDate' }}
+      <span class="md:hidden">
+        <ng-container [ngTemplateOutlet]="topicCount"></ng-container>
+      </span>
     </div>
   </div>
   <!--  -->
-  <div class="col-1 hidden md:block border-left-1 border-orange-600">
-    <span
-      class="text-orange-600 font-semibold text-xs flex justify-content-between pl-2"
-    >
-      {{ forum?.count ?? forum?.posts?.length ?? 0 }} Topic(s)
-    </span>
+  <div class="col-1 hidden md:block">
+    <ng-container [ngTemplateOutlet]="topicCount"></ng-container>
   </div>
 </div>
+
+<ng-template #topicCount>
+  <span
+    class="border-left-1 text-orange-600 font-semibold text-xs flex justify-content-between pl-2"
+  >
+    {{ forum?.count ?? forum?.posts?.length ?? 0 }} Topic(s)
+  </span>
+</ng-template>
 

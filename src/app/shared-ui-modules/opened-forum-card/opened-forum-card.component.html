@@ -1,6 +1,6 @@
 <div
   *ngIf="forum$ | async; else loading"
-  class="px-3 md:px-8 p-component relative"
+  class="px-3 lg:px-8 p-component relative"
 >
   <div
     class="flex justify-content-between sticky forum-title relative bg-white"
@@ -33,6 +33,7 @@
         </span>
       </div>
       <button
+        *ngIf="showAddButton$ | async"
         pButton
         icon="pi pi-plus"
         class="w-13rem col-12 md:col-3 p-button-outlined p-button-secondary align-self-end"

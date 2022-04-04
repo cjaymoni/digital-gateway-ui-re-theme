@@ -1,6 +1,6 @@
 <ng-container *ngIf="forumPost$ | async; else loading">
   <div
-    class="md:px-8 px-3 py-3 w-full fadein animation-duration-500 p-component shadow-2 mt-5"
+    class="lg:px-8 px-3 py-3 w-full fadein animation-duration-500 p-component shadow-2 mt-5"
   >
     <div class="flex justify-content-between align-content-center">
       <div class="flex">
@@ -109,3 +109,4 @@
 <ng-template #loading>
   <app-forum-loading-card></app-forum-loading-card>
 </ng-template>
+

@@ -7,8 +7,9 @@ import {
 } from '@angular/core';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { filter, tap } from 'rxjs';
+import { filter, map, tap } from 'rxjs';
 import { TODAY_FORUM } from 'src/app/config/app-config';
+import { Forum, ForumPost } from 'src/app/models/forum.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumActions } from 'src/app/store/actions/forum.actions';
 import { selectRouteNestedParams } from 'src/app/store/selectors/router.selectors';
@@ -47,6 +48,15 @@ export class OpenedForumCardComponent implements OnInit, OnDestroy {
       )
     )
     .subscribe();
+
+  showAddButton$ = this.forum$.pipe(
+    map((fp: Forum | undefined) => {
+      console.log(fp?.slug);
+      console.log(fp && fp.slug !== TODAY_FORUM.slug);
+
+      return fp && fp.slug !== TODAY_FORUM.slug;
+    })
+  );
 
   ngOnInit() {}
   reply() {}
