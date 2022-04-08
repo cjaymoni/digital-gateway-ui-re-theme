@@ -11,6 +11,9 @@ export interface Forum {
   posts?: ForumPost[] | any;
   description?: string;
   slug?: string;
+  created_on?: string;
+  count?: number;
+  icon?: string;
 }
 
 export interface ForumPost {
@@ -41,3 +44,4 @@ export interface Submitter {
   id?: string | number | any;
   username: string;
 }
+

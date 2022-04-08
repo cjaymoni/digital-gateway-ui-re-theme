@@ -1,17 +1,14 @@
-<div class="flex justify-content-between align-items-center">
+<div
+  class="flex justify-content-between align-items-center w-full"
+  [ngClass]="direction === VotesDirection.VERTICAL ? ' flex-column ' : ''"
+>
   <button
     pButton
     type="button"
     icon="pi pi-thumbs-up"
     [attr.liked]="liked"
-    class="
-      md:mr-2
-      p-1
-      md:p-3
-      scalein
-      animation-ease-in animation-duration-500
-      p-button-rounded p-button-info p-button-text
-    "
+    [ngClass]="clickable ? '' : ' no-click '"
+    class="md:mr-2 p-1 md:p-3 scalein animation-ease-in animation-duration-500 p-button-rounded p-button-info p-button-text"
     pTooltip="Like"
     tooltipPosition="bottom"
     [label]="likeCount.toString()"
@@ -22,15 +19,10 @@
   <button
     pButton
     type="button"
+    [ngClass]="clickable ? '' : ' no-click '"
     icon="pi pi-thumbs-down"
     [attr.disliked]="disliked"
-    class="
-      p-1
-      md:p-3
-      scalein
-      animation-ease-in animation-duration-500
-      p-button-rounded p-button-danger p-button-text
-    "
+    class="p-1 md:p-3 scalein animation-ease-in animation-duration-500 p-button-rounded p-button-danger p-button-text"
     pTooltip="Dislike"
     tooltipPosition="bottom"
     [disabled]="disableDislike"
@@ -39,3 +31,4 @@
     (onProceed)="dislike()"
   ></button>
 </div>
+

@@ -13,6 +13,7 @@ const routes: Routes = [
     path: '',
     component: ArticleListComponent,
     canActivate: [ArticleGuard],
+    data: { breadcrumb: null },
   },
   {
     path: Pages.Articles.view,
@@ -78,3 +79,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ArticleRoutesModule {}
+

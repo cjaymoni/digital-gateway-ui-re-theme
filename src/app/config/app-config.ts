@@ -1,6 +1,7 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ArticlePublishedStatus } from '../models/article.model';
+import { Forum } from '../models/forum.model';
 import { CREATE_AD, CREATE_RESOURCE } from './activity-roles';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
@@ -423,24 +424,29 @@ export const MainMenu: MenuItem[] = [
     id: INFO_HUB_ID,
     label: 'Information Hub',
     icon: 'pi pi-folder-open',
+    routerLinkActiveOptions: { exact: true },
     items: [],
   },
   {
     id: 'forum',
     label: "Entrepreneurs' Forum",
     icon: 'pi pi-discord',
+    routerLinkActiveOptions: { paths: 'subset' },
+    state: { route: Pages.Forum.main },
     items: [
       {
         id: 'view-forums',
         label: 'View Forums',
         icon: 'pi pi-eye',
         routerLink: [Pages.Forum.main],
+        routerLinkActiveOptions: { exact: true },
       },
       {
         id: 'create-forum',
         label: 'Create A Forum',
         icon: 'pi pi-plus',
         routerLink: [Pages.Forum.main, Pages.Forum.add],
+        routerLinkActiveOptions: { exact: true },
         visible: (() => {
           const userRole = getUserRole();
           return (
@@ -456,18 +462,21 @@ export const MainMenu: MenuItem[] = [
     id: 'market-place',
     label: 'Market Place',
     icon: 'pi pi-shopping-bag',
+    routerLinkActiveOptions: { paths: 'subset' },
     items: [
       {
         id: 'view-add',
         label: 'View Product Ads',
         icon: 'pi pi-eye',
         routerLink: [Pages.MarketPlace.main],
+        routerLinkActiveOptions: { exact: true },
       },
       {
         id: 'create-add',
         label: 'Create An Ad',
         icon: 'pi pi-plus',
         routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
+        routerLinkActiveOptions: { exact: true },
         disabled: (() => {
           const userRole = getUserRole();
           return CREATE_AD(userRole);
@@ -479,12 +488,14 @@ export const MainMenu: MenuItem[] = [
     id: 'resource',
     label: 'Resources',
     icon: 'pi pi-file-o',
+    routerLinkActiveOptions: { paths: 'subset' },
     items: [
       {
         id: 'view-resources',
         label: 'Reports',
         icon: 'pi pi-file',
         routerLink: [Pages.Resources.main],
+        routerLinkActiveOptions: { exact: true },
       },
       {
         id: 'create-resource',
@@ -495,12 +506,15 @@ export const MainMenu: MenuItem[] = [
           const userRole = getUserRole();
           return CREATE_RESOURCE(userRole);
         })(),
+        routerLinkActiveOptions: { exact: true },
       },
+
       {
         id: 'view-links',
         label: 'Direct Links',
         icon: 'pi pi-link',
         routerLink: [Pages.Resources.main, Pages.Resources.links],
+        routerLinkActiveOptions: { exact: true },
       },
     ],
   },
@@ -519,3 +533,14 @@ export const ERROR_MESSAGES_MAPPING = {
     },
   },
 };
+
+export const TODAY_TOPICS = 'today';
+export const TODAY_FORUM: Forum = {
+  name: "Today's Forum Topics",
+  description: 'This forum contains all topics that have been posted today',
+  created_on: new Date().toString(),
+  slug: TODAY_TOPICS,
+  count: 0,
+  icon: 'pi pi-star-fill',
+};
+

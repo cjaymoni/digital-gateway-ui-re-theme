@@ -62,4 +62,29 @@ export class ForumPostsService extends ResourceService {
       true
     ).pipe(map((data: any) => data as number));
   }
+
+  todayForumPostCount() {
+    const today = new Date();
+    return this.getResources(
+      `${ForumPostEndpoint}?page_size=1&date=${today.getFullYear()}-${
+        today.getMonth() + 1
+      }-${today.getDate()}`,
+      undefined,
+      undefined,
+      true
+    ).pipe(map((data: any) => data.count as number));
+  }
+
+  todayForumPosts() {
+    const today = new Date();
+    return this.getResources(
+      `${ForumPostEndpoint}?&date=${today.getFullYear()}-${
+        today.getMonth() + 1
+      }-${today.getDate()}&ordering=created_on`,
+      undefined,
+      undefined,
+      true
+    ).pipe(map((data: any) => data.results as ForumPost[]));
+  }
 }
+
