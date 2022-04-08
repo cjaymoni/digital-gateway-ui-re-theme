@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { TagModule } from 'primeng/tag';
 import { AppTableModule } from 'src/app/shared-ui-modules/app-table/app-table.module';
+import { AppHeadingModule } from 'src/app/shared-ui-modules/app-heading/app-heading.module';
 
 @NgModule({
   imports: [
@@ -15,8 +16,10 @@ import { AppTableModule } from 'src/app/shared-ui-modules/app-table/app-table.mo
     TooltipModule,
     MessageModule,
     TagModule,
+    AppHeadingModule,
   ],
   declarations: [MyForumPostsComponent],
   exports: [MyForumPostsComponent],
 })
 export class MyForumPostsModule {}
+

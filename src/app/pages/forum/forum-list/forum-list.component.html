@@ -1,11 +1,24 @@
 <app-listing-page
   [loading]="loadingForums$ | async"
   [title]="'Entrepreneur\'s Forum'"
+  description="This page lists all available forums where topics are being discussed by other users"
   [itemTemplate]="forumCardTemplate"
   [items]="forums$ | async"
-  itemClass="col-12 px-8 pt-3"
+  itemClass="col-12 lg:px-8 px-3 pt-3"
+  [sideTemplate]="addTopic"
 ></app-listing-page>
-
 <ng-template #forumCardTemplate let-forum>
-  <app-forum-card [forum]="forum"></app-forum-card>
+  <app-forum-card [forum]="forum" [icon]="forum.icon"></app-forum-card>
 </ng-template>
+
+<ng-template #addTopic>
+  <button
+    pButton
+    icon="pi pi-plus"
+    class="w-13rem col-12 md:col-3 p-button-outlined p-button-secondary align-self-end"
+    label="Add Forum Post"
+    proceedIfLoggedIn
+    (onProceed)="goToAddForumPost()"
+  ></button>
+</ng-template>
+

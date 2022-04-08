@@ -37,8 +37,8 @@ export class DigitalLinkFormComponent implements OnInit, OnDestroy {
   digitalLink!: DigitalLink;
 
   featuredTypes = [
-    { name: 'Featured', value: 'true' },
-    { name: 'Non-Featured', value: 'false' },
+    { name: 'Featured', value: true },
+    { name: 'Non-Featured', value: false },
   ];
 
   constructor(
@@ -104,7 +104,7 @@ export class DigitalLinkFormComponent implements OnInit, OnDestroy {
           this.digitalLinkFform.patchValue({
             ...digitalLink,
             featured: {
-              name: digitalLink.featured,
+              name: digitalLink.featured === true? 'Featured' : 'Non-Featured',
               value: digitalLink.featured,
             },
           });

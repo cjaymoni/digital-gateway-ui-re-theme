@@ -17,6 +17,11 @@ interface VoteResponse {
   user: { voted: boolean; type: VoteType };
 }
 
+export enum VotesDirection {
+  HORIZONTAL,
+  VERTICAL,
+}
+
 @Component({
   selector: 'app-votes',
   templateUrl: './votes.component.html',
@@ -37,9 +42,12 @@ export class VotesComponent implements OnInit {
   @Output() dislikeClickEvent = new EventEmitter();
 
   @Input() type: CommentType = CommentType.Comment;
+  @Input() clickable: boolean = true;
 
   @Input() id: number = 0;
+  @Input() direction: VotesDirection | null = VotesDirection.HORIZONTAL;
 
+  VotesDirection = VotesDirection;
   constructor(
     private forumService: ForumsService,
     private cdref: ChangeDetectorRef
@@ -86,3 +94,4 @@ export class VotesComponent implements OnInit {
     this.cdref.detectChanges();
   }
 }
+

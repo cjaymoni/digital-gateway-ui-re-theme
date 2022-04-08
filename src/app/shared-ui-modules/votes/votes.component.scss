@@ -7,3 +7,7 @@ button[liked='true'] {
   background-color: var(--blue-900) !important;
   color: white !important;
 }
+
+.no-click {
+  pointer-events: none !important;
+}

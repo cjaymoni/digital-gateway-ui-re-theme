@@ -101,7 +101,7 @@ const routes: Routes = [
         m => m.DigitalLinksModule
       ),
     data: {
-      breadcrumb: 'Digital Links',
+      breadcrumb: 'Direct Links',
     },
   },
   {

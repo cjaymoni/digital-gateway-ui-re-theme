@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { filter, Observable, tap } from 'rxjs';
 import { articleActions } from 'src/app/store/actions/article.actions';
 import { selectRouteNestedParam } from 'src/app/store/selectors/router.selectors';
-import { tagSelectors } from 'src/app/store/selectors/tag.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +29,7 @@ export class ArticleGuard implements CanActivate {
     | boolean
     | UrlTree {
     this.store.dispatch(articleActions.clearAllSelected());
+
     const shouldFetchArticle = route.data['fetch'];
     this.store
       .select(selectRouteNestedParam('article-id'))
@@ -58,3 +58,4 @@ export class ArticleGuard implements CanActivate {
     return true;
   }
 }
+

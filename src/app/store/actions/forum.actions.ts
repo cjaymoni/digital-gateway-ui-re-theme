@@ -147,8 +147,15 @@ class ForumActions {
     }>()
   );
 
+  findAndSelectTodayForum = createAction(
+    `${this.type} Fetch Today Forum Posts`
+  );
+
   noop = createAction(`${this.type} No Operation`);
+
+  startLoading = createAction(`${this.type} Start Loading`);
 
   comments = new CommentActions();
 }
 export const forumActions = new ForumActions();
+

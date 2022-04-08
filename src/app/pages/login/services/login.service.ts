@@ -16,6 +16,7 @@ import { LoginEndpoint, LogoutEndpoint } from 'src/app/config/routes';
 import { LocalStorageService } from 'src/app/helpers/localstorage.service';
 
 import { CookieService } from 'ngx-cookie';
+import { UserManagementService } from '../../users-management/services/users-management.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,8 @@ export class LoginService implements IAuthService {
     private http: HttpClient,
     private store: Store,
     private localStorage: LocalStorageService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private userManagementService: UserManagementService
   ) {
     // this.setUpUser()
   }
@@ -62,9 +64,10 @@ export class LoginService implements IAuthService {
         this.cookieService.putObject(APP_USER_TOKEN, response.user);
 
         if (response.user) {
-          this.store.dispatch(
-            userAuthActions.loginSuccessful({ user: response.user })
+          this.fetchUserDetails().subscribe(user =>
+            this.store.dispatch(userAuthActions.loginSuccessful({ user }))
           );
+
           this.store.dispatch(forumActions.fetch());
           return true;
         } else {
@@ -110,4 +113,15 @@ export class LoginService implements IAuthService {
       password_confirmation: credentials.password,
     });
   }
+
+  fetchUserDetails() {
+    return this.userManagementService.getMyDetails().pipe(
+      map(user => {
+        this.localStorage.setItem(APP_USER_TOKEN, JSON.stringify(user));
+        this.cookieService.putObject(APP_USER_TOKEN, user);
+        return user;
+      })
+    );
+  }
 }
+

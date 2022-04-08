@@ -4,9 +4,12 @@ import { Store } from '@ngrx/store';
 import { of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
+import { LoginService } from 'src/app/pages/login/services/login.service';
 import { UserProfileService } from 'src/app/pages/user-profile/services/user-profile.service';
+import { UserManagementService } from 'src/app/pages/users-management/services/users-management.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
-import { UserProfile } from '../../models/user-auth.model';
+import { User, UserProfile } from '../../models/user-auth.model';
+import { userAuthActions } from '../actions/user-auth.actions';
 import { userProfileActions } from '../actions/user-profile.actions';
 
 @Injectable()
@@ -56,6 +59,25 @@ export class UserProfileEffects {
       )
     )
   );
+
+  userUpdated$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(userAuthActions.updateUser),
+      switchMap(() =>
+        this.loginService.fetchUserDetails().pipe(
+          map((updatedUser: User) =>
+            userAuthActions.userUpdated({
+              user: updatedUser,
+            })
+          ),
+          catchError(error => {
+            this.showError(error);
+            return of(userProfileActions.fetchError);
+          })
+        )
+      )
+    )
+  );
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }
@@ -71,6 +93,8 @@ export class UserProfileEffects {
     private actions$: Actions,
     private authService: UserProfileService,
     private alert: AppAlertService,
-    private store: Store
+    private store: Store,
+    private loginService: LoginService
   ) {}
 }
+

@@ -46,7 +46,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     this.categoryListSubscription$ = this.store
       .select(selectRouteParams)
       .pipe(
-        debounceTime(100),
+        // debounceTime(100),
         map((params: any) => {
           const categorySlug = params.category;
           const tagSlug = params.tag;
@@ -97,3 +97,4 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     this.categoryListSubscription$?.unsubscribe();
   }
 }
+
