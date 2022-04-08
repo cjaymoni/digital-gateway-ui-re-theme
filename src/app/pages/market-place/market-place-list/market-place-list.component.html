@@ -1,10 +1,12 @@
-<ng-template [ngTemplateOutlet]="productAdFilter"></ng-template>
+<!-- <ng-template [ngTemplateOutlet]="productAdFilter"></ng-template> -->
 <app-listing-page
   [loading]="productAdsLoading$ | async"
   [title]="'Product Ads'"
   [itemTemplate]="productCardTemplate"
   [items]="productAds$ | async"
   itemClass="col-12 sm:col-6 xl:col-4"
+  [headerTemplate]="productAdFilter"
+  description="Find goods and services that have been posted by other users"
 ></app-listing-page>
 
 <ng-template #productCardTemplate let-productAd>
@@ -12,7 +14,10 @@
 </ng-template>
 
 <ng-template #productAdFilter>
-  <div class="flex flex-column mb-3 p-card p-4" [formGroup]="productFilterForm">
+  <div
+    class="flex flex-column mb-3 p-card p-4 mx-3"
+    [formGroup]="productFilterForm"
+  >
     <div class="flex justify-content-between">
       <h1 class="text-sm text-left">Filter Products</h1>
       <button
@@ -21,6 +26,7 @@
         [icon]="showFilter ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"
         (click)="toggleFilter()"
         pTooltip="Hide/Show Filter Options"
+        tooltipPosition="left"
       ></button>
     </div>
     <ng-container *ngIf="showFilter">
@@ -73,3 +79,4 @@
     </ng-container>
   </div>
 </ng-template>
+

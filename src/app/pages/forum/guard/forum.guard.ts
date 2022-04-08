@@ -19,9 +19,7 @@ export class ForumGuard implements CanActivate {
   /**
    *
    */
-  constructor(private store: Store) {
-    this.store.dispatch(forumActions.fetch());
-  }
+  constructor(private store: Store) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -30,6 +28,14 @@ export class ForumGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    this.store.dispatch(forumActions.startLoading());
+
+    const reloadData = route.data['reload'];
+    if (reloadData) {
+      // this.store.dispatch(forumActions.clearAllSelected());
+      this.store.dispatch(forumActions.fetch());
+    }
+
     this.store
       .select(selectRouteNestedParams)
       .pipe(

@@ -26,6 +26,16 @@ class UserAuth {
   );
 
   logoutSuccessful = createAction(`${this.type} Logout Successful`);
+
+  updateUser = createAction(`${this.type} Update User`);
+
+  userUpdated = createAction(
+    `${this.type} User Updated Successfully`,
+    props<{
+      user: User;
+    }>()
+  );
 }
 
 export const userAuthActions = new UserAuth();
+

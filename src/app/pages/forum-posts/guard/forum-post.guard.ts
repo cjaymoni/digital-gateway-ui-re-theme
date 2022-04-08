@@ -19,8 +19,7 @@ export class ForumPostGuard implements CanActivate {
    *
    */
   constructor(private store: Store) {
-    this.store.dispatch(forumActions.fetch()),
-      this.store.dispatch(forumPostActions.fetch());
+    this.store.dispatch(forumActions.fetch());
   }
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -30,6 +29,7 @@ export class ForumPostGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    this.store.dispatch(forumPostActions.fetch());
     this.store
       .select(selectRouteNestedParam('forum-post-id'))
       .pipe(
@@ -47,3 +47,4 @@ export class ForumPostGuard implements CanActivate {
     return true;
   }
 }
+

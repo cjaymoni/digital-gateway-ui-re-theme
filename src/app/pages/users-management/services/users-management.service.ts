@@ -7,6 +7,8 @@ import { map, tap } from 'rxjs';
 import { usersListActions } from 'src/app/store/actions/users-list.actions';
 import { Store } from '@ngrx/store';
 import { TransferStateService } from 'src/app/services/transfer-state.service';
+import { CookieService } from 'ngx-cookie';
+import { APP_USER_TOKEN } from 'src/app/config/app-config';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,8 @@ export class UserManagementService extends ResourceService {
   constructor(
     http: HttpClient,
     private store: Store,
-    transferState: TransferStateService
+    transferState: TransferStateService,
+    private cookieService: CookieService
   ) {
     super(http, UsersEndPoint, transferState);
   }
@@ -58,4 +61,10 @@ export class UserManagementService extends ResourceService {
       map(data => data as User[])
     );
   }
+
+  getMyDetails() {
+    const myId = (this.cookieService.getObject(APP_USER_TOKEN) as any)?.id;
+    return this.getOneResource(myId).pipe(map(data => data as User));
+  }
 }
+

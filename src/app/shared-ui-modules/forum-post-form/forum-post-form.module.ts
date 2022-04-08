@@ -9,6 +9,7 @@ import { AppQuillModule } from '../app-quill/app-quill.module';
 import { ForumAutocompleteModule } from '../forum-autocomplete/forum-autocomplete.module';
 import { ImageUploadModule } from '../image-upload/image-upload.module';
 import { ErrorTailorModule } from '@ngneat/error-tailor';
+import { AppHeadingModule } from '../app-heading/app-heading.module';
 
 @NgModule({
   imports: [
@@ -22,8 +23,10 @@ import { ErrorTailorModule } from '@ngneat/error-tailor';
     ForumAutocompleteModule,
     ImageUploadModule,
     ErrorTailorModule,
+    AppHeadingModule,
   ],
   declarations: [ForumPostFormComponent],
   exports: [ForumPostFormComponent],
 })
 export class ForumPostFormModule {}
+

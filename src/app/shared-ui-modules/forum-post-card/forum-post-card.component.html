@@ -17,9 +17,12 @@
     <div class="col flex flex-column">
       <div class="text-lg font-bold mr-8">
         {{ forumPost.title | uppercase }}
-        <div class="text-sm">
+        <div class="text-xs font-italic text-darkblue my-1">
           {{ forumPost.submitter.first_name }}
           {{ forumPost.submitter.last_name }}
+          <span class="ml-1">
+            | {{ forumPost.created_on | date: 'fullDate' }}
+          </span>
         </div>
       </div>
       <div class="text-gray-500">

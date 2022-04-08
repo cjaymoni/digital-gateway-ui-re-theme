@@ -153,6 +153,8 @@ class ForumActions {
 
   noop = createAction(`${this.type} No Operation`);
 
+  startLoading = createAction(`${this.type} Start Loading`);
+
   comments = new CommentActions();
 }
 export const forumActions = new ForumActions();

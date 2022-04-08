@@ -16,6 +16,7 @@ const routes: Routes = [
     path: '',
     component: ForumListComponent,
     canActivate: [ForumGuard],
+    data: { reload: true },
   },
   {
     path: Pages.Forum.viewSubComments,
@@ -58,3 +59,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ForumRoutesModule {}
+

@@ -36,6 +36,10 @@ export const initialState: ForumState = forumEntityAdapter.getInitialState({
 
 export const forumReducer = createReducer(
   initialState,
+  on(forumActions.startLoading, state => {
+    return { ...state, loading: true };
+  }),
+
   on(forumActions.fetch, state => {
     return { ...state, loading: true };
   }),
