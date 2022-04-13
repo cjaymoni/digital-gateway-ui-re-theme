@@ -15,7 +15,10 @@ import { CookieModule } from 'ngx-cookie';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ERROR_MESSAGES_MAPPING } from './config/app-config';
+import {
+  anchorErrorComponentFn,
+  ERROR_MESSAGES_MAPPING,
+} from './config/app-config';
 import { DirectivesModule } from './directives/directives.module';
 import { ErrorMessageInterceptor } from './interceptors/error.interceptor';
 import { LoginTokenInterceptor } from './interceptors/login-token.interceptor';
@@ -41,7 +44,19 @@ import { TestComponentModule } from './test/test-component/test-component.module
     SignupFormModule,
     SearchResultsModule,
     DirectivesModule,
-    ErrorTailorModule.forRoot(ERROR_MESSAGES_MAPPING),
+    ErrorTailorModule.forRoot({
+      ...ERROR_MESSAGES_MAPPING,
+      controlErrorComponentAnchorFn: anchorErrorComponentFn,
+      blurPredicate(element) {
+        return (
+          element.tagName === 'INPUT' ||
+          element.tagName === 'SELECT' ||
+          element.tagName === 'TEXTAREA' ||
+          element.tagName === 'P-FILEUPLOAD' ||
+          element.tagName === 'P-AUTOCOMPLETE'
+        );
+      },
+    }),
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
     GtagModule.forRoot({
@@ -78,3 +93,4 @@ import { TestComponentModule } from './test/test-component/test-component.module
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+

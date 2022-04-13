@@ -73,8 +73,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.profileForm = this.fb.group({
       email: ['', [Validators.required]],
-      first_name: [this.user?.first_name, [Validators.required]],
-      last_name: [this.user?.last_name, [Validators.required]],
+      first_name: ['', [Validators.required]],
+      last_name: ['', [Validators.required]],
       website: [''],
       facebook: [''],
       youtube: [''],
@@ -106,7 +106,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             ...user?.profile,
             email: user?.email,
             first_name: user?.first_name,
-            last_name: user?.first_name,
+            last_name: user?.last_name,
           });
         })
       )
@@ -121,7 +121,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const profileToSend = this.profileForm.value;
     const toSend = {
       email: profileToSend.email,
-      name: profileToSend.name,
+      name: profileToSend.first_name + ' ' + profileToSend.last_name,
       website: profileToSend.website,
       twitter: profileToSend.twitter,
       facebook: profileToSend.facebook,

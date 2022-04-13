@@ -1,5 +1,12 @@
-<ng-container [formGroup]="forumForm">
-  <div class="formgrid grid">
+<app-heading
+  [title]="'Add A Forum'"
+  [description]="
+    'This form is used to add a forum where users can post topics for discussion'
+  "
+>
+</app-heading>
+<ng-container [formGroup]="forumForm" errorTailor>
+  <div class="formgrid grid px-4">
     <div class="field col-12">
       <label for="title">Title</label>
       <input
@@ -29,6 +36,7 @@
         formControlName="description"
         pInputTextarea
         placeholder="Forum Description"
+        [rows]="5"
       ></textarea>
     </div>
 
@@ -55,3 +63,4 @@
     </div>
   </div>
 </ng-container>
+

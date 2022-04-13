@@ -527,9 +527,10 @@ export const ERROR_MESSAGES_MAPPING = {
     useValue: {
       required: 'This field is required',
       minlength: ({ requiredLength, actualLength }: any) =>
-        `Expected ${requiredLength} but got ${actualLength}`,
+        `Please enter ${requiredLength} or more characters. Current count: ${actualLength}`,
       maxlength: ({ requiredLength, actualLength }: any) =>
-        `Expected ${requiredLength} but got ${actualLength}`,
+        `Please enter  ${requiredLength} or less characters. Current count: ${actualLength}`,
+      email: () => `Please enter a valid email`,
     },
   },
 };
@@ -537,10 +538,43 @@ export const ERROR_MESSAGES_MAPPING = {
 export const TODAY_TOPICS = 'today';
 export const TODAY_FORUM: Forum = {
   name: "Today's Forum Topics",
-  description: 'This forum contains all topics that have been posted today',
+  description:
+    'This forum contains all topics that have been posted today. You cannot directly add a topic to this forum',
   created_on: new Date().toString(),
   slug: TODAY_TOPICS,
   count: 0,
   icon: 'pi pi-star-fill',
+  moderators: [
+    {
+      first_name: 'MSME GATEWAY',
+    },
+  ],
+};
+
+export const anchorErrorComponentFn = (
+  hostElement: Element,
+  errorElement: Element
+) => {
+  let errorNode: Element | null | undefined = hostElement?.querySelector(
+    'custom-control-error'
+  );
+
+  const isInputGroup =
+    hostElement?.parentElement?.classList.contains('p-inputgroup');
+
+  if (isInputGroup) {
+    hostElement?.parentElement?.insertAdjacentElement('afterend', errorElement);
+    errorNode = hostElement?.parentElement?.querySelector(
+      'custom-control-error'
+    );
+  } else {
+    hostElement?.insertAdjacentElement('afterend', errorElement);
+  }
+
+  return () => {
+    if (errorNode) {
+      errorNode.remove();
+    }
+  };
 };
 
