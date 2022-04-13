@@ -60,7 +60,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
 
     const boolean = showPanel && showPanel === 'true';
-
     this.showRightPanel$.next(boolean);
   }
 
@@ -100,3 +99,4 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.localStorage.setItem(SHOW_PANEL, `${next}`);
   }
 }
+

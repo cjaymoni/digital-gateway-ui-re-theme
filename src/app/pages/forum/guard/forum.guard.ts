@@ -32,7 +32,7 @@ export class ForumGuard implements CanActivate {
 
     const reloadData = route.data['reload'];
     if (reloadData) {
-      // this.store.dispatch(forumActions.clearAllSelected());
+      this.store.dispatch(forumActions.clearAllSelected());
       this.store.dispatch(forumActions.fetch());
     }
 

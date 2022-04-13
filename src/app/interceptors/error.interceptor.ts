@@ -49,10 +49,7 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
               // }
             }
             //  const messages = Object.keys(event.error.messages)
-            this.alert.showToast(
-              `Validation Error. \n ${errorMessages}`,
-              PrimeNgAlerts.ERROR
-            );
+            this.alert.showToast(`${errorMessages}`, PrimeNgAlerts.ERROR);
           }
         } else if (event.status === 401) {
           if (this.cookieService.hasKey(APP_REFRESH_TOKEN)) {
@@ -91,3 +88,4 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
     );
   }
 }
+

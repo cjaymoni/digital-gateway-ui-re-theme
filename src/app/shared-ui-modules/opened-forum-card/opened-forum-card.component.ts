@@ -41,7 +41,6 @@ export class OpenedForumCardComponent implements OnInit, OnDestroy {
   todayPostSubscription$ = this.store
     .select(selectRouteNestedParams)
     .pipe(
-      // tap(_ => console.log(_)),
       filter((params: any) => params.slug && params.slug === TODAY_FORUM.slug),
       tap((params: any) =>
         this.store.dispatch(forumActions.findAndSelectTodayForum())
@@ -51,9 +50,6 @@ export class OpenedForumCardComponent implements OnInit, OnDestroy {
 
   showAddButton$ = this.forum$.pipe(
     map((fp: Forum | undefined) => {
-      console.log(fp?.slug);
-      console.log(fp && fp.slug !== TODAY_FORUM.slug);
-
       return fp && fp.slug !== TODAY_FORUM.slug;
     })
   );
