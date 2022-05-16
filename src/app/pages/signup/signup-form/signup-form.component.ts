@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -17,8 +18,9 @@ import { SignupService } from '../services/signup.service';
   styleUrls: ['./signup-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignupFormComponent implements OnInit {
+export class SignupFormComponent implements OnInit, OnDestroy {
   signupForm!: FormGroup;
+  subscription: Subscription | undefined;
   constructor(
     private fb: FormBuilder,
     private signupService: SignupService,
@@ -26,6 +28,10 @@ export class SignupFormComponent implements OnInit {
     private navigator: NavigatorService,
     private gtag: GoogleAnalyticsService
   ) {}
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 
   ngOnInit() {
     this.signupForm = this.fb.group({
@@ -58,7 +64,19 @@ export class SignupFormComponent implements OnInit {
           Validators.maxLength(50),
         ],
       ],
+      cpassword: [''],
     });
+
+    this.subscription = this.signupForm
+      .get('cpassword')
+      ?.valueChanges.subscribe(value => {
+        const passwordCtrl = this.signupForm.get('password');
+        if (!value || value.length < 6 || value !== passwordCtrl?.value) {
+          passwordCtrl?.setErrors({ notmatch: true });
+        } else {
+          passwordCtrl?.setErrors(null);
+        }
+      });
 
     this.navigator.setPanelTitle('SIGN UP');
   }
@@ -85,4 +103,9 @@ export class SignupFormComponent implements OnInit {
   goToLogin() {
     this.navigator.auth.goToLogin();
   }
+
+  get password() {
+    return this.signupForm.get('password');
+  }
 }
+

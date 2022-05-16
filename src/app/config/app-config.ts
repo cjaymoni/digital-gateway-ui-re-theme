@@ -1,6 +1,7 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ArticlePublishedStatus } from '../models/article.model';
+import { Forum } from '../models/forum.model';
 import { CREATE_AD, CREATE_RESOURCE } from './activity-roles';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
@@ -11,6 +12,8 @@ export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
 export const APP_REFRESH_TOKEN = 'app_refresh_token';
 export const LOGIN_PATH = 'login';
+
+export const POLLING_INTERVAL = 10000; // 5 SECONDS
 
 export enum RouterOutlets {
   Main = 'main',
@@ -146,16 +149,16 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     },
   },
   DigitalLinks: {
-    main: 'digital-links',
+    main: 'direct-links',
     add: 'post-link',
     edit: 'edit-link/:id',
     view: 'view-link/:id',
     matcher: {
       view: (url: UrlSegment[]) => {
-        return urlMatcherForEditAndView(url, 'digital-links');
+        return urlMatcherForEditAndView(url, 'direct-links');
       },
       edit: (url: UrlSegment[]) => {
-        return urlMatcherForEditAndView(url, 'digital-links', false);
+        return urlMatcherForEditAndView(url, 'direct-links', false);
       },
     },
   },
@@ -165,7 +168,20 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
   Login: 'login',
-  UserManagement: 'user-management',
+  UserManagement: {
+    main: 'user-management',
+    add: 'post-user',
+    edit: 'edit-user/:id',
+    view: 'view-user/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'user-management');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'user-management', false);
+      },
+    },
+  },
   AboutUs: 'about-us',
 
   Category: {
@@ -293,7 +309,7 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
     {
       id: 'user-management',
       label: 'User Management',
-      routerLink: [Pages.UserManagement],
+      routerLink: [Pages.UserManagement.main],
       icon: 'pi pi-users',
       visible: userRole === Roles.Admin,
     },
@@ -312,8 +328,8 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
     {
-      id: 'digital-links',
-      label: 'Digital Links',
+      id: 'direct-links',
+      label: 'Direct Links',
       routerLink: [Pages.DigitalLinks.main],
       icon: 'pi pi-link',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
@@ -390,6 +406,14 @@ export enum Roles {
   ServiceProvider = 'service',
 }
 
+export const UserRoleMapping: { [key: string]: string } = {
+  [Roles.Admin]: PrimeNgSeverity.Error,
+  [Roles.Editor]: PrimeNgSeverity.Success,
+  [Roles.Contributor]: PrimeNgSeverity.Info,
+  [Roles.ServiceProvider]: PrimeNgSeverity.Warn,
+  [Roles.Reporter]: PrimeNgSeverity.Info,
+};
+
 export const getUserRole = () => {
   const user = JSON.parse(localStorage?.getItem(APP_USER_TOKEN) || '{}');
   return user.role;
@@ -400,24 +424,29 @@ export const MainMenu: MenuItem[] = [
     id: INFO_HUB_ID,
     label: 'Information Hub',
     icon: 'pi pi-folder-open',
+    routerLinkActiveOptions: { exact: true },
     items: [],
   },
   {
     id: 'forum',
     label: "Entrepreneurs' Forum",
     icon: 'pi pi-discord',
+    routerLinkActiveOptions: { paths: 'subset' },
+    state: { route: Pages.Forum.main },
     items: [
       {
         id: 'view-forums',
         label: 'View Forums',
         icon: 'pi pi-eye',
         routerLink: [Pages.Forum.main],
+        routerLinkActiveOptions: { exact: true },
       },
       {
         id: 'create-forum',
         label: 'Create A Forum',
         icon: 'pi pi-plus',
         routerLink: [Pages.Forum.main, Pages.Forum.add],
+        routerLinkActiveOptions: { exact: true },
         visible: (() => {
           const userRole = getUserRole();
           return (
@@ -433,18 +462,21 @@ export const MainMenu: MenuItem[] = [
     id: 'market-place',
     label: 'Market Place',
     icon: 'pi pi-shopping-bag',
+    routerLinkActiveOptions: { paths: 'subset' },
     items: [
       {
         id: 'view-add',
         label: 'View Product Ads',
         icon: 'pi pi-eye',
         routerLink: [Pages.MarketPlace.main],
+        routerLinkActiveOptions: { exact: true },
       },
       {
         id: 'create-add',
         label: 'Create An Ad',
         icon: 'pi pi-plus',
         routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
+        routerLinkActiveOptions: { exact: true },
         disabled: (() => {
           const userRole = getUserRole();
           return CREATE_AD(userRole);
@@ -456,12 +488,14 @@ export const MainMenu: MenuItem[] = [
     id: 'resource',
     label: 'Resources',
     icon: 'pi pi-file-o',
+    routerLinkActiveOptions: { paths: 'subset' },
     items: [
       {
         id: 'view-resources',
         label: 'Reports',
         icon: 'pi pi-file',
         routerLink: [Pages.Resources.main],
+        routerLinkActiveOptions: { exact: true },
       },
       {
         id: 'create-resource',
@@ -472,12 +506,15 @@ export const MainMenu: MenuItem[] = [
           const userRole = getUserRole();
           return CREATE_RESOURCE(userRole);
         })(),
+        routerLinkActiveOptions: { exact: true },
       },
+
       {
         id: 'view-links',
         label: 'Direct Links',
         icon: 'pi pi-link',
         routerLink: [Pages.Resources.main, Pages.Resources.links],
+        routerLinkActiveOptions: { exact: true },
       },
     ],
   },
@@ -490,9 +527,54 @@ export const ERROR_MESSAGES_MAPPING = {
     useValue: {
       required: 'This field is required',
       minlength: ({ requiredLength, actualLength }: any) =>
-        `Expected ${requiredLength} but got ${actualLength}`,
+        `Please enter ${requiredLength} or more characters. Current count: ${actualLength}`,
       maxlength: ({ requiredLength, actualLength }: any) =>
-        `Expected ${requiredLength} but got ${actualLength}`,
+        `Please enter  ${requiredLength} or less characters. Current count: ${actualLength}`,
+      email: () => `Please enter a valid email`,
     },
   },
 };
+
+export const TODAY_TOPICS = 'today';
+export const TODAY_FORUM: Forum = {
+  name: "Today's Forum Topics",
+  description:
+    'This forum contains all topics that have been posted today. You cannot directly add a topic to this forum',
+  created_on: new Date().toString(),
+  slug: TODAY_TOPICS,
+  count: 0,
+  icon: 'pi pi-star-fill',
+  moderators: [
+    {
+      first_name: 'MSME GATEWAY',
+    },
+  ],
+};
+
+export const anchorErrorComponentFn = (
+  hostElement: Element,
+  errorElement: Element
+) => {
+  let errorNode: Element | null | undefined = hostElement?.querySelector(
+    'custom-control-error'
+  );
+
+  const isInputGroup =
+    hostElement?.parentElement?.classList.contains('p-inputgroup');
+
+  if (isInputGroup) {
+    hostElement?.parentElement?.insertAdjacentElement('afterend', errorElement);
+    errorNode = hostElement?.parentElement?.querySelector(
+      'custom-control-error'
+    );
+  } else {
+    hostElement?.insertAdjacentElement('afterend', errorElement);
+  }
+
+  return () => {
+    if (errorNode) {
+      errorNode.remove();
+    }
+  };
+};
+

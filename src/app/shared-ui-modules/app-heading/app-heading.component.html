@@ -1,0 +1,26 @@
+<div class="surface-section px-4 py-5 md:px-6 lg:px-8">
+  <div
+    class="flex md:align-items-center md:justify-content-between flex-column md:flex-row pb-4 border-bottom-1 surface-border"
+  >
+    <div class="mb-3 lg:mb-0">
+      <div class="text-3xl font-medium text-900 mb-3 text-darkblue uppercase">
+        {{ title }}
+      </div>
+      <div *ngIf="description" class="text-500 mr-0 md:mr-3">
+        {{ description }}
+      </div>
+      <ng-content select=".afterDescription"></ng-content>
+    </div>
+    <ng-container *ngIf="sideTemplate">
+      <span class="w-full md:w-auto">
+        <ng-container [ngTemplateOutlet]="sideTemplate"></ng-container>
+      </span>
+    </ng-container>
+  </div>
+</div>
+
+<ng-container
+  *ngIf="headerTemplate"
+  [ngTemplateOutlet]="headerTemplate"
+></ng-container>
+

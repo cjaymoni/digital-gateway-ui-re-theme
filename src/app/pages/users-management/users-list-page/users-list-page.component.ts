@@ -1,12 +1,25 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
-import { PrimeNgAlerts } from 'src/app/config/app-config';
+import {
+  PrimeNgAlerts,
+  UserRoleMapping,
+  RouterOutlets,
+} from 'src/app/config/app-config';
 import { Store } from '@ngrx/store';
 import { usersListSelectors } from '../../../store/selectors/users-list.selectors';
 import { User } from '../../../models/user-auth.model';
 import { usersListActions } from '../../../store/actions/users-list.actions';
 import { UserManagementService } from '../services/users-management.service';
+import { NavigatorService } from 'src/app/services/navigator.service';
+import { AfterViewInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-users-list-page',
@@ -14,30 +27,47 @@ import { UserManagementService } from '../services/users-management.service';
   styleUrls: ['./users-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersListPageComponent implements OnInit {
+export class UsersListPageComponent implements OnInit, AfterViewInit {
+  @ViewChild('roleTemplate')
+  roleTemplate!: TemplateRef<any>;
+
+  @ViewChild('statusTemplate')
+  statusTemplate!: TemplateRef<any>;
+
   usersList$ = this.store.select(usersListSelectors.all);
 
   columns: any[] = [];
 
   rolesList!: MenuItem[];
 
+  statusList!: MenuItem[];
+
   selectedUser: any;
 
   selectedRole!: string;
 
+  selectedStatus!: string;
+
+  UserRoleMapping = UserRoleMapping;
+
   constructor(
     private store: Store,
     private userService: UserManagementService,
-    private appAlertService: AppAlertService
+    private appAlertService: AppAlertService,
+    private navigator: NavigatorService,
+    private title: Title
   ) {
     this.store.dispatch(usersListActions.fetch());
   }
-
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.columns = [
       { header: 'Email', field: 'email' },
-      { header: 'Role', field: 'role' },
+      { header: 'ROLE', field: 'role', template: this.roleTemplate },
+      { header: 'ACTIVE', field: 'is_active', template: this.statusTemplate },
     ];
+  }
+  ngOnInit() {
+    this.title.setTitle('Users Management');
 
     this.rolesList = [
       {
@@ -81,8 +111,34 @@ export class UsersListPageComponent implements OnInit {
         },
       },
     ];
+
+    this.statusList = [
+      {
+        id: 'true',
+        label: 'Active',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editUserStatus();
+        },
+      },
+      {
+        id: 'false',
+        label: 'InActive',
+        command: e => {
+          this.selectedStatus = e.item['id'];
+          this.editUserStatus();
+        },
+      },
+    ];
   }
 
+  editUser(user: User) {
+    this.navigator.userManagement.goToEditPage(
+      user.id,
+      'Edit User',
+      RouterOutlets.Modal
+    );
+  }
   editUserRole() {
     const formData = {
       role: this.selectedRole,
@@ -96,9 +152,27 @@ export class UsersListPageComponent implements OnInit {
     });
   }
 
+  editUserStatus() {
+    const formData = {
+      is_active: this.selectedStatus,
+    };
+    const userId = this.selectedUser.id;
+    this.userService.editUserPatch(formData, userId).subscribe((data: any) => {
+      this.appAlertService.showToast(
+        `${data.email} status updated successfully`,
+        PrimeNgAlerts.UNOBSTRUSIVE
+      );
+    });
+  }
   viewUser(user: User) {
-    alert('development in progress');
+    this.navigator.userManagement.goToViewPage(
+      user.id,
+      'Preview User',
+      RouterOutlets.Modal
+    );
   }
 
-  goToAddUserPage() {}
+  goToAddUserPage() {
+    this.navigator.userManagement.goToAddPage();
+  }
 }

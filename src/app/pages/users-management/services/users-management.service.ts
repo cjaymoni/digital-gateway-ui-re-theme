@@ -7,6 +7,8 @@ import { map, tap } from 'rxjs';
 import { usersListActions } from 'src/app/store/actions/users-list.actions';
 import { Store } from '@ngrx/store';
 import { TransferStateService } from 'src/app/services/transfer-state.service';
+import { CookieService } from 'ngx-cookie';
+import { APP_USER_TOKEN } from 'src/app/config/app-config';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,8 @@ export class UserManagementService extends ResourceService {
   constructor(
     http: HttpClient,
     private store: Store,
-    transferState: TransferStateService
+    transferState: TransferStateService,
+    private cookieService: CookieService
   ) {
     super(http, UsersEndPoint, transferState);
   }
@@ -34,7 +37,22 @@ export class UserManagementService extends ResourceService {
       )
     );
   }
-  addUser() {}
+  editUserPatch(formData: any, userId: any) {
+    return this.updateResource(formData, userId).pipe(
+      map(data => data as User)
+      // tap(user =>
+      //   this.store.dispatch(
+      //     usersListActions.editUserSuccessful({
+      //       updatedUser: { id: user.id, changes: user },
+      //     })
+      //   )
+      // )
+    );
+  }
+  addUser(user: User) {
+    return this.storeResource(user).pipe(map(data => data as User));
+  }
+
   searchUser(searchParams: { [key: string]: any }) {
     for (const key in searchParams) {
       const element = searchParams[key];
@@ -43,4 +61,10 @@ export class UserManagementService extends ResourceService {
       map(data => data as User[])
     );
   }
+
+  getMyDetails() {
+    const myId = (this.cookieService.getObject(APP_USER_TOKEN) as any)?.id;
+    return this.getOneResource(myId).pipe(map(data => data as User));
+  }
 }
+

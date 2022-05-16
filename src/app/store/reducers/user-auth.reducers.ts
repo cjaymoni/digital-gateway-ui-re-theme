@@ -13,5 +13,9 @@ export const userAuthReducer = createReducer(
   }),
   on(userAuthActions.logoutSuccessful, state => {
     return { user: null };
+  }),
+  on(userAuthActions.userUpdated, (state, { user }) => {
+    return { ...state, ...user };
   })
 );
+

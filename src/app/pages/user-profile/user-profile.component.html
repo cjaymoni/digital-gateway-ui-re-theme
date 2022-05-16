@@ -1,7 +1,7 @@
 <h3 class="text-center">User Profile</h3>
 <div class="flex flex-column justify-content-center align-items-center">
   <p-image
-    [src]="getImageToUpload() ?? (selectedUser$ | async)?.avatar"
+    [src]="getImageToUpload() ?? (selectedUser$ | async)?.profile?.avatar"
     styleClass="border-circle w-17rem h-17rem align-self-center"
     imageClass="border-circle w-17rem h-17rem z-1 border-gray-200 border-1 p-2"
     [preview]="true"
@@ -31,8 +31,11 @@
 </div>
 
 <div class="flex flex-column mt-3">
-  <div class="text-center">{{ (selectedUser$ | async)?.name }}</div>
-  <div class="text-center mt-3">{{ user?.email }}</div>
+  <div class="text-center">
+    {{ (selectedUser$ | async)?.first_name }}
+    {{ (selectedUser$ | async)?.last_name }}
+  </div>
+  <div class="text-center mt-3">{{ (selectedUser$ | async)?.email }}</div>
 </div>
 <p-divider></p-divider>
 
@@ -53,13 +56,22 @@
 
       <div class="flex flex-column md:flex-row w-full">
         <div class="field col-12 md:col-6">
-          <label for="fname">Full Name</label>
+          <label for="fname">First Name</label>
           <input
             type="text"
             pInputText
             class="inputfield w-full"
-            formControlName="name"
-            placeholder="Full Name"
+            formControlName="first_name"
+            placeholder="First Name"
+          />
+
+          <label for="fname">Last Name</label>
+          <input
+            type="text"
+            pInputText
+            class="inputfield w-full"
+            formControlName="last_name"
+            placeholder="Last Name"
           />
         </div>
         <div class="field col-12 md:col-6">
@@ -161,3 +173,4 @@
     ></button>
   </div>
 </div>
+

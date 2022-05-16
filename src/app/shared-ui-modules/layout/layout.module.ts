@@ -14,6 +14,8 @@ import { RightNavCardModule } from '../right-nav-card/right-nav-card.module';
 import { ModalComponentsModule } from '../modal-components/modal-components.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BackButtonModule } from '../back-button/back-button.module';
+import { TooltipModule } from 'primeng/tooltip';
+import {ScrollTopModule} from 'primeng/scrolltop';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -31,7 +33,10 @@ import { BackButtonModule } from '../back-button/back-button.module';
     ModalComponentsModule,
     BreadcrumbModule,
     BackButtonModule,
+    TooltipModule,
+    ScrollTopModule
   ],
   exports: [LayoutComponent],
 })
 export class LayoutModule {}
+

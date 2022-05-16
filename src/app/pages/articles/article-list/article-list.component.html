@@ -3,9 +3,11 @@
   [title]="(title$ | async) ?? 'ARTICLES'"
   [itemTemplate]="articleCardTemplate"
   [items]="articles$ | async"
+  description="A list of articles filtered by specified category"
 ></app-listing-page>
 <p-paginator></p-paginator>
 
 <ng-template #articleCardTemplate let-article>
   <app-article-card [article]="article"></app-article-card>
 </ng-template>
+

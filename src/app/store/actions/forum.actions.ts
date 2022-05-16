@@ -140,8 +140,22 @@ class ForumActions {
     }>()
   );
 
+  fetchNewComments = createAction(
+    `${this.type} Fetch and Reload Forum Post Comments`,
+    props<{
+      id: number;
+    }>()
+  );
+
+  findAndSelectTodayForum = createAction(
+    `${this.type} Fetch Today Forum Posts`
+  );
+
   noop = createAction(`${this.type} No Operation`);
+
+  startLoading = createAction(`${this.type} Start Loading`);
 
   comments = new CommentActions();
 }
 export const forumActions = new ForumActions();
+

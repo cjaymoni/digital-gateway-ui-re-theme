@@ -5,10 +5,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs';
+import { map, take } from 'rxjs';
 import { ForumPost } from 'src/app/models/forum.model';
+import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
+import { VotesDirection } from '../votes/votes.component';
 
 @Component({
   selector: 'app-forum-post-card',
@@ -21,10 +23,17 @@ export class ForumPostCardComponent implements OnInit {
 
   @Input() avatar: any;
 
-  constructor(private navigator: NavigatorService, private store: Store) {}
+  constructor(
+    private navigator: NavigatorService,
+    private store: Store,
+    private device: DeviceService
+  ) {}
 
   selectedForum$ = this.store.select(forumSelectors.selectedForum);
 
+  direction$ = this.device.isHandheld$.pipe(
+    map(hh => (hh ? VotesDirection.VERTICAL : VotesDirection.HORIZONTAL))
+  );
   ngOnInit(): void {}
 
   openForumPost() {
@@ -39,3 +48,4 @@ export class ForumPostCardComponent implements OnInit {
   dislikeForum() {}
   likeForum() {}
 }
+

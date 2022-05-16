@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TagAutocompleteModule } from '../tag-autocomplete/tag-autocomplete.module';
 import { ImageUploadModule } from '../image-upload/image-upload.module';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ErrorTailorModule } from '@ngneat/error-tailor';
+import { AppHeadingModule } from '../app-heading/app-heading.module';
 @NgModule({
   declarations: [ForumFormComponent],
   imports: [
@@ -20,7 +22,10 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     ReactiveFormsModule,
     ImageUploadModule,
     InputTextareaModule,
+    ErrorTailorModule,
+    AppHeadingModule,
   ],
   exports: [ForumFormComponent],
 })
 export class ForumFormModule {}
+

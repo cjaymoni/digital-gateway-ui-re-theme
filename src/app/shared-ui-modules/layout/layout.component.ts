@@ -9,6 +9,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Subscription, tap } from 'rxjs';
 import { RouterOutlets } from 'src/app/config/app-config';
 import { LocalStorageService } from 'src/app/helpers/localstorage.service';
+import { DeviceService } from 'src/app/services/device.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { ThemeSettingsService } from 'src/app/services/theme-settings.service';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
@@ -49,7 +50,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private navigator: NavigatorService,
     private themeService: ThemeSettingsService,
     private cookieService: CookieService,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private device: DeviceService
   ) {
     let showPanel: any = this.cookieService.get(SHOW_PANEL);
 
@@ -58,9 +60,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
 
     const boolean = showPanel && showPanel === 'true';
-
     this.showRightPanel$.next(boolean);
   }
+
+  isHandheld$ = this.device.isHandheld$;
 
   ngOnDestroy(): void {
     this.modalActiveSubcription$?.unsubscribe();
@@ -96,3 +99,4 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.localStorage.setItem(SHOW_PANEL, `${next}`);
   }
 }
+

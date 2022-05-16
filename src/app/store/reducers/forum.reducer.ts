@@ -36,6 +36,10 @@ export const initialState: ForumState = forumEntityAdapter.getInitialState({
 
 export const forumReducer = createReducer(
   initialState,
+  on(forumActions.startLoading, state => {
+    return { ...state, loading: true };
+  }),
+
   on(forumActions.fetch, state => {
     return { ...state, loading: true };
   }),
@@ -51,11 +55,37 @@ export const forumReducer = createReducer(
     return { ...state, loading: false };
   }),
 
+  on(forumActions.findAndSelectForum, state => {
+    return {
+      ...state,
+      loading: true,
+      postsOfSelectedForum: [],
+      selectedForum: null,
+    };
+  }),
+  on(forumActions.findAndSelectForumById, state => {
+    return {
+      ...state,
+      loading: true,
+      postsOfSelectedForum: [],
+      selectedForum: null,
+    };
+  }),
+  on(forumActions.findAndSelectTodayForum, state => {
+    return {
+      ...state,
+      loading: true,
+      postsOfSelectedForum: [],
+      selectedForum: null,
+    };
+  }),
+
   on(forumActions.selectForum, (state, { forum }) => {
     return {
       ...state,
       selectedForum: forum,
-      postsOfSelectedForum: forum.posts,
+      postsOfSelectedForum: forum?.posts,
+      loading: false,
     };
   }),
 
@@ -64,11 +94,12 @@ export const forumReducer = createReducer(
       ...state,
       selectedForumPost: forumPost,
       commentsOfSelectedForumPosts: forumPost.comments || [],
+      loading: false,
     };
   }),
 
   on(forumActions.selectForumToEdit, (state, { forum }) => {
-    return { ...state, selectedForumToEdit: forum };
+    return { ...state, selectedForumToEdit: forum, loading: false };
   }),
 
   on(forumActions.comments.addCommentSuccessful, (state, { comment }) => {
@@ -113,6 +144,7 @@ export const forumReducer = createReducer(
     return {
       ...state,
       selectedComment: comment,
+      loading: false,
       commentsOfSelectedComment: comment.subcomments || [],
     };
   }),
@@ -132,6 +164,8 @@ export const forumReducer = createReducer(
       selectedForum: null,
       selectedForumPost: null,
       postsOfSelectedForum: [],
+      loading: false,
     };
   })
 );
+

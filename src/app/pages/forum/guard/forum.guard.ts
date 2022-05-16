@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { debounceTime, filter, map, Observable, take, tap } from 'rxjs';
+import { TODAY_FORUM } from 'src/app/config/app-config';
 import { forumSelectors } from 'src/app/store/selectors/forum.selectors';
 import { selectRouteNestedParams } from 'src/app/store/selectors/router.selectors';
 import { forumActions } from '../../../store/actions/forum.actions';
@@ -18,9 +19,7 @@ export class ForumGuard implements CanActivate {
   /**
    *
    */
-  constructor(private store: Store) {
-    this.store.dispatch(forumActions.fetch());
-  }
+  constructor(private store: Store) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -29,6 +28,14 @@ export class ForumGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    this.store.dispatch(forumActions.startLoading());
+
+    const reloadData = route.data['reload'];
+    if (reloadData) {
+      this.store.dispatch(forumActions.clearAllSelected());
+      this.store.dispatch(forumActions.fetch());
+    }
+
     this.store
       .select(selectRouteNestedParams)
       .pipe(
@@ -36,7 +43,7 @@ export class ForumGuard implements CanActivate {
         // tap(_ => this.store.dispatch(forumActions.clearAllSelected())),
         take(1),
         tap((params: any) => {
-          if (params.slug) {
+          if (params.slug && params.slug != TODAY_FORUM.slug) {
             this.store.dispatch(
               forumActions.findAndSelectForum({
                 searchParams: {
@@ -90,3 +97,4 @@ export class ForumGuard implements CanActivate {
     return true;
   }
 }
+

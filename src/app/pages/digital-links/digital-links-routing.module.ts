@@ -10,6 +10,7 @@ const routes: Routes = [
     path: '',
     component: DigitalLinkListComponent,
     canActivate: [DigitalLinkGuard],
+    pathMatch: 'full',
   },
   {
     path: Pages.DigitalLinks.add,
@@ -17,8 +18,9 @@ const routes: Routes = [
     outlet: RouterOutlets.Modal,
     canActivate: [DigitalLinkGuard],
     data: {
-      breadcrumb: 'Add MultiMedia',
+      breadcrumb: 'Add DirectLink',
     },
+    pathMatch: 'full',
   },
   {
     path: Pages.DigitalLinks.view,
@@ -26,8 +28,9 @@ const routes: Routes = [
     outlet: RouterOutlets.Modal,
     canActivate: [DigitalLinkGuard],
     data: {
-      breadcrumb: 'View MultiMedia',
+      breadcrumb: 'View DirectLink',
     },
+    pathMatch: 'full',
   },
   {
     path: Pages.DigitalLinks.edit,
@@ -35,8 +38,9 @@ const routes: Routes = [
     outlet: RouterOutlets.Modal,
     canActivate: [DigitalLinkGuard],
     data: {
-      breadcrumb: 'Edit MultiMedia',
+      breadcrumb: 'Edit DirectLink',
     },
+    pathMatch: 'full',
   },
 ];
 

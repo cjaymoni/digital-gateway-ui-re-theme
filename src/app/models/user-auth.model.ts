@@ -5,6 +5,9 @@ export interface User {
   email: string;
   name?: string;
   role: Roles;
+  first_name?: string;
+  last_name?: string;
+  profile?: UserProfile;
 }
 
 export interface UserToken {
@@ -36,3 +39,4 @@ export interface ProfileType {
   id?: string | number | any;
   name: string;
 }
+

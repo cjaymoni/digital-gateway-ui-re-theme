@@ -48,6 +48,27 @@ export class UsersListEffects {
       )
     )
   );
+
+  editUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersListActions.editUser),
+      switchMap(({ user }) =>
+        this.userService.editUserPatch(user, user.id).pipe(
+          map(updatedUser =>
+            usersListActions.addUserSuccessful({
+              user,
+            })
+          ),
+          tap(saved => this.showToast('User Edited Successfully')),
+          catchError(error => {
+            this.showError(error);
+            return of(usersListActions.fetchError);
+          })
+        )
+      )
+    )
+  );
+
   searchUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(usersListActions.findAndSelectUser),

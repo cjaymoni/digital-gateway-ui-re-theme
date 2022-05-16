@@ -227,6 +227,11 @@ export class NavigatorService {
     this.panelTitle$,
     this.modalTitle$
   );
+  userManagement = new UserManagementRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
 }
 
 class AppRoutesConfig {
@@ -521,5 +526,22 @@ class ContentManagementRoutes extends AppRoutesConfig {
       [this.page, ...Pages.Category.edit.replace(':id', id).split('/')],
       'Edit Category'
     );
+  }
+}
+
+class UserManagementRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.UserManagement, router, subject, modalsubject);
+  }
+
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
   }
 }

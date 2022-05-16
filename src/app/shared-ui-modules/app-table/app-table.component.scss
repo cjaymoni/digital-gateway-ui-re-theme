@@ -21,15 +21,10 @@ div.holder {
     span:nth-child(1) {
       visibility: hidden;
     }
-    // span:nth-child(1)::after {
-    //   content: 'All'
-    // }
 
     &::before {
       content: 'All';
     }
-
-    // display: none;
   }
 }
 
@@ -66,3 +61,4 @@ div.holder {
     }
   }
 }
+

@@ -8,7 +8,6 @@
   }
 }
 
-
 .loader {
   margin-top: 30vh;
 }
@@ -16,7 +15,11 @@
 .right-nav-in-sidebar {
   ::ng-deep {
     app-right-nav-card > * {
-      color: white !important
+      color: white !important;
     }
   }
+}
+
+.right-panel-toggler {
+  top: 30px;
 }

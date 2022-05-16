@@ -18,10 +18,15 @@
       <div
         class="grid justify-content-center h-full p-2 pt-5 mb-7"
         [ngClass]="
-          (showRightPanel$ | async) ? 'col-12 lg:col-9 xl:col-8' : 'col'
+          !(isHandheld$ | async)
+            ? (showRightPanel$ | async)
+              ? 'col-12 lg:col-9 xl:col-8'
+              : 'col'
+            : 'col-12'
         "
       >
         <div class="col-12 min-h-screen p-0 pl-3 pb-8">
+         
           <div class="mr-3 hidden lg:flex justify-content-between">
             <!-- <app-back-button styleClass="h-3rem"></app-back-button> -->
 
@@ -34,14 +39,22 @@
             </div>
 
             <div
-              class="hidden xl:block text-orange-500 cursor-pointer hover-underline"
+              class="hidden xl:block cursor-pointer hover-underline p-button p-button-secondary sticky right-panel-toggler"
               (click)="toggleRightPanel()"
-            >
-              {{
+              [pTooltip]="
                 (showRightPanel$ | async)
-                  ? 'Hide Right Panel >>>'
-                  : 'Show Right Panel <<<'
-              }}
+                  ? 'Hide right panel'
+                  : 'Show right panel'
+              "
+            >
+              <i
+                class="pi"
+                [ngClass]="
+                  (showRightPanel$ | async)
+                    ? 'pi-angle-double-right'
+                    : 'pi-angle-double-left'
+                "
+              ></i>
             </div>
           </div>
           <router-outlet></router-outlet>
@@ -69,6 +82,7 @@
           <app-right-nav-card></app-right-nav-card>
         </div>
       </div>
+       <p-scrollTop></p-scrollTop>
     </div>
     <!-- footer -->
     <footer class="col-12 footer p-0 z-4">
@@ -91,3 +105,4 @@
     <h6 class="text-lg text-teal-500 text-center">Please wait...</h6>
   </div>
 </ng-template>
+

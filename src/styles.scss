@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'src/styles/quill-editor';
 @import '~ngx-sharebuttons/themes/default';
+@import 'src/styles/theme';
 
 :root {
   --menu-background: #27272a;
@@ -107,37 +108,9 @@ body {
   color: var(--darkblue-500) !important;
 }
 
-.text-lime {
-  color: var(--lime-500) !important;
-}
-
-.md-m-unset {
-  @media screen and (min-width: 1024px) {
-    margin: revert !important;
-  }
-}
-
-.gap-8 {
-  > :not(:last-child) {
-    margin-right: 8px;
-  }
-}
-
 .gap-v-8 {
   > :not(:last-child) {
     margin-bottom: 8px;
-  }
-}
-
-.gap-16 {
-  > :not(:last-child) {
-    margin-right: 16px;
-  }
-}
-
-.gap-v-16 {
-  > :not(:last-child) {
-    margin-bottom: 16px;
   }
 }
 
@@ -163,3 +136,4 @@ body {
 .lh-24 {
   line-height: 24px !important;
 }
+

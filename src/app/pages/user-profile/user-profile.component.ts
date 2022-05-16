@@ -13,15 +13,29 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie';
-import { filter, Subscription, take, tap } from 'rxjs';
+import {
+  combineLatest,
+  filter,
+  map,
+  Subscription,
+  take,
+  tap,
+  withLatestFrom,
+} from 'rxjs';
 import { APP_USER_TOKEN } from 'src/app/config/app-config';
 import { UserProfile } from 'src/app/models/user-auth.model';
 import {
   ImageUploadComponent,
   ImageUploadMode,
 } from 'src/app/shared-ui-modules/image-upload/image-upload.component';
+import { userAuthActions } from 'src/app/store/actions/user-auth.actions';
 import { userProfileActions } from 'src/app/store/actions/user-profile.actions';
+import {
+  userAuth,
+  userAuthSelectors,
+} from 'src/app/store/selectors/user-auth.selectors';
 import { userProfileSelectors } from 'src/app/store/selectors/user-profile.selectors';
+import { UserManagementService } from '../users-management/services/users-management.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -30,7 +44,7 @@ import { userProfileSelectors } from 'src/app/store/selectors/user-profile.selec
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-  selectedUser$ = this.store.select(userProfileSelectors.selectedUserProfile);
+  selectedUser$ = this.store.select(userAuthSelectors.loggedInUser);
 
   @ViewChild('imageUpload')
   imageUploadComponent: ImageUploadComponent | null = null;
@@ -39,7 +53,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   profileForm!: FormGroup;
 
-  profile!: UserProfile;
+  profile!: UserProfile | undefined;
 
   user!: any;
 
@@ -48,7 +62,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private userService: UserManagementService
   ) {}
 
   ngOnDestroy(): void {
@@ -58,7 +73,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.profileForm = this.fb.group({
       email: ['', [Validators.required]],
-      name: ['', [Validators.required]],
+      first_name: ['', [Validators.required]],
+      last_name: ['', [Validators.required]],
       website: [''],
       facebook: [''],
       youtube: [''],
@@ -82,16 +98,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   private getUserProfileToEditSubscription() {
-    return this.store
-      .select(userProfileSelectors.selectedUserProfileToEdit)
+    return this.selectedUser$
       .pipe(
-        filter(data => !!data),
-        take(1),
-        tap((userProfile: UserProfile) => {
-          this.profile = userProfile;
+        map(user => {
+          this.profile = user?.profile;
           this.profileForm.patchValue({
-            ...userProfile,
-            email: this.user.email,
+            ...user?.profile,
+            email: user?.email,
+            first_name: user?.first_name,
+            last_name: user?.last_name,
           });
         })
       )
@@ -106,7 +121,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const profileToSend = this.profileForm.value;
     const toSend = {
       email: profileToSend.email,
-      name: profileToSend.name,
+      name: profileToSend.first_name + ' ' + profileToSend.last_name,
       website: profileToSend.website,
       twitter: profileToSend.twitter,
       facebook: profileToSend.facebook,
@@ -117,6 +132,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       district: profileToSend.district,
     };
 
+    const user = {
+      first_name: profileToSend.first_name,
+      last_name: profileToSend.last_name,
+      email: profileToSend.email,
+    };
+
+    this.userService
+      .editUserPatch(user, this.user.id)
+      .subscribe(user => this.store.dispatch(userAuthActions.updateUser()));
+
     const images: any =
       this.imageUploadComponent?.getFilesToUpload()?.length > 0
         ? this.imageUploadComponent?.getFilesToUpload()
@@ -124,7 +149,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(
       userProfileActions.editUserProfile({
-        userProfile: { ...toSend, id: this.user.profile_id },
+        userProfile: { ...toSend, id: this.user.profile.id },
         imageToUpload: images,
       })
     );
@@ -140,3 +165,4 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.imageUploadComponent?.clear();
   }
 }
+

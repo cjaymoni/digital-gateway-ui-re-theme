@@ -45,13 +45,20 @@
           <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
           <p-password
             type="password"
-            placeholder="Pasword"
+            placeholder="Password"
             formControlName="password"
-            inputStyleClass="w-12 "
+            inputStyleClass="w-12"
             styleClass="w-12"
-            autocomplete="on"
+            mediumRegex="^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
           ></p-password>
         </div>
+        <span class="control-error">
+          <span
+            *ngIf="password?.touched && password?.dirty && password?.errors?.['minlength']"
+          >
+            Required length is 6
+          </span>
+        </span>
       </div>
 
       <!-- password -->
@@ -60,13 +67,18 @@
           <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
           <p-password
             type="password"
-            placeholder=" Confirm Pasword"
-            formControlName="password"
+            placeholder=" Confirm Password"
             inputStyleClass="w-12 relative"
+            formControlName="cpassword"
             styleClass="w-12"
-            autocomplete="on"
+            [feedback]="false"
           ></p-password>
         </div>
+        <span class="control-error">
+          <span *ngIf="password?.errors?.['notmatch']">
+            Passwords don't match
+          </span>
+        </span>
       </div>
 
       <div
@@ -94,3 +106,4 @@
     </div>
   </form>
 </ng-container>
+

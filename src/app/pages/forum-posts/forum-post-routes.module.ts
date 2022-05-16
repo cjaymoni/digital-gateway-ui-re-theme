@@ -1,22 +1,18 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, UrlSegment } from '@angular/router';
-import {
-  Pages,
-  Roles,
-  RouterOutlets,
-  SLUG_PREFIX,
-} from 'src/app/config/app-config';
+import { RouterModule, Routes } from '@angular/router';
+import { Pages, Roles, RouterOutlets } from 'src/app/config/app-config';
+import { RoleGuard } from 'src/app/services/role.guard';
 import { ForumPostDetailsComponent } from '../../shared-ui-modules/forum-post-details/forum-post-details.component';
 import { ForumPostFormComponent } from '../../shared-ui-modules/forum-post-form/forum-post-form.component';
+import { ForumPostsModerationComponent } from './forum-posts-moderation/forum-posts-moderation.component';
 import { ForumPostGuard } from './guard/forum-post.guard';
 import { MyForumPostsComponent } from './my-forum-posts/my-forum-posts.component';
-import { ForumPostsModerationComponent } from './forum-posts-moderation/forum-posts-moderation.component';
-import { RoleGuard } from 'src/app/services/role.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: Pages.ForumPost.myList,
+    redirectTo: `/${Pages.Forum.main}`,
+    pathMatch: 'full',
   },
   {
     path: Pages.ForumPost.moderation,
@@ -72,3 +68,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ForumPostRoutesModule {}
+

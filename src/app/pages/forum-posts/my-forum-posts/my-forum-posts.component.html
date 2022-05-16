@@ -1,19 +1,16 @@
-<div class="text-center flex justify-content-between">
-  <div>MY FORUM POSTS</div>
-
-  <button
-    pButton
-    class="align-self-end p-btn p-btn-lg"
-    icon="pi pi-plus"
-    label="Add New Forum Post"
-    (click)="goToAddForumPostPage()"
-  ></button>
-</div>
+<app-heading
+  [title]="'My Forum Posts'"
+  [description]="'View all topics you have created'"
+  [sideTemplate]="addButton"
+>
+</app-heading>
+<div class="text-center flex justify-content-between"></div>
 <app-table
   [data]="(myForumPosts$ | async) || []"
   [columnsDefinition]="columns"
   [actionTemplate]="actions"
-  [showAction]="true"
+  [showAction]="false"
+  [title]="'My Forum Posts'"
 ></app-table>
 
 <ng-template #actions let-forumPost>
@@ -37,3 +34,14 @@
     ></button>
   </div>
 </ng-template>
+
+<ng-template #addButton>
+  <button
+    pButton
+    class="align-self-end p-btn p-btn-lg"
+    icon="pi pi-plus"
+    label="Add New Forum Post"
+    (click)="goToAddForumPostPage()"
+  ></button>
+</ng-template>
+
