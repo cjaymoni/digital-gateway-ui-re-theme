@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MultimediaComponent } from './multimedia.component';
+import { NgModule } from '@angular/core';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { MultimediaComponent } from './multimedia.component';
 
 @NgModule({
   imports: [CommonModule, YouTubePlayerModule],
@@ -9,3 +9,4 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
   declarations: [MultimediaComponent],
 })
 export class MultimediaModule {}
+

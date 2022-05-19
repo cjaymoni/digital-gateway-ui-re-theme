@@ -8,6 +8,7 @@ export const environment = {
   APP_URL: 'http://localhost:4200',
   API_URL: 'https://api.msme.aiti-kace.com.gh/',
   GTAG_ID: 'G-EWVY9H4P8P',
+  GOOGLE_CLIENT: 'AIzaSyDCnfkkvVQbMvI2lX4dZLO1p_a8uuW2P5g',
 };
 
 /*
@@ -18,3 +19,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+

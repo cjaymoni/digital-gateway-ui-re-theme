@@ -9,6 +9,22 @@
     padding-bottom: 42.25%; /* 16:9 */
     height: 0;
     border-radius: 6px;
+
+    &:hover {
+      .play-button {
+        display: block;
+        transition: all;
+        transition-duration: 500ms;
+      }
+    }
+
+    .play-button {
+      display: hidden;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.5);
+      }
+    }
   }
   youtube-player iframe {
     position: absolute;
@@ -19,3 +35,4 @@
     border-radius: 6px;
   }
 }
+

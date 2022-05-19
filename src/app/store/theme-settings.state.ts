@@ -110,6 +110,9 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
     this.select(state => state.featuredEvents);
 
   readonly featuredMultimedia$: Observable<ThemeSettings['multimedia']> =
+    this.select(state => state.multimedia.slice(0, 3));
+
+  readonly allFeaturedMultimedia$: Observable<ThemeSettings['multimedia']> =
     this.select(state => state.multimedia);
 
   readonly forumMetrics$: Observable<any> = this.select(
@@ -179,3 +182,4 @@ export class ThemeSettingsStore extends ComponentStore<ThemeSettings> {
       );
     });
 }
+
