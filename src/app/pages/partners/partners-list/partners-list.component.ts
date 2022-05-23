@@ -69,6 +69,14 @@ export class PartnersListComponent implements OnInit, AfterViewInit {
     );
   }
 
+  removePartner(partner: IPartners) {
+    this.store.dispatch(
+      partnersActions.deletePartner({
+        id: partner.id
+      })
+    );
+  }
+
   fetchData = () => {
     this.store.dispatch(partnersActions.fetch());
   };

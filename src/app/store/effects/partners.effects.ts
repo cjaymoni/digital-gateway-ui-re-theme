@@ -116,6 +116,28 @@ export class PartnersEffects {
     )
   );
 
+  deletePartner$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(partnersActions.deletePartner),
+      switchMap(({ id }) =>
+        this.PartnersService.deleteResource(id).pipe(
+          map((partner: any) =>
+            partnersActions.deletePartnerSuccessful({
+              id,
+            })
+          ),
+          tap(_ =>
+            this.alert.showToast(
+              'Partner delete successfully',
+              PrimeNgAlerts.UNOBSTRUSIVE
+            )
+          ),
+          catchError(error => of(partnersActions.fetchError(error)))
+        )
+      )
+    )
+  );
+
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }
