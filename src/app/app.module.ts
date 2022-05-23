@@ -9,7 +9,6 @@ import { ErrorTailorModule } from '@ngneat/error-tailor';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { GtagModule } from 'angular-gtag';
 import { CookieModule } from 'ngx-cookie';
 import { environment } from 'src/environments/environment';
@@ -28,7 +27,6 @@ import { SignupFormModule } from './pages/signup/signup-form/signup-form.module'
 import { LayoutModule } from './shared-ui-modules/layout/layout.module';
 import { appStoreEffects } from './store/app.effects';
 import { appReducersMap } from './store/app.reducers';
-import { TestComponentModule } from './test/test-component/test-component.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,7 +37,6 @@ import { TestComponentModule } from './test/test-component/test-component.module
     AppRoutingModule,
     LayoutModule,
     HttpClientModule,
-    TestComponentModule,
     LoginModule,
     SignupFormModule,
     SearchResultsModule,
@@ -67,16 +64,6 @@ import { TestComponentModule } from './test/test-component/test-component.module
       httpOnly: false,
     }),
     EffectsModule.forRoot(appStoreEffects),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: false,
-      autoPause: true,
-      features: {
-        pause: false,
-        lock: true,
-        persist: true,
-      },
-    }),
   ],
   providers: [
     {

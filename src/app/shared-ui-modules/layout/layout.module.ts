@@ -15,6 +15,7 @@ import { ModalComponentsModule } from '../modal-components/modal-components.modu
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BackButtonModule } from '../back-button/back-button.module';
 import { TooltipModule } from 'primeng/tooltip';
+import {ScrollTopModule} from 'primeng/scrolltop';
 
 @NgModule({
   declarations: [LayoutComponent],
@@ -33,6 +34,7 @@ import { TooltipModule } from 'primeng/tooltip';
     BreadcrumbModule,
     BackButtonModule,
     TooltipModule,
+    ScrollTopModule
   ],
   exports: [LayoutComponent],
 })

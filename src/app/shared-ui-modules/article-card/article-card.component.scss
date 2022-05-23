@@ -52,7 +52,6 @@ $text-shadow: 2px 2px 6px black;
 }
 
 .article-title {
-  // text-shadow: $text-shadow;
   text-overflow: ellipsis;
   width: calc(100%);
 
@@ -86,3 +85,4 @@ $text-shadow: 2px 2px 6px black;
     text-shadow: $text-shadow;
   }
 }
+

@@ -29,10 +29,8 @@ export class MultimediaManagementGuard implements CanActivate {
 
     if (idExists) {
       this.store.dispatch(
-        multimediaActions.findAndSelectMultiMedia({
-          searchParams: {
-            multimedia: id,
-          },
+        multimediaActions.findAndSelectMultiMediaById({
+          id,
         })
       );
     } else {
@@ -42,3 +40,4 @@ export class MultimediaManagementGuard implements CanActivate {
     return true;
   }
 }
+
