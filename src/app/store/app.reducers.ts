@@ -15,6 +15,7 @@ import { tagReducer } from './reducers/tag.reducers';
 import { userAuthReducer } from './reducers/user-auth.reducers';
 import { userProfileReducer } from './reducers/user-profile.reducers';
 import { userListReducer } from './reducers/users-list.reducers';
+import { partnersReducer } from './reducers/partners.reducers';
 
 export const appReducersMap = {
   [FeatureNamesForStore.User]: userAuthReducer,
@@ -33,4 +34,5 @@ export const appReducersMap = {
   [FeatureNamesForStore.UsersList]: userListReducer,
   [FeatureNamesForStore.MultiMedia]: multiMediaReducer,
   [FeatureNamesForStore.DigitalLink]: digitalLinkReducer,
+  [FeatureNamesForStore.Partners]: partnersReducer,
 };

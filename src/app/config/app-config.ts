@@ -38,6 +38,7 @@ export enum FeatureNamesForStore {
   UsersList = 'usersList',
   MultiMedia = 'multiMedia',
   DigitalLink = 'digitalLink',
+  Partners = 'partners',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -159,6 +160,20 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
       },
       edit: (url: UrlSegment[]) => {
         return urlMatcherForEditAndView(url, 'direct-links', false);
+      },
+    },
+  },
+  Partners: {
+    main: 'partners',
+    add: 'post-partner',
+    edit: 'edit-partner/:id',
+    view: 'view-partner/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'partners');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'partners', false);
       },
     },
   },
@@ -332,6 +347,13 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       label: 'Direct Links',
       routerLink: [Pages.DigitalLinks.main],
       icon: 'pi pi-link',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
+    {
+      id: 'partners',
+      label: 'Partners',
+      routerLink: [Pages.Partners.main],
+      icon: 'pi pi-users',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
   ];

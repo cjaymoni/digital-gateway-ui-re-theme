@@ -232,6 +232,11 @@ export class NavigatorService {
     this.panelTitle$,
     this.modalTitle$
   );
+  partners = new PartnersRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
 }
 
 class AppRoutesConfig {
@@ -542,6 +547,23 @@ class UserManagementRoutes extends AppRoutesConfig {
     this.router.navigate([
       this.page.main,
       ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
+  }
+}
+
+class PartnersRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.Partners, router, subject, modalsubject);
+  }
+
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.view.replace(':id', id).split('/'),
     ]);
   }
 }
