@@ -1,0 +1,53 @@
+<ng-container *appShellNoRender>
+  <div class="text-center flex justify-content-between">
+    <div>PARTNERS MANAGEMENT</div>
+
+    <button
+      pButton
+      class="align-self-end p-btn p-btn-lg"
+      icon="pi pi-plus"
+      label="Add Partner"
+      (click)="goToAddNewPartner()"
+    ></button>
+  </div>
+
+  <app-table
+    [data]="(partners$ | async) || []"
+    [columnsDefinition]="columns"
+    [actionTemplate]="actions"
+    [showAction]="true"
+    [refreshDataFunction]="fetchData"
+  ></app-table>
+
+  <ng-template #actions let-partners>
+    <div class="flex justify-content-between">
+      <button
+        class="p-button p-button-rounded p-button-danger mr-3"
+        pButton
+        tooltipPosition="bottom"
+        pTooltip="View Partner"
+        icon="pi pi-eye"
+        (click)="viewPartner(partners)"
+      ></button>
+
+      <button
+        class="p-button p-button-info p-button-rounded mr-3"
+        pButton
+        pTooltip="Edit Partner"
+        tooltipPosition="bottom"
+        icon="pi pi-pencil"
+        (click)="editPartner(partners)"
+      ></button>
+
+      <button
+        class="p-button p-button-rounded p-button-danger mr-auto"
+        pButton
+        tooltipPosition="bottom"
+        pTooltip="Delete Partner"
+        icon="pi pi-trash"
+        clickConfirmation
+        (onConfirm)="removePartner(partners)"
+      ></button>
+    </div>
+  </ng-template>
+</ng-container>

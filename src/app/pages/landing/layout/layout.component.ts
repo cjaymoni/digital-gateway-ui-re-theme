@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Carousel } from 'primeng/carousel';
+import { take } from 'rxjs/operators';
 import { trackByAny, trackById } from 'src/app/config/app-config';
 import { DeviceService } from 'src/app/services/device.service';
 import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
@@ -65,3 +66,4 @@ export class LayoutComponent implements OnInit {
     }
   }
 }
+

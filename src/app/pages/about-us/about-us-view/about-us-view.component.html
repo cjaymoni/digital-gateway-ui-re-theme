@@ -73,15 +73,18 @@
   <div class="w-full mt-7">
     <div class="font-bold text-xl">Our Partners</div>
     <div class="grid mt-3">
-      <ng-container *ngFor="let _ of [].constructor(6)">
-        <div class="col-2">
-          <img
-            [src]="partImage"
-            class="h-full w-full border-round"
-            alt="Partners Image"
-          />
+      <ng-container *ngFor="let partner of allPartners$ | async">
+        <div class="col-2 cursor-pointer">
+          <a [href]="partner?.url" class="no-underline" target="_blank">
+            <img
+              [src]="partner?.image"
+              class="h-full w-full border-round"
+              [alt]="partner?.name"
+            />
+          </a>
         </div>
       </ng-container>
     </div>
   </div>
 </div>
+

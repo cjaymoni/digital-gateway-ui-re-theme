@@ -1,0 +1,91 @@
+<ng-container [formGroup]="partnersForm" errorTailor>
+  <div class="fluid formgrid grid p-3">
+    <div class="field col-12">
+      <label for="title">Name</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="name"
+        placeholder="Enter partner's name"
+      />
+    </div>
+
+    <div class="field col-12">
+      <label for="description">Description</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="desription"
+        placeholder="Enter description"
+      />
+    </div>
+
+    <div class="field col-12">
+      <label for="url">URL</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="url"
+        placeholder="Enter a url"
+      />
+    </div>
+
+    <div class="col-12">
+      <ng-container *ngIf="!createForm && partnerHasImage">
+        <div class="mb-1">
+          <div class="flex justify-content-evenly align-items-center">
+            <div class="font-bold">
+              Current Image (Remove to upload a new one)
+            </div>
+            <button
+              pButton
+              pTooltip="Remove current image"
+              class="p-button p-button-text p-button-rounded p-button-danger"
+              icon="pi pi-trash"
+              clickConfirmation
+              (onConfirm)="removeImage()"
+            ></button>
+          </div>
+          <div
+            class="flex justify-content-center align-items-center border-solid p-1 border-200"
+          >
+            <img
+              [src]="partners?.image"
+              alt="partner-image"
+              class="h-15rem"
+            />
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!partnerHasImage">
+        <label for="imageUpload">Image Upload</label>
+        <app-image-upload #imageUpload [multiple]="false"></app-image-upload>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="col-12 ml-auto flex justify-content-end">
+    <button
+      pButton
+      pRipple
+      class="mr-1"
+      type="button"
+      icon="pi pi-save"
+      [label]="(createForm ? 'Add' : 'Update') + ' Partner'"
+      [disabled]="partnersForm.invalid"
+      (click)="onAddOrUpdatePartner()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      class="p-button-danger mr-1"
+      icon="pi pi-times"
+      type="button"
+      label="Cancel"
+      (click)="goBack()"
+    ></button>
+  </div>
+</ng-container>

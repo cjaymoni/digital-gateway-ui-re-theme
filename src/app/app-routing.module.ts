@@ -137,6 +137,16 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: Pages.Partners.main,
+    loadChildren: () =>
+      import('./pages/partners/partners.module').then(
+        m => m.PartnersModule
+      ),
+    data: {
+      breadcrumb: 'Partners',
+    },
+  },
 ];
 
 @NgModule({

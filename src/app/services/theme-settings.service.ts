@@ -51,12 +51,12 @@ export class ThemeSettingsService extends ResourceService {
     if (initial) {
       homeDataRequest = forkJoin([
         this.getFeaturedCategories(),
-        // this.getMultimedia(),
+        this.getMultimedia(),
       ]).pipe(
         map(data => {
           return {
             featuredCategories: data[0],
-            // multimedia: data[1],
+            multimedia: data[1],
           };
         }),
         catchError(e => of(initialHomepageState)),
@@ -68,7 +68,7 @@ export class ThemeSettingsService extends ResourceService {
         this.getEvents(),
         this.getFeaturedArticles(),
         this.getDirectLinks(),
-        this.getMultimedia(),
+        // this.getMultimedia(),
       ]).pipe(
         map(data => {
           return {
@@ -76,7 +76,7 @@ export class ThemeSettingsService extends ResourceService {
             featuredEvents: data[1],
             featuredArticles: data[2],
             featuredDirectLinks: data[3],
-            multimedia: data[4],
+            // multimedia: data[4],
           };
         }),
         catchError(e => of(initialHomepageState)),
@@ -195,3 +195,4 @@ export class ThemeSettingsService extends ResourceService {
     );
   }
 }
+
