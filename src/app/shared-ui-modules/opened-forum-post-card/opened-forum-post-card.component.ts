@@ -8,6 +8,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import {
+  catchError,
+  EMPTY,
   filter,
   interval,
   map,
@@ -91,9 +93,11 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
 
     this.reloadCommentSubscription = this.pollInterval
       .pipe(
+        catchError(e => EMPTY),
         withLatestFrom(this.forumPost$, this.currentCommentCount$),
         switchMap(([_, forumPost, currentCommentCount]) => {
           return this.forumPostService.commentCount(forumPost.id).pipe(
+            catchError(e => EMPTY),
             filter(
               retrievedCommentCount =>
                 retrievedCommentCount != currentCommentCount
@@ -173,3 +177,4 @@ export class OpenedForumPostCardComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 }
+

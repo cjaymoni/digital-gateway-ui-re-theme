@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://msme.aiti-kace.com.gh/sitemap.xml

@@ -13,9 +13,7 @@ import { socialmediaActions } from 'src/app/store/actions/socialmedia.actions';
   providedIn: 'root',
 })
 export class SocialMediaGuard implements CanActivate {
-  constructor(private store: Store) {
-    this.store.dispatch(socialmediaActions.fetch());
-  }
+  constructor(private store: Store) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -30,7 +28,7 @@ export class SocialMediaGuard implements CanActivate {
     if (idExists) {
       this.store.dispatch(
         socialmediaActions.findAndSelectSocialMediaById({
-          id: id
+          id: id,
         })
       );
     } else {
@@ -40,3 +38,4 @@ export class SocialMediaGuard implements CanActivate {
     return true;
   }
 }
+

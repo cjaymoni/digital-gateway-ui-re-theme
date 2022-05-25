@@ -3,6 +3,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie';
+import { debounceTime, filter } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   APP_REFRESH_TOKEN,
@@ -12,6 +13,7 @@ import {
 import { LocalStorageService } from '../helpers/localstorage.service';
 import { SeoService } from '../helpers/seo.service';
 import { categoryActions } from '../store/actions/category.actions';
+import { socialmediaActions } from '../store/actions/socialmedia.actions';
 import { tagActions } from '../store/actions/tag.actions';
 import { userAuthActions } from './../store/actions/user-auth.actions';
 
@@ -35,14 +37,18 @@ export class AppBootstrap {
     if (isPlatformBrowser(this.platformId)) {
       this.store.dispatch(tagActions.fetch());
       this.store.dispatch(categoryActions.fetch());
+      this.store.dispatch(socialmediaActions.fetch());
     }
     this.initializeLogin();
 
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        debounceTime(1000)
+      )
+      .subscribe((event: any) => {
         this.seo.setURL(`${environment.APP_URL}${event.url}`);
-      }
-    });
+      });
   }
 
   initializeLogin() {
