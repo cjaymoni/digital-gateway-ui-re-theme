@@ -1,39 +1,17 @@
 <div
-  class="shadow-4 h-10rem p-2 w-full fadein animation-duration-500 justify-content-between align-items-center flex flex-column border-round"
+  class="shadow-4 bg-darkblue text-white h-10rem p-2 w-full fadein animation-duration-500 justify-content-between align-items-center flex flex-column border-round"
 >
-  <div class="flex align-items-center text-blue-900 mt-4">
-    <i class="pi pi-file text-5xl"></i>
+  <div class="align-items-center font-bold mt-4">
+    Download {{ resource.name }}
   </div>
-  <div>
-    <span class="align-items-center mr-2">{{ resource.name }}</span>
-
-    <i
-      class="pi pi-download text-xl text-green-500 cursor-pointer ml-1"
-      (click)="downloadFile()"
-      pTooltip="Download File"
-    ></i>
+  <div class="align-items-center text-xs mt-4">
+    {{ resource.description || '' | appEllipsis: 100 }}
   </div>
 
-  <div class="text align-items-center p-1 font-italic mb-2">
-    {{ resource.description }}
-  </div>
-</div>
-
-<!-- <div
-  class="shadow-4 h-10rem p-2 w-full fadein animation-duration-500 justify-content-between align-items-center flex flex-column border-round"
->
-  <div
-    class="flex justify-content-between align-items-center text-blue-900 text-2xl"
-  >
-    <i class="pi pi-file mr-2 text-2xl"></i>
-    <div>{{ resource.name }}</div>
-  </div>
-
-  <div class="text p-1">{{ resource.description }}</div>
   <p-button
-    styleClass="p-button-success p-button-outlined p-button-rounded"
-    icon="pi pi-download"
+    styleClass="text-white p-button-outlined p-button-rounded my-2"
+    icon="pi pi-arrow-down"
     (click)="downloadFile()"
     pTooltip="Download File"
   ></p-button>
-</div> -->
+</div>

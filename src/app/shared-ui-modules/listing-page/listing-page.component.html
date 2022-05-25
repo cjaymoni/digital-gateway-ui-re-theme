@@ -1,17 +1,29 @@
-<div class="text-center text-2xl text-darkblue uppercase">{{ title }}</div>
-<ng-container *ngIf="loading; else loaded">
-  <div class="grid">
-    <ng-container
-      *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
-    >
-      <p-skeleton size="15rem" shape="rectangle" styleClass="m-3"></p-skeleton>
+<app-heading
+  [title]="title"
+  [description]="description"
+  [sideTemplate]="sideTemplate"
+  [headerTemplate]="headerTemplate"
+></app-heading>
+
+<ng-container *ngIf="loading || !items; else loaded">
+  <div class="flex flex-column justify-content-start align-content-center m-0">
+    <ng-container *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
+      <!-- size="15rem" -->
+      <!-- <div [class]="itemClass + ' ' + loadingElementClass"> -->
+      <p-skeleton
+        shape="rectangle"
+        width="70vw"
+        height="10vh"
+        styleClass="mx-auto mb-4"
+      ></p-skeleton>
+      <!-- </div> -->
     </ng-container>
   </div>
 </ng-container>
 
 <ng-template #loaded>
-  <ng-container *ngIf="items.length > 0; else noresults">
-    <div class="grid justify-content-start align-content-center m-0">
+  <ng-container *ngIf="items?.length > 0; else noresults">
+    <div class="grid justify-content-start align-content-center m-0 lg:mx-3">
       <ng-container *ngFor="let item of items">
         <div [class]="itemClass">
           <ng-container
@@ -27,3 +39,4 @@
 <ng-template #noresults>
   <app-no-results-found></app-no-results-found>
 </ng-template>
+

@@ -6,6 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { LoginFormComponent } from './login-form.component';
 import { DirectivesModule } from 'src/app/directives/directives.module';
+import { ErrorTailorModule } from '@ngneat/error-tailor';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
     InputTextModule,
     PasswordModule,
     DirectivesModule,
+    ErrorTailorModule,
   ],
   exports: [LoginFormComponent],
   declarations: [LoginFormComponent],

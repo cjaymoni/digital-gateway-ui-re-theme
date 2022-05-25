@@ -32,8 +32,8 @@ export class MyForumPostsComponent implements OnInit, AfterViewInit {
     this.columns = [
       { header: 'TITLE', field: 'title' },
       { header: 'COMMENTS', field: 'comment_count' },
-      { header: 'UPVOTES', field: 'upvote_count' },
-      { header: 'DOWNVOTES', field: 'downvote_count' },
+      { header: 'UPVOTES', field: 'upvotes' },
+      { header: 'DOWNVOTES', field: 'downvotes' },
       { header: 'SCORE', field: 'score' },
     ];
   }
@@ -62,3 +62,4 @@ export class MyForumPostsComponent implements OnInit, AfterViewInit {
     );
   }
 }
+

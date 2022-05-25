@@ -20,7 +20,7 @@ export class AppComponent implements AfterViewInit {
     private seo: SeoService
   ) {
     this.appBootstrap.initializeAppData();
-    AppComponent.isBrowser.next(isPlatformBrowser(platformId));
+    AppComponent.isBrowser.next(isPlatformBrowser(this.platformId));
     this.seo.generateTags({
       title: 'MSME Gateway',
       description:

@@ -1,8 +1,12 @@
-<ng-container [formGroup]="forumPostForm">
-  <div class="formgrid grid">
+<ng-container [formGroup]="forumPostForm" errorTailor>
+  <app-heading
+    [title]="'Add A Topic'"
+    description="Use this form to post a topic for discussion under a selected forum"
+  ></app-heading>
+  <div class="formgrid grid mx-2 lg:mx-6">
     <div *ngIf="selectedForum$ | async" class="text-blue-600 mb-3">
-      Add a post to Forum :
-      <span class="font-italic font-semibold uppercase">
+      <p>Add a post to Forum :</p>
+      <span class="font-semibold uppercase">
         {{ (selectedForum$ | async)?.name }}
       </span>
     </div>
@@ -25,7 +29,6 @@
 
     <div class="field col-12">
       <label for="content">Body</label>
-
       <textarea
         id="description"
         class="inputfield w-full"
@@ -62,3 +65,4 @@
     </div>
   </div>
 </ng-container>
+

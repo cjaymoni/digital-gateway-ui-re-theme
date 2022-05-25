@@ -2,59 +2,93 @@
 <app-toasts></app-toasts>
 <app-dialog></app-dialog>
 <div class="grid h-full block md:flex">
-  <nav class="topbar w-full sticky top-0 z-5 bg-teal-700">
+  <nav class="topbar w-full sticky top-0 z-5">
     <app-top-nav></app-top-nav>
   </nav>
-  <div class="col-12 grid pt-0 pb-0 justify-content-center">
-    <!-- left sidebar -->
-    <div
-      class="hidden col-3 xl:col-2 lg:block p-2 xl:sticky xl:top-0 pt-5 bg-darkblue z-4"
-    >
-      <app-side-nav></app-side-nav>
-      <div class="col-12 xl:hidden pt-5">
-        <app-right-nav-card></app-right-nav-card>
-      </div>
-    </div>
-    <!-- middle content -->
-    <div
-      class="col-12 lg:col-9 xl:col-8 grid justify-content-center h-full p-0 pt-5 mb-7"
-    >
-      <div class="col-12 min-h-screen p-0 pl-3 pb-8">
-        <!-- <div class="mr-3 hidden lg:flex">
-            <app-back-button styleClass="h-3rem"></app-back-button>
-          </div> -->
-        <p-breadcrumb
-          *ngIf="((breadcrumbs$ | async) || []).length > 1"
-          styleClass="p-0 border-noround border-none m-0 pl-2 mb-3 bg-white"
-          [model]="(breadcrumbs$ | async) ?? []"
-        ></p-breadcrumb>
-        <router-outlet></router-outlet>
-      </div>
-
-      <!-- left bar loaded below -->
-      <div class="col-12 lg:hidden justify-content-center p-0 pt-5 pl-3">
+  <!-- main content -->
+  <ng-container *ngIf="!(loading$ | async); else loading">
+    <div class="col-12 grid pt-0 pb-0 justify-content-center">
+      <!-- left sidebar -->
+      <div
+        class="hidden col-3 xl:col-2 lg:block p-2 xl:sticky xl:top-0 pt-5 bg-darkblue z-4"
+      >
         <app-side-nav></app-side-nav>
       </div>
-
-      <!-- right bar loaded below -->
+      <!-- middle content -->
       <div
-        class="rightcontent col-12 lg:hidden justify-content-center p-0 pt-5 pl-3"
+        class="grid justify-content-center h-full p-2 pt-5 mb-7"
+        [ngClass]="
+          !(isHandheld$ | async)
+            ? (showRightPanel$ | async)
+              ? 'col-12 lg:col-9 xl:col-8'
+              : 'col'
+            : 'col-12'
+        "
       >
-        <app-right-nav-card></app-right-nav-card>
-      </div>
-    </div>
+        <div class="col-12 min-h-screen p-0 pl-3 pb-8">
+         
+          <div class="mr-3 hidden lg:flex justify-content-between">
+            <!-- <app-back-button styleClass="h-3rem"></app-back-button> -->
 
-    <!-- right side bar -->
-    <div class="hidden xl:flex xl:col-2 h-full p-0 pt-5">
-      <div class="col-12">
-        <app-right-nav-card></app-right-nav-card>
+            <div>
+              <p-breadcrumb
+                *ngIf="((breadcrumbs$ | async) || []).length > 1"
+                styleClass="p-0 border-noround border-none m-0 pl-2 mb-3 bg-white"
+                [model]="(breadcrumbs$ | async) ?? []"
+              ></p-breadcrumb>
+            </div>
+
+            <div
+              class="hidden xl:block cursor-pointer hover-underline p-button p-button-secondary sticky right-panel-toggler"
+              (click)="toggleRightPanel()"
+              [pTooltip]="
+                (showRightPanel$ | async)
+                  ? 'Hide right panel'
+                  : 'Show right panel'
+              "
+            >
+              <i
+                class="pi"
+                [ngClass]="
+                  (showRightPanel$ | async)
+                    ? 'pi-angle-double-right'
+                    : 'pi-angle-double-left'
+                "
+              ></i>
+            </div>
+          </div>
+          <router-outlet></router-outlet>
+        </div>
+
+        <!-- right bar loaded below -->
+        <div
+          class="rightcontent col-12 xl:hidden justify-content-center p-0 pt-5 pl-3"
+        >
+          <app-right-nav-card></app-right-nav-card>
+        </div>
+
+        <!-- left bar loaded below -->
+        <div class="col-12 lg:hidden justify-content-center p-0 pt-5 pl-3">
+          <app-side-nav></app-side-nav>
+        </div>
       </div>
+
+      <!-- right side bar -->
+      <div
+        *ngIf="showRightPanel$ | async"
+        class="hidden xl:flex xl:col-2 h-full p-0 pt-5 fadeinright"
+      >
+        <div class="col-12">
+          <app-right-nav-card></app-right-nav-card>
+        </div>
+      </div>
+       <p-scrollTop></p-scrollTop>
     </div>
-  </div>
-  <!-- footer -->
-  <footer class="col-12 footer p-0">
-    <app-footer></app-footer>
-  </footer>
+    <!-- footer -->
+    <footer class="col-12 footer p-0 z-4">
+      <app-footer></app-footer>
+    </footer>
+  </ng-container>
   <!-- right panel -->
   <app-right-overlay-panel>
     <router-outlet name="right-panel"></router-outlet>
@@ -64,3 +98,11 @@
     <app-modal-components></app-modal-components>
   </ng-container>
 </div>
+
+<ng-template #loading>
+  <div class="ml-auto mr-auto loader">
+    <i class="pi pi-spin pi-spinner" style="font-size: 8rem"></i>
+    <h6 class="text-lg text-teal-500 text-center">Please wait...</h6>
+  </div>
+</ng-template>
+

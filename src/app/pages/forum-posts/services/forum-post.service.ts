@@ -1,18 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { ForumPostEndpoint } from 'src/app/config/routes';
 import { ForumPost } from 'src/app/models/forum.model';
 import { ResourceService } from 'src/app/services/resources.service';
 import { forumPostActions } from '../../../store/actions/forum-post.action';
 import { Store } from '@ngrx/store';
+import { TransferStateService } from 'src/app/services/transfer-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ForumPostsService extends ResourceService {
-  constructor(http: HttpClient, private store: Store) {
-    super(http, ForumPostEndpoint);
+  constructor(
+    http: HttpClient,
+    private store: Store,
+    transferState: TransferStateService
+  ) {
+    super(http, ForumPostEndpoint, transferState);
   }
 
   searchForumPost(searchParams: { [key: string]: any }) {
@@ -48,4 +53,38 @@ export class ForumPostsService extends ResourceService {
       )
     );
   }
+
+  commentCount(id: number): Observable<number> {
+    return this.getResources(
+      `${ForumPostEndpoint + id}/count-comments/`,
+      undefined,
+      undefined,
+      true
+    ).pipe(map((data: any) => data as number));
+  }
+
+  todayForumPostCount() {
+    const today = new Date();
+    return this.getResources(
+      `${ForumPostEndpoint}?page_size=1&date=${today.getFullYear()}-${
+        today.getMonth() + 1
+      }-${today.getDate()}`,
+      undefined,
+      undefined,
+      true
+    ).pipe(map((data: any) => data.count as number));
+  }
+
+  todayForumPosts() {
+    const today = new Date();
+    return this.getResources(
+      `${ForumPostEndpoint}?&date=${today.getFullYear()}-${
+        today.getMonth() + 1
+      }-${today.getDate()}&ordering=created_on`,
+      undefined,
+      undefined,
+      true
+    ).pipe(map((data: any) => data.results as ForumPost[]));
+  }
 }
+

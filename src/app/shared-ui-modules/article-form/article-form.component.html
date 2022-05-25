@@ -1,4 +1,4 @@
-<ng-container [formGroup]="articleForm">
+<ng-container [formGroup]="articleForm" errorTailor>
   <div class="fluid formgrid grid">
     <div class="field col-12">
       <label for="title">Title</label>
@@ -50,7 +50,11 @@
           <div
             class="flex justify-content-center align-items-center border-solid p-1 border-200"
           >
-            <img [src]="article?.images?.[0]?.image" alt="" class="h-15rem" />
+            <img
+              [src]="article?.images?.[0]?.image"
+              alt="article-image"
+              class="h-15rem"
+            />
           </div>
         </div>
       </ng-container>

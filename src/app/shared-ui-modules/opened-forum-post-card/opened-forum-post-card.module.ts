@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
 import { DirectivesModule } from 'src/app/directives/directives.module';
+import { AppHeadingModule } from '../app-heading/app-heading.module';
 import { CommentCardModule } from '../comment-card/comment-card.module';
 import { CommentFormModule } from '../comment-form/comment-form.module';
 import { CommentsModule } from '../comments/comments.module';
@@ -25,8 +26,10 @@ import { OpenedForumPostCardComponent } from './opened-forum-post-card.component
     ForumLoadingCardModule,
     GalleriaModule,
     DirectivesModule,
+    AppHeadingModule,
   ],
   declarations: [OpenedForumPostCardComponent],
   exports: [OpenedForumPostCardComponent],
 })
 export class OpenedForumPostCardModule {}
+

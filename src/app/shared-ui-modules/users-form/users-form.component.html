@@ -1,0 +1,73 @@
+<ng-container [formGroup]="usersForm">
+  <div class="formgrid grid">
+    <div class="field col-12">
+      <label for="email">Email</label>
+      <input
+        pInputText
+        id="email"
+        type="text"
+        class="inputfield w-full"
+        formControlName="email"
+        placeholder="Email Address"
+      />
+    </div>
+
+    <div class="field col-12" *ngIf="createForm">
+      <label for="password">Password</label>
+
+      <p-password
+        type="password"
+        placeholder="Pasword"
+        formControlName="password"
+        inputStyleClass="w-12 "
+        styleClass="w-12"
+        autocomplete="on"
+      ></p-password>
+    </div>
+
+    <div class="field col-12" *ngIf="createForm">
+      <label for="role">Role</label>
+      <p-dropdown
+        styleClass="w-full"
+        [options]="userRoles"
+        placeholder="Select user role"
+        optionLabel="name"
+        formControlName="role"
+        [showClear]="true"
+      ></p-dropdown>
+    </div>
+
+    <div class="field col-12" *ngIf="!createForm">
+      <label for="role">Role</label>
+      <p-dropdown
+        styleClass="w-full"
+        [options]="userRoles"
+        optionLabel="name"
+        formControlName="role"
+        [disabled]="true"
+      ></p-dropdown>
+    </div>
+    <div class="col-12 ml-auto flex justify-content-end mt-2">
+      <button
+        *ngIf="createForm"
+        pButton
+        pRipple
+        class="mr-1"
+        type="button"
+        icon="pi pi-save"
+        [label]="'Add User'"
+        [disabled]="usersForm.invalid"
+        (click)="onAddOrUpdateUser()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        class="p-button-danger mr-1"
+        icon="pi pi-times"
+        type="button"
+        label="Cancel"
+        (click)="goBack()"
+      ></button>
+    </div>
+  </div>
+</ng-container>

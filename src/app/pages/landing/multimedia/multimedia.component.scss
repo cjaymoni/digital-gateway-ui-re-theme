@@ -1,9 +1,30 @@
 :host ::ng-deep {
   .video-container {
+    @media screen and (max-width: 500px) {
+      padding-bottom: 56.25% !important; /* 16:9 */
+    }
+
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
+    // padding-bottom: 56.25%; /* 16:9 */
+    padding-bottom: 42.25%; /* 16:9 */
     height: 0;
     border-radius: 6px;
+
+    &:hover {
+      .play-button {
+        display: block;
+        transition: all;
+        transition-duration: 500ms;
+      }
+    }
+
+    .play-button {
+      display: hidden;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.5);
+      }
+    }
   }
   youtube-player iframe {
     position: absolute;
@@ -14,3 +35,4 @@
     border-radius: 6px;
   }
 }
+

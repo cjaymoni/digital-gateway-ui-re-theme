@@ -29,10 +29,8 @@ export class SocialMediaGuard implements CanActivate {
 
     if (idExists) {
       this.store.dispatch(
-        socialmediaActions.findAndSelectSocialMedia({
-          searchParams: {
-            socialmedia: id,
-          },
+        socialmediaActions.findAndSelectSocialMediaById({
+          id: id
         })
       );
     } else {

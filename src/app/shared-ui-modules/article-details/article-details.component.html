@@ -1,5 +1,5 @@
-<article *ngIf="article$ | async; else loading">
-  <div class="container p-2">
+<article *ngIf="!(loading$ | async); else loading">
+  <div class="container p-2" *ngIf="article$ | async; else notfound">
     <div class="col-12 flex flex-column md:flex-row">
       <div class="col-12 flex flex-column md:col-7">
         <h1 class="title font-bold text-3xl text-left">
@@ -9,7 +9,8 @@
           Published On: {{ (article$ | async).created_on | date: 'longDate' }}
         </div>
         <div class="m-1 font-italic">
-          Author: {{ (article$ | async).created_by?.username }}
+          Author: {{ (article$ | async).created_by?.first_name }}
+          {{ (article$ | async).created_by?.last_name }}
         </div>
         <div class="flex m-1 align-items-center">
           <i class="pi pi-tag mr-1 text-blue-500"></i>
@@ -32,20 +33,13 @@
         <p-overlayPanel #op [showCloseIcon]="true">
           <ng-template pTemplate>
             <share-buttons
-              [show]="8"
+              [show]="3"
               [include]="[
                 'facebook',
                 'twitter',
-                'linkedin',
                 'whatsapp',
-                'pinterest',
-                'reddit',
                 'telegram',
-                'messenger',
-                'sms',
-                'email',
-                'print',
-                'copy'
+                'email'
               ]"
             ></share-buttons>
           </ng-template>
@@ -67,6 +61,11 @@
     </div>
   </div>
 </article>
+
 <ng-template #loading>
-  <p-skeleton size="20rem" shape="rectangle"></p-skeleton>
+  <app-forum-loading-card></app-forum-loading-card>
+</ng-template>
+
+<ng-template #notfound>
+  <app-no-results-found></app-no-results-found>
 </ng-template>

@@ -1,70 +1,81 @@
-<div class="text-center flex justify-content-between">
-  <div>MY ARTICLES</div>
-
-  <button
-    pButton
-    class="align-self-end p-btn p-btn-lg"
-    icon="pi pi-plus"
-    label="Add New Article"
-    (click)="goToAddArticlePage()"
-  ></button>
-</div>
-<app-table
-  [data]="(myArticles$ | async) || []"
-  [columnsDefinition]="columns"
-  [actionTemplate]="actions"
-  [showAction]="true"
-  [totalDataLength]="(count$ | async) || 0"
-  (pageChangeEvent)="changePage($event)"
-></app-table>
-
-<ng-template #actions let-article>
-  <div class="flex justify-content-between">
-    <button
-      class="p-button p-button-rounded p-button-danger mr-1"
-      pButton
-      tooltipPosition="bottom"
-      pTooltip="View Article"
-      (click)="viewArticle(article)"
-      icon="pi pi-eye"
-    ></button>
+<ng-container *appShellNoRender>
+  <div class="text-center flex justify-content-between">
+    <div>MY ARTICLES</div>
 
     <button
-      class="p-button p-button-info p-button-rounded mr-1"
       pButton
-      pTooltip="Edit Article"
-      tooltipPosition="bottom"
-      icon="pi pi-pencil"
-      (click)="editArticle(article)"
-    ></button>
-
-    <button
-      class="p-button p-button-help p-button-rounded mr-auto"
-      pButton
-      pTooltip="Edit Status"
-      tooltipPosition="bottom"
-      icon="pi pi-book"
-      (click)="selectedArticle = article; statusMenu.toggle($event)"
+      class="align-self-end p-btn p-btn-lg"
+      icon="pi pi-plus"
+      label="Add New Article"
+      (click)="goToAddArticlePage()"
     ></button>
   </div>
-</ng-template>
-<p-menu #statusMenu [popup]="true" [model]="statusList"></p-menu>
+  <app-table
+    [data]="(myArticles$ | async) || []"
+    [columnsDefinition]="columns"
+    [actionTemplate]="actions"
+    [showAction]="true"
+    [totalDataLength]="(count$ | async) || 0"
+    (pageChangeEvent)="changePage($event)"
+    [refreshDataFunction]="fetchData"
+  ></app-table>
 
-<ng-template #statusTemplate let-status>
-  <!-- severity="warn" -->
-  <p-message
-    [severity]="PublishedStatusMapping[status.toLowerCase()]"
-    styleClass="p-message-no-icon"
-    [text]="status | uppercase"
-  ></p-message>
-</ng-template>
+  <ng-template #actions let-article>
+    <div class="flex justify-content-between">
+      <button
+        class="p-button p-button-rounded p-button-danger mr-1"
+        pButton
+        tooltipPosition="bottom"
+        pTooltip="View Article"
+        (click)="viewArticle(article)"
+        icon="pi pi-eye"
+      ></button>
 
-<ng-template #tagsTemplate let-tags>
-  <div
-    class="flex flex-column flex-wrap justify-content-center align-items-center"
-  >
-    <ng-container *ngFor="let tag of tags">
-      <p-tag styleClass="mb-1" [value]="tag.name"></p-tag>
-    </ng-container>
-  </div>
-</ng-template>
+      <button
+        class="p-button p-button-info p-button-rounded mr-1"
+        pButton
+        pTooltip="Edit Article"
+        tooltipPosition="bottom"
+        icon="pi pi-pencil"
+        (click)="editArticle(article)"
+      ></button>
+
+      <button
+        class="p-button p-button-help p-button-rounded mr-auto"
+        pButton
+        pTooltip="Edit Status"
+        tooltipPosition="bottom"
+        icon="pi pi-book"
+        (click)="selectedArticle = article; statusMenu.toggle($event)"
+      ></button>
+    </div>
+  </ng-template>
+  <p-menu #statusMenu [popup]="true" [model]="statusList"></p-menu>
+
+  <ng-template #statusTemplate let-status>
+    <!-- severity="warn" -->
+    <p-message
+      [severity]="PublishedStatusMapping[status.toLowerCase()]"
+      styleClass="p-message-no-icon"
+      [text]="status | uppercase"
+    ></p-message>
+  </ng-template>
+
+  <ng-template #tagsTemplate let-tags>
+    <div
+      class="flex flex-column flex-wrap justify-content-center align-items-center"
+    >
+      <ng-container *ngFor="let tag of tags">
+        <p-tag styleClass="mb-1" [value]="tag.name"></p-tag>
+      </ng-container>
+    </div>
+  </ng-template>
+
+  <ng-template #fullnameTemplate let-created>
+    {{ created.first_name }} {{ created.last_name }}
+  </ng-template>
+
+  <ng-template #createdOnTemplate let-created>
+    {{ created | date: 'longDate' }}
+  </ng-template>
+</ng-container>

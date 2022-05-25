@@ -1,6 +1,8 @@
 import { UrlSegment } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ArticlePublishedStatus } from '../models/article.model';
+import { Forum } from '../models/forum.model';
+import { CREATE_AD, CREATE_RESOURCE } from './activity-roles';
 
 export const MOBILE_WIDTH_BREAKPOINT = 600;
 export const TABLET_WIDTH_BREAKPOINT = 960;
@@ -10,6 +12,8 @@ export const APP_TOKEN = 'app_token';
 export const APP_USER_TOKEN = 'app_user_access_token';
 export const APP_REFRESH_TOKEN = 'app_refresh_token';
 export const LOGIN_PATH = 'login';
+
+export const POLLING_INTERVAL = 10000; // 5 SECONDS
 
 export enum RouterOutlets {
   Main = 'main',
@@ -35,6 +39,7 @@ export enum FeatureNamesForStore {
   MultiMedia = 'multiMedia',
   SocialMedia = 'socialMedia',
   DigitalLink = 'digitalLink',
+  Partners = 'partners',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -129,6 +134,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   Resources: {
     main: 'resources',
     add: 'post-resource',
+    links: 'direct-links',
   },
   MultimediaManagement: {
     main: 'multimedia-management',
@@ -159,16 +165,30 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
     }
   },
   DigitalLinks: {
-    main: 'digital-links',
+    main: 'direct-links',
     add: 'post-link',
     edit: 'edit-link/:id',
     view: 'view-link/:id',
     matcher: {
       view: (url: UrlSegment[]) => {
-        return urlMatcherForEditAndView(url, 'digital-links');
+        return urlMatcherForEditAndView(url, 'direct-links');
       },
       edit: (url: UrlSegment[]) => {
-        return urlMatcherForEditAndView(url, 'digital-links', false);
+        return urlMatcherForEditAndView(url, 'direct-links', false);
+      },
+    },
+  },
+  Partners: {
+    main: 'partners',
+    add: 'post-partner',
+    edit: 'edit-partner/:id',
+    view: 'view-partner/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'partners');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'partners', false);
       },
     },
   },
@@ -178,7 +198,21 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   UserProfile: 'user-profile',
   SignUp: 'sign-up',
   Login: 'login',
-  UserManagement: 'user-management',
+  UserManagement: {
+    main: 'user-management',
+    add: 'post-user',
+    edit: 'edit-user/:id',
+    view: 'view-user/:id',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'user-management');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'user-management', false);
+      },
+    },
+  },
+  AboutUs: 'about-us',
 
   Category: {
     main: 'category',
@@ -280,16 +314,14 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       label: 'Article Moderation',
       routerLink: [Pages.Articles.main, Pages.Articles.myList],
       icon: 'pi pi-list',
-      visible:
-        userRole === Roles.Admin ||
-        userRole === Roles.Editor ||
-        userRole === Roles.Contributor,
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
     {
       id: 'my-forum-post',
       label: 'My Forum Posts',
       routerLink: [Pages.ForumPost.main, Pages.ForumPost.myList],
       icon: 'pi pi-list',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
     {
       id: 'my-market-ad',
@@ -307,8 +339,9 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
     {
       id: 'user-management',
       label: 'User Management',
-      routerLink: [Pages.UserManagement],
+      routerLink: [Pages.UserManagement.main],
       icon: 'pi pi-users',
+      visible: userRole === Roles.Admin,
     },
     {
       id: 'content-settings',
@@ -325,10 +358,17 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
     {
-      id: 'digital-links',
-      label: 'Digital Links',
+      id: 'direct-links',
+      label: 'Direct Links',
       routerLink: [Pages.DigitalLinks.main],
       icon: 'pi pi-link',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
+    {
+      id: 'partners',
+      label: 'Partners',
+      routerLink: [Pages.Partners.main],
+      icon: 'pi pi-users',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
   ];
@@ -368,17 +408,48 @@ export enum CommentType {
   Comment,
 }
 
-export const trackById = (index: number, comment: any): number => {
-  return comment.id;
+export const trackById = (index: number, data: any): number => {
+  return data.id;
+};
+
+export const trackByAny = (key: string) => {
+  return function (index: number, data: any) {
+    if (key.includes('.')) {
+      const keys = key.split('.');
+      let retrievedData: any;
+      let currentData: any;
+      for (let index = 0; index < keys.length; index++) {
+        const key = keys[index];
+        if (index === 0) {
+          currentData = { ...data[key] };
+        } else {
+          retrievedData = currentData[key];
+        }
+      }
+      return retrievedData;
+    }
+    return data[key];
+  };
+};
+(index: number, data: any): number => {
+  return data.id;
 };
 
 export enum Roles {
   Contributor = 'contributor',
-  Moderator = 'moderator',
+  Reporter = 'reporter',
   Admin = 'admin',
   Editor = 'editor',
-  ServiceProvider = 'service_provider',
+  ServiceProvider = 'service',
 }
+
+export const UserRoleMapping: { [key: string]: string } = {
+  [Roles.Admin]: PrimeNgSeverity.Error,
+  [Roles.Editor]: PrimeNgSeverity.Success,
+  [Roles.Contributor]: PrimeNgSeverity.Info,
+  [Roles.ServiceProvider]: PrimeNgSeverity.Warn,
+  [Roles.Reporter]: PrimeNgSeverity.Info,
+};
 
 export const getUserRole = () => {
   const user = JSON.parse(localStorage?.getItem(APP_USER_TOKEN) || '{}');
@@ -390,63 +461,30 @@ export const MainMenu: MenuItem[] = [
     id: INFO_HUB_ID,
     label: 'Information Hub',
     icon: 'pi pi-folder-open',
+    routerLinkActiveOptions: { exact: true },
     items: [],
   },
   {
     id: 'forum',
-    label: 'Entrepreneurs\' Forum',
+    label: "Entrepreneurs' Forum",
     icon: 'pi pi-discord',
+    routerLinkActiveOptions: { paths: 'subset' },
+    state: { route: Pages.Forum.main },
     items: [
       {
         id: 'view-forums',
         label: 'View Forums',
         icon: 'pi pi-eye',
         routerLink: [Pages.Forum.main],
+        routerLinkActiveOptions: { exact: true },
       },
       {
         id: 'create-forum',
         label: 'Create A Forum',
         icon: 'pi pi-plus',
         routerLink: [Pages.Forum.main, Pages.Forum.add],
-      },
-    ],
-  },
-  {
-    id: 'market-place',
-    label: 'Market Place',
-    icon: 'pi pi-shopping-bag',
-    items: [
-      {
-        id: 'view-add',
-        label: 'View Product Ads',
-        icon: 'pi pi-eye',
-        routerLink: [Pages.MarketPlace.main],
-      },
-      {
-        id: 'create-add',
-        label: 'Create An Ad',
-        icon: 'pi pi-plus',
-        routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
-      },
-    ],
-  },
-  {
-    id: 'resource',
-    label: 'Resources',
-    icon: 'pi pi-file-o',
-    items: [
-      {
-        id: 'view-resources',
-        label: 'Reports',
-        icon: 'pi pi-file',
-        routerLink: [Pages.Resources.main],
-      },
-      {
-        id: 'create-resource',
-        label: 'Add Resource',
-        icon: 'pi pi-plus',
-        routerLink: [Pages.Resources.main, Pages.Resources.add],
-        disabled: (() => {
+        routerLinkActiveOptions: { exact: true },
+        visible: (() => {
           const userRole = getUserRole();
           return (
             userRole === Roles.Admin ||
@@ -455,14 +493,125 @@ export const MainMenu: MenuItem[] = [
           );
         })(),
       },
+    ],
+  },
+  {
+    id: 'market-place',
+    label: 'Market Place',
+    icon: 'pi pi-shopping-bag',
+    routerLinkActiveOptions: { paths: 'subset' },
+    items: [
+      {
+        id: 'view-add',
+        label: 'View Product Ads',
+        icon: 'pi pi-eye',
+        routerLink: [Pages.MarketPlace.main],
+        routerLinkActiveOptions: { exact: true },
+      },
+      {
+        id: 'create-add',
+        label: 'Create An Ad',
+        icon: 'pi pi-plus',
+        routerLink: [Pages.MarketPlace.main, Pages.MarketPlace.add],
+        routerLinkActiveOptions: { exact: true },
+        disabled: (() => {
+          const userRole = getUserRole();
+          return CREATE_AD(userRole);
+        })(),
+      },
+    ],
+  },
+  {
+    id: 'resource',
+    label: 'Resources',
+    icon: 'pi pi-file-o',
+    routerLinkActiveOptions: { paths: 'subset' },
+    items: [
       {
         id: 'view-resources',
-        label: 'Direct Links',
-        icon: 'pi pi-logout',
+        label: 'Reports',
+        icon: 'pi pi-file',
         routerLink: [Pages.Resources.main],
+        routerLinkActiveOptions: { exact: true },
+      },
+      {
+        id: 'create-resource',
+        label: 'Add Resource',
+        icon: 'pi pi-plus',
+        routerLink: [Pages.Resources.main, Pages.Resources.add],
+        visible: (() => {
+          const userRole = getUserRole();
+          return CREATE_RESOURCE(userRole);
+        })(),
+        routerLinkActiveOptions: { exact: true },
+      },
+
+      {
+        id: 'view-links',
+        label: 'Direct Links',
+        icon: 'pi pi-link',
+        routerLink: [Pages.Resources.main, Pages.Resources.links],
+        routerLinkActiveOptions: { exact: true },
       },
     ],
   },
 ];
 
 export const MAX_FEATURED_CATEGORIES = 6;
+
+export const ERROR_MESSAGES_MAPPING = {
+  errors: {
+    useValue: {
+      required: 'This field is required',
+      minlength: ({ requiredLength, actualLength }: any) =>
+        `Please enter ${requiredLength} or more characters. Current count: ${actualLength}`,
+      maxlength: ({ requiredLength, actualLength }: any) =>
+        `Please enter  ${requiredLength} or less characters. Current count: ${actualLength}`,
+      email: () => `Please enter a valid email`,
+    },
+  },
+};
+
+export const TODAY_TOPICS = 'today';
+export const TODAY_FORUM: Forum = {
+  name: "Today's Forum Topics",
+  description:
+    'This forum contains all topics that have been posted today. You cannot directly add a topic to this forum',
+  created_on: new Date().toString(),
+  slug: TODAY_TOPICS,
+  count: 0,
+  icon: 'pi pi-star-fill',
+  moderators: [
+    {
+      first_name: 'MSME GATEWAY',
+    },
+  ],
+};
+
+export const anchorErrorComponentFn = (
+  hostElement: Element,
+  errorElement: Element
+) => {
+  let errorNode: Element | null | undefined = hostElement?.querySelector(
+    'custom-control-error'
+  );
+
+  const isInputGroup =
+    hostElement?.parentElement?.classList.contains('p-inputgroup');
+
+  if (isInputGroup) {
+    hostElement?.parentElement?.insertAdjacentElement('afterend', errorElement);
+    errorNode = hostElement?.parentElement?.querySelector(
+      'custom-control-error'
+    );
+  } else {
+    hostElement?.insertAdjacentElement('afterend', errorElement);
+  }
+
+  return () => {
+    if (errorNode) {
+      errorNode.remove();
+    }
+  };
+};
+

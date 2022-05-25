@@ -1,5 +1,10 @@
-<ng-container [formGroup]="productAdForm">
-  <div class="fluid formgrid grid p-3">
+<app-heading
+  [title]="'Post An Ad'"
+  description="Use this form to create a market advertisement"
+></app-heading>
+
+<ng-container [formGroup]="productAdForm" errorTailor>
+  <div class="fluid formgrid grid mx-3 lg:mx-6">
     <div class="flex flex-column md:flex-row w-full flex-wrap">
       <div class="col-12 md:col-3 align-items-end justify-content-end">
         <label for="adType">Select Ad Type</label>
@@ -88,16 +93,7 @@
           <div class="mb-1">
             <div class="font-bold">Current Images</div>
             <div
-              class="
-                w-full
-                flex
-                justify-content-center
-                align-items-center
-                border-solid
-                p-1
-                border-200
-                overflow-x-auto
-              "
+              class="w-full flex justify-content-center align-items-center border-solid p-1 border-200 overflow-x-auto"
             >
               <div
                 *ngFor="
@@ -109,18 +105,13 @@
                 <img
                   [src]="image.image"
                   class="w-full h-full border-round relative"
-                  alt=""
+                  alt="product-ad-image"
                 />
                 <button
                   pButton
                   pTooltip="Remove this image"
                   tooltipPosition="top"
-                  class="
-                    p-button p-button-rounded p-button-danger
-                    left-50
-                    absolute
-                    remove-button
-                  "
+                  class="p-button p-button-rounded p-button-danger left-50 absolute remove-button"
                   icon="pi pi-trash"
                   clickConfirmation
                   (onConfirm)="removeImage(index)"
@@ -145,7 +136,7 @@
         ></p-inputMask>
       </div>
 
-      <div class="field col">
+      <div class="field col-12 md:col-3">
         <label for="location">Location</label>
         <input
           type="text"
@@ -182,9 +173,9 @@
       pRipple
       class="mr-1"
       type="button"
-      icon="pi pi-save"
+      [icon]="(loading$ | async) ? 'pi pi-spinner pi-spin' : 'pi pi-save'"
       [label]="(createForm ? 'Add' : 'Update') + ' MarketPost'"
-      [disabled]="productAdForm.invalid"
+      [disabled]="productAdForm.invalid || (loading$ | async)"
       (click)="onAddOrUpdateMarketPost()"
     ></button>
     <button
@@ -198,3 +189,4 @@
     ></button>
   </div>
 </ng-container>
+

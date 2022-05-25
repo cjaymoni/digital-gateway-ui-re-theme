@@ -1,12 +1,15 @@
 <ng-container *ngIf="opportunity">
   <div
-    class="p-0 w-full scalein animation-duration-500 overflow-hidden border-round cursor-pointer"
+    class="p-0 w-full fadein animation-duration-500 overflow-hidden border-round cursor-pointer"
   >
-    <p-image
-      [src]="opportunity.images?.[0]?.image ?? ''"
-      imageClass="w-full h-10rem border-round mb-3"
-    ></p-image>
-    <div>
+    <div class="h-18rem border-round">
+      <p-image
+        [src]="opportunity.images?.[0]?.image ?? ''"
+        imageClass="w-full h-full border-round mb-3 object-fit-cover"
+        alt="current-opportunities-image"
+      ></p-image>
+    </div>
+    <div class="text-center text-blue-900 mt-3">
       {{ opportunity.title }}
     </div>
   </div>

@@ -1,38 +1,47 @@
 <div
-  class="
-    forum-post-card
-    shadow-4
-    p-component p-3
-    border-round
-    fadeindown
-    animation-duration-500
-    hover:bg-gray-100
-  "
+  class="flex align-items-center forum-post-card shadow-2 p-component px-2 lg:px-8 py-2 md:py-4 border-round fadeindown animation-duration-500 hover:bg-gray-100 justify-content-between align-content-start flex-column md:flex-row"
   *ngIf="forum"
   (click)="openForum()"
 >
-  <div class="text-lg xl:text-2xl font-bold text-darkblue">
-    {{ forum.name | uppercase }}
+  <!--  -->
+  <div class="col-1 hidden md:block">
+    <i
+      style="font-size: 2.5rem"
+      [ngClass]="icon || 'pi pi-comments'"
+      class="text-orange-600"
+    ></i>
   </div>
+  <!--  -->
+  <div class="col-10 p-2 lg:p-0" *ngIf="forum">
+    <div class="xl:text-xl font-bold text-black-alpha-90 mr-1 lg:mr-8">
+      {{ forum.name | uppercase }}
+    </div>
 
-  <div class="font-italic text-purple-800 font-semibold text-xs" *ngIf="count; else length">
-    {{ count }} Topic(s)
-    <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
-      {{ tag.name }}
-    </span>
-  </div>
-
-  <ng-template #length>
-    <div class="font-italic text-purple-800 font-semibold text-xs">
-      {{ forum.posts?.length ?? 0 }} Topic(s)
-      <span *ngFor="let tag of forum.tags" class="p-tag p-tag-warning mr-2">
+    <div class="text-gray-400 text-sm pt-2">
+      {{ forum.description ?? '' | appEllipsis }}
+      <span *ngFor="let tag of forum?.tags" class="p-tag p-tag-warning mr-2">
         {{ tag.name }}
       </span>
     </div>
-  </ng-template>
-
-  <!-- <div class="flex justify-content-between">
-    <app-comments></app-comments>
-    <app-votes></app-votes>
-  </div> -->
+    <!--  -->
+    <div class="text-blue-400 text-xs pt-1 flex justify-content-between">
+      {{ forum.created_on ?? '' | date: 'longDate' }}
+      <span class="md:hidden">
+        <ng-container [ngTemplateOutlet]="topicCount"></ng-container>
+      </span>
+    </div>
+  </div>
+  <!--  -->
+  <div class="col-1 hidden md:block">
+    <ng-container [ngTemplateOutlet]="topicCount"></ng-container>
+  </div>
 </div>
+
+<ng-template #topicCount>
+  <span
+    class="border-left-1 text-orange-600 font-semibold text-xs flex justify-content-between pl-2"
+  >
+    {{ forum?.count ?? forum?.posts?.length ?? 0 }} Topic(s)
+  </span>
+</ng-template>
+

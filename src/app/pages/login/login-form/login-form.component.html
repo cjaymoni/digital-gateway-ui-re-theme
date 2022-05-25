@@ -4,6 +4,7 @@
     class="my-8"
     enterPressed
     (onEnterPressed)="onLoginSubmit()"
+    errorTailor
   >
     <div
       class="fluid formgrid grid justify-content-between align-content-center"
@@ -29,7 +30,7 @@
           <p-password
             [toggleMask]="true"
             type="password"
-            placeholder="Pasword"
+            placeholder="Password"
             formControlName="password"
             inputStyleClass="w-12 relative"
             styleClass="w-12"
@@ -39,14 +40,7 @@
       </div>
 
       <div
-        class="
-          field
-          col-12
-          ml-auto
-          flex
-          justify-content-between
-          align-items-center
-        "
+        class="field col-12 ml-auto flex justify-content-between align-items-center"
       >
         <button
           pButton
@@ -60,14 +54,7 @@
         <div>
           Don't have an account?
           <span
-            class="
-              ml-1
-              cursor-pointer
-              text-lg
-              font-bold
-              text-blue-700
-              hover-underline
-            "
+            class="ml-1 cursor-pointer text-lg font-bold text-blue-700 hover-underline"
             (click)="goToSignup(); $event.stopPropagation()"
             >Sign up</span
           >
@@ -76,3 +63,4 @@
     </div>
   </form>
 </ng-container>
+

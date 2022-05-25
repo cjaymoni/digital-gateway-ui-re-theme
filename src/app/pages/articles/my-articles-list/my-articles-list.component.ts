@@ -1,25 +1,28 @@
+import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  Inject,
   OnInit,
+  PLATFORM_ID,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
+import { MenuItem } from 'primeng/api';
 import {
+  PrimeNgAlerts,
   PublishedStatusMapping,
   RouterOutlets,
 } from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { articleSelectors } from 'src/app/store/selectors/article.selectors';
-import { MenuItem } from 'primeng/api';
-import { ArticleService } from '../services/articles.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
-import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { articleActions } from 'src/app/store/actions/article.actions';
+import { articleSelectors } from 'src/app/store/selectors/article.selectors';
+import { ArticleService } from '../services/articles.service';
 
 @Component({
   selector: 'app-my-articles-list',
@@ -37,6 +40,14 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
   @ViewChild('tagsTemplate') tagsTemplate: TemplateRef<any> | undefined =
     undefined;
 
+  @ViewChild('createdOnTemplate') createdOnTemplate:
+    | TemplateRef<any>
+    | undefined = undefined;
+
+  @ViewChild('fullnameTemplate') fullnameTemplate:
+    | TemplateRef<any>
+    | undefined = undefined;
+
   columns: any[] = [];
   statusList!: MenuItem[];
   selectedArticle: any;
@@ -48,18 +59,44 @@ export class MyArticlesListComponent implements OnInit, AfterViewInit {
     private navigator: NavigatorService,
     private title: Title,
     private articleService: ArticleService,
-    private appAlertService: AppAlertService
-  ) {
+    private appAlertService: AppAlertService,
+    @Inject(PLATFORM_ID) private platformId: any
+  ) {}
+
+  fetchData = () => {
     this.store.dispatch(articleActions.fetchMyArticles());
-  }
+  };
 
   ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.fetchData();
+    }
+
     this.columns = [
-      { header: 'TITLE', field: 'title' },
-      { header: 'CATEGORY', field: 'category', subField: 'name' },
+      { header: 'TITLE', field: 'title', sortable: true },
+      {
+        header: 'CATEGORY',
+        field: 'category',
+        subField: 'name',
+      },
       { header: 'TAGS', field: 'tags', template: this.tagsTemplate },
-      { header: 'STATUS', field: 'status', template: this.statusTemplate },
-      { header: 'CREATED_BY', field: 'created_by', subField: 'username' },
+      {
+        header: 'STATUS',
+        field: 'status',
+        template: this.statusTemplate,
+        sortable: true,
+      },
+      {
+        header: 'CREATED_BY',
+        field: 'created_by',
+        template: this.fullnameTemplate,
+      },
+      {
+        header: 'CREATED_ON',
+        field: 'created_on',
+        sortable: true,
+        template: this.createdOnTemplate,
+      },
     ];
   }
 

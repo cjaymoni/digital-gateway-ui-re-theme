@@ -77,7 +77,7 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   showPaginator = true;
 
   @Input()
-  refreshDataFunction: (() => void) | undefined;
+  refreshDataFunction: Function | undefined = undefined;
 
   @Input()
   showCaption = true;
@@ -150,6 +150,8 @@ export class AppTableComponent implements OnInit, AfterViewInit {
   }
 
   refreshData() {
-    // this.refreshDataFunction();
+    if (this.refreshDataFunction) {
+      this.refreshDataFunction();
+    }
   }
 }

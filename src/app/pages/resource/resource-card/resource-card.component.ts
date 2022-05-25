@@ -5,6 +5,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Upload } from 'src/app/models/uploads.model';
+import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 
 @Component({
   selector: 'app-resource-card',
@@ -16,12 +17,13 @@ export class ResourceCardComponent implements OnInit {
   @Input()
   resource!: Upload;
 
-  constructor() {}
+  constructor(private gtag: GoogleAnalyticsService) {}
 
   ngOnInit() {}
 
   downloadFile() {
     const file = this.resource?.resource;
+    this.gtag.Events.downloadResource(this.resource);
     window.open(file, '_blank');
   }
 }

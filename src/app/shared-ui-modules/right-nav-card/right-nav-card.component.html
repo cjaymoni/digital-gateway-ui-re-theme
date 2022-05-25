@@ -1,39 +1,35 @@
-<div class="flex h-full wrapper bg-white col-12 p-0 w-full p-0">
+<div class="flex h-full wrapper col-12 p-0 w-full p-0">
   <p-divider
     type="solid"
     layout="vertical"
     styleClass="hidden xl:flex p-0 mr-6 border-darkblue"
   ></p-divider>
 
-  <!-- <div class="flex flex-column"> -->
-  <!-- <div *ngIf="multimedia$ | async" class="flex flex-column mt-3 w-full"> -->
-  <!-- VIDEOS -->
-  <!-- {{ multimedia$ | async | json }} -->
-  <!-- <div class="p-tag p-tag-info max-w-max mb-3">
-      <i class="pi pi-star mr-2"></i>
-      VIDEOS
-    </div>
-    <div class="flex flex-column w-full">
-      <ng-container *ngFor="let video of multimedia$ | async">
-        <app-multimedia [multimedia]="video"></app-multimedia> -->
+  <div class="p-4 grid flex flex-column" *appShellRender>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+    <p-skeleton styleClass="mb-3 w-11" height="10rem"></p-skeleton>
+  </div>
 
   <div *ngIf="featuredArticles$ | async" class="flex flex-column">
-    <div class="p-tag p-tag-info w-full text-base mb-5">Featured Articles</div>
-
-    <div class="grid">
-      <ng-container *ngFor="let article of featuredArticles$ | async">
-        <div class="mb-6 col-6 md:col-4 lg:col-12 p-0">
-          <app-featured-article-card [featuredArticle]="article">
+    <div
+      class="text-center text-2xl text-darkblue w-full text-base mb-1 underline"
+    >
+      Featured Articles
+    </div>
+    <div class="grid gap-v-8">
+      <ng-container
+        *ngFor="
+          let fArticle of featuredArticles$ | async;
+          trackBy: trackAny('article.id')
+        "
+      >
+        <div class="mt-4 col-12 sm:col-6 xl:col-12 p-4 xl:p-1 h-15rem xl:13rem">
+          <app-featured-article-card [featuredArticle]="fArticle.article">
           </app-featured-article-card>
         </div>
       </ng-container>
     </div>
-    <!-- <button pButton class="p-button-danger w-full mb-3" icon="pi pi-youtube">
-      Goto YouTube
-    </button> -->
   </div>
-  <!-- </div> -->
-  <!-- </ng-container> -->
-  <!-- </div> -->
-  <!-- </div> -->
 </div>

@@ -15,7 +15,8 @@ import { NavigatorService } from 'src/app/services/navigator.service';
 })
 export class ForumCardComponent implements OnInit {
   @Input() forum: Forum | null = null;
-  @Input() count: any = 0;
+
+  @Input() icon = 'pi pi-comments';
 
   constructor(private navigator: NavigatorService) {}
 
@@ -28,3 +29,4 @@ export class ForumCardComponent implements OnInit {
   dislikeForum() {}
   likeForum() {}
 }
+

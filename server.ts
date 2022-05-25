@@ -30,6 +30,7 @@ export function app(): express.Express {
   global['MouseEvent'] = win.Event;
   global['Event']['prototype'] = win.Event.prototype;
   global['document'] = win.document;
+  (global as any)['gtag'] = () => {};
   applyDomino(global, join(distFolder, 'index.html'));
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
@@ -55,9 +56,14 @@ export function app(): express.Express {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
+    // (req as any).cookie = req.headers.cookie;
     res.render(indexHtml, {
       req,
-      providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
+      providers: [
+        { provide: APP_BASE_HREF, useValue: req.baseUrl },
+        { provide: 'REQUEST', useValue: req },
+        { provide: 'RESPONSE', useValue: res },
+      ],
     });
   });
 

@@ -32,8 +32,8 @@ export class SocialMediaFormComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
 
   default = [
-    { name: 'Default', value: 'true' },
-    { name: 'Not-Default', value: 'false' },
+    { name: 'Default', value: true },
+    { name: 'Not-Default', value: false },
   ];
 
   constructor(
@@ -99,7 +99,7 @@ export class SocialMediaFormComponent implements OnInit, OnDestroy {
           this.socialmediaForm.patchValue({
             ...socialmedia,
             is_default: {
-              name: socialmedia.is_default,
+              name: socialmedia.is_default === true? 'Default' : 'Not-Default',
               value: socialmedia.is_default,
             },
           });

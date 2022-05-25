@@ -31,12 +31,16 @@ export class SocialMediaSettingsComponent implements OnInit {
   ngOnInit() {
     this.columns = [
       {
-        header: 'SOCIAL MEDIA',
+        header: 'TWITTER URL',
         field: 'twitter'
       },
       {
-        header: 'URL',
-        field: 'twitter'
+        header: 'FACEBOOK URL',
+        field: 'facebook'
+      },
+      {
+        header: 'INSTAGRAM URL',
+        field: 'Instagram'
       },
       {
         header: 'DEFAULT',

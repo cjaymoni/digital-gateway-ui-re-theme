@@ -12,15 +12,15 @@ import { RouterOutlets } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { digitalLinkSelectors } from 'src/app/store/selectors/digital-link.selectors';
 import { DigitalLink } from 'src/app/models/digital-link.model';
+import { digitalLinkActions } from 'src/app/store/actions/digital-link.actions';
 
 @Component({
   selector: 'app-digital-link-list',
   templateUrl: './digital-link-list.component.html',
   styleUrls: ['./digital-link-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DigitalLinkListComponent implements OnInit, AfterViewInit {
-
   @ViewChild('featuredTemplate')
   featuredTemplate!: TemplateRef<any>;
 
@@ -35,6 +35,7 @@ export class DigitalLinkListComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
+    this.fetchData();
     this.columns = [
       {
         header: 'TITLE',
@@ -53,7 +54,7 @@ export class DigitalLinkListComponent implements OnInit, AfterViewInit {
     ];
   }
   ngOnInit() {
-    this.title.setTitle('Digital Links');
+    this.title.setTitle('Direct Links');
   }
 
   goToAddNewLink() {
@@ -63,7 +64,7 @@ export class DigitalLinkListComponent implements OnInit, AfterViewInit {
   editLink(digitallink: DigitalLink) {
     this.navigator.digitalLink.goToEditPage(
       digitallink.id,
-      'Edit Digital Link',
+      'Edit Direct Link',
       RouterOutlets.Modal
     );
   }
@@ -71,9 +72,12 @@ export class DigitalLinkListComponent implements OnInit, AfterViewInit {
   viewLink(digitallink: DigitalLink) {
     this.navigator.digitalLink.goToViewPage(
       digitallink.id,
-      'View Digital Link',
+      'View Direct Link',
       RouterOutlets.Modal
     );
   }
 
+  fetchData = () => {
+    this.store.dispatch(digitalLinkActions.fetch());
+  };
 }

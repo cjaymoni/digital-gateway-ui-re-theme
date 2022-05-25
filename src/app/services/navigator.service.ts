@@ -24,7 +24,7 @@ import { selectUrl } from '../store/selectors/router.selectors';
 })
 export class NavigatorService {
   constructor(
-    private router: Router,
+    public router: Router,
     private store: Store,
     private location: Location
   ) {
@@ -148,7 +148,7 @@ export class NavigatorService {
               },
             },
           ]);
-
+          this.modalRef?.close();
           this.modalRef?.destroy();
         })
       )
@@ -228,6 +228,16 @@ export class NavigatorService {
     this.modalTitle$
   );
   contentManagement = new ContentManagementRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
+  userManagement = new UserManagementRoutes(
+    this.router,
+    this.panelTitle$,
+    this.modalTitle$
+  );
+  partners = new PartnersRoutes(
     this.router,
     this.panelTitle$,
     this.modalTitle$
@@ -449,6 +459,20 @@ class MarketAdRoutes extends AppRoutesConfig {
       ...this.page.viewDetails.replace(':id', id).split('/'),
     ]);
   }
+
+  addFilters(filters: { [key: string]: string }) {
+    this.router.navigate([this.page.main], {
+      queryParams: { ...filters },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  clearFilters() {
+    this.router.navigate([this.page.main], {
+      queryParams: null,
+      queryParamsHandling: 'merge',
+    });
+  }
 }
 
 class ResourceRoutes extends AppRoutesConfig {
@@ -532,3 +556,36 @@ class ContentManagementRoutes extends AppRoutesConfig {
   }
 }
 
+class UserManagementRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.UserManagement, router, subject, modalsubject);
+  }
+
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.viewDetails.replace(':id', id).split('/'),
+    ]);
+  }
+}
+
+class PartnersRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.Partners, router, subject, modalsubject);
+  }
+
+  override goToViewDetailsPage(id: any) {
+    this.router.navigate([
+      this.page.main,
+      ...this.page.view.replace(':id', id).split('/'),
+    ]);
+  }
+}

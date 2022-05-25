@@ -1,27 +1,41 @@
 <div class="p-1 pt-0">
+  <div class="p-4 w-full border-round" *appShellRender>
+    <p-skeleton styleClass="mb-3 w-11" height="20rem"></p-skeleton>
+  </div>
+
   <p-carousel
-    #eventSlider
+    *appShellNoRender
+    #multimediaSlider
     [value]="(multimedia$ | async) || []"
-    [showNavigators]="false"
+    [showNavigators]="!(isHandheld$ | async)"
     [circular]="true"
     [showIndicators]="false"
     [contentClass]="'content'"
     [numVisible]="1"
     [numScroll]="1"
+    [autoplayInterval]="15000"
   >
     <ng-template pTemplate="item" let-video>
-      <div class="p-2 w-full border-round">
-        <app-multimedia [multimedia]="video"></app-multimedia>
+      <div class="p-0 w-full border-round">
+        <app-multimedia
+          (playerStatus)="videoStatusChange($event)"
+          [multimedia]="video"
+        ></app-multimedia>
       </div>
     </ng-template>
   </p-carousel>
 
   <div *ngIf="featuredCategories$ | async">
-    <div class="text-center text-2xl font-bold my-5 text-darkblue">
+    <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
       Featured Categories
-    </div>
+    </h3>
     <div class="grid">
-      <ng-container *ngFor="let featured of featuredCategories$ | async">
+      <ng-container
+        *ngFor="
+          let featured of featuredCategories$ | async;
+          trackBy: trackAny('category.id')
+        "
+      >
         <div class="col-12 md:col-4 p-3">
           <app-featured-categories-card
             [category]="featured.category"
@@ -31,95 +45,43 @@
     </div>
   </div>
 
-  <div *ngIf="featuredEvents$ | async">
-    <div class="text-center text-2xl font-bold my-5">Current Opportunities</div>
-    <p-carousel
-      #articleSlider
-      [value]="(featuredEvents$ | async) || []"
-      styleClass="custom-carousel"
-      [numVisible]="3"
-      [numScroll]="3"
-      [circular]="true"
-      [responsiveOptions]="responsiveOptions"
-      [showIndicators]="false"
-      [showNavigators]="false"
-    >
-      <ng-template pTemplate="item" let-opportunity>
-        <div class="col p-2">
-          <app-opportunitis-card
-            [opportunity]="opportunity.article"
-          ></app-opportunitis-card>
-        </div>
-      </ng-template>
-    </p-carousel>
+  <div class="p-4 w-full border-round" *appShellRender>
+    <p-skeleton styleClass="mb-3 w-11" height="20rem"></p-skeleton>
   </div>
 
-  <div class="text-center text-2xl font-bold my-5 text-darkblue">
+  <div *ngIf="featuredOpportunities$ | async">
+    <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
+      Current Opportunities
+    </h3>
+    <div class="grid">
+      <div
+        *ngFor="
+          let opportunity of featuredOpportunities$ | async;
+          trackBy: trackAny('article.id')
+        "
+        class="col-12 md:col-4 p-3"
+      >
+        <app-opportunitis-card
+          [opportunity]="opportunity.article"
+        ></app-opportunitis-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-4 w-full border-round" *appShellRender>
+    <p-skeleton styleClass="mb-3 w-11" height="20rem"></p-skeleton>
+  </div>
+
+  <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
     Direct Links
+  </h3>
+
+  <div class="grid">
+    <ng-container *ngFor="let directLink of directLinks$ | async | slice: 0:3">
+      <div class="col-12 md:col-4 p-3">
+        <app-direct-links-card [digiLink]="directLink"></app-direct-links-card>
+      </div>
+    </ng-container>
   </div>
-  <p-carousel
-    #articleSlider
-    [value]="digiLinks || []"
-    styleClass="custom-carousel"
-    [circular]="true"
-    [responsiveOptions]="responsiveOptions"
-    [showIndicators]="false"
-    [showNavigators]="false"
-  >
-    <ng-template pTemplate="item" let-digiLink>
-      <div class="col p-2">
-        <app-direct-links-card [digiLink]="digiLink"></app-direct-links-card>
-      </div>
-    </ng-template>
-  </p-carousel>
-  <!-- <div class="mb-6">
-    <div class="text-2xl font-bold my-3">Forum</div>
-    <div class="pb-2">
-      <div class="text-lg my-2">Most Topics</div>
-      <app-forum-card
-        [forum]="(forumMetrics$ | async)?.most_posts?.forum"
-        [count]="(forumMetrics$ | async)?.most_posts?.count"
-      ></app-forum-card>
-    </div>
-    <div>
-      <div class="text-lg my-2">Recently Added</div>
-      <app-forum-card
-        [forum]="(forumMetrics$ | async)?.most_recent_post?.forum"
-      ></app-forum-card>
-    </div>
-  </div> -->
-
-  <!-- <div class="text-2xl font-bold my-3">Multimedia</div>
-  <p-carousel
-    #multimediaSlider
-    [value]="(multimedia$ | async) || []"
-    styleClass="custom-carousel"
-    [numVisible]="4"
-    [numScroll]="4"
-    [circular]="true"
-    [responsiveOptions]="responsiveOptions"
-  >
-    <ng-template pTemplate="item" let-video>
-      <div class="p-2 h-15rem">
-        <app-multimedia [multimedia]="video"></app-multimedia>
-      </div>
-    </ng-template>
-  </p-carousel> -->
-
-  <!-- <div class="text-2xl font-bold my-3">Marketing Info</div>
-  <p-carousel
-    #marketSlider
-    [value]="(productAds$ | async) || []"
-    styleClass="custom-carousel py-2"
-    [numVisible]="3"
-    [numScroll]="1"
-    [responsiveOptions]="responsiveOptions"
-    [showIndicators]="false"
-  >
-    <ng-template pTemplate="item" let-productAd>
-      <div class="p-2">
-        <app-market-card [productAd]="productAd"></app-market-card>
-      </div>
-    </ng-template>
-  </p-carousel> -->
 </div>
+

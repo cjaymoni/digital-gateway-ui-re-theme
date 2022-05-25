@@ -1,5 +1,5 @@
 <ng-container>
-  <form [formGroup]="signupForm" class="my-8">
+  <form [formGroup]="signupForm" class="my-8" errorTailor>
     <div class="fluid formgrid grid">
       <div class="field col-12 md:col-6">
         <div class="p-inputgroup">
@@ -45,13 +45,20 @@
           <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
           <p-password
             type="password"
-            placeholder="Pasword"
+            placeholder="Password"
             formControlName="password"
-            inputStyleClass="w-12 "
+            inputStyleClass="w-12"
             styleClass="w-12"
-            autocomplete="on"
+            mediumRegex="^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})"
           ></p-password>
         </div>
+        <span class="control-error">
+          <span
+            *ngIf="password?.touched && password?.dirty && password?.errors?.['minlength']"
+          >
+            Required length is 6
+          </span>
+        </span>
       </div>
 
       <!-- password -->
@@ -60,24 +67,22 @@
           <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
           <p-password
             type="password"
-            placeholder=" Confirm Pasword"
-            formControlName="password"
+            placeholder=" Confirm Password"
             inputStyleClass="w-12 relative"
+            formControlName="cpassword"
             styleClass="w-12"
-            autocomplete="on"
+            [feedback]="false"
           ></p-password>
         </div>
+        <span class="control-error">
+          <span *ngIf="password?.errors?.['notmatch']">
+            Passwords don't match
+          </span>
+        </span>
       </div>
 
       <div
-        class="
-          field
-          col-12
-          ml-auto
-          flex
-          align-items-center
-          justify-content-between
-        "
+        class="field col-12 ml-auto flex align-items-center justify-content-between"
       >
         <button
           pButton
@@ -92,14 +97,7 @@
         <div>
           Already have an account?
           <span
-            class="
-              ml-1
-              cursor-pointer
-              text-lg
-              font-bold
-              text-blue-700
-              hover-underline
-            "
+            class="ml-1 cursor-pointer text-lg font-bold text-blue-700 hover-underline"
             (click)="goToLogin(); $event.stopPropagation()"
             >Login</span
           >
@@ -108,3 +106,4 @@
     </div>
   </form>
 </ng-container>
+

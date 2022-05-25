@@ -1,34 +1,45 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, UrlSegment } from '@angular/router';
-import { Pages, RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
+import { RouterModule, Routes } from '@angular/router';
+import { Pages, Roles, RouterOutlets } from 'src/app/config/app-config';
+import { RoleGuard } from 'src/app/services/role.guard';
 import { ForumPostDetailsComponent } from '../../shared-ui-modules/forum-post-details/forum-post-details.component';
 import { ForumPostFormComponent } from '../../shared-ui-modules/forum-post-form/forum-post-form.component';
+import { ForumPostsModerationComponent } from './forum-posts-moderation/forum-posts-moderation.component';
 import { ForumPostGuard } from './guard/forum-post.guard';
 import { MyForumPostsComponent } from './my-forum-posts/my-forum-posts.component';
-import { ForumPostsModerationComponent } from './forum-posts-moderation/forum-posts-moderation.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: Pages.ForumPost.myList,
+    redirectTo: `/${Pages.Forum.main}`,
+    pathMatch: 'full',
   },
   {
     path: Pages.ForumPost.moderation,
     component: ForumPostsModerationComponent,
-    canActivate: [ForumPostGuard],
-    data: { breadcrumb: 'Moderation' },
+    canActivate: [RoleGuard, ForumPostGuard],
+    data: { breadcrumb: 'Moderation', roles: [Roles.Admin, Roles.Editor] },
   },
   {
     path: Pages.ForumPost.myList,
     component: MyForumPostsComponent,
-    canActivate: [ForumPostGuard],
-    data: { breadcrumb: 'My Forum Posts' },
+    canActivate: [RoleGuard, ForumPostGuard],
+    data: { breadcrumb: 'My Forum Posts', roles: [Roles.Admin, Roles.Editor] },
   },
   {
     path: Pages.ForumPost.add,
     component: ForumPostFormComponent,
-    canActivate: [ForumPostGuard],
-    data: { breadcrumb: 'Add Forum Post' },
+    canActivate: [RoleGuard, ForumPostGuard],
+    data: {
+      breadcrumb: 'Add Forum Post',
+      roles: [
+        Roles.Admin,
+        Roles.Editor,
+        Roles.Contributor,
+        Roles.Reporter,
+        Roles.ServiceProvider,
+      ],
+    },
   },
   {
     path: Pages.ForumPost.view,
@@ -41,8 +52,8 @@ const routes: Routes = [
     path: Pages.ForumPost.edit,
     component: ForumPostFormComponent,
     outlet: RouterOutlets.Modal,
-    canActivate: [ForumPostGuard],
-    data: { breadcrumb: 'Edit Forum Post' },
+    canActivate: [RoleGuard, ForumPostGuard],
+    data: { breadcrumb: 'Edit Forum Post', roles: [Roles.Admin, Roles.Editor] },
   },
   {
     path: Pages.ForumPost.viewDetails,
@@ -57,3 +68,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ForumPostRoutesModule {}
+

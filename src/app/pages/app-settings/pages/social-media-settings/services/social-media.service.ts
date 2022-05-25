@@ -5,14 +5,19 @@ import { map } from 'rxjs';
 import { ResourceService } from 'src/app/services/resources.service';
 import { SocialMedia } from 'src/app/models/social-media.model';
 import { SocialMediaEndpoint } from 'src/app/config/routes';
+import { TransferStateService } from 'src/app/services/transfer-state.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocialMediaService extends ResourceService {
 
-  constructor(http: HttpClient, private store: Store) {
-    super(http, SocialMediaEndpoint);
+  constructor(
+    http: HttpClient,
+    private store: Store,
+    transferState: TransferStateService,
+  ) {
+    super(http, SocialMediaEndpoint, transferState);
   }
 
   // searchSocialMedia(searchParams: { [key: string]: any }) {

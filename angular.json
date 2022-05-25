@@ -149,9 +149,7 @@
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "routes": [
-              "/"
-            ]
+            "routes": ["/"]
           },
           "configurations": {
             "production": {
@@ -170,3 +168,4 @@
   },
   "defaultProject": "MSME-UI"
 }
+

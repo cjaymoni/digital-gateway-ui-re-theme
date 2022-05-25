@@ -1,41 +1,50 @@
 <div
-  class="
-    forum-post-card
-    shadow-5
-    p-component p-3
-    border-round
-    fadeindown
-    animation-duration-1000
-    hover:text-pink-700 hover:bg-gray-100
-    transition-all transition-duration-500 transition-ease-out
-  "
-  (click)="openForumPost()"
   *ngIf="forumPost"
+  class="mt-4 forum-post-card shadow-3 p-component lg:px-8 px-3 py-4 border-round fadeindown animation-duration-1000 hover:text-pink-700 hover:bg-gray-100 transition-all transition-duration-500 transition-ease-out"
+  (click)="openForumPost()"
 >
-  <div class="flex justify-content-between align-content-center">
-    <div class="flex">
+  <div class="flex flex-row">
+    <!--  -->
+    <div class="col-2 md:col-1">
       <p-avatar
-        [image]="forumPost.submitter.image"
-        styleClass="mr-2"
-        size="large"
+        [image]="forumPost.submitter.avatar"
+        styleClass="mr-2 "
         shape="circle"
+        size="large"
       ></p-avatar>
-      <div class="text-lg font-bold mt-1">
+    </div>
+    <!--  -->
+    <div class="col flex flex-column">
+      <div class="text-lg font-bold mr-8">
         {{ forumPost.title | uppercase }}
-        <div class="text-sm">
-          {{ forumPost.submitter.username }}
+        <div class="text-xs font-italic text-darkblue my-1">
+          {{ forumPost.submitter.first_name }}
+          {{ forumPost.submitter.last_name }}
+          <span class="ml-1">
+            | {{ forumPost.created_on | date: 'fullDate' }}
+          </span>
         </div>
       </div>
+      <div class="text-gray-500">
+        {{ forumPost.content || '' | appEllipsis: 150 }}
+      </div>
     </div>
+    <!--  -->
+    <div class="col-2 pt-2 flex justify-content-between">
+      <div class="flex flex-column md:flex-row justify-content-between">
+        <app-comments
+          [commentCount]="forumPost.comment_count || 0"
+        ></app-comments>
 
-    <div class="align-content-end">
-      <app-comments
-        [commentCount]="forumPost.comment_count || 0"
-      ></app-comments>
+        <app-votes
+          [clickable]="false"
+          [direction]="direction$ | async"
+          [likeCount]="forumPost.upvotes ?? 0"
+          [dislikeCount]="forumPost.downvotes ?? 0"
+        ></app-votes>
+      </div>
     </div>
-  </div>
-
-  <div>
-    {{ forumPost.content || '' | appEllipsis: 150 }}
+    <!--  -->
   </div>
 </div>
+

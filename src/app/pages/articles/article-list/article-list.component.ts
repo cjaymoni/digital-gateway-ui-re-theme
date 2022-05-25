@@ -46,10 +46,11 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     this.categoryListSubscription$ = this.store
       .select(selectRouteParams)
       .pipe(
-        debounceTime(100),
+        // debounceTime(100),
         map((params: any) => {
           const categorySlug = params.category;
           const tagSlug = params.tag;
+          this.store.dispatch(articleActions.startLoad());
 
           if (params.category) {
             this.store
@@ -96,3 +97,4 @@ export class ArticleListComponent implements OnInit, OnDestroy {
     this.categoryListSubscription$?.unsubscribe();
   }
 }
+

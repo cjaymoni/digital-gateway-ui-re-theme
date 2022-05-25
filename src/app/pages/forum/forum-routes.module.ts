@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Pages, RouterOutlets } from 'src/app/config/app-config';
+import { Pages, Roles, RouterOutlets } from 'src/app/config/app-config';
+import { RoleGuard } from 'src/app/services/role.guard';
 import { ForumDetailsComponent } from 'src/app/shared-ui-modules/forum-details/forum-details.component';
 import { ForumFormComponent } from 'src/app/shared-ui-modules/forum-form/forum-form.component';
 import { ForumPostDetailsComponent } from 'src/app/shared-ui-modules/forum-post-details/forum-post-details.component';
-import { ForumPostDetailsModule } from '../../shared-ui-modules/forum-post-details/forum-post-details.module';
 import { CommentsOfCommentsComponent } from './comments-of-comments/comments-of-comments.component';
 import { ForumListComponent } from './forum-list/forum-list.component';
 import { ForumGuard } from './guard/forum.guard';
@@ -15,6 +15,7 @@ const routes: Routes = [
     path: '',
     component: ForumListComponent,
     canActivate: [ForumGuard],
+    data: { reload: true },
   },
   {
     path: Pages.Forum.viewSubComments,
@@ -26,14 +27,17 @@ const routes: Routes = [
   {
     path: Pages.Forum.myList,
     component: MyForumsListComponent,
-    canActivate: [ForumGuard],
-    data: { breadcrumb: 'Forum Moderation' },
+    canActivate: [RoleGuard, ForumGuard],
+    data: {
+      breadcrumb: 'Forum Moderation',
+      roles: [Roles.Admin, Roles.Editor],
+    },
   },
   {
     path: Pages.Forum.add,
     component: ForumFormComponent,
-    canActivate: [ForumGuard],
-    data: { breadcrumb: 'Add Forum' },
+    canActivate: [RoleGuard, ForumGuard],
+    data: { breadcrumb: 'Add Forum', roles: [Roles.Admin, Roles.Editor] },
   },
   {
     path: Pages.Forum.viewPost,
@@ -47,12 +51,6 @@ const routes: Routes = [
     data: { fetch: true, breadcrumb: 'View Forum Details' },
     canActivate: [ForumGuard],
   },
-  {
-    path: Pages.Forum.viewPostDetails,
-    component: ForumPostDetailsModule,
-    data: { fetch: true, breadcrumb: 'View Forum Post Details' },
-    canActivate: [ForumGuard],
-  },
 ];
 
 @NgModule({
@@ -60,3 +58,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ForumRoutesModule {}
+

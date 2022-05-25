@@ -13,6 +13,7 @@ const routes: Routes = [
     path: '',
     component: ArticleListComponent,
     canActivate: [ArticleGuard],
+    data: { breadcrumb: null },
   },
   {
     path: Pages.Articles.view,
@@ -28,7 +29,7 @@ const routes: Routes = [
     canActivate: [RoleGuard, ArticleGuard],
     data: {
       breadcrumb: 'Edit',
-      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+      roles: [Roles.Admin, Roles.Editor],
     },
   },
 
@@ -51,7 +52,7 @@ const routes: Routes = [
     canActivate: [RoleGuard, ArticleGuard],
     data: {
       breadcrumb: 'List',
-      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+      roles: [Roles.Admin, Roles.Editor],
     },
   },
 
@@ -62,7 +63,7 @@ const routes: Routes = [
     canActivate: [RoleGuard, ArticleGuard],
     data: {
       breadcrumb: 'Add',
-      roles: [Roles.Admin, Roles.Editor, Roles.Contributor],
+      roles: [Roles.Admin, Roles.Editor, Roles.Reporter],
     },
   },
   {
@@ -78,3 +79,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ArticleRoutesModule {}
+
