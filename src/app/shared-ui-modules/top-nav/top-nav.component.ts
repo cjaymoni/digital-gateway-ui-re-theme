@@ -6,9 +6,8 @@ import {
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { MenuItem } from 'primeng/api';
-import { map } from 'rxjs';
-import { LoggedInMenu, SignUpMenu } from 'src/app/config/app-config';
+import { filter, map } from 'rxjs';
+import { SignUpMenu } from 'src/app/config/app-config';
 import { LOGIN_SERVICE } from 'src/app/config/injectables';
 import { IAuthService } from 'src/app/models/auth-service';
 import { DeviceService } from 'src/app/services/device.service';
@@ -30,6 +29,11 @@ export class TopNavComponent implements OnInit {
 
   isHandheld$ = this.device.isHandheld$;
 
+  menuChangesSubscription = this.isLoggedIn$.pipe(
+    filter(d => !!d),
+    map(loggedIn => {})
+  );
+
   searchInputControl = new FormControl('', [
     Validators.required,
     Validators.minLength(4),
@@ -40,7 +44,9 @@ export class TopNavComponent implements OnInit {
     private device: DeviceService,
     private navigator: NavigatorService,
     @Inject(LOGIN_SERVICE) public loginService: IAuthService
-  ) {}
+  ) {
+    // this.
+  }
 
   items$ = this.store.select(menuItemSelectors.menuItems);
 
@@ -67,3 +73,4 @@ export class TopNavComponent implements OnInit {
     }
   }
 }
+

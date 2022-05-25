@@ -60,7 +60,7 @@ const routes: Routes = [
     // canActivate: [RoleGuard],
   },
   {
-    path: Pages.SiteSettings,
+    path: Pages.SiteSettings.main,
     loadChildren: () =>
       import('./pages/app-settings/app-settings.module').then(
         m => m.AppSettingsModule

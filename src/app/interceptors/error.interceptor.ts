@@ -14,6 +14,7 @@ import {
   APP_USER_TOKEN,
   PrimeNgAlerts,
 } from 'src/app/config/app-config';
+import { environment } from 'src/environments/environment';
 import { LocalStorageService } from '../helpers/localstorage.service';
 import { NavigatorService } from '../services/navigator.service';
 import { AppAlertService } from '../shared-ui-modules/alerts/service/app-alert.service';
@@ -51,7 +52,10 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
             //  const messages = Object.keys(event.error.messages)
             this.alert.showToast(`${errorMessages}`, PrimeNgAlerts.ERROR);
           }
-        } else if (event.status === 401) {
+        } else if (
+          event.status === 401 &&
+          request.url.includes(environment.API_URL)
+        ) {
           if (this.cookieService.hasKey(APP_REFRESH_TOKEN)) {
           }
 

@@ -11,6 +11,7 @@ import { ProfileTypeEffects } from './effects/profile-type.effects';
 import { UserProfileEffects } from './effects/user-profile.effects';
 import { UsersListEffects } from './effects/users-list.effects';
 import { MultiMediaEffects } from './effects/multimedia.effects';
+import { SocialMediaEffects } from './effects/socialmedia.effects';
 import { DigitalLinkEffects } from './effects/digital-link.effects';
 import { PartnersEffects } from './effects/partners.effects';
 
@@ -28,6 +29,7 @@ export const appStoreEffects = [
   UserProfileEffects,
   UsersListEffects,
   MultiMediaEffects,
+  SocialMediaEffects,
   DigitalLinkEffects,
   PartnersEffects,
 ];

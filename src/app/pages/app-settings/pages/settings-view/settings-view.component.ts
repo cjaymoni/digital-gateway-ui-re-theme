@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { HighlightsSettingsComponent } from '../highlights-settings/highlights-settings.component';
 import { FeaturedArticlesSettingsComponent } from '../featured-articles-settings/featured-articles-settings.component';
+import { SocialMediaSettingsComponent } from '../social-media-settings/social-media-settings.component';
 
 @Component({
   selector: 'app-settings-view',
@@ -36,6 +37,10 @@ export class SettingsViewComponent implements OnInit {
       {
         header: 'Featured Articles',
         content: FeaturedArticlesSettingsComponent,
+      },
+      {
+        header: 'Social Media',
+        content: SocialMediaSettingsComponent,
       },
     ];
   }

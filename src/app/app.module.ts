@@ -56,6 +56,16 @@ import { appReducersMap } from './store/app.reducers';
     }),
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
+    // StoreDevtoolsModule.instrument({
+    //   maxAge: 25,
+    //   logOnly: false,
+    //   autoPause: true,
+    //   features: {
+    //     pause: false,
+    //     lock: true,
+    //     persist: true,
+    //   },
+    // }),
     GtagModule.forRoot({
       trackingId: environment.GTAG_ID,
       trackPageviews: false,

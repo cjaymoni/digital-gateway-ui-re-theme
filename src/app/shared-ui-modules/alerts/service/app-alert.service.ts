@@ -46,10 +46,7 @@ export class AppAlertService {
   };
 
   showToast(message: string, type = PrimeNgAlerts.INFO) {
-    if (type === PrimeNgAlerts.ERROR) {
-      this.messageService.clear();
-    }
-
+    this.messageService.clear();
     this.messageService.add(this.getMessageObject(message, type));
   }
 
@@ -97,3 +94,4 @@ export class AppAlertService {
     });
   }
 }
+
