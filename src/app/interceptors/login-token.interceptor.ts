@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { APP_TOKEN, LOGIN_PATH } from 'src/app/config/app-config';
 import { LocalStorageService } from '../helpers/localstorage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class LoginTokenInterceptor implements HttpInterceptor {
@@ -18,7 +19,11 @@ export class LoginTokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const idToken = this.localStorage.getItem(APP_TOKEN) || '';
-    if (!request.url.toLocaleLowerCase().includes(LOGIN_PATH) && idToken) {
+    if (
+      request.url.includes(environment.API_URL) &&
+      !request.url.toLocaleLowerCase().includes(LOGIN_PATH) &&
+      idToken
+    ) {
       const cloned = request.clone({
         headers: request.headers.set('Authorization', `Bearer ${idToken}`),
       });
@@ -29,3 +34,4 @@ export class LoginTokenInterceptor implements HttpInterceptor {
     }
   }
 }
+
