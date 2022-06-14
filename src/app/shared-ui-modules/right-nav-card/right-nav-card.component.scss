@@ -6,3 +6,11 @@
     }
   }
 }
+
+.wrapper {
+  @media screen and (min-width: 992px) {
+    top: 100px;
+    height: 85vh !important;
+  }
+}
+

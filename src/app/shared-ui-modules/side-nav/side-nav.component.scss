@@ -7,7 +7,7 @@
   .featured-category {
     &:hover {
       margin-left: 1.5rem;
-      color: #ffdaa9 !important;
+      color: var(--pink-200) !important;
 
       .arrow {
         margin-right: 1.5rem !important;
@@ -27,16 +27,27 @@
 }
 
 :host ::ng-deep {
+  .subcategory-side-panel {
+    .p-sidebar-content {
+      padding-right: 0px !important;
+      height: 100vh !important;
+      @media screen and (min-width: 992px) {
+        height: 95vh !important;
+      }
+    }
+  }
   .sidemenu {
-    z-index: 1000 !important;
-    background-color: rgba($color: white, $alpha: 0.95) !important;
+    background-color: #daedf6 !important;
+    @media screen and (max-width: 992px) and (min-width: 100px) {
+      transition: all;
+    }
   }
 
   app-login-button {
     .login-button,
     .user-icon {
-      color: var(--lime-500) !important;
-      border-color: var(--lime-500) !important;
+      color: white !important;
+      border-color: white !important;
     }
 
     .loginMenu {
@@ -45,3 +56,23 @@
     }
   }
 }
+
+hr {
+  width: 10rem;
+}
+
+li {
+  list-style: none;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.active {
+  color: var(--pink-500) !important;
+  background-color: rgba($color: black, $alpha: 0.05) !important;
+}
+

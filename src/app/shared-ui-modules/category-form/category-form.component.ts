@@ -112,6 +112,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
         slug: slugify(category.name),
         created_by: 1,
         is_active: true,
+        position: category.position,
       };
 
       const images: any =
@@ -164,3 +165,4 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 }
+

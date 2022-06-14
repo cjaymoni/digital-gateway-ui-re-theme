@@ -137,3 +137,13 @@ body {
   line-height: 24px !important;
 }
 
+.vh100 {
+  height: calc(100vh - 30px) !important;
+}
+.p-sidebar-mask {
+  backdrop-filter: blur(1px);
+  @media screen and (min-width: 992px) {
+    z-index: 2 !important;
+  }
+}
+

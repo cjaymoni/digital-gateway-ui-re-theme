@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, catchError, map, take } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { trackById } from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
-import { Tag } from 'src/app/models/tag.model';
+import { Category } from 'src/app/models/category.model';
 import { ArticleService } from 'src/app/pages/articles/services/articles.service';
 import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { tagSelectors } from 'src/app/store/selectors/tag.selectors';
+import { categorySelectors } from 'src/app/store/selectors/category.selectors';
 
 @Component({
   selector: 'app-side-nav',
@@ -24,18 +24,34 @@ export class SideNavComponent implements OnInit {
   ) {}
 
   showAll = false;
+
+  // used to determine if we should close sidemenu or not
+  // when we click outside of the sidemenu
   currentIndex = -1;
-  currentTag!: Tag;
+  currentSubcategoryIndex = -1;
+
+  currentCategory!: Category | undefined | null;
+  currentSubcategory!: Category | undefined | null;
+
+  articlesLoading$ = new BehaviorSubject(false);
 
   trackById = trackById;
 
   // featuredCategory$ = this.themeSetting.featuredCategoryArray$;
-  featuredTags$ = this.store.select(tagSelectors.featuredArticleTags);
+  // featuredTags$ = this.store.select(tagSelectors.featuredArticleTags);
+  categories$ = this.store.select(categorySelectors.all);
 
   loading$ = new BehaviorSubject(false);
   articles$: BehaviorSubject<Article[]> = new BehaviorSubject([] as Article[]);
+  subCategories$: BehaviorSubject<Category[]> = new BehaviorSubject(
+    [] as Category[]
+  );
 
-  display = false;
+  displaySubCategories = false;
+  displayArticles = false;
+
+  selectedCategory!: Category | null | undefined;
+  selectedSubCategory!: Category | null | undefined;
 
   ngOnInit(): void {}
 
@@ -43,48 +59,107 @@ export class SideNavComponent implements OnInit {
     this.showAll = !this.showAll;
   }
 
-  getRelatedArtciles(tag: Tag, index: number) {
-    this.display = !this.display;
+  getRelatedArticles(category: Category, index: number) {
+    this.selectedCategory = category;
+    this.displaySubCategories = !this.displaySubCategories;
 
     if (this.currentIndex !== index) {
-      this.display = true;
+      this.displaySubCategories = true;
     }
 
-    if (this.display) {
+    if (this.displaySubCategories) {
       this.currentIndex = index;
-      this.currentTag = tag;
-      this.gtag.Events.openedTagArticles(tag);
+      this.currentCategory = category;
     }
 
     this.loading$.next(true);
-    this.articleService
-      .searchArticle({
-        tag: tag.id,
-      })
-      .pipe(
-        take(1),
-        map(articles => {
-          this.loading$.next(false);
-          this.articles$.next(articles);
-        }),
-        catchError(e => {
-          this.loading$.next(false);
-          return e;
-        })
-      )
-      .subscribe();
+    // this.articleService
+    //   .searchArticle({
+    //     tag: tag.id,
+    //   })
+    //   .pipe(
+    //     take(1),
+    //     map(articles => {
+    //       this.loading$.next(false);
+    //       this.articles$.next(articles);
+    //     }),
+    //     catchError(e => {
+    //       this.loading$.next(false);
+    //       return e;
+    //     })
+    //   )
+    //   .subscribe();
   }
 
   readArticle(article: Article) {
-    this.display = false;
+    this.closeAll();
+
     this.navigator.article.goToViewDetailsPage(article.slug);
-    this.gtag.Events.readTagArticle(this.currentTag, article);
+  }
+
+  getArticles(category: Category, index: number) {
+    this.selectedSubCategory = category;
+    this.displayArticles = !this.displayArticles;
+
+    if (this.currentSubcategoryIndex !== index) {
+      this.displayArticles = true;
+    }
+
+    if (this.displayArticles) {
+      this.currentSubcategoryIndex = index;
+      this.currentSubcategory = category;
+    }
+    if (category && category.id) {
+      this.articlesLoading$.next(true);
+
+      this.articleService
+        .searchArticleByCategory(category.id)
+        .pipe(take(1))
+        .subscribe(articles => {
+          this.articlesLoading$.next(false);
+          console.log(articles);
+          this.articles$.next(articles);
+        });
+    }
+  }
+
+  getSubCategories(category: Category | undefined, index: number) {
+    this.selectedCategory = category;
+    this.displaySubCategories = !this.displaySubCategories;
+
+    if (this.currentIndex !== index) {
+      this.displaySubCategories = true;
+    }
+
+    if (this.displaySubCategories) {
+      this.currentIndex = index;
+      this.currentCategory = category;
+    }
+
+    this.loading$.next(true);
+    if (category && category.id) {
+      this.store
+        .select(categorySelectors.getById(category.id))
+        .pipe(take(1))
+        .subscribe(categories => {
+          this.subCategories$.next(categories?.subcategories);
+          this.loading$.next(false);
+        });
+    }
   }
 
   clickOutsidePanel(event: Event) {
     event.stopPropagation();
-    if (this.display) {
-      this.display = false;
+    if (this.displaySubCategories) {
+      this.displaySubCategories = false;
     }
   }
+
+  closeAll() {
+    this.selectedCategory = null;
+    this.selectedSubCategory = null;
+    this.displayArticles = false;
+    this.displaySubCategories = false;
+  }
 }
+

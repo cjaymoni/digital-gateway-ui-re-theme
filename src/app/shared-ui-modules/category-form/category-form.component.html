@@ -11,6 +11,21 @@
     </div>
 
     <div class="field col-12">
+      <label for="position">Position</label>
+      <p-sele
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="position"
+      >
+        <option value="top">Top</option>
+        <option value="left">Left</option>
+        <option value="bottom">Bottom</option>
+        <option value="right">Right</option>
+      </p-sele>
+    </div>
+
+    <div class="field col-12">
       <div>
         <label for="description">Description</label>
       </div>
@@ -84,3 +99,4 @@
     ></button>
   </div>
 </ng-container>
+

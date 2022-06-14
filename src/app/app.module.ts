@@ -9,6 +9,7 @@ import { ErrorTailorModule } from '@ngneat/error-tailor';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { GtagModule } from 'angular-gtag';
 import { CookieModule } from 'ngx-cookie';
 import { environment } from 'src/environments/environment';
@@ -56,16 +57,16 @@ import { appReducersMap } from './store/app.reducers';
     }),
     StoreModule.forRoot(appReducersMap),
     StoreRouterConnectingModule.forRoot(),
-    // StoreDevtoolsModule.instrument({
-    //   maxAge: 25,
-    //   logOnly: false,
-    //   autoPause: true,
-    //   features: {
-    //     pause: false,
-    //     lock: true,
-    //     persist: true,
-    //   },
-    // }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: false,
+      autoPause: true,
+      features: {
+        pause: false,
+        lock: true,
+        persist: true,
+      },
+    }),
     GtagModule.forRoot({
       trackingId: environment.GTAG_ID,
       trackPageviews: false,

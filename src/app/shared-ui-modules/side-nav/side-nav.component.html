@@ -1,8 +1,8 @@
-<ng-container *ngIf="featuredTags$ | async">
+<ng-container *ngIf="categories$ | async">
   <div
     class="wrapper w-full lg:sticky align-self-center flex flex-column justify-content-between overflow-x-hidden relative h-auto mb-5"
-    (clickOutside)="clickOutsidePanel($event)"
   >
+    <!-- (clickOutside)="clickOutsidePanel($event)" -->
     <!-- <p-divider align="center" styleClass="p-divider-no-background">
       <span class="p-tag p-tag-info">
         <i class="pi pi-star mr-2"></i>
@@ -11,31 +11,20 @@
     <!-- <div class="p-tag p-tag-info w-max">FEATURED CATEGORIES</div> -->
     <div class="mb-5">
       <ng-container
-        *ngFor="let featured of featuredTags$ | async; let index = index"
+        *ngFor="let category of categories$ | async; let index = index"
       >
         <div
-          *ngIf="
-            index < (this.showAll ? (featuredTags$ | async)?.length || 100 : 8)
-          "
+          [ngClass]="{ active: selectedCategory?.name === category.name }"
           class="mt-4 border-none w-full h-auto py-2 px-3 text-white cursor-pointer featured-category transition-duration-200 transition-all transition-ease-in-out"
-          (click)="getRelatedArtciles(featured, index)"
+          (click)="getSubCategories(category, index)"
         >
           <!-- [routerLink]="['articles', 'tag', featured?.slug]" -->
           <div class="flex justify-content-between">
-            <div>{{ featured?.name }}</div>
+            <div>{{ category?.name }}</div>
             <div class="arrow">></div>
           </div>
         </div>
       </ng-container>
-      <button
-        *ngIf="(featuredTags$ | async)?.length! > 8 ?? false"
-        pButton
-        class="cursor-pointer mt-4 w-max p-3 ml-3 p-button-secondary mb-2"
-        (click)="viewMore()"
-        [icon]="showAll ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"
-      >
-        View {{ showAll ? 'less ' : 'more ' }} &nbsp;&nbsp;
-      </button>
     </div>
 
     <div
@@ -52,49 +41,112 @@
   </div>
 </ng-container>
 
+<!-- sub categories side panel -->
 <p-sidebar
-  [(visible)]="display"
+  #subcategories
+  [(visible)]="displaySubCategories"
   position="left"
-  [modal]="false"
-  styleClass="sidemenu lg:col-offset-3 xl:col-offset-2 z-5 w-12 lg:w-3"
+  [modal]="true"
+  styleClass="sidemenu lg:col-offset-3 xl:col-offset-2 w-12 lg:w-4 h-full p-0 pl-1 vh100 subcategory-side-panel"
   [style]=""
-  [baseZIndex]="10"
+  [baseZIndex]="1000"
   [blockScroll]="true"
 >
-  <div class="mt-0 lg:mt-3 h-full">
+  <div class="mt-0 lg:mt-3 pl-1">
     <button
       pButton
       icon="pi pi-times"
       class="hidden md:flex p-button-secondary p-button-text p-button-outlined align-content-center justify-content-center mb-3"
-      (click)="this.display = false"
+      (click)="closeAll()"
     ></button>
+    <h3 class="text-pink-500">{{ selectedCategory?.name }}</h3>
 
     <i
-      class="pi pi-spin pi-spinner"
+      class="pi pi-spin pi-spinner mx-auto"
       *ngIf="loading$ | async; else show"
       style="font-size: 4rem"
     ></i>
     <ng-template #show>
-      <ul>
-        <ng-container *ngIf="(articles$ | async)?.length == 0">
-          <p class="fadein text-lg hover:text-blue-900">
-            Sorry, no related resources
-          </p>
+      <hr />
+      <br />
+      <div>
+        <ng-container *ngIf="(subCategories$ | async)?.length == 0">
+          <p class="fadein text-blue-900">Sorry, no related resources</p>
         </ng-container>
 
         <ng-container
-          *ngFor="let article of articles$ | async; trackBy: trackById"
+          *ngFor="
+            let category of subCategories$ | async;
+            let index = index;
+            trackBy: trackById
+          "
         >
-          <li>
-            <p
-              (click)="readArticle(article)"
-              class="cursor-pointer hover-underline fadein text-lg hover:text-blue-900"
-            >
-              {{ article.title }}
-            </p>
-          </li>
+          <div
+            [pTooltip]="category.name"
+            class="flex w-12 justify-content-between align-content-center cursor-pointer scalein text-lg p-1 py-3"
+            tooltipPosition="right"
+            [ngClass]="{
+              'bg-white': selectedSubCategory?.name === category.name
+            }"
+            (click)="getArticles(category, index)"
+          >
+            <div class="w-10 white-space-nowrap ellipsis">
+              {{ category.name }}
+            </div>
+            <div class="arrow pr-2">></div>
+          </div>
         </ng-container>
-      </ul>
+      </div>
     </ng-template>
   </div>
 </p-sidebar>
+
+<!-- articles panel -->
+<p-sidebar
+  #articles
+  [(visible)]="displayArticles"
+  position="left"
+  [modal]="true"
+  styleClass="lg:col-offset-7 xl:col-offset-6 w-12 lg:w-4 h-full vh100"
+  [baseZIndex]="1001"
+  [blockScroll]="true"
+>
+  <div class="mt-0 lg:mt-3 px-1">
+    <button
+      pButton
+      icon="pi pi-times"
+      class="hidden md:flex p-button-secondary p-button-text p-button-outlined align-content-center justify-content-center mb-3"
+      (click)="this.displayArticles = false; selectedSubCategory = null"
+    ></button>
+    <h3 class="text-blue-900">{{ selectedSubCategory?.name }}</h3>
+    <hr />
+    <i
+      class="pi pi-spin pi-spinner ml-4"
+      *ngIf="articlesLoading$ | async; else showArticles"
+      style="font-size: 4rem"
+    ></i>
+    <ng-template #showArticles>
+      <br />
+      <div>
+        <ng-container *ngIf="(articles$ | async)?.length == 0">
+          <p class="fadein text-blue-900">Sorry, no related resources</p>
+        </ng-container>
+        <ng-container
+          *ngFor="let article of articles$ | async; trackBy: trackById"
+        >
+          <div
+            class="flex justify-content-between align-content-center cursor-pointer scalein text-lg p-1 mb-3"
+            [pTooltip]="article.title"
+            tooltipPosition="right"
+            (click)="readArticle(article)"
+          >
+            <div class="white-space-nowrap ellipsis">
+              {{ article.title }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-template>
+  </div>
+</p-sidebar>
+
