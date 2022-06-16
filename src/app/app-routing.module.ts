@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Pages, RouterOutlets } from './config/app-config';
+import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
 import { SignupFormComponent } from './pages/signup/signup-form/signup-form.component';
-import { RoleGuard } from './services/role.guard';
 
 const routes: Routes = [
   {
@@ -133,19 +133,21 @@ const routes: Routes = [
     component: SearchResultsComponent,
   },
   {
-    path: '**',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
     path: Pages.Partners.main,
     loadChildren: () =>
-      import('./pages/partners/partners.module').then(
-        m => m.PartnersModule
-      ),
+      import('./pages/partners/partners.module').then(m => m.PartnersModule),
     data: {
       breadcrumb: 'Partners',
     },
+  },
+  {
+    path: 'verify-email/:token',
+    component: ConfirmEmailComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
 ];
 
@@ -159,3 +161,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
+

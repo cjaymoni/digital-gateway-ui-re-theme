@@ -7,7 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
 
-import { catchError, EMPTY, Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import {
   APP_REFRESH_TOKEN,
   APP_TOKEN,
@@ -87,7 +87,7 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
         //   );
         // }
 
-        return EMPTY;
+        return throwError(event);
       })
     );
   }
