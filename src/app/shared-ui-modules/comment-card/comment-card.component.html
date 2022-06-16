@@ -1,15 +1,18 @@
 <div
-  class="box w-full shadow-1 md:shadow-2 p-2 lg:px-8 flex flex-column fadein md:fadeinright border-round animation-duration-500"
+  class="box w-full shadow-1 md:shadow-2 p-2 lg:px-4 flex flex-column fadein md:fadeinright border-round animation-duration-500"
+  [ngClass]="{ 'lg:px-8': !sidePanel }"
 >
-  <div class="flex">
-    <div class="flex flex-column md:flex-row">
+  <div class="flex flex-column md:flex-row">
+    <div class="hidden md:flex flex-column md:flex-row">
       <div class="flex mr-2">
         <p-avatar shape="circle" [image]="comment.author.avatar"></p-avatar>
       </div>
       <div class="flex text-xs flex-column text-gray-500">
         <div class="font-bold text-sm">
           {{ comment.author.first_name }} {{ comment.author.last_name }}
+          <img src="assets/svgs/check.svg" alt="check" class="w-1rem h-1rem" />
         </div>
+
         <div class="font-italic">
           {{ comment.created_on | date: 'mediumDate' }}
         </div>
@@ -18,7 +21,13 @@
         </div>
       </div>
     </div>
-    <p-divider styleClass="mx-2 md:mx-3 h-1rem" layout="vertical"></p-divider>
+    <div class="md:hidden">
+      <ng-container [ngTemplateOutlet]="smallScreen"></ng-container>
+    </div>
+    <p-divider
+      styleClass="hidden md:block mx-2 md:mx-3 h-1rem"
+      layout="vertical"
+    ></p-divider>
     <div class="overflow-hidden text-overflow-ellipsis">
       {{ comment.text }}
     </div>
@@ -69,4 +78,21 @@
     ></app-comment-form>
   </div>
 </div>
+
+<ng-template #smallScreen>
+  <div class="flex mb-1">
+    <div class="flex mr-2">
+      <p-avatar shape="circle" [image]="comment.author.avatar"></p-avatar>
+    </div>
+    <div class="flex text-xs flex-column text-gray-500">
+      <div class="font-bold text-sm">
+        {{ comment.author.first_name }} {{ comment.author.last_name }}
+      </div>
+      <div class="font-italic">
+        {{ comment.created_on | date: 'mediumDate' }}
+        {{ comment.created_on | date: 'mediumTime' }}
+      </div>
+    </div>
+  </div>
+</ng-template>
 

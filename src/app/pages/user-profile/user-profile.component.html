@@ -34,9 +34,39 @@
   <div class="text-center">
     {{ (selectedUser$ | async)?.first_name }}
     {{ (selectedUser$ | async)?.last_name }}
+    <img src="assets/svgs/check.svg" alt="check" class="w-1rem h-1rem" />
   </div>
   <div class="text-center mt-3">{{ (selectedUser$ | async)?.email }}</div>
 </div>
+
+<div class="mt-3 flex flex-column justify-content-center align-items-center">
+  <div>
+    <button
+      pButton
+      icon="pi pi-refresh"
+      class="p-button-warning mr-2"
+      label=" Request OTP"
+      (click)="requestPasswordReset()"
+      type="button"
+      [disabled]="otpRequested"
+    ></button>
+    <button
+      pButton
+      icon="pi pi-refresh"
+      class="p-button-warning"
+      label=" Change password"
+      (click)="navigateToResetPage()"
+      type="button"
+      [disabled]="!otpRequested"
+    ></button>
+  </div>
+
+  <p class="text-sm font-bold text-pink-500">
+    To change your password, request an OTP(One Time Password) first. The OTP
+    will be sent to your email and will be required when changing your password
+  </p>
+</div>
+
 <p-divider></p-divider>
 
 <div>

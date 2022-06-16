@@ -20,6 +20,7 @@
         <div class="text-xs font-italic text-darkblue my-1">
           {{ forumPost.submitter.first_name }}
           {{ forumPost.submitter.last_name }}
+          <img src="assets/svgs/check.svg" alt="check" class="w-1rem h-1rem" />
           <span class="ml-1">
             | {{ forumPost.created_on | date: 'fullDate' }}
           </span>
@@ -32,16 +33,20 @@
     <!--  -->
     <div class="col-2 pt-2 flex justify-content-between">
       <div class="flex flex-column md:flex-row justify-content-between">
-        <app-comments
-          [commentCount]="forumPost.comment_count || 0"
-        ></app-comments>
-
-        <app-votes
-          [clickable]="false"
-          [direction]="direction$ | async"
-          [likeCount]="forumPost.upvotes ?? 0"
-          [dislikeCount]="forumPost.downvotes ?? 0"
-        ></app-votes>
+        <div>
+          <app-comments
+            [commentCount]="forumPost.comment_count || 0"
+          ></app-comments>
+        </div>
+        <div>
+          <app-votes
+            [clickable]="false"
+            [direction]="direction$ | async"
+            [likeCount]="forumPost.upvotes ?? 0"
+            [dislikeCount]="forumPost.downvotes ?? 0"
+            [panelStyle]="{ 'max-width': '100px' }"
+          ></app-votes>
+        </div>
       </div>
     </div>
     <!--  -->

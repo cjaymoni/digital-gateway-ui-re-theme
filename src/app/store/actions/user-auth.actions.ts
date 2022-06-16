@@ -27,6 +27,13 @@ class UserAuth {
 
   logoutSuccessful = createAction(`${this.type} Logout Successful`);
 
+  requestPasswordReset = createAction(
+    `${this.type} Password Reset Request`,
+    props<{
+      email?: string;
+    }>()
+  );
+
   updateUser = createAction(`${this.type} Update User`);
 
   userUpdated = createAction(

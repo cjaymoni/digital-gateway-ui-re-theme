@@ -13,38 +13,30 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie';
-import {
-  combineLatest,
-  filter,
-  map,
-  Subscription,
-  take,
-  tap,
-  withLatestFrom,
-} from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { APP_USER_TOKEN } from 'src/app/config/app-config';
 import { UserProfile } from 'src/app/models/user-auth.model';
+import { NavigatorService } from 'src/app/services/navigator.service';
+import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import {
   ImageUploadComponent,
   ImageUploadMode,
 } from 'src/app/shared-ui-modules/image-upload/image-upload.component';
 import { userAuthActions } from 'src/app/store/actions/user-auth.actions';
 import { userProfileActions } from 'src/app/store/actions/user-profile.actions';
-import {
-  userAuth,
-  userAuthSelectors,
-} from 'src/app/store/selectors/user-auth.selectors';
-import { userProfileSelectors } from 'src/app/store/selectors/user-profile.selectors';
+import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
+import { LoginService } from '../login/services/login.service';
 import { UserManagementService } from '../users-management/services/users-management.service';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   selectedUser$ = this.store.select(userAuthSelectors.loggedInUser);
+
+  otpRequested = false;
 
   @ViewChild('imageUpload')
   imageUploadComponent: ImageUploadComponent | null = null;
@@ -63,7 +55,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private store: Store,
     private cookieService: CookieService,
-    private userService: UserManagementService
+    private userService: UserManagementService,
+    private navigator: NavigatorService,
+    private loginService: LoginService,
+    private appAlertService: AppAlertService
   ) {}
 
   ngOnDestroy(): void {
@@ -163,6 +158,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   onUploadCancel() {
     this.imageUploadComponent?.clear();
+  }
+
+  requestPasswordReset() {
+    this.loginService.requestPasswordReset(this.user.email).subscribe(() => {
+      this.appAlertService.showToast('OTP sent to your email.');
+      this.otpRequested = true;
+    });
+  }
+
+  navigateToResetPage() {
+    this.navigator.auth.goToResetPage();
   }
 }
 

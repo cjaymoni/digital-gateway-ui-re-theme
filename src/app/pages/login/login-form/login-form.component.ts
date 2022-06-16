@@ -15,21 +15,23 @@ import { Pages, PrimeNgAlerts } from 'src/app/config/app-config';
 import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { Store } from '@ngrx/store';
 import { selectQueryParam } from 'src/app/store/selectors/router.selectors';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent implements OnInit {
   loginForm!: FormGroup;
+
+  forgotPasswordMode = false;
 
   constructor(
     private fb: FormBuilder,
     private navigator: NavigatorService,
     private alert: AppAlertService,
-    @Inject(LOGIN_SERVICE) public loginService: IAuthService,
+    public loginService: LoginService,
     private gtag: GoogleAnalyticsService,
     private store: Store
   ) {}
@@ -49,14 +51,33 @@ export class LoginFormComponent implements OnInit {
         ],
       ],
     });
-    this.navigator.setPanelTitle('WELCOME BACK. PLEASE LOGIN');
+    // this.navigator.setPanelTitle('WELCOME BACK. PLEASE LOGIN');
+  }
+
+  get email() {
+    return this.loginForm.get('email');
   }
 
   onLoginSubmit() {
+    if (this.forgotPasswordMode) {
+      return this.requestOTPAndChangePassword();
+    }
+
     if (this.loginForm.valid) {
       this.loginService
         .login(this.loginForm.value)
-        .pipe(catchError(err => of(false)))
+        .pipe(
+          catchError(err => {
+            // this.alert.showToast(err.message);
+            if (err.status === 403) {
+              console.log('403');
+
+              // email not verified
+              this.loginForm.setErrors({ emailNotVerified: true });
+            }
+            return of(null);
+          })
+        )
         .subscribe(success => {
           if (success) {
             this.alert.showToast(
@@ -80,9 +101,8 @@ export class LoginFormComponent implements OnInit {
                   this.navigator.router.navigateByUrl(returnUrl);
                 }
               });
-          } else {
+          } else if (success === false) {
             this.loginForm.setErrors({ invalid: true });
-            this.alert.showToast('Invalid login', PrimeNgAlerts.ERROR);
           }
         });
     }
@@ -91,4 +111,38 @@ export class LoginFormComponent implements OnInit {
   goToSignup() {
     this.navigator.auth.goToSignUp();
   }
+
+  toggleForgotPasswordMode() {
+    this.forgotPasswordMode = !this.forgotPasswordMode;
+  }
+
+  resendVerification() {
+    if (this.email?.valid)
+      this.loginService
+        .requestEmailVerification(this.email.value)
+        .subscribe(success => {
+          if (success) {
+            this.alert.showToast(
+              'Verification email sent. Please check your email.',
+              PrimeNgAlerts.UNOBSTRUSIVE
+            );
+          }
+          this.loginForm.setErrors(null);
+        });
+  }
+
+  requestOTPAndChangePassword() {
+    this.loginService
+      .requestPasswordReset(this.email?.value)
+      .subscribe(success => {
+        if (success) {
+          this.alert.showToast(
+            'OTP sent. Please check your email.',
+            PrimeNgAlerts.UNOBSTRUSIVE
+          );
+        }
+        this.navigator.auth.goToResetPage();
+      });
+  }
 }
+

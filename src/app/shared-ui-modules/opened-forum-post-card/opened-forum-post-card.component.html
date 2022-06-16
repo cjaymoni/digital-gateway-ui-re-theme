@@ -19,7 +19,13 @@
             {{ (forumPost$ | async)?.title | uppercase }}
             <div class="text-sm font-italic text-blue-800">
               {{ (forumPost$ | async)?.submitter.first_name }}
-              {{ (forumPost$ | async)?.submitter.last_name }} |
+              {{ (forumPost$ | async)?.submitter.last_name }}
+              <img
+                src="assets/svgs/check.svg"
+                alt="check"
+                class="w-1rem h-1rem"
+              />
+              |
               {{ (forumPost$ | async)?.created_on | date: 'longDate' }}
             </div>
           </div>
@@ -98,21 +104,24 @@
         ></app-comment-form>
       </div>
     </div>
-    <ng-container *ngIf="(forumComments$ | async)?.length">
-      <div class="text-3xl font-medium text-900 mb-3 text-darkblue uppercase">
-        COMMENTS
-      </div>
-      <div
-        class="mt-4"
-        *ngFor="let comment of forumComments$ | async; trackBy: trackById"
-      >
-        <app-comment-card
-          [comment]="comment"
-          [loadSubCommentsOnClick]="true"
-        ></app-comment-card>
-        <ng-container></ng-container>
-      </div>
-    </ng-container>
+
+    <div
+      *ngIf="(forumComments$ | async)?.length"
+      class="text-center text-darkblue text-2xl my-3 p-component border-none mb-1"
+    >
+      <i class="pi pi-comments text-xl mr-3"></i>
+      COMMENTS
+    </div>
+    <div
+      class="mt-4"
+      *ngFor="let comment of forumComments$ | async; trackBy: trackById"
+    >
+      <app-comment-card
+        [comment]="comment"
+        [loadSubCommentsOnClick]="true"
+      ></app-comment-card>
+      <ng-container></ng-container>
+    </div>
   </div>
 </ng-container>
 

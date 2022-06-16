@@ -69,7 +69,12 @@ export class NavigatorService {
     map(url => {
       let context = url.split('/')[1];
 
-      if (url.includes('sign') || url.includes('login')) context = '';
+      if (
+        url.includes('sign') ||
+        url.includes('login') ||
+        url.includes('change-password')
+      )
+        context = '';
 
       return context;
     })
@@ -407,7 +412,7 @@ class AuthRoutes extends AppRoutesConfig {
 
   goToSignUp() {
     this.openPanel(Pages['Auth'].signup, 'Signup to create an account');
-    this.panelTitleSubject$.next('Please create an account');
+    this.panelTitleSubject$.next('');
     this.router.navigate([
       '', //main
       {
@@ -420,7 +425,7 @@ class AuthRoutes extends AppRoutesConfig {
 
   goToLogin(
     route = RouterOutlets.Right,
-    title = 'Welcome back. Please Login',
+    title = '',
     returnUrl = ''
   ) {
     route === RouterOutlets.Right
@@ -441,6 +446,18 @@ class AuthRoutes extends AppRoutesConfig {
         },
       }
     );
+  }
+
+  goToResetPage() {
+    this.panelTitleSubject$.next('Change Your Password');
+    this.router.navigate([
+      '', //main
+      {
+        outlets: {
+          [RouterOutlets.Right]: Pages.Auth.changePassword,
+        },
+      },
+    ]);
   }
 }
 
@@ -589,3 +606,4 @@ class PartnersRoutes extends AppRoutesConfig {
     ]);
   }
 }
+

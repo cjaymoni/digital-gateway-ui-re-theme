@@ -112,6 +112,7 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
   Auth: {
     login: 'login',
     signup: 'sign-up',
+    changePassword: 'change-password',
   },
 
   MarketPlace: {
@@ -161,8 +162,8 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
       },
       edit: (url: UrlSegment[]) => {
         return urlMatcherForEditAndView(url, 'site-settings', false);
-      }
-    }
+      },
+    },
   },
   DigitalLinks: {
     main: 'direct-links',
@@ -568,6 +569,7 @@ export const ERROR_MESSAGES_MAPPING = {
       maxlength: ({ requiredLength, actualLength }: any) =>
         `Please enter  ${requiredLength} or less characters. Current count: ${actualLength}`,
       email: () => `Please enter a valid email`,
+      mismatch: () => `Passwords do not match`,
     },
   },
 };

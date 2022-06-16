@@ -17,9 +17,7 @@ export class ArticleGuard implements CanActivate {
   /**
    *
    */
-  constructor(private store: Store) {
-    this.store.dispatch(articleActions.fetch());
-  }
+  constructor(private store: Store) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -29,6 +27,7 @@ export class ArticleGuard implements CanActivate {
     | boolean
     | UrlTree {
     this.store.dispatch(articleActions.clearAllSelected());
+    this.store.dispatch(articleActions.fetch());
 
     const shouldFetchArticle = route.data['fetch'];
     this.store

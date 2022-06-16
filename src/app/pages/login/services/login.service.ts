@@ -98,20 +98,28 @@ export class LoginService implements IAuthService {
   }
 
   requestPasswordReset(emailAdd?: string): Observable<any> {
-    return this.http.post(`${environment.API_URL}/auth/forgotPassword`, {
+    return this.http.post(`${environment.API_URL}request-otp/`, {
       email: emailAdd || this.loggedInUser.email,
     });
   }
 
+  requestEmailVerification(email: string): Observable<any> {
+    return this.http.post(`${environment.API_URL}request-email-verification/`, {
+      email,
+    });
+  }
+
   resetPassword(credentials: {
-    email: string;
-    token: string;
+    code: string;
     password: string;
   }): Observable<any> {
-    return this.http.post(`${environment.API_URL}/auth/resetPassword`, {
+    return this.http.patch(`${environment.API_URL}set-password/`, {
       ...credentials,
-      password_confirmation: credentials.password,
     });
+  }
+
+  verifyEmail(token: string): Observable<any> {
+    return this.http.get(`${environment.API_URL}verify-email/?token=${token}`);
   }
 
   fetchUserDetails() {

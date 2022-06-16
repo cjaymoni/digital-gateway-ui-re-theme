@@ -8,6 +8,8 @@ import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { LoginButtonModule } from '../login-button/login-button.module';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [SideNavComponent],
@@ -20,7 +22,10 @@ import { ClickOutsideModule } from 'ng-click-outside';
     SidebarModule,
     LoginButtonModule,
     ClickOutsideModule,
+    AppPipesModule,
+    TooltipModule,
   ],
   exports: [SideNavComponent],
 })
 export class SideNavModule {}
+

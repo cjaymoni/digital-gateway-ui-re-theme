@@ -47,6 +47,8 @@ export class VotesComponent implements OnInit {
   @Input() id: number = 0;
   @Input() direction: VotesDirection | null = VotesDirection.HORIZONTAL;
 
+  @Input() panelStyle: any;
+
   VotesDirection = VotesDirection;
   constructor(
     private forumService: ForumsService,

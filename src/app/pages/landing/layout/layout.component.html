@@ -26,10 +26,11 @@
   </p-carousel>
 
   <div *ngIf="featuredCategories$ | async">
-    <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
+    <h3 class="text-center text-2xl font-bold mt-5 mb-0 text-headers">
       Featured Categories
     </h3>
-    <div class="grid">
+    <hr class="mb-5 w-5rem" />
+    <div class="grid px-6">
       <ng-container
         *ngFor="
           let featured of featuredCategories$ | async;
@@ -50,10 +51,11 @@
   </div>
 
   <div *ngIf="featuredOpportunities$ | async">
-    <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
+    <h3 class="text-center text-2xl font-bold mt-5 mb-0 text-headers">
       Current Opportunities
     </h3>
-    <div class="grid">
+    <hr class="mb-5 w-5rem" />
+    <div class="grid px-6">
       <div
         *ngFor="
           let opportunity of featuredOpportunities$ | async;
@@ -72,16 +74,26 @@
     <p-skeleton styleClass="mb-3 w-11" height="20rem"></p-skeleton>
   </div>
 
-  <h3 class="text-center text-2xl font-bold my-5 text-darkblue">
-    Direct Links
+  <h3 class="text-center text-2xl font-bold mt-5 mb-0 text-headers">
+    Partners
   </h3>
-
-  <div class="grid">
-    <ng-container *ngFor="let directLink of directLinks$ | async | slice: 0:3">
-      <div class="col-12 md:col-4 p-3">
-        <app-direct-links-card [digiLink]="directLink"></app-direct-links-card>
+  <hr class="mb-5 w-5rem" />
+  <p-carousel
+    *appShellNoRender
+    [value]="(allPartners$ | async) || []"
+    [showNavigators]="!(isHandheld$ | async)"
+    [circular]="true"
+    [showIndicators]="false"
+    [contentClass]="'content'"
+    [numVisible]="5"
+    [numScroll]="1"
+    [autoplayInterval]="15000"
+  >
+    <ng-template pTemplate="item" let-partner>
+      <div class="p-0 w-full border-round">
+        <app-partners-card [partner]="partner"></app-partners-card>
       </div>
-    </ng-container>
-  </div>
+    </ng-template>
+  </p-carousel>
 </div>
 

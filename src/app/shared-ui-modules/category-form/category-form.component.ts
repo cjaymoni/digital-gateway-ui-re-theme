@@ -13,7 +13,7 @@ import {
 } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { filter, map, Subscription, tap } from 'rxjs';
+import { filter, map, pipe, Subscription, take, tap } from 'rxjs';
 import { slugify } from 'src/app/helpers/app.helper.functions';
 import { Category } from 'src/app/models/category.model';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -54,6 +54,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
       description: [''],
       image: [''],
       parent: [''],
+      position: [''],
     });
 
     this.subscription = this.store
@@ -72,6 +73,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
                 this.navigator.setPanelTitle('Update Category');
                 this.store
                   .select(categorySelectors.getById(category.parent))
+                  .pipe(take(1))
                   .subscribe(parent =>
                     this.categoryForm.get('parent')?.setValue(parent)
                   );
@@ -98,6 +100,10 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
     return this.categoryForm.get('description') as FormControl;
   }
 
+  get position() {
+    return this.categoryForm.get('position') as FormControl;
+  }
+
   get categoryHasImage() {
     return this.image.value;
   }
@@ -112,6 +118,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
         slug: slugify(category.name),
         created_by: 1,
         is_active: true,
+        position: category.position,
       };
 
       const images: any =
@@ -164,3 +171,4 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 }
+

@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { INFO_HUB_ID, Pages } from 'src/app/config/app-config';
-import { Category } from 'src/app/models/category.model';
+import { Category, CategoryPosition } from 'src/app/models/category.model';
 import { menuItemActions } from '../actions/menu-items.actions';
 import { MainMenu } from './../../config/app-config';
 
@@ -27,7 +27,11 @@ export const menuItemReducer = createReducer(
         const itemsArray: MenuItem[] = [];
 
         for (const category of menuItemCopy) {
-          if (!category.parent) {
+          //top menu only
+          if (
+            !category.parent &&
+            (category.position === CategoryPosition.TOP || !category.position)
+          ) {
             const menu = convertToMenu(category);
             itemsArray.push(menu);
           }
