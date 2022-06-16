@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, take } from 'rxjs';
 import { trackById } from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
-import { Category } from 'src/app/models/category.model';
+import { Category, CategoryPosition } from 'src/app/models/category.model';
 import { ArticleService } from 'src/app/pages/articles/services/articles.service';
 import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
@@ -39,7 +39,9 @@ export class SideNavComponent implements OnInit {
 
   // featuredCategory$ = this.themeSetting.featuredCategoryArray$;
   // featuredTags$ = this.store.select(tagSelectors.featuredArticleTags);
-  categories$ = this.store.select(categorySelectors.all);
+  categories$ = this.store.select(
+    categorySelectors.getByPostion(CategoryPosition.LEFT)
+  );
 
   loading$ = new BehaviorSubject(false);
   articles$: BehaviorSubject<Article[]> = new BehaviorSubject([] as Article[]);

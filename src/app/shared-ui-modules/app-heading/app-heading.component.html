@@ -3,12 +3,12 @@
     class="flex md:align-items-center md:justify-content-between flex-column md:flex-row pb-4 border-bottom-1 surface-border"
   >
     <div class="mb-3 lg:mb-0">
-      <div class="text-3xl font-medium text-900 mb-3 text-darkblue uppercase">
+      <h1 class="text-3xl font-medium text-900 mb-3 text-darkblue uppercase">
         {{ title }}
-      </div>
-      <div *ngIf="description" class="text-500 mr-0 md:mr-3">
+      </h1>
+      <h4 *ngIf="description" class="text-500 mr-0 md:mr-3">
         {{ description }}
-      </div>
+      </h4>
       <ng-content select=".afterDescription"></ng-content>
     </div>
     <ng-container *ngIf="sideTemplate">

@@ -50,6 +50,7 @@ const routes: Routes = [
     component: ForumDetailsComponent,
     data: { fetch: true, breadcrumb: 'View Forum Details' },
     canActivate: [ForumGuard],
+    children: [],
   },
 ];
 

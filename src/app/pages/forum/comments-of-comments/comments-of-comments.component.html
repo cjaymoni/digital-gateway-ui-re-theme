@@ -10,6 +10,7 @@
     <app-comment-card
       [showCommentButton]="false"
       [comment]="(comment$ | async)!"
+      [sidePanel]="true"
     ></app-comment-card>
     <p-divider align="center">
       <span class="p-tag bg-green-800">
@@ -22,8 +23,10 @@
       <app-comment-card
         [comment]="comment"
         [loadSubCommentsOnClick]="true"
+        [sidePanel]="true"
       ></app-comment-card>
       <br />
     </ng-container>
   </ng-container>
 </div>
+

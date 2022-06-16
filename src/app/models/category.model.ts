@@ -8,4 +8,13 @@ export interface Category {
   created_by: number;
   subcategories?: Category[];
   image?: any;
+  position?: CategoryPosition;
 }
+
+export enum CategoryPosition {
+  TOP = 'top',
+  BOTTOM = 'bottom',
+  LEFT = 'left',
+  RIGHT = 'right',
+}
+

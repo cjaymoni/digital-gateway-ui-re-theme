@@ -4,13 +4,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   selector: 'app-footer-powered-by',
   templateUrl: './footer-powered-by.component.html',
   styleUrls: ['./footer-powered-by.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterPoweredByComponent implements OnInit {
+  year = new Date().getFullYear();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
+

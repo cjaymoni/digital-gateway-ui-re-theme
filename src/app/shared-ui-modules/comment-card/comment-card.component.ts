@@ -40,6 +40,8 @@ export class CommentCardComponent implements OnInit, OnDestroy {
 
   @Input() showCommentButton = true;
 
+  @Input() sidePanel = false;
+
   subscription!: Subscription;
 
   showCommentForm: boolean = false;
@@ -163,3 +165,4 @@ export class CommentCardComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 }
+
