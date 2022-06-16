@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { of, switchMap } from 'rxjs';
+import { EMPTY, of, switchMap } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { LoginService } from 'src/app/pages/login/services/login.service';
@@ -78,6 +78,22 @@ export class UserProfileEffects {
       )
     )
   );
+
+  passwordResetRequest$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(userAuthActions.requestPasswordReset),
+      switchMap(({ email }) =>
+        this.loginService.requestPasswordReset(email).pipe(
+          tap(() => {
+            this.showToast(
+              'Password reset request sent successfully. Check your email'
+            );
+          })
+        )
+      )
+    )
+  );
+
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }

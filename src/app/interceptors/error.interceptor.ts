@@ -7,7 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
 
-import { catchError, EMPTY, Observable } from 'rxjs';
+import { catchError, EMPTY, Observable, throwError } from 'rxjs';
 import {
   APP_REFRESH_TOKEN,
   APP_TOKEN,
@@ -51,6 +51,8 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
             }
             //  const messages = Object.keys(event.error.messages)
             this.alert.showToast(`${errorMessages}`, PrimeNgAlerts.ERROR);
+          } else {
+            this.alert.showToast(validationError, PrimeNgAlerts.ERROR);
           }
         } else if (
           event.status === 401 &&
@@ -70,10 +72,8 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
           this.cookieService.removeAll();
           this.navigator.auth.goToLogin();
         } else if (event.status === 403) {
-          this.alert.showToast(
-            `Sorry you are not permitted to perform this function. See administrator`,
-            PrimeNgAlerts.ERROR
-          );
+          const message = event.error || 'You are not authorized';
+          this.alert.showToast(message, PrimeNgAlerts.ERROR);
         } else if (event.error?.message && event.status >= 500) {
           this.alert.showToast(
             `An error occured. Rest assured, it will be rectified soon.`,
@@ -87,7 +87,7 @@ export class ErrorMessageInterceptor implements HttpInterceptor {
         //   );
         // }
 
-        return EMPTY;
+        return throwError(() => event);
       })
     );
   }

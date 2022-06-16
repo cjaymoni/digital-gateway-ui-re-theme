@@ -51,7 +51,8 @@ import { appReducersMap } from './store/app.reducers';
           element.tagName === 'SELECT' ||
           element.tagName === 'TEXTAREA' ||
           element.tagName === 'P-FILEUPLOAD' ||
-          element.tagName === 'P-AUTOCOMPLETE'
+          element.tagName === 'P-AUTOCOMPLETE' ||
+          element.tagName === 'P-PASSWORD'
         );
       },
     }),

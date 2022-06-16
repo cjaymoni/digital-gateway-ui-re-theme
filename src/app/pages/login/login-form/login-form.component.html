@@ -9,6 +9,22 @@
     <div
       class="fluid formgrid grid justify-content-between align-content-center"
     >
+      <ng-container *ngIf="loginForm.errors?.['emailNotVerified']">
+        <p class="text-xs text-center text-blue-700">
+          You have not verified your email. Check your email or click 'Resend
+          Verification' to request another verification email.
+        </p>
+        <button
+          pButton
+          pRipple
+          class="ml-auto mr-auto p-button-warning mb-3"
+          type="button"
+          label="Resend Verification"
+          (click)="resendVerification()"
+          [disabled]="email?.invalid"
+        ></button>
+      </ng-container>
+
       <!-- username -->
       <div class="field col-12">
         <div class="p-inputgroup">
@@ -40,17 +56,26 @@
       </div>
 
       <div
-        class="field col-12 ml-auto flex justify-content-between align-items-center"
+        class="field col-12 ml-auto flex flex-column md:flex-row justify-content-between align-items-center"
       >
-        <button
-          pButton
-          pRipple
-          class="align-self-center"
-          type="button"
-          label="Sign In"
-          [disabled]="loginForm.invalid"
-          (click)="onLoginSubmit()"
-        ></button>
+        <div class="flex justify-content-between w-full align-items-end mb-3">
+          <button
+            pButton
+            pRipple
+            class="align-self-center"
+            type="button"
+            label="Sign In"
+            [disabled]="loginForm.invalid"
+            (click)="onLoginSubmit()"
+          ></button>
+
+          <span
+            class="ml-1 cursor-pointer text-lg font-bold text-pink-700 hover-underline"
+            (click)="toggleForgotPasswordMode(); $event.stopPropagation()"
+          >
+            {{ forgotPasswordMode ? 'Cancel' : 'Forgot Password' }}
+          </span>
+        </div>
         <div>
           Don't have an account?
           <span

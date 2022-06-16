@@ -69,7 +69,12 @@ export class NavigatorService {
     map(url => {
       let context = url.split('/')[1];
 
-      if (url.includes('sign') || url.includes('login')) context = '';
+      if (
+        url.includes('sign') ||
+        url.includes('login') ||
+        url.includes('change-password')
+      )
+        context = '';
 
       return context;
     })
@@ -442,6 +447,18 @@ class AuthRoutes extends AppRoutesConfig {
       }
     );
   }
+
+  goToResetPage() {
+    this.panelTitleSubject$.next('Change Your Password');
+    this.router.navigate([
+      '', //main
+      {
+        outlets: {
+          [RouterOutlets.Right]: Pages.Auth.changePassword,
+        },
+      },
+    ]);
+  }
 }
 
 class MarketAdRoutes extends AppRoutesConfig {
@@ -589,3 +606,4 @@ class PartnersRoutes extends AppRoutesConfig {
     ]);
   }
 }
+

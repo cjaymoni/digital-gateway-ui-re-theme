@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterOutlets, SLUG_PREFIX } from 'src/app/config/app-config';
-import { Router, RouterModule, Routes, UrlSegment } from '@angular/router';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { RouterModule, Routes } from '@angular/router';
+import { Pages, RouterOutlets } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { PasswordChangeComponent } from './password-change/password-change.component';
 
 const rightPanelRoutes: Routes = [
   {
@@ -15,6 +16,11 @@ const rightPanelRoutes: Routes = [
     component: LoginFormComponent,
     outlet: RouterOutlets.Modal,
   },
+  {
+    path: 'change-password',
+    component: PasswordChangeComponent,
+    outlet: RouterOutlets.Right,
+  },
 ];
 
 @NgModule({
@@ -26,3 +32,4 @@ export class LoginRoutesModule {
     this.navigator.addRightPanelRoutes(rightPanelRoutes);
   }
 }
+
