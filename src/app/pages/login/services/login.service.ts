@@ -118,6 +118,10 @@ export class LoginService implements IAuthService {
     });
   }
 
+  verifyEmail(token: string): Observable<any> {
+    return this.http.get(`${environment.API_URL}verify-email/?token=${token}`);
+  }
+
   fetchUserDetails() {
     return this.userManagementService.getMyDetails().pipe(
       map(user => {

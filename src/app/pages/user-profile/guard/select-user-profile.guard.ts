@@ -33,7 +33,7 @@ export class SelectUserProfileGuard implements CanActivate {
     if (user?.email) {
       this.store.dispatch(
         userProfileActions.findAndSelectUserProfileById({
-          id: user?.profile_id,
+          id: user?.profile?.id,
         })
       );
     }
@@ -41,3 +41,4 @@ export class SelectUserProfileGuard implements CanActivate {
     return true;
   }
 }
+

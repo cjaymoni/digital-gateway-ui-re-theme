@@ -4,6 +4,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Subscription, tap } from 'rxjs';
@@ -51,7 +53,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private themeService: ThemeSettingsService,
     private cookieService: CookieService,
     private localStorage: LocalStorageService,
-    private device: DeviceService
+    private device: DeviceService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly store: Store
   ) {
     let showPanel: any = this.cookieService.get(SHOW_PANEL);
 
@@ -93,7 +97,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   toggleRightPanel() {
     const next = !this.showRightPanel$.getValue();
-
     this.showRightPanel$.next(next);
     this.cookieService.put(SHOW_PANEL, `${next}`);
     this.localStorage.setItem(SHOW_PANEL, `${next}`);

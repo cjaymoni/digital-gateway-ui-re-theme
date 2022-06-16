@@ -59,6 +59,10 @@ export class LoginFormComponent implements OnInit {
   }
 
   onLoginSubmit() {
+    if (this.forgotPasswordMode) {
+      return this.requestOTPAndChangePassword();
+    }
+
     if (this.loginForm.valid) {
       this.loginService
         .login(this.loginForm.value)
@@ -125,6 +129,20 @@ export class LoginFormComponent implements OnInit {
           }
           this.loginForm.setErrors(null);
         });
+  }
+
+  requestOTPAndChangePassword() {
+    this.loginService
+      .requestPasswordReset(this.email?.value)
+      .subscribe(success => {
+        if (success) {
+          this.alert.showToast(
+            'OTP sent. Please check your email.',
+            PrimeNgAlerts.UNOBSTRUSIVE
+          );
+        }
+        this.navigator.auth.goToResetPage();
+      });
   }
 }
 

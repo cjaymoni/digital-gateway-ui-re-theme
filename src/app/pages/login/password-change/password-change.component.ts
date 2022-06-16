@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
+import { NavigatorService } from 'src/app/services/navigator.service';
 import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { LoginService } from '../services/login.service';
 
@@ -16,7 +17,8 @@ export class PasswordChangeComponent implements OnInit {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly alert: AppAlertService,
-    private readonly loginService: LoginService
+    private readonly loginService: LoginService,
+    private readonly navigator: NavigatorService
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +59,7 @@ export class PasswordChangeComponent implements OnInit {
           if (res) {
             this.alert.showToast('Password changed successfully');
           }
+          this.navigator.hidePanel();
         });
     }
   }
