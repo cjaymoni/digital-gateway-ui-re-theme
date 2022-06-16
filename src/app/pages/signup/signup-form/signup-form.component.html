@@ -1,9 +1,13 @@
 <ng-container>
-  <form [formGroup]="signupForm" class="my-8" errorTailor>
-    <div class="fluid formgrid grid">
-      <div class="field col-12 md:col-6">
+  <form [formGroup]="signupForm" class="my-8 md:px-6" errorTailor>
+    <div class="fluid formgrid grid md:px-8">
+      <div class="col-12 text-4xl text-center text-blue-700 pb-8">SIGN UP</div>
+
+      <div class="field col-12">
         <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <span class="p-inputgroup-addon bg-darkblue"
+            ><i class="pi pi-user text-white"></i
+          ></span>
           <input
             type="text"
             pInputText
@@ -13,9 +17,11 @@
           />
         </div>
       </div>
-      <div class="field col-12 md:col-6">
+      <div class="field col-12">
         <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <span class="p-inputgroup-addon bg-darkblue"
+            ><i class="pi pi-user text-white"></i
+          ></span>
           <input
             type="text"
             pInputText
@@ -28,7 +34,9 @@
 
       <div class="field col-12">
         <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+          <span class="p-inputgroup-addon bg-darkblue"
+            ><i class="pi pi-envelope text-white"></i
+          ></span>
           <input
             type="text"
             pInputText
@@ -42,7 +50,9 @@
       <!-- password -->
       <div class="field col-12 static">
         <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+          <span class="p-inputgroup-addon bg-darkblue"
+            ><i class="pi pi-lock text-white"></i
+          ></span>
           <p-password
             type="password"
             placeholder="Password"
@@ -64,7 +74,9 @@
       <!-- password -->
       <div class="field col-12 static">
         <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+          <span class="p-inputgroup-addon bg-darkblue"
+            ><i class="pi pi-lock text-white"></i
+          ></span>
           <p-password
             type="password"
             placeholder=" Confirm Password"
@@ -81,13 +93,11 @@
         </span>
       </div>
 
-      <div
-        class="field col-12 ml-auto flex align-items-center justify-content-between"
-      >
+      <div class="field col-12 ml-auto flex align-items-start flex-column">
         <button
           pButton
           pRipple
-          class="align-self-center"
+          class="align-self-start my-4 button-color"
           type="button"
           label="Sign Up"
           [disabled]="signupForm.invalid"
@@ -97,7 +107,7 @@
         <div>
           Already have an account?
           <span
-            class="ml-1 cursor-pointer text-lg font-bold text-blue-700 hover-underline"
+            class="ml-1 cursor-pointer text-lg font-bold text-headers hover-underline"
             (click)="goToLogin(); $event.stopPropagation()"
             >Login</span
           >

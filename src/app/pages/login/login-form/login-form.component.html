@@ -1,14 +1,16 @@
 <ng-container>
   <form
     [formGroup]="loginForm"
-    class="my-8"
+    class="my-8 md:px-6"
     enterPressed
     (onEnterPressed)="onLoginSubmit()"
     errorTailor
   >
     <div
-      class="fluid formgrid grid justify-content-between align-content-center"
+      class="fluid formgrid grid justify-content-center align-content-center"
     >
+      <div class="col-12 text-xl text-center py-5">Welcome Back</div>
+      <div class="col-12 text-4xl text-center text-blue-700 pb-8">LOGIN</div>
       <ng-container *ngIf="loginForm.errors?.['emailNotVerified']">
         <p class="text-xs text-center text-blue-700">
           You have not verified your email. Check your email or click 'Resend
@@ -28,7 +30,9 @@
       <!-- username -->
       <div class="field col-12">
         <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <span class="p-inputgroup-addon bg-darkblue"
+            ><i class="pi pi-envelope text-white"></i
+          ></span>
           <input
             type="text"
             pInputText
@@ -48,7 +52,9 @@
       <!-- password -->
       <div class="field col-12 static" *ngIf="!forgotPasswordMode">
         <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+          <span class="p-inputgroup-addon bg-darkblue"
+            ><i class="pi pi-lock text-white"></i
+          ></span>
           <p-password
             [toggleMask]="true"
             type="password"
@@ -57,6 +63,7 @@
             inputStyleClass="w-12 relative"
             styleClass="w-12"
             autocomplete="on"
+            [feedback]="false"
           ></p-password>
         </div>
       </div>
@@ -68,7 +75,7 @@
           <button
             pButton
             pRipple
-            class="align-self-center"
+            class="align-self-center button-color"
             type="button"
             [label]="
               forgotPasswordMode ? 'Request OTP and Change Password' : 'Sign In'
@@ -90,7 +97,7 @@
         <div>
           Don't have an account?
           <span
-            class="ml-1 cursor-pointer text-lg font-bold text-blue-700 hover-underline"
+            class="ml-1 cursor-pointer text-lg font-bold text-headers hover-underline"
             (click)="goToSignup(); $event.stopPropagation()"
             >Sign up</span
           >

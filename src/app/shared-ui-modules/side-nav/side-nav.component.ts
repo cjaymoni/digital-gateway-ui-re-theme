@@ -119,7 +119,6 @@ export class SideNavComponent implements OnInit {
         .pipe(take(1))
         .subscribe(articles => {
           this.articlesLoading$.next(false);
-          console.log(articles);
           this.articles$.next(articles);
         });
     }

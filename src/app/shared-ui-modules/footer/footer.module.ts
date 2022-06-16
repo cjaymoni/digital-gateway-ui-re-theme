@@ -6,6 +6,7 @@ import { FooterQuickLinksComponent } from './components/footer-quick-links/foote
 import { FooterSocialsComponent } from './components/footer-socials/footer-socials.component';
 import { FooterPoweredByComponent } from './components/footer-powered-by/footer-powered-by.component';
 import { RouterModule } from '@angular/router';
+import { FooterMiniInfoComponent } from './components/footer-mini-info/footer-mini-info.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule],
@@ -15,7 +16,9 @@ import { RouterModule } from '@angular/router';
     FooterQuickLinksComponent,
     FooterSocialsComponent,
     FooterPoweredByComponent,
+    FooterMiniInfoComponent,
   ],
   exports: [FooterComponent],
 })
 export class FooterModule {}
+

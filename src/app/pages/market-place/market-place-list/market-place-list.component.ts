@@ -13,6 +13,7 @@ import { selectQueryParams } from 'src/app/store/selectors/router.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarketPlaceListComponent implements OnInit {
+  model = 50;
   productAds$ = this.store.select(productAdSelectors.all);
 
   productAdsLoading$ = this.store.select(productAdSelectors.loading);
@@ -88,3 +89,4 @@ export class MarketPlaceListComponent implements OnInit {
     this.productAds$ = this.store.select(productAdSelectors.all);
   }
 }
+

@@ -412,7 +412,7 @@ class AuthRoutes extends AppRoutesConfig {
 
   goToSignUp() {
     this.openPanel(Pages['Auth'].signup, 'Signup to create an account');
-    this.panelTitleSubject$.next('Please create an account');
+    this.panelTitleSubject$.next('');
     this.router.navigate([
       '', //main
       {
@@ -425,7 +425,7 @@ class AuthRoutes extends AppRoutesConfig {
 
   goToLogin(
     route = RouterOutlets.Right,
-    title = 'Welcome back. Please Login',
+    title = '',
     returnUrl = ''
   ) {
     route === RouterOutlets.Right

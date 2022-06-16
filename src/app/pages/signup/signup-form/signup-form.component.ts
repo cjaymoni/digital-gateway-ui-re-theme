@@ -78,7 +78,7 @@ export class SignupFormComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.navigator.setPanelTitle('SIGN UP');
+    // this.navigator.setPanelTitle('SIGN UP');
   }
   onSignupSubmit() {
     if (this.signupForm.valid) {

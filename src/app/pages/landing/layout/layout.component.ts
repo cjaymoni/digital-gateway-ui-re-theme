@@ -7,11 +7,14 @@ import {
   PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Carousel } from 'primeng/carousel';
 import { take } from 'rxjs/operators';
 import { trackByAny, trackById } from 'src/app/config/app-config';
 import { DeviceService } from 'src/app/services/device.service';
 import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
+import { partnersActions } from 'src/app/store/actions/partners.actions';
+import { partnersSelectors } from 'src/app/store/selectors/partners.selectors';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 enum PlayStatus {
@@ -43,6 +46,7 @@ export class LayoutComponent implements OnInit {
   featuredOpportunities$ = this.themeStore.featuredEventsArray$;
   directLinks$ = this.themeStore.featuredDirectLinks$;
   featuredCategories$ = this.themeStore.featuredCatgories$;
+  allPartners$ = this.store.select(partnersSelectors.all);
 
   isHandheld$ = this.device.isHandheld$;
 
@@ -50,12 +54,16 @@ export class LayoutComponent implements OnInit {
     private themeStore: ThemeSettingsStore,
     private device: DeviceService,
     @Inject(PLATFORM_ID) private platform: any,
+    private store: Store,
+
     private gtag: GoogleAnalyticsService
   ) {
     this.gtag.Pages.homepageOpened();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(partnersActions.fetch());
+  }
 
   videoStatusChange(event: any) {
     if (event.data === PlayStatus.PLAY) {

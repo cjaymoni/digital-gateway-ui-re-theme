@@ -19,7 +19,13 @@
             {{ (forumPost$ | async)?.title | uppercase }}
             <div class="text-sm font-italic text-blue-800">
               {{ (forumPost$ | async)?.submitter.first_name }}
-              {{ (forumPost$ | async)?.submitter.last_name }} |
+              {{ (forumPost$ | async)?.submitter.last_name }}
+              <img
+                src="assets/svgs/check.svg"
+                alt="check"
+                class="w-1rem h-1rem"
+              />
+              |
               {{ (forumPost$ | async)?.created_on | date: 'longDate' }}
             </div>
           </div>

@@ -10,7 +10,7 @@
 <ng-template #articleImage>
   <p-image
     [src]="images?.[0]?.image ?? ''"
-    imageClass="object-fit-cover md:h-full article-image w-full"
+    imageClass="object-fit-cover md:h-full article-image w-full border-round-2xl"
     [styleClass]="imageClass"
     [preview]="preview"
     appendTo="body"
@@ -21,3 +21,4 @@
     >Click on image to view</em
   >
 </ng-template>
+

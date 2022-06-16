@@ -1,3 +1,10 @@
 .footer {
   color: #fff !important;
 }
+
+.app-footer {
+  @media screen and (min-width: 962px) {
+    padding-left: 5rem !important;
+  }
+}
+

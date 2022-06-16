@@ -20,6 +20,7 @@
         <div class="text-xs font-italic text-darkblue my-1">
           {{ forumPost.submitter.first_name }}
           {{ forumPost.submitter.last_name }}
+          <img src="assets/svgs/check.svg" alt="check" class="w-1rem h-1rem" />
           <span class="ml-1">
             | {{ forumPost.created_on | date: 'fullDate' }}
           </span>

@@ -1,4 +1,4 @@
-<div class="bg-light-blue flex justify-content-between 4-rem p-1 sticky z-1">
+<div class="bg-primary flex justify-content-between 4-rem p-1 sticky z-1">
   <!-- start  -->
   <div
     class="flex align-content-center flex-row justify-content-between ml-2 col-2"
@@ -12,7 +12,7 @@
       routerLink="/"
     >
       <!-- home and home icon -->
-      <span class="hidden lg:block text-darkblue text-xl ml-3">
+      <span class="hidden lg:block text-white text-xl ml-3">
         MSME GATEWAY
         <i class="pi pi-home"></i>
       </span>
@@ -27,7 +27,7 @@
   <p-menubar
     [model]="(items$ | async) || []"
     [autoDisplay]="true"
-    styleClass=" border-none border-noround p-divider-no-background p-2"
+    styleClass=" border-none border-noround p-divider-no-background bg-primary p-2"
   >
   </p-menubar>
 
@@ -61,7 +61,7 @@
   <!-- user login menu for small to lg screen-->
   <div class="flex justify-content-between align-items-center xl:hidden">
     <button
-      class="xl:hidden p-button-outlined p-button-rounded p-button-secondary mr-1"
+      class="xl:hidden p-button-outlined p-button-rounded p-button-secondary mr-1 button-color"
       icon="pi pi-search"
       pStyleClass=".searchButton"
       enterClass="hidden"
@@ -80,11 +80,13 @@
 </div>
 
 <ng-template #search>
-  <div class="flex justify-content-center align-items-center">
+  <div
+    class="flex justify-content-center md:justify-content-end align-items-center"
+  >
     <input
       type="text"
       pInputText
-      class="col-10 mr-1"
+      class="col-10 md:col-4 mr-1"
       placeholder="What are you looking for?"
       [formControl]="searchInputControl"
       enterPressed
@@ -93,7 +95,7 @@
     <button
       pButton
       icon="pi pi-search"
-      class="p-button-rounded p-button-secondary col-2"
+      class="p-button-rounded col-2 button-color"
       [disabled]="searchInputControl.invalid"
       (click)="$event.stopPropagation(); searchTerm()"
       pStyleClass=".searchButton"
@@ -110,3 +112,4 @@
 <ng-template #userLoginMenu>
   <app-login-button></app-login-button>
 </ng-template>
+

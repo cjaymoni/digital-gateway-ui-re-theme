@@ -51,7 +51,7 @@ export class LoginFormComponent implements OnInit {
         ],
       ],
     });
-    this.navigator.setPanelTitle('WELCOME BACK. PLEASE LOGIN');
+    // this.navigator.setPanelTitle('WELCOME BACK. PLEASE LOGIN');
   }
 
   get email() {

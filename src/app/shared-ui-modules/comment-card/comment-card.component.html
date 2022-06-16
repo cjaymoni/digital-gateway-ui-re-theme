@@ -10,7 +10,9 @@
       <div class="flex text-xs flex-column text-gray-500">
         <div class="font-bold text-sm">
           {{ comment.author.first_name }} {{ comment.author.last_name }}
+          <img src="assets/svgs/check.svg" alt="check" class="w-1rem h-1rem" />
         </div>
+
         <div class="font-italic">
           {{ comment.created_on | date: 'mediumDate' }}
         </div>
