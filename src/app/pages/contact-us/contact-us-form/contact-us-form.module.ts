@@ -6,6 +6,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { ErrorTailorModule } from '@ngneat/error-tailor';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { DropdownModule } from 'primeng/dropdown';
     FormsModule,
     ReactiveFormsModule,
     DropdownModule,
+    ErrorTailorModule,
   ],
   declarations: [ContactUsFormComponent],
 })

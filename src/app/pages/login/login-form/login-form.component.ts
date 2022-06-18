@@ -1,19 +1,12 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LOGIN_SERVICE } from 'src/app/config/injectables';
-import { NavigatorService } from 'src/app/services/navigator.service';
-import { IAuthService } from 'src/app/models/auth-service';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
-import { Pages, PrimeNgAlerts } from 'src/app/config/app-config';
+import { PrimeNgAlerts } from 'src/app/config/app-config';
 import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
-import { Store } from '@ngrx/store';
+import { NavigatorService } from 'src/app/services/navigator.service';
+import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { selectQueryParam } from 'src/app/store/selectors/router.selectors';
 import { LoginService } from '../services/login.service';
 
@@ -51,7 +44,6 @@ export class LoginFormComponent implements OnInit {
         ],
       ],
     });
-    // this.navigator.setPanelTitle('WELCOME BACK. PLEASE LOGIN');
   }
 
   get email() {

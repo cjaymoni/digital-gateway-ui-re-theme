@@ -27,6 +27,18 @@
 }
 
 :host ::ng-deep {
+  .article-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:hover {
+      white-space: normal !important;
+      text-overflow: unset;
+      overflow: visible;
+    }
+  }
+
   .subcategory-side-panel {
     .p-sidebar-content {
       padding-right: 0px !important;
@@ -64,12 +76,6 @@ hr {
 
 li {
   list-style: none;
-}
-
-.ellipsis {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .active {

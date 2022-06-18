@@ -46,7 +46,6 @@ export class LayoutComponent implements OnInit {
   featuredOpportunities$ = this.themeStore.featuredEventsArray$;
   directLinks$ = this.themeStore.featuredDirectLinks$;
   featuredCategories$ = this.themeStore.featuredCatgories$;
-  allPartners$ = this.store.select(partnersSelectors.all);
 
   isHandheld$ = this.device.isHandheld$;
 

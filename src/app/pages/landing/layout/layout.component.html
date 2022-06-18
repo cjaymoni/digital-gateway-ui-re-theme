@@ -78,22 +78,6 @@
     Partners
   </h3>
   <hr class="mb-5 w-5rem" />
-  <p-carousel
-    *appShellNoRender
-    [value]="(allPartners$ | async) || []"
-    [showNavigators]="!(isHandheld$ | async)"
-    [circular]="true"
-    [showIndicators]="false"
-    [contentClass]="'content'"
-    [numVisible]="5"
-    [numScroll]="1"
-    [autoplayInterval]="15000"
-  >
-    <ng-template pTemplate="item" let-partner>
-      <div class="p-0 w-full border-round">
-        <app-partners-card [partner]="partner"></app-partners-card>
-      </div>
-    </ng-template>
-  </p-carousel>
+  <app-partners-view></app-partners-view>
 </div>
 

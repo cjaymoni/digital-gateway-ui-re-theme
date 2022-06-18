@@ -1,0 +1,17 @@
+<p-carousel
+  *appShellNoRender
+  [value]="(allPartners$ | async) || []"
+  [showNavigators]="true"
+  [circular]="true"
+  [showIndicators]="true"
+  [contentClass]="'content'"
+  [numVisible]="5"
+  [numScroll]="1"
+  [autoplayInterval]="15000"
+>
+  <ng-template pTemplate="item" let-partner>
+    <div class="p-0 w-full border-round">
+      <app-partners-card [partner]="partner"></app-partners-card>
+    </div>
+  </ng-template>
+</p-carousel>

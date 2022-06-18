@@ -1,6 +1,6 @@
 <ng-container *ngIf="categories$ | async">
   <div
-    class="wrapper w-full lg:sticky align-self-center flex flex-column justify-content-between overflow-x-hidden relative h-auto mb-5 p-5"
+    class="wrapper w-full lg:sticky align-self-center flex flex-column justify-content-between overflow-x-hidden relative h-auto mb-5"
   >
     <!-- (clickOutside)="clickOutsidePanel($event)" -->
     <!-- <p-divider align="center" styleClass="p-divider-no-background">
@@ -75,6 +75,7 @@
   [style]=""
   [baseZIndex]="1000"
   [blockScroll]="true"
+  (onHide)="closeAll()"
 >
   <div class="mt-0 lg:mt-3 pl-1">
     <button
@@ -106,9 +107,7 @@
           "
         >
           <div
-            [pTooltip]="category.name"
             class="flex w-12 justify-content-between align-content-center cursor-pointer scalein text-lg p-1 py-3"
-            tooltipPosition="right"
             [ngClass]="{
               'bg-white': selectedSubCategory?.name === category.name
             }"
@@ -160,11 +159,9 @@
         >
           <div
             class="flex justify-content-between align-content-center cursor-pointer scalein text-lg p-1 mb-3"
-            [pTooltip]="article.title"
-            tooltipPosition="right"
             (click)="readArticle(article)"
           >
-            <div class="white-space-nowrap ellipsis">
+            <div class="article-title">
               {{ article.title }}
             </div>
           </div>

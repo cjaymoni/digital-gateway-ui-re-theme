@@ -8,10 +8,12 @@ import { ArticleCardModule } from 'src/app/shared-ui-modules/article-card/articl
 import { ForumCardModule } from 'src/app/shared-ui-modules/forum-card/forum-card.module';
 import { OpportunitisCardModule } from 'src/app/shared-ui-modules/opportunitis-card/opportunitis-card.module';
 import { PartnersCardModule } from 'src/app/shared-ui-modules/partners-card/partners-card.module';
+import { PartnersViewModule } from 'src/app/shared-ui-modules/partners/partners-view.module';
 import { RightNavCardModule } from 'src/app/shared-ui-modules/right-nav-card/right-nav-card.module';
 import { DirectLinksCardModule } from '../../../shared-ui-modules/direct-links-card/direct-links-card.module';
 import { FeaturedCategoriesCardModule } from '../../../shared-ui-modules/featured-categories-card/featured-categories-card.module';
 import { MarketCardModule } from '../../market-place/market-card/market-card.module';
+import { PartnersModule } from '../../partners/partners.module';
 import { MultimediaModule } from '../multimedia/multimedia.module';
 import { LayoutComponent } from './layout.component';
 
@@ -30,7 +32,7 @@ import { LayoutComponent } from './layout.component';
     OpportunitisCardModule,
     DirectivesModule,
     SkeletonModule,
-    PartnersCardModule,
+    PartnersViewModule,
   ],
   declarations: [LayoutComponent],
   exports: [LayoutComponent],

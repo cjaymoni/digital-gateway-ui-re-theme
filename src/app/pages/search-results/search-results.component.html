@@ -20,9 +20,6 @@
       SHOWING RESULTS FOR :
       <span class="font-italic text-pink-700">"{{ query$ | async }}"</span>
     </div> -->
-    <div class="text-3xl text-center text-blue-800 mt-3">
-      NO RESULTS FOUND. TRY ANOTHER SEARCH TERM.
-    </div>
   </ng-container>
 
   <ng-template #resultDisplay>
@@ -47,7 +44,9 @@
             <app-forum-card [forum]="searchresults"></app-forum-card>
           </div>
           <div *ngIf="searchresults.source == 'post'">
-            <app-forum-card [forum]="searchresults"></app-forum-card>
+            <app-forum-post-card
+              [forumPost]="searchresults"
+            ></app-forum-post-card>
           </div>
           <div *ngIf="searchresults.source == 'ad'">
             <ng-container
