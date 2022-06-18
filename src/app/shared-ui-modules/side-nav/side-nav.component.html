@@ -98,7 +98,41 @@
         <ng-container *ngIf="(subCategories$ | async)?.length == 0">
           <p class="fadein text-blue-900">Sorry, no related resources</p>
         </ng-container>
+      </div>
+    </ng-template>
+  </div>
+</p-sidebar>
 
+<!-- articles panel -->
+<p-sidebar
+  #articles
+  [(visible)]="displayArticles"
+  position="left"
+  [modal]="true"
+  styleClass="lg:col-offset-7 xl:col-offset-6 w-12 lg:w-4 h-full vh100"
+  [baseZIndex]="1001"
+  [blockScroll]="true"
+>
+  <div class="mt-0 lg:mt-3 px-1">
+    <button
+      pButton
+      icon="pi pi-times"
+      class="hidden md:flex p-button-secondary p-button-text p-button-outlined align-content-center justify-content-center mb-3"
+      (click)="this.displayArticles = false; selectedSubCategory = null"
+    ></button>
+    <h3 class="text-blue-900">{{ selectedSubCategory?.name }}</h3>
+    <hr />
+    <i
+      class="pi pi-spin pi-spinner ml-4"
+      *ngIf="articlesLoading$ | async; else showArticles"
+      style="font-size: 4rem"
+    ></i>
+    <ng-template #showArticles>
+      <br />
+      <div>
+        <ng-container *ngIf="(articles$ | async)?.length == 0">
+          <p class="fadein text-blue-900">Sorry, no related resources</p>
+        </ng-container>
         <ng-container
           *ngFor="
             let category of subCategories$ | async;
