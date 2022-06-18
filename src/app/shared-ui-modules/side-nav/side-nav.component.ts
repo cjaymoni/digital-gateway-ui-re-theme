@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, take, tap } from 'rxjs';
 import { trackById } from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
 import { Category, CategoryPosition } from 'src/app/models/category.model';
 import { ArticleService } from 'src/app/pages/articles/services/articles.service';
-import { GoogleAnalyticsService } from 'src/app/services/google-analytics.service';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { categorySelectors } from 'src/app/store/selectors/category.selectors';
 
@@ -13,14 +12,13 @@ import { categorySelectors } from 'src/app/store/selectors/category.selectors';
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNavComponent implements OnInit {
   constructor(
     private navigator: NavigatorService,
     private store: Store,
-    private articleService: ArticleService,
-    private gtag: GoogleAnalyticsService
+    private articleService: ArticleService
   ) {}
 
   showAll = false;
@@ -161,6 +159,10 @@ export class SideNavComponent implements OnInit {
     this.selectedSubCategory = null;
     this.displayArticles = false;
     this.displaySubCategories = false;
+  }
+
+  goToFaqs() {
+    this.navigator.goToRoute(['search', 'faqs']);
   }
 }
 

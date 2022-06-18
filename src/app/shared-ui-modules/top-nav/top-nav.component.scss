@@ -26,6 +26,7 @@
       .p-menubar .p-menubar-button {
         &::after {
           content: ' Menu';
+          font-size: 1.5rem;
         }
 
         &:hover {
@@ -38,6 +39,7 @@
         }
 
         color: white !important;
+        margin-top: 0.5rem;
       }
 
       .p-menubar-mobile-active {
@@ -50,7 +52,14 @@
         top: 3.5rem;
         left: 0;
       }
+      .p-menubar .p-menubar-button i {
+        font-size: 1.5rem;
+        margin-right: 0.5em;
+      }
     }
+  }
+  .searchButton {
+    color: white;
   }
 }
 

@@ -23,3 +23,4 @@ export class ModalComponentsComponent implements OnInit {
     this.navigator.closeModal();
   }
 }
+

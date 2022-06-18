@@ -34,7 +34,12 @@
   <div class="text-center">
     {{ (selectedUser$ | async)?.first_name }}
     {{ (selectedUser$ | async)?.last_name }}
-    <img src="assets/svgs/check.svg" alt="check" class="w-1rem h-1rem" />
+    <img
+      *ngIf="(selectedUser$ | async)?.is_verified"
+      src="assets/svgs/check.svg"
+      alt="check"
+      class="w-1rem h-1rem"
+    />
   </div>
   <div class="text-center mt-3">{{ (selectedUser$ | async)?.email }}</div>
 </div>

@@ -28,15 +28,39 @@
     </div>
 
     <div
-      class="hidden lg:flex mt-8 p-3 pr-3 align-self-end flex-column justify-content-between h-10rem"
+      class="hidden lg:flex mt-8 p-3 pr-3 align-self-start flex-column justify-content-between h-10rem"
     >
-      <a class="text-white text-lg no-underline" [routerLink]="['about-us']">
+      <a
+        class="text-white text-lg no-underline mb-2"
+        [routerLink]="['about-us']"
+        routerLinkActive="active-link"
+      >
         <span>
           <i class="pi pi-users"></i>
         </span>
         About Us</a
       >
-      <app-login-button></app-login-button>
+      <a
+        class="text-white text-lg no-underline mb-2 cursor-pointer"
+        [routerLink]="['faqs']"
+        routerLinkActive="active-link"
+      >
+        <span>
+          <i class="pi pi-question-circle"></i>
+        </span>
+        FAQs</a
+      >
+      <a
+        class="text-white text-lg no-underline"
+        [routerLink]="['contact-us']"
+        routerLinkActive="active-link"
+      >
+        <span>
+          <i class="pi pi-directions-alt"></i>
+        </span>
+        Contact Us</a
+      >
+      <!-- <app-login-button></app-login-button> -->
     </div>
   </div>
 </ng-container>
@@ -51,6 +75,7 @@
   [style]=""
   [baseZIndex]="1000"
   [blockScroll]="true"
+  (onHide)="closeAll()"
 >
   <div class="mt-0 lg:mt-3 pl-1">
     <button
@@ -82,9 +107,7 @@
           "
         >
           <div
-            [pTooltip]="category.name"
             class="flex w-12 justify-content-between align-content-center cursor-pointer scalein text-lg p-1 py-3"
-            tooltipPosition="right"
             [ngClass]="{
               'bg-white': selectedSubCategory?.name === category.name
             }"
@@ -136,11 +159,9 @@
         >
           <div
             class="flex justify-content-between align-content-center cursor-pointer scalein text-lg p-1 mb-3"
-            [pTooltip]="article.title"
-            tooltipPosition="right"
             (click)="readArticle(article)"
           >
-            <div class="white-space-nowrap ellipsis">
+            <div class="article-title">
               {{ article.title }}
             </div>
           </div>

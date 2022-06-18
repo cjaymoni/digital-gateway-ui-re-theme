@@ -1,0 +1,9 @@
+:host ::ng-deep {
+  .field-border {
+    border: 1px solid #0986b2;
+  }
+  .required:after {
+    content: ' *';
+    color: red;
+  }
+}

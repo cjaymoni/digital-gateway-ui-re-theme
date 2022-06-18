@@ -27,6 +27,18 @@
 }
 
 :host ::ng-deep {
+  .article-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:hover {
+      white-space: normal !important;
+      text-overflow: unset;
+      overflow: visible;
+    }
+  }
+
   .subcategory-side-panel {
     .p-sidebar-content {
       padding-right: 0px !important;
@@ -59,20 +71,19 @@
 
 hr {
   width: 10rem;
+  float: left;
 }
 
 li {
   list-style: none;
 }
 
-.ellipsis {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .active {
   color: var(--pink-500) !important;
-  background-color: rgba($color: black, $alpha: 0.05) !important;
+  // background-color: rgba($color: black, $alpha: 0.05) !important;
+  background-color: #daedf6 !important;
+}
+.active-link {
+  color: #fdbfe6 !important;
 }
 

@@ -184,6 +184,8 @@ export class NavigatorService {
   }
 
   goBack() {
+    this.closeModal();
+    this.hidePanel();
     if (this.router.navigated) {
       this.location.back();
     } else {
@@ -423,11 +425,7 @@ class AuthRoutes extends AppRoutesConfig {
     ]);
   }
 
-  goToLogin(
-    route = RouterOutlets.Right,
-    title = '',
-    returnUrl = ''
-  ) {
+  goToLogin(route = RouterOutlets.Right, title = '', returnUrl = '') {
     route === RouterOutlets.Right
       ? this.panelTitleSubject$.next(title)
       : this.modalTitleSubject$.next(title);
