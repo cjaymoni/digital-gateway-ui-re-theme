@@ -39,6 +39,8 @@ export class TopNavComponent implements OnInit {
     Validators.minLength(4),
   ]);
 
+  searchBar = false;
+
   constructor(
     private store: Store,
     private device: DeviceService,
@@ -72,5 +74,8 @@ export class TopNavComponent implements OnInit {
       this.searchInputControl.setValue('');
     }
   }
-}
 
+  toggleSearchBar() {
+    this.searchBar = !this.searchBar;
+  }
+}

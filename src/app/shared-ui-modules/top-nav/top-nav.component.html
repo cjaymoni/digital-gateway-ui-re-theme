@@ -12,11 +12,11 @@
       routerLink="/"
     >
       <!-- home and home icon -->
-      <span class="hidden lg:block text-white text-xl ml-3">
-        MSME GATEWAY
-        <i class="pi pi-home"></i>
+      <span class="hidden lg:block text-white text-2xl ml-5">
+        MSME Gateway
+        <i class="pi pi-home text-2xl"></i>
       </span>
-      <span class="text-darkblue lg:hidden text-xl">
+      <span class="text-darkblue lg:hidden text-xl text-white">
         <i class="pi pi-home" style="font-size: 2rem"></i>
       </span>
       <!-- <em class="text-xs">One stop for information</em> -->
@@ -44,7 +44,7 @@
 
   <!-- animated search dropdown -->
   <div
-    class="absolute w-full h-4rem mt-6 hidden surface-600 animation-duration-500 animation-ease-out justify-content-center align-items-center fadeinup p-1 searchButton xl:hidden"
+    class="absolute w-full h-4rem mt-7 hidden surface-600 animation-duration-500 animation-ease-out justify-content-center align-items-center fadeinup p-1 searchButton xl:hidden"
   >
     <div>
       <ng-container [ngTemplateOutlet]="search"></ng-container>
@@ -53,15 +53,18 @@
   <!-- end animated search dropdown -->
 
   <!-- search for xl screen -->
-  <div class="hidden xl:block mx-2 align-items-center col">
+  <div
+    class="hidden xl:inline-flex xl:justify-content-end mx-2 align-items-center col"
+  >
     <ng-container [ngTemplateOutlet]="search"></ng-container>
+    <app-login-button></app-login-button>
   </div>
   <!-- end search for xl screen -->
 
   <!-- user login menu for small to lg screen-->
   <div class="flex justify-content-between align-items-center xl:hidden">
     <button
-      class="xl:hidden p-button-outlined p-button-rounded p-button-secondary mr-1 button-color"
+      class="xl:hidden p-button-outlined p-button-rounded p-button-secondary mr-1 button-color text-white"
       icon="pi pi-search"
       pStyleClass=".searchButton"
       enterClass="hidden"
@@ -71,6 +74,7 @@
       leaveActiveClass="fadeoutup"
       leaveToClass="hidden"
       pButton
+      (click)="toggleSearchBar()"
     ></button>
     <div class="lg:hidden flex justify-content-between align-items-center mr-3">
       <ng-container [ngTemplateOutlet]="userLoginMenu"></ng-container>
@@ -84,9 +88,10 @@
     class="flex justify-content-center md:justify-content-end align-items-center"
   >
     <input
+      *ngIf="searchBar"
       type="text"
       pInputText
-      class="col-10 md:col-4 mr-1"
+      class="col-10 md:col-4 mr-3"
       placeholder="What are you looking for?"
       [formControl]="searchInputControl"
       enterPressed
@@ -95,9 +100,8 @@
     <button
       pButton
       icon="pi pi-search"
-      class="p-button-rounded col-2 button-color"
-      [disabled]="searchInputControl.invalid"
-      (click)="$event.stopPropagation(); searchTerm()"
+      class="p-button-rounded col-2 button-color mr-3"
+      (click)="$event.stopPropagation(); toggleSearchBar()"
       pStyleClass=".searchButton"
       enterClass="hidden"
       enterActiveClass="flex"
@@ -112,4 +116,3 @@
 <ng-template #userLoginMenu>
   <app-login-button></app-login-button>
 </ng-template>
-

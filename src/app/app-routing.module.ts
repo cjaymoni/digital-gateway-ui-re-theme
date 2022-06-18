@@ -145,6 +145,16 @@ const routes: Routes = [
     component: ConfirmEmailComponent,
   },
   {
+    path: 'contact-us',
+    loadChildren: () =>
+      import('./pages/contact-us/contact-us.module').then(
+        m => m.ContactUsModule
+      ),
+    data: {
+      breadcrumb: 'Contact Us',
+    },
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
@@ -161,4 +171,3 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
-

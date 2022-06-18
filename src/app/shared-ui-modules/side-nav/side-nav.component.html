@@ -1,6 +1,6 @@
 <ng-container *ngIf="categories$ | async">
   <div
-    class="wrapper w-full lg:sticky align-self-center flex flex-column justify-content-between overflow-x-hidden relative h-auto mb-5"
+    class="wrapper w-full lg:sticky align-self-center flex flex-column justify-content-between overflow-x-hidden relative h-auto mb-5 p-5"
   >
     <!-- (clickOutside)="clickOutsidePanel($event)" -->
     <!-- <p-divider align="center" styleClass="p-divider-no-background">
@@ -28,15 +28,33 @@
     </div>
 
     <div
-      class="hidden lg:flex mt-8 p-3 pr-3 align-self-end flex-column justify-content-between h-10rem"
+      class="hidden lg:flex mt-8 p-3 pr-3 align-self-start flex-column justify-content-between h-10rem"
     >
-      <a class="text-white text-lg no-underline" [routerLink]="['about-us']">
+      <a
+        class="text-white text-lg no-underline mb-2"
+        [routerLink]="['about-us']"
+      >
         <span>
           <i class="pi pi-users"></i>
         </span>
         About Us</a
       >
-      <app-login-button></app-login-button>
+      <a
+        class="text-white text-lg no-underline mb-2"
+        [routerLink]="['about-us']"
+      >
+        <span>
+          <i class="pi pi-question-circle"></i>
+        </span>
+        FAQs</a
+      >
+      <a class="text-white text-lg no-underline" [routerLink]="['contact-us']">
+        <span>
+          <i class="pi pi-directions-alt"></i>
+        </span>
+        Contact Us</a
+      >
+      <!-- <app-login-button></app-login-button> -->
     </div>
   </div>
 </ng-container>
@@ -149,4 +167,3 @@
     </ng-template>
   </div>
 </p-sidebar>
-

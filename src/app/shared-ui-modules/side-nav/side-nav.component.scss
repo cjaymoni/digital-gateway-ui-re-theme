@@ -59,6 +59,7 @@
 
 hr {
   width: 10rem;
+  float: left;
 }
 
 li {
@@ -73,6 +74,6 @@ li {
 
 .active {
   color: var(--pink-500) !important;
-  background-color: rgba($color: black, $alpha: 0.05) !important;
+  // background-color: rgba($color: black, $alpha: 0.05) !important;
+  background-color: #daedf6 !important;
 }
-
