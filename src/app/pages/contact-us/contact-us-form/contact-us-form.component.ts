@@ -50,7 +50,7 @@ export class ContactUsFormComponent implements OnInit {
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
-      location: ['', [Validators.required]],
+      location: [''],
       region: ['', [Validators.required]],
     });
 
