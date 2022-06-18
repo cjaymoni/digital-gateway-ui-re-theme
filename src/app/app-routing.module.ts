@@ -155,6 +155,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'faqs',
+    loadChildren: () =>
+      import('./pages/faqs/faqs.module').then(m => m.FaqsModule),
+    data: {
+      breadcrumb: 'FAQs',
+    },
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
@@ -171,3 +179,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
+

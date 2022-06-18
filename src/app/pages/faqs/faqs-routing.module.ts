@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Pages, RouterOutlets } from 'src/app/config/app-config';
-import { ContactUsFormComponent } from './contact-us-form/contact-us-form.component';
+import { FaqsViewComponent } from './faqs-view/faqs-view.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ContactUsFormComponent,
-    data: { breadcrumb: 'Contact Us' },
+    component: FaqsViewComponent,
   },
 ];
 
@@ -15,5 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ContactUsRoutesModule {}
+export class FaqsRoutesModule {}
 

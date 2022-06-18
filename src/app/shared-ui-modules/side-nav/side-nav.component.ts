@@ -162,5 +162,9 @@ export class SideNavComponent implements OnInit {
     this.displayArticles = false;
     this.displaySubCategories = false;
   }
+
+  goToFaqs() {
+    this.navigator.goToRoute(['search', 'faqs']);
+  }
 }
 

@@ -33,6 +33,7 @@
       <a
         class="text-white text-lg no-underline mb-2"
         [routerLink]="['about-us']"
+        routerLinkActive="active-link"
       >
         <span>
           <i class="pi pi-users"></i>
@@ -40,15 +41,20 @@
         About Us</a
       >
       <a
-        class="text-white text-lg no-underline mb-2"
-        [routerLink]="['about-us']"
+        class="text-white text-lg no-underline mb-2 cursor-pointer"
+        [routerLink]="['faqs']"
+        routerLinkActive="active-link"
       >
         <span>
           <i class="pi pi-question-circle"></i>
         </span>
         FAQs</a
       >
-      <a class="text-white text-lg no-underline" [routerLink]="['contact-us']">
+      <a
+        class="text-white text-lg no-underline"
+        [routerLink]="['contact-us']"
+        routerLinkActive="active-link"
+      >
         <span>
           <i class="pi pi-directions-alt"></i>
         </span>
@@ -167,3 +173,4 @@
     </ng-template>
   </div>
 </p-sidebar>
+
