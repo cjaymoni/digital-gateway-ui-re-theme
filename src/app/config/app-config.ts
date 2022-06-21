@@ -8,12 +8,12 @@ export const MOBILE_WIDTH_BREAKPOINT = 600;
 export const TABLET_WIDTH_BREAKPOINT = 960;
 export const DEFAULT_PAGE_SIZE = 50;
 
-export const APP_TOKEN = 'app_token';
-export const APP_USER_TOKEN = 'app_user_access_token';
-export const APP_REFRESH_TOKEN = 'app_refresh_token';
+export const APP_TOKEN = 'msme_app_token';
+export const APP_USER_TOKEN = 'msme_app_user_access_token';
+export const APP_REFRESH_TOKEN = 'msme_app_refresh_token';
 export const LOGIN_PATH = 'login';
 
-export const POLLING_INTERVAL = 10000; // 5 SECONDS
+export const POLLING_INTERVAL = 10000; // 10 SECONDS
 
 export enum RouterOutlets {
   Main = 'main',

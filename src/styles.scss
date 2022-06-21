@@ -160,6 +160,11 @@ body {
   background-color: var(--accent-color);
 }
 
+.button-color:enabled:hover {
+  background-color: var(--accent-color);
+  opacity: 0.8;
+}
+
 .p-menuitem-link-active span {
   color: var(--accent-color) !important;
 }
