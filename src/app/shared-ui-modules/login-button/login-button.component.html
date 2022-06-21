@@ -4,13 +4,21 @@
 ></ng-container>
 
 <ng-template #userLoginMenu>
-  <button
+  <div
     *ngIf="isLoggedIn$ | async; else login"
-    class="p-button-outlined p-button-rounded p-button-secondary ml-3 relative user-icon"
-    icon="pi pi-user"
-    pButton
     (click)="loginMenu.toggle($event)"
-  ></button>
+    class="flex p-3 lg:px-3 lg:py-2 align-items-center hover:bg-cyan-600 font-medium border-round cursor-pointer transition-duration-150 transition-colors"
+  >
+    <p-avatar
+      [image]="(loggedInUser$ | async)?.profile?.avatar ?? ''"
+      alt="profile image"
+      styleClass="mr-2"
+      shape="circle"
+    ></p-avatar>
+    <span class="hidden lg:block text-white-alpha-90">{{
+      (loggedInUser$ | async)?.email
+      }}</span>
+  </div>
   <p-menu
     #loginMenu
     [popup]="true"

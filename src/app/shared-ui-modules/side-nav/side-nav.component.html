@@ -1,6 +1,6 @@
 <ng-container *ngIf="categories$ | async">
   <div
-    class="wrapper w-full lg:sticky align-self-center flex flex-column justify-content-between overflow-x-hidden relative h-auto mb-5"
+    class="wrapper w-full lg:sticky align-self-center flex flex-column justify-content-between overflow-x-hidden relative h-auto mb-5 p-5"
   >
     <!-- (clickOutside)="clickOutsidePanel($event)" -->
     <!-- <p-divider align="center" styleClass="p-divider-no-background">
@@ -31,7 +31,7 @@
       class="hidden lg:flex mt-8 p-3 pr-3 align-self-start flex-column justify-content-between h-10rem"
     >
       <a
-        class="text-white text-lg no-underline mb-2"
+        class="text-white text-lg no-underline mb-3"
         [routerLink]="['about-us']"
         routerLinkActive="active-link"
       >
@@ -41,7 +41,7 @@
         About Us</a
       >
       <a
-        class="text-white text-lg no-underline mb-2 cursor-pointer"
+        class="text-white text-lg no-underline mb-3 cursor-pointer"
         [routerLink]="['faqs']"
         routerLinkActive="active-link"
       >
