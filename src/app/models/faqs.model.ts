@@ -1,6 +1,9 @@
 export interface FAQ {
-  id?: string | number | any;
-  position: string;
+  id?: number | string | any;
   question: string;
   answer: string;
+  position: number;
+  updated_on?: string;
+  created_on?: string;
 }
+

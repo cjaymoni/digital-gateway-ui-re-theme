@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { BehaviorSubject } from 'rxjs';
+import { PrimeNgAlerts } from 'src/app/config/app-config';
+import { AppAlertService } from 'src/app/shared-ui-modules/alerts/service/app-alert.service';
 import { userAuthSelectors } from 'src/app/store/selectors/user-auth.selectors';
+import { ContactUsFormService } from '../contact-us-form.service';
 
 @Component({
   selector: 'app-contact-us-form',
@@ -12,6 +16,7 @@ export class ContactUsFormComponent implements OnInit {
   contactUsForm!: FormGroup;
   emailReadonly = false;
   fullnameReadonly = false;
+  loading$ = new BehaviorSubject(false);
 
   regions = [
     { value: 'AHAFO REGION' },
@@ -34,13 +39,15 @@ export class ContactUsFormComponent implements OnInit {
 
   constructor(
     private readonly store: Store,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly contactUsService: ContactUsFormService,
+    private readonly alert: AppAlertService
   ) {}
 
   ngOnInit() {
     this.contactUsForm = this.fb.group({
       message: ['', [Validators.required]],
-      fullname: ['', [Validators.required, Validators.minLength(3)]],
+      full_name: ['', [Validators.required, Validators.minLength(3)]],
       contact: [
         '',
         [
@@ -58,13 +65,32 @@ export class ContactUsFormComponent implements OnInit {
       if (user) {
         this.contactUsForm?.patchValue({
           email: user?.email,
-          fullname: user?.first_name + ' ' + user?.last_name,
+          full_name: user?.first_name + ' ' + user?.last_name,
         });
 
         this.emailReadonly = true;
         this.fullnameReadonly = true;
       }
     });
+  }
+
+  submit() {
+    if (this.contactUsForm.valid) {
+      const formValues = this.contactUsForm.value;
+
+      this.contactUsService
+        .sendData({ ...formValues, region: formValues.region.value })
+        .subscribe(_ => {
+          this.loading$.next(false);
+          this.alert.showToast(
+            'Message sent successfully',
+            PrimeNgAlerts.UNOBSTRUSIVE
+          );
+          this.contactUsForm.reset();
+          this.emailReadonly = false;
+          this.fullnameReadonly = false;
+        });
+    }
   }
 }
 
