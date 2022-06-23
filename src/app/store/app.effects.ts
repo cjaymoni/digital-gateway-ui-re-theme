@@ -14,6 +14,7 @@ import { MultiMediaEffects } from './effects/multimedia.effects';
 import { SocialMediaEffects } from './effects/socialmedia.effects';
 import { DigitalLinkEffects } from './effects/digital-link.effects';
 import { PartnersEffects } from './effects/partners.effects';
+import { FaqEffects } from './effects/faq.effects';
 
 export const appStoreEffects = [
   ArticleEffects,
@@ -32,4 +33,6 @@ export const appStoreEffects = [
   SocialMediaEffects,
   DigitalLinkEffects,
   PartnersEffects,
+  FaqEffects,
 ];
+

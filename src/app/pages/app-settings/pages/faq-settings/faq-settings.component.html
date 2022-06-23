@@ -1,0 +1,29 @@
+<div class="flex justify-content-end mr-7 mb-2">
+  <button
+    pButton
+    icon="pi pi-save"
+    label="Save"
+    class="p-button-secondary p-button"
+    (click)="saveChanges()"
+  ></button>
+</div>
+
+<p-orderList
+  [value]="(unselectedFaqs$ | async) || []"
+  listStyleClass="min-h-full h-15rem"
+  header="List of Questions"
+  filterBy="question"
+  filterPlaceholder="Filter by question"
+  [dragdrop]="true"
+  [responsive]="true"
+  (onReorder)="assignNewPositionNumber($event)"
+>
+  <ng-template let-item pTemplate="item">
+    <div>
+      <i class="pi pi-question-circle mr-2"></i>
+      <!-- <span class="mr-2">{{ index + 1 }}</span> -->
+      <span class="product-category">{{ item.question }}</span>
+    </div>
+  </ng-template>
+</p-orderList>
+

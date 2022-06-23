@@ -40,6 +40,7 @@ export enum FeatureNamesForStore {
   SocialMedia = 'socialMedia',
   DigitalLink = 'digitalLink',
   Partners = 'partners',
+  Faqs = 'faqs',
 }
 
 export const SLUG_PREFIX = 'read';
@@ -176,6 +177,21 @@ export const Pages: { [key: string]: IPageItems | any } | any = {
       },
       edit: (url: UrlSegment[]) => {
         return urlMatcherForEditAndView(url, 'direct-links', false);
+      },
+    },
+  },
+  Faqs: {
+    main: 'faqs',
+    add: 'post-faq',
+    edit: 'edit-faq/:id',
+    view: 'view-faq/:id',
+    management: 'faqs-management',
+    matcher: {
+      view: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'faqs');
+      },
+      edit: (url: UrlSegment[]) => {
+        return urlMatcherForEditAndView(url, 'faqs', false);
       },
     },
   },
@@ -370,6 +386,13 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
       label: 'Partners',
       routerLink: [Pages.Partners.main],
       icon: 'pi pi-users',
+      visible: userRole === Roles.Admin || userRole === Roles.Editor,
+    },
+    {
+      id: 'faqs',
+      label: 'Faq Management',
+      routerLink: [Pages.Faqs.main, Pages.Faqs.management],
+      icon: 'pi pi-question-circle',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,
     },
   ];

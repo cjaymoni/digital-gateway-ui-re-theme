@@ -249,6 +249,7 @@ export class NavigatorService {
     this.panelTitle$,
     this.modalTitle$
   );
+  faqs = new FaqsRoutes(this.router, this.panelTitle$, this.modalTitle$);
 }
 
 class AppRoutesConfig {
@@ -602,6 +603,16 @@ class PartnersRoutes extends AppRoutesConfig {
       this.page.main,
       ...this.page.view.replace(':id', id).split('/'),
     ]);
+  }
+}
+
+class FaqsRoutes extends AppRoutesConfig {
+  constructor(
+    router: Router,
+    subject: BehaviorSubject<string>,
+    modalsubject: BehaviorSubject<string>
+  ) {
+    super(Pages.Faqs, router, subject, modalsubject);
   }
 }
 

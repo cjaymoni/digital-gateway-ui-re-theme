@@ -8,6 +8,7 @@ import { HighlightsSettingsModule } from './pages/highlights-settings/highlights
 import { FeaturedArticlesSettingsModule } from './pages/featured-articles-settings/featured-articles-settings.module';
 import { SocialMediaSettingsModule } from './pages/social-media-settings/social-media-settings.module';
 import { SocialMediaFormModule } from './pages/social-media-settings/social-media-form/social-media-form.module';
+import { FaqSettingsModule } from './pages/faq-settings/faq-settings.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,8 @@ import { SocialMediaFormModule } from './pages/social-media-settings/social-medi
     FeaturedArticlesSettingsModule,
     SocialMediaSettingsModule,
     SocialMediaFormModule,
+    FaqSettingsModule,
   ],
 })
 export class AppSettingsModule {}
+

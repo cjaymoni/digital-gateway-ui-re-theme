@@ -9,6 +9,7 @@ import {
 import { HighlightsSettingsComponent } from '../highlights-settings/highlights-settings.component';
 import { FeaturedArticlesSettingsComponent } from '../featured-articles-settings/featured-articles-settings.component';
 import { SocialMediaSettingsComponent } from '../social-media-settings/social-media-settings.component';
+import { FaqSettingsComponent } from '../faq-settings/faq-settings.component';
 
 @Component({
   selector: 'app-settings-view',
@@ -42,6 +43,11 @@ export class SettingsViewComponent implements OnInit {
         header: 'Social Media',
         content: SocialMediaSettingsComponent,
       },
+      {
+        header: 'FAQs',
+        content: FaqSettingsComponent,
+      },
     ];
   }
 }
+

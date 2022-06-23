@@ -17,6 +17,7 @@ import { userAuthReducer } from './reducers/user-auth.reducers';
 import { userProfileReducer } from './reducers/user-profile.reducers';
 import { userListReducer } from './reducers/users-list.reducers';
 import { partnersReducer } from './reducers/partners.reducers';
+import { faqReducer } from './reducers/faq.reducers';
 
 export const appReducersMap = {
   [FeatureNamesForStore.User]: userAuthReducer,
@@ -37,4 +38,6 @@ export const appReducersMap = {
   [FeatureNamesForStore.SocialMedia]: socialMediaReducer,
   [FeatureNamesForStore.DigitalLink]: digitalLinkReducer,
   [FeatureNamesForStore.Partners]: partnersReducer,
+  [FeatureNamesForStore.Faqs]: faqReducer,
 };
+

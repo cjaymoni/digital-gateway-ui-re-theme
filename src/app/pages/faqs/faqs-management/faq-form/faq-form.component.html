@@ -1,0 +1,66 @@
+<ng-container [formGroup]="faqForm">
+  <div class="fluid formgrid grid p-3">
+    <div class="field col-12">
+      <label for="question">Enter a Question</label>
+      <input
+        type="text"
+        pInputText
+        class="inputfield w-full"
+        formControlName="question"
+        placeholder="Enter a question"
+      />
+    </div>
+    <div class="field col-12">
+      <label for="answer">Enter an Answer</label>
+      <textarea
+        type="text"
+        [rows]="4"
+        pInputTextarea
+        class="inputfield w-full"
+        formControlName="answer"
+        placeholder="Enter an answer"
+      ></textarea>
+    </div>
+    <div class="field col-12">
+      <label for="position">Enter position</label>
+      <br />
+      <p-inputNumber
+        formControlName="position"
+        [showButtons]="true"
+        buttonLayout="horizontal"
+        inputId="horizontal"
+        spinnerMode="horizontal"
+        [step]="1"
+        [min]="1"
+        incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus"
+        styleClass="w-full"
+        inputStyleClass="w-full"
+      >
+      </p-inputNumber>
+    </div>
+  </div>
+
+  <div class="col-12 ml-auto flex justify-content-end">
+    <button
+      pButton
+      pRipple
+      class="mr-1"
+      type="button"
+      icon="pi pi-save"
+      [label]="(createForm ? 'Add' : 'Update') + ' Faq'"
+      [disabled]="faqForm.invalid"
+      (click)="onAddOrUpdateFaq()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      class="p-button-danger mr-1"
+      icon="pi pi-times"
+      type="button"
+      label="Cancel"
+      (click)="goBack()"
+    ></button>
+  </div>
+</ng-container>
+

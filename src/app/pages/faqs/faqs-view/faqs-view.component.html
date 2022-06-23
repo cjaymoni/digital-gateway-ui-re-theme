@@ -3,8 +3,16 @@
     FREQUENTLY ASKED QUESTIONS (FAQs)
   </h1>
   <div>
+    <div *ngIf="loading$ | async">
+      <i class="pi-spinner pi-spin" style="font-size: 6rem"></i>
+    </div>
     <p-accordion>
-      <p-accordionTab header="All Questions"> Content 1 </p-accordionTab>
+      <p-accordionTab *ngFor="let faq of questions" [header]="faq.question">
+        <div
+          class="col-12 w-full article-content"
+          [innerHTML]="sanitizer.bypassSecurityTrustHtml(faq.answer)"
+        ></div>
+      </p-accordionTab>
     </p-accordion>
   </div>
 </div>

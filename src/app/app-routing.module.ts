@@ -155,7 +155,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'faqs',
+    path: Pages.Faqs.main,
     loadChildren: () =>
       import('./pages/faqs/faqs.module').then(m => m.FaqsModule),
     data: {
