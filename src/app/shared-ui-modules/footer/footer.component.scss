@@ -3,8 +3,12 @@
 }
 
 .app-footer {
-  @media screen and (min-width: 962px) {
+  @media screen and (min-width: 1200px) {
     padding-left: 5rem !important;
+  }
+
+  @media screen and (min-width: 991px) and (max-width: 1199px) {
+    padding-left: 15rem !important;
   }
 }
 
