@@ -43,5 +43,5 @@ export const PartnersEndpoint = environment.API_URL + 'partners/';
 export const SocialMediaEndpoint = environment.API_URL + 'social-group/';
 export const FrequentlyAskedQuestionsEndpoint =
   environment.API_URL + 'frequently-asked-questions/';
-export const ContactUsEndpoint = environment.API_URL + 'contact-us';
+export const ContactUsEndpoint = environment.API_URL + 'contact-us/';
 

@@ -3,15 +3,16 @@
     class="p-0 w-full fadein animation-duration-500 overflow-hidden border-round cursor-pointer hover-underline"
     (click)="gotoCategoryPage(category)"
   >
-    <div class="h-18rem border-round">
+    <div class="border-round">
       <img
         [src]="category.image"
         class="object-fit-cover h-full w-full border-round"
         alt="Category Image"
       />
     </div>
-    <div class="text-blue-900 text-left mt-3">
+    <div class="text-blue-900 text-left">
       {{ category.description }}
     </div>
   </div>
 </ng-container>
+

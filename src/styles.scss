@@ -157,7 +157,7 @@ body {
 }
 
 .button-color {
-  background-color: var(--accent-color);
+  background-color: var(--accent-color) !important;
 }
 
 .button-color:enabled:hover {
@@ -231,3 +231,6 @@ h6 {
     0px 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
 }
 
+.p-breadcrumb ul li .p-menuitem-link .p-menuitem-text {
+  color: var(--accent-color) !important;
+}
