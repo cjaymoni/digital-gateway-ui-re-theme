@@ -77,5 +77,7 @@ export class TopNavComponent implements OnInit {
 
   toggleSearchBar() {
     this.searchBar = !this.searchBar;
+    this.searchTerm();
   }
 }
+

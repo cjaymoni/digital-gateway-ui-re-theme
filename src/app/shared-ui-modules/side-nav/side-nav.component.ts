@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, take, tap } from 'rxjs';
+import { BehaviorSubject, filter, take } from 'rxjs';
 import { trackById } from 'src/app/config/app-config';
 import { Article } from 'src/app/models/article.model';
 import { Category, CategoryPosition } from 'src/app/models/category.model';
@@ -53,7 +54,11 @@ export class SideNavComponent implements OnInit {
   selectedCategory!: Category | null | undefined;
   selectedSubCategory!: Category | null | undefined;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.navigator.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(_ => this.closeAll());
+  }
 
   viewMore() {
     this.showAll = !this.showAll;
@@ -73,22 +78,6 @@ export class SideNavComponent implements OnInit {
     }
 
     this.loading$.next(true);
-    // this.articleService
-    //   .searchArticle({
-    //     tag: tag.id,
-    //   })
-    //   .pipe(
-    //     take(1),
-    //     map(articles => {
-    //       this.loading$.next(false);
-    //       this.articles$.next(articles);
-    //     }),
-    //     catchError(e => {
-    //       this.loading$.next(false);
-    //       return e;
-    //     })
-    //   )
-    //   .subscribe();
   }
 
   readArticle(article: Article) {
@@ -125,6 +114,7 @@ export class SideNavComponent implements OnInit {
   getSubCategories(category: Category | undefined, index: number) {
     this.selectedCategory = category;
     this.displaySubCategories = !this.displaySubCategories;
+    this.displayArticles = false;
 
     if (this.currentIndex !== index) {
       this.displaySubCategories = true;

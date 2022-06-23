@@ -5,16 +5,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  BehaviorSubject,
-  debounceTime,
-  filter,
-  map,
-  skip,
-  Subscription,
-} from 'rxjs';
+import { BehaviorSubject, filter, map, Subscription } from 'rxjs';
 import { Category } from 'src/app/models/category.model';
-import { NavigatorService } from 'src/app/services/navigator.service';
 import { articleActions } from 'src/app/store/actions/article.actions';
 import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 import { categorySelectors } from 'src/app/store/selectors/category.selectors';
@@ -39,14 +31,13 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
   title$ = new BehaviorSubject('');
 
-  constructor(private store: Store, private navigator: NavigatorService) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.title$.next('Articles');
     this.categoryListSubscription$ = this.store
       .select(selectRouteParams)
       .pipe(
-        // debounceTime(100),
         map((params: any) => {
           const categorySlug = params.category;
           const tagSlug = params.tag;
@@ -87,7 +78,6 @@ export class ArticleListComponent implements OnInit, OnDestroy {
           } else {
             this.articles$ = this.allArticles$;
           }
-          // return of(noop);
         })
       )
       .subscribe();

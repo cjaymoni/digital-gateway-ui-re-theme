@@ -1,13 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  Input,
-} from '@angular/core';
-import { Store } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { trackByAny, trackById } from 'src/app/config/app-config';
 import { NavigatorService } from 'src/app/services/navigator.service';
-import { articleSelectors } from 'src/app/store/selectors/article.selectors';
 import { ThemeSettingsStore } from 'src/app/store/theme-settings.state';
 
 @Component({
@@ -23,8 +16,7 @@ export class RightNavCard implements OnInit {
 
   constructor(
     private themeStore: ThemeSettingsStore,
-    private navigator: NavigatorService,
-    private store: Store
+    private navigator: NavigatorService
   ) {}
 
   featuredArticles$ = this.themeStore.featuredArticles$;
@@ -39,3 +31,4 @@ export class RightNavCard implements OnInit {
     this.navigator.article.goToViewDetailsPage(slug);
   }
 }
+
