@@ -40,5 +40,9 @@
       ></button>
     </div>
   </ng-template>
+
+  <ng-template #contentTemplate let-content>
+    <div [innerHTML]="content | appEllipsis: 100"></div>
+  </ng-template>
 </ng-container>
 

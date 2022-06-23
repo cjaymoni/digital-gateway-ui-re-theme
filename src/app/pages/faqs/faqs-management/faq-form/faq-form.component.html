@@ -12,32 +12,12 @@
     </div>
     <div class="field col-12">
       <label for="answer">Enter an Answer</label>
-      <textarea
-        type="text"
-        [rows]="4"
-        pInputTextarea
-        class="inputfield w-full"
-        formControlName="answer"
-        placeholder="Enter an answer"
-      ></textarea>
-    </div>
-    <div class="field col-12">
-      <label for="position">Enter position</label>
-      <br />
-      <p-inputNumber
-        formControlName="position"
-        [showButtons]="true"
-        buttonLayout="horizontal"
-        inputId="horizontal"
-        spinnerMode="horizontal"
-        [step]="1"
-        [min]="1"
-        incrementButtonIcon="pi pi-plus"
-        decrementButtonIcon="pi pi-minus"
-        styleClass="w-full"
-        inputStyleClass="w-full"
-      >
-      </p-inputNumber>
+      <app-content-box
+        #contentBox
+        [required]="true"
+        [contentFormControl]="answer"
+        classNames="h-auto"
+      ></app-content-box>
     </div>
   </div>
 

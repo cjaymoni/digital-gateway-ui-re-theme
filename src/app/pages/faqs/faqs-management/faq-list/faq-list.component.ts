@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewChild,
+  TemplateRef,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { RouterOutlets } from 'src/app/config/app-config';
@@ -14,6 +20,9 @@ import { faqSelectors } from 'src/app/store/selectors/faq.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FaqListComponent implements OnInit {
+  @ViewChild('contentTemplate')
+  contentTemplate!: TemplateRef<any>;
+
   faqsList$ = this.store.select(faqSelectors.all);
 
   columns: any[] = [];
@@ -34,6 +43,7 @@ export class FaqListComponent implements OnInit {
       {
         header: 'Answer',
         field: 'answer',
+        template: this.contentTemplate,
       },
     ];
   }

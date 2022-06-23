@@ -1,5 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { NavigatorService } from 'src/app/services/navigator.service';
 import { FAQ } from '../../../../models/faqs.model';
 import { filter, Subscription, tap } from 'rxjs';
@@ -23,6 +28,10 @@ export class FaqFormComponent implements OnInit {
 
   subscription!: Subscription;
 
+  get answer() {
+    return this.faqForm.get('answer') as FormControl;
+  }
+
   constructor(
     private fb: FormBuilder,
     private navigator: NavigatorService,
@@ -36,7 +45,7 @@ export class FaqFormComponent implements OnInit {
     this.faqForm = this.fb.group({
       question: ['', [Validators.required]],
       answer: ['', [Validators.required]],
-      position: [''],
+      position: [1],
     });
 
     this.subscription = this.getFaqToEditSubscription();
@@ -44,6 +53,7 @@ export class FaqFormComponent implements OnInit {
   }
 
   goBack() {
+    this.store.dispatch(faqActions.clearAllSelected());
     this.navigator.goBack();
   }
 
@@ -53,7 +63,7 @@ export class FaqFormComponent implements OnInit {
       const newFaq = {
         question: formValues.question,
         answer: formValues.answer,
-        position: formValues.position,
+        position: 1,
       };
       if (this.createForm) {
         this.store.dispatch(faqActions.addFaq({ faq: { ...newFaq } }));
