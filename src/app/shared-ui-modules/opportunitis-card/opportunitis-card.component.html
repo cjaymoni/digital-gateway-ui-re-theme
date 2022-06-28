@@ -1,5 +1,6 @@
 <ng-container *ngIf="opportunity">
   <div
+    (click)="openOpportunity(); $event.stopPropagation()"
     class="p-0 w-full fadein animation-duration-500 overflow-hidden border-round cursor-pointer"
   >
     <div class="h-18rem border-round">
@@ -14,3 +15,4 @@
     </div>
   </div>
 </ng-container>
+
