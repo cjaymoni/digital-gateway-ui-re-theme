@@ -1,7 +1,12 @@
 <ng-container *appShellNoRender>
-  <div class="text-center flex justify-content-between p-component">
-    <div class="text-lg font-bold">MY MARKET ADS</div>
+  <app-heading
+    [title]="'My Market Ads'"
+    [description]="'View all ads created'"
+    [sideTemplate]="addButton"
+  >
+  </app-heading>
 
+  <ng-template #addButton>
     <button
       pButton
       class="align-self-end p-btn p-btn-lg"
@@ -9,7 +14,8 @@
       label="Add New Post"
       (click)="goToAddPostPage()"
     ></button>
-  </div>
+  </ng-template>
+
   <app-table
     [data]="(myMarketAds$ | async) || []"
     [columnsDefinition]="columns"
@@ -56,3 +62,4 @@
     {{ description | appEllipsis: 100 }}
   </ng-template>
 </ng-container>
+

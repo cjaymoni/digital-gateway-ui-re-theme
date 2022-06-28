@@ -8,6 +8,7 @@ import { MessageModule } from 'primeng/message';
 import { TagModule } from 'primeng/tag';
 import { MenuModule } from 'primeng/menu';
 import { DirectivesModule } from 'src/app/directives/directives.module';
+import { AppHeadingModule } from 'src/app/shared-ui-modules/app-heading/app-heading.module';
 
 @NgModule({
   declarations: [MyArticlesListComponent],
@@ -20,7 +21,9 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
     TagModule,
     MenuModule,
     DirectivesModule,
+    AppHeadingModule,
   ],
   exports: [MyArticlesListComponent],
 })
 export class MyArticlesListModule {}
+

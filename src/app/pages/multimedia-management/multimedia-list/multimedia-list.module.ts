@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
 import { DirectivesModule } from 'src/app/directives/directives.module';
+import { AppHeadingModule } from '../../../shared-ui-modules/app-heading/app-heading.module';
 
 @NgModule({
   imports: [
@@ -15,8 +16,10 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
     MessageModule,
     AppPipesModule,
     DirectivesModule,
+    AppHeadingModule,
   ],
   declarations: [MultimediaListComponent],
   exports: [MultimediaListComponent],
 })
 export class MultimediaListModule {}
+

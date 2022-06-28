@@ -1,7 +1,12 @@
 <ng-container *appShellNoRender>
-  <div class="text-center flex justify-content-between">
-    <div>DIRECT LINKS MANAGEMENT</div>
+  <app-heading
+    [title]="'Direct Links Management'"
+    [description]="'View all direct links created'"
+    [sideTemplate]="addButton"
+  >
+  </app-heading>
 
+  <ng-template #addButton>
     <button
       pButton
       class="align-self-end p-btn p-btn-lg"
@@ -9,7 +14,7 @@
       label="Add New Link"
       (click)="goToAddNewLink()"
     ></button>
-  </div>
+  </ng-template>
 
   <app-table
     [data]="(digitalLink$ | async) || []"
@@ -49,3 +54,4 @@
     ></p-message>
   </ng-template>
 </ng-container>
+

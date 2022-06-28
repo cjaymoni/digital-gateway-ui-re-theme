@@ -1,75 +1,82 @@
-<div class="grid">
-  <div class="col-12 md:col-6 lg:col-6">
-    <app-content-list
-      [title]="'Article Tags'"
-      [availableList]="(articleTags$ | async) || []"
-      (removeItemEvent)="removeTag($event)"
-      (addItemEvent)="addTag($event, TagTypes.article)"
-      [addTemplate]="addTagTemplate"
-    ></app-content-list>
+<ng-container *appShellNoRender>
+  <app-heading
+    [title]="'Content Management'"
+    [description]="'View all content settings'"
+  >
+  </app-heading>
+  <div class="grid">
+    <div class="col-12 md:col-6 lg:col-6">
+      <app-content-list
+        [title]="'Article Tags'"
+        [availableList]="(articleTags$ | async) || []"
+        (removeItemEvent)="removeTag($event)"
+        (addItemEvent)="addTag($event, TagTypes.article)"
+        [addTemplate]="addTagTemplate"
+      ></app-content-list>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <app-content-list
+        [title]="'Product Tags'"
+        [availableList]="(productTags$ | async) || []"
+        (removeItemEvent)="removeTag($event)"
+        (addItemEvent)="addTag($event, TagTypes.product)"
+      ></app-content-list>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <app-content-list
+        [title]="'Forum Tags'"
+        [availableList]="(forumTags$ | async) || []"
+        (removeItemEvent)="removeTag($event)"
+        (addItemEvent)="addTag($event, TagTypes.forum)"
+      ></app-content-list>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <app-content-list
+        [title]="'Ad Tags'"
+        [availableList]="(adTags$ | async) || []"
+        (removeItemEvent)="removeTag($event)"
+        (addItemEvent)="addTag($event, TagTypes.ad)"
+      ></app-content-list>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <app-content-list
+        [title]="'Category'"
+        [availableList]="(category$ | async) || []"
+        (removeItemEvent)="removeCategory($event)"
+        (addNewItemEvent)="addCategory($event)"
+        [customCreate]="true"
+        [showEdit]="true"
+        (editItemEvent)="editCategory($event)"
+        [addTemplate]="addTemplate"
+      ></app-content-list>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <app-content-list
+        [title]="'Product Types'"
+        [availableList]="(productTypes$ | async) || []"
+        (removeItemEvent)="removeProductType($event)"
+        (addItemEvent)="addProductType($event)"
+      ></app-content-list>
+    </div>
   </div>
-  <div class="col-12 md:col-6 lg:col-6">
-    <app-content-list
-      [title]="'Product Tags'"
-      [availableList]="(productTags$ | async) || []"
-      (removeItemEvent)="removeTag($event)"
-      (addItemEvent)="addTag($event, TagTypes.product)"
-    ></app-content-list>
-  </div>
-  <div class="col-12 md:col-6 lg:col-6">
-    <app-content-list
-      [title]="'Forum Tags'"
-      [availableList]="(forumTags$ | async) || []"
-      (removeItemEvent)="removeTag($event)"
-      (addItemEvent)="addTag($event, TagTypes.forum)"
-    ></app-content-list>
-  </div>
-  <div class="col-12 md:col-6 lg:col-6">
-    <app-content-list
-      [title]="'Ad Tags'"
-      [availableList]="(adTags$ | async) || []"
-      (removeItemEvent)="removeTag($event)"
-      (addItemEvent)="addTag($event, TagTypes.ad)"
-    ></app-content-list>
-  </div>
-  <div class="col-12 md:col-6 lg:col-6">
-    <app-content-list
-      [title]="'Category'"
-      [availableList]="(category$ | async) || []"
-      (removeItemEvent)="removeCategory($event)"
-      (addNewItemEvent)="addCategory($event)"
-      [customCreate]="true"
-      [showEdit]="true"
-      (editItemEvent)="editCategory($event)"
-      [addTemplate]="addTemplate"
-    ></app-content-list>
-  </div>
-  <div class="col-12 md:col-6 lg:col-6">
-    <app-content-list
-      [title]="'Product Types'"
-      [availableList]="(productTypes$ | async) || []"
-      (removeItemEvent)="removeProductType($event)"
-      (addItemEvent)="addProductType($event)"
-    ></app-content-list>
-  </div>
-</div>
 
-<ng-template #addTemplate>
-  <div class="w-9">
-    <label for="category">Parent Category</label>
-    <app-category-autocomplete
-      [selectedCategory]="category"
-    ></app-category-autocomplete>
-  </div>
-</ng-template>
+  <ng-template #addTemplate>
+    <div class="w-9">
+      <label for="category">Parent Category</label>
+      <app-category-autocomplete
+        [selectedCategory]="category"
+      ></app-category-autocomplete>
+    </div>
+  </ng-template>
 
-<ng-template #addTagTemplate>
-  <div class="w-9 field-checkbox">
-    <p-checkbox
-      name="featured"
-      [formControl]="tagFeatured"
-      [binary]="true"
-    ></p-checkbox>
-    <label for="featured"> Featured ? : {{ tagFeatured.value }}</label>
-  </div>
-</ng-template>
+  <ng-template #addTagTemplate>
+    <div class="w-9 field-checkbox">
+      <p-checkbox
+        name="featured"
+        [formControl]="tagFeatured"
+        [binary]="true"
+      ></p-checkbox>
+      <label for="featured"> Featured ? : {{ tagFeatured.value }}</label>
+    </div>
+  </ng-template>
+</ng-container>

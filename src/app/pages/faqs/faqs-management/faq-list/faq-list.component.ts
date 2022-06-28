@@ -63,5 +63,8 @@ export class FaqListComponent implements OnInit {
   viewFaq(faq: FAQ) {
     this.navigator.faqs.goToViewPage(faq.id, 'View Faq', RouterOutlets.Modal);
   }
+  deleteFaq(faq: FAQ) {
+    this.store.dispatch(faqActions.deleteFaq({ id: faq.id }));
+  }
 }
 

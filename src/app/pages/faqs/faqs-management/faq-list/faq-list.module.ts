@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
+import { AppHeadingModule } from 'src/app/shared-ui-modules/app-heading/app-heading.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
     TooltipModule,
     DirectivesModule,
     AppPipesModule,
+    AppHeadingModule,
   ],
   declarations: [FaqListComponent],
   exports: [FaqListComponent],

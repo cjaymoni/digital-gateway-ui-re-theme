@@ -5,6 +5,8 @@ import { ContentManagementListPageComponent } from './content-management-list-pa
 import { ContentManagementListModule } from 'src/app/shared-ui-modules/content-management-list/content-management-list.module';
 import { CategoryAutocompleteModule } from 'src/app/shared-ui-modules/category-autocomplete/category-autocomplete.module';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DirectivesModule } from 'src/app/directives/directives.module';
+import { AppHeadingModule } from 'src/app/shared-ui-modules/app-heading/app-heading.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -13,8 +15,11 @@ import { CheckboxModule } from 'primeng/checkbox';
     FormsModule,
     ReactiveFormsModule,
     CheckboxModule,
+    DirectivesModule,
+    AppHeadingModule,
   ],
   exports: [ContentManagementListPageComponent],
   declarations: [ContentManagementListPageComponent],
 })
 export class ContentManagementListPageModule {}
+

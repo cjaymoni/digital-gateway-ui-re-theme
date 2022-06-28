@@ -1,7 +1,12 @@
 <ng-container *appShellNoRender>
-  <div class="text-center flex justify-content-between">
-    <div>PARTNERS MANAGEMENT</div>
+  <app-heading
+    [title]="'Partners Management'"
+    [description]="'View all partners created'"
+    [sideTemplate]="addButton"
+  >
+  </app-heading>
 
+  <ng-template #addButton>
     <button
       pButton
       class="align-self-end p-btn p-btn-lg"
@@ -9,7 +14,7 @@
       label="Add Partner"
       (click)="goToAddNewPartner()"
     ></button>
-  </div>
+  </ng-template>
 
   <app-table
     [data]="(partners$ | async) || []"
@@ -51,3 +56,4 @@
     </div>
   </ng-template>
 </ng-container>
+

@@ -390,7 +390,7 @@ export const LoggedInMenu = (userRole: Roles): MenuItem[] => {
     },
     {
       id: 'faqs',
-      label: 'Faq Management',
+      label: `FAQs Management`,
       routerLink: [Pages.Faqs.main, Pages.Faqs.management],
       icon: 'pi pi-question-circle',
       visible: userRole === Roles.Admin || userRole === Roles.Editor,

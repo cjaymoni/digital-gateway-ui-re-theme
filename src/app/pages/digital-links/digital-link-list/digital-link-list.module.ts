@@ -7,6 +7,7 @@ import { MessageModule } from 'primeng/message';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
 import { DirectivesModule } from 'src/app/directives/directives.module';
+import { AppHeadingModule } from 'src/app/shared-ui-modules/app-heading/app-heading.module';
 
 @NgModule({
   imports: [
@@ -17,8 +18,10 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
     AppPipesModule,
     DirectivesModule,
     TooltipModule,
+    AppHeadingModule,
   ],
   declarations: [DigitalLinkListComponent],
   exports: [DigitalLinkListComponent],
 })
 export class DigitalLinkListModule {}
+

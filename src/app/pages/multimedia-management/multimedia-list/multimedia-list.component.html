@@ -1,7 +1,12 @@
 <ng-container *appShellNoRender>
-  <div class="text-center flex justify-content-between">
-    <div>MULTIMEDIA MANAGEMENT</div>
+  <app-heading
+    [title]="'Multimedia Management'"
+    [description]="'View all multimedia created'"
+    [sideTemplate]="addButton"
+  >
+  </app-heading>
 
+  <ng-template #addButton>
     <button
       pButton
       class="align-self-end p-btn p-btn-lg"
@@ -9,7 +14,7 @@
       label="Add New Media"
       (click)="goToAddNewMedia()"
     ></button>
-  </div>
+  </ng-template>
 
   <app-table
     [data]="(multiMedia$ | async) || []"
@@ -57,3 +62,4 @@
     ></p-message>
   </ng-template>
 </ng-container>
+

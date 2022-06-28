@@ -1,7 +1,12 @@
 <ng-container *appShellNoRender>
-  <div class="text-center flex justify-content-between mt-2">
-    <div>FAQs LISTS MANAGEMENT</div>
+  <app-heading
+    [title]="'FAQs LISTS MANAGEMENT'"
+    [description]="'View all faqs created'"
+    [sideTemplate]="addButton"
+  >
+  </app-heading>
 
+  <ng-template #addButton>
     <button
       pButton
       class="align-self-end p-btn p-btn-lg"
@@ -9,7 +14,7 @@
       label="Add New Faq"
       (click)="goToAddNewFaq()"
     ></button>
-  </div>
+  </ng-template>
 
   <app-table
     [data]="(faqsList$ | async) || []"
@@ -22,7 +27,7 @@
   <ng-template #actions let-faq>
     <div class="flex justify-content-between">
       <button
-        class="p-button p-button-rounded p-button-danger mr-3"
+        class="p-button p-button-rounded p-button-info mr-3"
         pButton
         tooltipPosition="bottom"
         pTooltip="View Faq"
@@ -31,12 +36,22 @@
       ></button>
 
       <button
-        class="p-button p-button-info p-button-rounded mr-auto"
+        class="p-button p-button-warning p-button-rounded mr-3"
         pButton
         pTooltip="Edit Faq"
         tooltipPosition="bottom"
         icon="pi pi-pencil"
         (click)="editFaq(faq)"
+      ></button>
+
+      <button
+        class="p-button p-button-danger p-button-rounded mr-auto"
+        pButton
+        pTooltip="Delete Faq"
+        tooltipPosition="bottom"
+        icon="pi pi-trash"
+        clickConfirmation
+        (onConfirm)="deleteFaq(faq)"
       ></button>
     </div>
   </ng-template>

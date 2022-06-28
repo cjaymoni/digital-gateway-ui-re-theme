@@ -6,6 +6,8 @@ import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { AppPipesModule } from 'src/app/pipes/app-pipes.module';
 import { MessageModule } from 'primeng/message';
+import { AppHeadingModule } from 'src/app/shared-ui-modules/app-heading/app-heading.module';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   imports: [
@@ -15,8 +17,11 @@ import { MessageModule } from 'primeng/message';
     AppPipesModule,
     MenuModule,
     ButtonModule,
+    AppHeadingModule,
+    DirectivesModule,
   ],
   declarations: [UsersListPageComponent],
   exports: [UsersListPageComponent],
 })
 export class UsersListPageModule {}
+

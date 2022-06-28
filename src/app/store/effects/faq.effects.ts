@@ -114,6 +114,27 @@ export class FaqEffects {
     )
   );
 
+  deleteFaq$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(faqActions.deleteFaq),
+      switchMap(({ id }) =>
+        this.faqService.deleteResource(id).pipe(
+          map((tag: any) =>
+            faqActions.deleteFaqSuccessful({
+              id,
+            })
+          ),
+          tap(_ =>
+            this.alert.showToast(
+              'Faq deleted successfully',
+              PrimeNgAlerts.UNOBSTRUSIVE
+            )
+          ),
+          catchError(error => of(faqActions.fetchError(error)))
+        )
+      )
+    )
+  );
   private showToast(message: string) {
     this.alert.showToast(message, PrimeNgAlerts.UNOBSTRUSIVE);
   }

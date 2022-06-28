@@ -1,7 +1,12 @@
 <ng-container *appShellNoRender>
-  <div class="text-center flex justify-content-between">
-    <div>MY ARTICLES</div>
+  <app-heading
+    [title]="'My Articles'"
+    [description]="'View all articles you have created'"
+    [sideTemplate]="addButton"
+  >
+  </app-heading>
 
+  <ng-template #addButton>
     <button
       pButton
       class="align-self-end p-btn p-btn-lg"
@@ -9,7 +14,8 @@
       label="Add New Article"
       (click)="goToAddArticlePage()"
     ></button>
-  </div>
+  </ng-template>
+
   <app-table
     [data]="(myArticles$ | async) || []"
     [columnsDefinition]="columns"
@@ -79,3 +85,4 @@
     {{ created | date: 'longDate' }}
   </ng-template>
 </ng-container>
+

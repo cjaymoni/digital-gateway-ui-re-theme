@@ -24,4 +24,3 @@ import { AppQuillModule } from 'src/app/shared-ui-modules/app-quill/app-quill.mo
 })
 export class FaqFormModule {}
 
-

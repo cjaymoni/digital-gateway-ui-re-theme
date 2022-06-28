@@ -1,68 +1,76 @@
-<div class="text-center flex justify-content-between">
-  <div>USERS MANAGEMENT</div>
-  <button
-    pButton
-    class="align-self-end p-btn p-btn-lg"
-    icon="pi pi-plus"
-    label="Add New User"
-    (click)="goToAddUserPage()"
-  ></button>
-</div>
-
-<app-table
-  [data]="(usersList$ | async) || []"
-  [columnsDefinition]="columns"
-  [actionTemplate]="actions"
-  [showAction]="true"
-></app-table>
-
-<ng-template #actions let-user>
-  <div class="flex justify-content-between">
+<ng-container *appShellNoRender>
+  <app-heading
+    [title]="'Users Management'"
+    [description]="'View all users created'"
+    [sideTemplate]="addButton"
+  >
+  </app-heading>
+  <ng-template #addButton>
     <button
-      class="p-button p-button-rounded p-button-danger mr-3"
       pButton
-      tooltipPosition="bottom"
-      pTooltip="View user"
-      (click)="viewUser(user)"
-      icon="pi pi-eye"
+      class="align-self-end p-btn p-btn-lg"
+      icon="pi pi-plus"
+      label="Add New User"
+      (click)="goToAddUserPage()"
     ></button>
+  </ng-template>
 
-    <button
-      class="p-button p-button-info p-button-rounded mr-3"
-      pButton
-      pTooltip="Edit User Role"
-      tooltipPosition="bottom"
-      icon="pi pi-pencil"
-      (click)="selectedUser = user; rolesMenu.toggle($event)"
-    ></button>
+  <app-table
+    [data]="(usersList$ | async) || []"
+    [columnsDefinition]="columns"
+    [actionTemplate]="actions"
+    [showAction]="true"
+  ></app-table>
 
-    <button
-      class="p-button p-button-warning p-button-rounded mr-auto"
-      pButton
-      pTooltip="Edit User Status"
-      tooltipPosition="bottom"
-      icon="pi pi-book"
-      (click)="selectedUser = user; statusMenu.toggle($event)"
-    ></button>
-  </div>
-</ng-template>
+  <ng-template #actions let-user>
+    <div class="flex justify-content-between">
+      <button
+        class="p-button p-button-rounded p-button-danger mr-3"
+        pButton
+        tooltipPosition="bottom"
+        pTooltip="View user"
+        (click)="viewUser(user)"
+        icon="pi pi-eye"
+      ></button>
 
-<p-menu #rolesMenu [popup]="true" [model]="rolesList"></p-menu>
+      <button
+        class="p-button p-button-info p-button-rounded mr-3"
+        pButton
+        pTooltip="Edit User Role"
+        tooltipPosition="bottom"
+        icon="pi pi-pencil"
+        (click)="selectedUser = user; rolesMenu.toggle($event)"
+      ></button>
 
-<p-menu #statusMenu [popup]="true" [model]="statusList"></p-menu>
+      <button
+        class="p-button p-button-warning p-button-rounded mr-auto"
+        pButton
+        pTooltip="Edit User Status"
+        tooltipPosition="bottom"
+        icon="pi pi-book"
+        (click)="selectedUser = user; statusMenu.toggle($event)"
+      ></button>
+    </div>
+  </ng-template>
 
-<ng-template #roleTemplate let-role>
-  <p-message
-    [severity]="UserRoleMapping[role]"
-    styleClass="p-message-no-icon"
-    [text]="role | uppercase"
-  ></p-message>
-</ng-template>
+  <p-menu #rolesMenu [popup]="true" [model]="rolesList"></p-menu>
 
-<ng-template #statusTemplate let-status>
-  <p-message
-    [severity]="status === true ? 'info' : 'warn'"
-    [text]="status | BooleanPipe"
-    styleClass="p-message-no-icon"
-  ></p-message>
-</ng-template>
+  <p-menu #statusMenu [popup]="true" [model]="statusList"></p-menu>
+
+  <ng-template #roleTemplate let-role>
+    <p-message
+      [severity]="UserRoleMapping[role]"
+      styleClass="p-message-no-icon"
+      [text]="role | uppercase"
+    ></p-message>
+  </ng-template>
+
+  <ng-template #statusTemplate let-status>
+    <p-message
+      [severity]="status === true ? 'info' : 'warn'"
+      [text]="status | BooleanPipe"
+      styleClass="p-message-no-icon"
+    ></p-message>
+  </ng-template>
+</ng-container>
+
