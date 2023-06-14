@@ -15,7 +15,7 @@
       >
         <div
           [ngClass]="{ active: selectedCategory?.name === category.name }"
-          class="mt-4 border-none w-full h-auto py-2 px-6 text-white cursor-pointer featured-category transition-duration-200 transition-all transition-ease-in-out"
+          class="mt-4 border-none w-full h-auto py-2 px-6 text-primary cursor-pointer featured-category transition-duration-200 transition-all transition-ease-in-out"
           (click)="getSubCategories(category, index)"
         >
           <!-- [routerLink]="['articles', 'tag', featured?.slug]" -->

@@ -7,7 +7,10 @@
   --menu-background: #27272a;
   font-size: 14px;
   --accent-color: #d20787;
-  --primary-color: #0986b2;
+  // --primary-color: #0986b2;
+  --primary-color: #2f4d9f;
+
+  --sidebar-light-blue: #fbfdfe;
 }
 
 body {
@@ -97,6 +100,9 @@ body {
   background-color: var(--darkblue-500) !important;
 }
 
+.sidebar-lightblue {
+  background-color: var(--sidebar-light-blue) !important;
+}
 .bg-grey {
   background-color: var(--grey-500) !important;
 }
@@ -234,3 +240,4 @@ h6 {
 .p-breadcrumb ul li .p-menuitem-link .p-menuitem-text {
   color: var(--accent-color) !important;
 }
+
